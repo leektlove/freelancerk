@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/notice.css">
+</head>
+
+	
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>Freelancer Korea Blog</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+        <!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/common/notice}" class="nav-link disabled d-flex">
+							<span>Blog</span>
+							<span class="count_alarm" th:text="${totalCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/common/reference}" class="nav-link active d-flex">
+							<span>자료실</span>
+							<span class="count_alarm" th:text="${totalReference}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+		
+		<section>
+			<div class="container py-4">
+				<div class="container_inner">
+					<div id="sub_search">
+						<form id="searchForm" action="#" th:action="@{/common/notice}" method="get">
+							<div class="row">
+								<div class="col-lg-7 sub_search_text">
+									총 <span th:text="${totalCount}"></span>건의 blog가 있습니다.
+								</div>
+								<div class="col-lg-5 sub_search_date">
+									<div class="input-group">
+				                        <input type="text" class="search_input form-control form-control px-3" th:name="searchWord" th:value="${searchWord}" placeholder="제목, 내용을 입력해 주세요" style="border: 1px solid #d2d2d2;border-radius: 10px 0 0 10px;border-right: 0;font-size:14px">
+				                        <span class="input-group-append">
+				                            <button class="btn btn-light search_submit" type="submit" style="border: 1px solid #d2d2d2;border-left: 0;border-radius: 0 10px 10px 0">
+				                                <img src="/static/images/icon/search.png" style="width: 25px;height: 25px;">
+				                            </button>
+				                        </span>
+				                    </div>
+								</div>
+							</div>
+						</form>
+					</div>
+					
+					<div class="row">
+						<div class="col">
+							<div class="">
+								<div class="recent-posts">
+									<div id="contents" class="masonry form-row" data-plugin-masonry data-plugin-options="{'itemSelector': '.masonry-item'}">
+										<div class="masonry-item no-default-style col-12 col-sm-6 col-md-4 col-lg-3" th:each="notice, iter : ${list}">
+											<th:block th:if="${notice.type.name() == 'NOTICE'}">
+											<a th:href="@{/common/notice(noticeId=${notice.id})}">
+												<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+													<span class="thumb-info-wrapper mb-4">
+														 <img th:src="|${notice.imageUrl}|" class="img-fluid" alt="">
+														<span class="thumb-info-title">
+															<span class="thumb-info-inner line-height-8" th:text="${notice.title}">'1000 명 인터뷰'한 프리랜서 방송인</span>
+															<span class="thumb-info-type line-height-3" th:text="${notice.abbreviatedContents}">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+														</span>
+													</span>
+												</span>
+											</a>
+											</th:block>
+											<th:block th:if="${notice.type.name() == 'LALA'}">
+												<a th:href="|/common/blog/${notice.id}|">
+												<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+													<span class="thumb-info-wrapper mb-4">
+														 <img th:src="|${notice.mainImageUrl}|" class="img-fluid" alt="">
+														<span class="thumb-info-title">
+															<span class="thumb-info-inner line-height-8" th:text="${notice.title}">'1000 명 인터뷰'한 프리랜서 방송인</span>
+															<span class="thumb-info-type line-height-3" th:text="${notice.subtitle}">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+														</span>
+													</span>
+												</span>
+												</a>
+											</th:block>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+		<script src="/static/js/notice.js"></script>
+	</div>
+	
+
+</html>

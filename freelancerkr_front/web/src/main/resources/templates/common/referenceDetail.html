@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/referenceDetail.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>자료실보기</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+        <!-- 페이지헤더// -->
+
+		<div class="container">
+			<div class="content-body">
+				<div class="reference_container">
+					<div class="title" th:text="${reference.title}"></div>
+					<div class="wrap">
+						<div class="createdAt">
+							<div>등록일</div>
+							<div th:text="${#temporals.format(reference.createdAt, 'yyyy-MM-dd')}"></div>
+						</div>
+						<div class="hits">
+							<div>조회수</div>
+							<div th:text="${reference.hits}"></div>
+						</div>
+					</div>
+					<div class="file_wrap">
+						<div class="file_list">
+							<div>첨부파일</div>
+							<a class="content" th:each="file : ${referenceFiles}" th:href="@{${file.fileUrl}}" th:text="${file.fileName}"></a>
+						</div>
+					</div>
+					<div id="view_content" class="des" th:utext="${reference.content}">
+						안녕하세요.
+						대한민국 대표 프리랜서 플랫폼 프리랜서코리아입니다.
+
+						저희 플랫폼은 프로젝트에 대한 개입을 최소화하고 있습니다. 이는 프로젝트와 프리랜서의 개인정보를 침해하지 않기 위한 저희의 정책입니다.
+
+						다만 저희의 에스크로서비스를 이용하시는 고객분들을 위하여 꼼꼼히 변호인의 검토를 받은 계약서 샘플을 준비해놓았습니다.
+						필요하신 경우 자유롭게 이용하세요.
+
+						성공적인 프로젝트로 끝맺음되길 기원합니다.
+
+						@프리랜서코리아팀 올림.
+					</div>
+				</div>
+				<div class="btn_group">
+					<a th:href="@{/common/reference}" class="btn btn-lg">목록으로</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

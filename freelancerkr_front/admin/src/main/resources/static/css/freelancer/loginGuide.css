@@ -1,0 +1,114 @@
+#guide{width:100%; text-align:center; padding:3rem 0;}
+#guide .maintitle{font-size:24px; font-weight:300; color:#666;line-height:42px;}
+#guide .maintitle span{color:#000; font-weight:700;font-size:24px;}
+#guide .mainimage{margin-top:90px}
+#guide .mainimage img{}
+#guide .mainbox{margin-top:90px;}
+#guide .mainbox table{width:100%;margin:0 auto;}
+#guide .mainbox table td{vertical-align:top;;text-align:left; position:relative; min-height:240px;}
+#guide .mainbox .mainbox1{padding:30px; border-bottom:1px solid #e6e6e6; cursor:pointer; background-color:#fff;}
+#guide .mainbox .mainbox1 .text1{color:#0088cc;font-size:40px;font-family:impact;padding-bottom:12px;}
+#guide .mainbox .mainbox1 .text2{padding-bottom:97px; width:150px;}
+#guide .mainbox .mainbox1 .text2 .star_point_con{margin-top:-27px; overflow:hidden;}
+#guide .mainbox .mainbox1 .text3{font-size:17px;color:#555; font-weight:400;}
+#guide .mainbox .mainbox1 .text3 span{font-size:17px;color:#0088cc; font-weight:700;}
+#guide .mainbox .mainbox2{width:320px;padding:30px; border-bottom:1px solid #e6e6e6;cursor:pointer; background-color:#fff;}
+#guide .mainbox .mainbox2 h1{font-size:18px;color:#000;font-weight:700;text-transform:uppercase}
+#guide .mainbox .mainbox2 p{font-size:15px;color::#aaa;font-weight:400;}
+#guide .mainbox .mainbox3{width:320px;padding:30px; border-bottom:1px solid #209585;cursor:pointer; background-color:#0088cc;}
+#guide .mainbox .mainbox3 h1{font-size:18px;color:#fff;font-weight:700;text-transform:uppercase}
+#guide .mainbox .mainbox3 p{font-size:15px;color::#fff;font-weight:400;}
+/*#guide {display:none; position:absolute; width:100%; height:100%; z-index:1000; }*/
+#guide .contents_con {width:1000px; height:100%; margin:0 auto; background-color:#fff; text-align:center; display:table;}
+#guide .contents {}
+#guide .img {padding-bottom:40px;}
+#guide .img img {width:115px;}
+#guide .title {font-size:45px; color:#b2b2b2; text-transform:uppercase; font-family:raleway_r; padding-bottom:40px;}
+#guide .title span {color:#e36159; font-family:raleway_b;}
+#guide .input { border:1px solid #e36159; border-radius:3px; margin:0 auto;}
+#guide .input .b_01 {width:100%; height:55px; border-bottom:1px solid #e36159;}
+#guide .input .b_02 {width:100%; height:55px;}
+#guide .input .box {float:left; padding-left:20px;}
+#guide .input .icon {float:right; padding-right:20px; line-height:55px;}
+#guide .input input {width:400px; height:55px; line-height:55px; text-align:left; color:#e36159; font-size:16px; font-weight:400; border:0; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-serif';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+#guide .step_info {max-width:835px; height:145px; margin:0 auto; background:url('/static/images/free_info_line_bg.png') repeat; margin-top:45px;display: flex;justify-content: space-between;} 
+#guide .step_info div{position: relative;}
+#guide .step_info .round {float:left;width:145px; height:145px; background:url('/static/images/free_info_round_bg.png') no-repeat;}
+#guide .step_info .round p {font-size:14px; color:#e36159; font-weight:700; padding-top:15px;}
+#guide .step_info .round img {padding-top:35px;}
+#guide .step_info .arrow {position: absolute;right:-65px;bottom:0;}
+#guide .step_info .talk {float:left; width:120px; /*overflow:hidden;*/}
+#guide .step_info .talk img {padding-top:50px;}
+#guide .step_info .talk p {font-size:14px; color:#e36159; font-weight:700; padding-top:15px;}
+#guide ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #0088cc;
+}
+#guide ::-moz-placeholder { /* Firefox 19+ */
+  color: #0088cc;
+}
+#guide :-ms-input-placeholder { /* IE 10+ */
+  color: #0088cc;
+}
+#guide :-moz-placeholder { /* Firefox 18- */
+  color: #0088cc;
+}
+#guide .btn_login { margin:0 auto; padding-top:10px;}
+#guide .btn_login input {width:100%; height:55px; border:1px solid #e36159; text-align:center; line-height:55px; font-family:raleway_b; font-size:19px; color:#fff;background-color:#e36159; text-transform:uppercase; border-radius:3px;cursor: pointer;}
+#guide .search { margin:0 auto; text-align:center; padding:30px 0; overflow:hidden;}
+#guide .search a {font-size:17px; color:#e36159; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-serif';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700; transition:background-color .3s ease;}
+#guide .search a:hover {color:#aaa; transition:background-color .3s ease;}
+#guide .btn_join { margin:0 auto; padding-top:10px;}
+#guide .btn_join input {width:100%; height:55px; border:1px solid #e36159; text-align:center; line-height:55px; font-family:raleway_b; font-size:19px; color:#e36159;background-color:#fff; text-transform:uppercase; border-radius:3px;cursor: pointer;transition:background-color .3s ease;}
+#guide .btn_join input:hover {background:#e36159; color:#fff; transition:background-color .3s ease;}
+#guide .close {position:fixed; top:40px; right:40px; z-index:1001; cursor: pointer;}
+#guide .close img {width:30px;}
+#guide .sub_title {text-align:center; font-size:16px; color:#aaaaaa; line-height:30px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-serif';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+#guide .sub_title p {color:#313131; font-size:20px;}
+#guide .sub_title p span {color:#e36159; font-weight:700;}
+#guide .btn_project {max-width: 500px; margin:0 auto; height:55px; border:1px solid #e36159; text-align:center; line-height:55px;  font-size:18px; color:#e36159;background-color:#fff; text-transform:uppercase; border-radius:3px;cursor: pointer; font-weight:700;margin-top:10px;transition:background-color .3s ease;}
+#guide .btn_project:hover {color:#fff; background-color:#e36159;transition:background-color .3s ease;}
+#guide .btn_mypage {max-width:500px; margin:0 auto; height:55px; border:1px solid #e36159; text-align:center; line-height:55px;  font-size:18px; color:#e36159;background-color:#fff; text-transform:uppercase; border-radius:3px;cursor: pointer; font-weight:700;margin-top:10px;transition:background-color .3s ease;}
+#guide .btn_mypage:hover {color:#fff; background-color:#e36159;transition:background-color .3s ease;}
+#guide .text{max-width:800px; margin:0 auto;padding-top:50px;}
+#guide .text div{float:left; width:25%; text-align:center;}
+#guide .text div p{color:#999; font-size:14px; line-height:22px; padding:15px 0 0 0; letter-spacing:-1px;}
+
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+	#guide .text div{width:50%;margin-bottom:20px;}
+	#guide .step_info{display: block;background:none;}
+	#guide .step_info div{display: block;width:100%!important;margin-bottom:40px;}
+	#guide .step_info .round{background-position: center}
+	#guide .step_info .arrow {right: 43%;bottom: -97px;width:30px;-ms-transform: rotate(90deg); /* IE 9 */-webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */transform: rotate(90deg);}
+	#guide .step_info .talk img {padding-top: 30px;}
+	#guide .step_info .talk p {margin-bottom: 30px;}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	#guide .text div{width:50%;margin-bottom:20px;}
+	#guide .step_info{display: block;background:none;}
+	#guide .step_info div{display: block;width:100%!important;margin-bottom:40px;}
+	#guide .step_info .round{background-position: center}
+	#guide .step_info .arrow {right: 44%;bottom: -97px;width:30px;-ms-transform: rotate(90deg); /* IE 9 */-webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */transform: rotate(90deg);}
+	#guide .step_info .talk img {padding-top: 30px;}
+	#guide .step_info .talk p {margin-bottom: 30px;}
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	#guide .step_info .round {background-size: 85%;background-position: center center;}
+	#guide .step_info .arrow {right: -30px;padding-top: 0!important;top: 20px;width: 25px;}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}

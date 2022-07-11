@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/pickmeup.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<div id="cs_list">
+					<ul>
+						<li><a href="">포트폴리오리스트</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 포트폴리오 등록</h1>
+					<form name="" id="" action="" method="post">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody><tr>
+								<th>관리자권한 노출여부</th>
+								<td>
+									<label><input type="checkbox" name="" value="N" id="">노출방지</label>
+								</td>
+							</tr>
+							<tr>
+								<th>플랫폼 공개여부</th>
+								<td>
+									<label><input type="radio" name="" value="Y">플랫폼공개</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="" checked>플랫폼미공개</label>
+								</td>
+							</tr>
+							<tr>
+								<th>구분</th>
+								<td>
+									<label><input type="radio" name="" value="portfolio" checked>포트폴리오</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="project">프로젝트</label>
+								</td>
+							</tr>
+							<tr>
+								<th>프리랜서</th>
+								<td>
+									<input type="text" value="" readonly="" class="readonly" id="" style="width:400px;">
+									<span class="btn-black small">프리랜서찾기</span>
+								</td>
+							</tr>
+							<tr class="project_con" style="display:none;">
+								<th>프로젝트</th>
+								<td>
+									<select name="" id="">
+										<option value="">선택</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>분류</th>
+								<td>
+									<select name="" id="" class="required" required="" title="분류">
+										<option value="">1차분류</option>
+									</select>
+
+									<select name="" id="" class="required" required="" title="분류">
+										<option value="">2차분류</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>프로젝트명</th>
+								<td>
+									<input type="text" name="" id="" value="" class="required" required="" title="프로젝트명" style="width:99%" maxlength="150">
+								</td>
+							</tr>
+							<tr>
+								<th>작업일</th>
+								<td>
+									<input type="text" name="" id="" value="" readonly="" class="required readonly search_date hasDatepicker" required="" title="작업일">
+									 ~ 
+									<input type="text" name="" id="" value="" readonly="" class="required readonly search_date hasDatepicker" required="" title="작업일">
+								</td>
+							</tr>
+							<tr>
+								<th>소개내용</th>
+								<td colspan="3">
+									<textarea name="" id="" title="소개내용" rows="5" style="width:99%"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<th>대표 이미지</th>
+								<td>
+									<input type="file" name="" id="fp_img_1" style="margin-bottom:5px;">
+									<div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>상세 이미지</th>
+								<td>
+									<input type="file" name="" id="fp_img_2" style="margin-bottom:5px;">
+									<div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>상세 이미지</th>
+								<td>
+									<input type="file" name="" id="fp_img_3" style="margin-bottom:5px;">
+									<div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>상세 이미지</th>
+								<td>
+									<input type="file" name="" id="fp_img_4" style="margin-bottom:5px;">
+									<div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>상세 이미지</th>
+								<td>
+									<input type="file" name="" id="fp_img_5" style="margin-bottom:5px;">
+									<div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>상세 이미지</th>
+								<td>
+									<input type="file" name="" id="fp_img_6" style="margin-bottom:5px;">
+									<div>
+									</div>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="저장" class="btn-color large">
+								<a href="" class="btn-colorline large">목록</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

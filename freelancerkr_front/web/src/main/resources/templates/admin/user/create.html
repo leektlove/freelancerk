@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){
+    	
+		var validator = new FormValidator({
+            "events": ['blur', 'input', 'change']
+        }, document.form1);
+        
+        // on form "submit" event
+        document.form1.onsubmit = function(e) {
+            var submit = true,
+                validatorResult = validator.checkAll(this);
+            console.log(validatorResult);
+            return !!validatorResult.valid;
+            
+        };
+          
+        // on form "reset" event
+        document.form1.onreset = function(e) {
+            validator.reset();
+        };
+        
+        $('.toggleValidationTooltips').change(function() {
+            validator.settings.alerts = !this.checked;
+            if (this.checked)
+                $('form .alert').remove();
+        }).prop('checked', false);
+        
+        
+	});    
+
+</script>
+
+
+<script>
+var resSeq = 0;
+var resourceIds = [];
+
+function addResource(){
+	
+	var oldResId = (resSeq + "").lpad(2, "0");
+	
+	resSeq = resSeq + 1;	
+	var resId = (resSeq + "").lpad(2, "0");
+	
+	var currSeq = resSeq;
+	
+	
+	// 기존 resource 복사 
+	var orgRes = $("#resourceTemp").clone();
+	var removeResIcon = orgRes.find('#removeResIconTemp');
+	
+	orgRes.attr('id','resource' + resId);
+	removeResIcon.attr('id','removeResIcon' + resId);
+	
+	resourceIds.push(resId);
+	
+	removeResIcon.on("click", function(){
+		console.log("remove : " + '#resource' + resId);
+		if(currSeq == resSeq){
+			resSeq = resSeq -1;
+		}
+		
+		resourceIds.splice(resourceIds.indexOf(resId),1);   
+		
+		$('#resource' + resId).remove();  
+	});
+	
+	if(resourceIds.length  == 1){		
+		$('#resourceTemp').after(orgRes);
+		orgRes.show();
+	}else{
+		$('#resource' + oldResId).after(orgRes);
+		orgRes.show();
+	}
+	
+}
+
+function saveUser(){
+	
+	showModal("등록 하시겠습니까?", true, function(){
+		form1.submit();		
+	});
+	
+}
+</script>
+
+	<div class="">
+
+		<div class="row">
+		
+		
+			<div class="col-md-12 col-sm-12">
+				<div class="x_panel">
+					
+					<div class="x_title">
+						<h2>
+							사용자 등록
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>							
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="x_content">
+						
+						<form class="form-horizontal form-label-left" action="/w1/user/create" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
+							<input type="hidden" name="agreeYn" id="agreeYn" value="Y" />
+							<input type="hidden" name="privateYn" id="privateYn" value="Y" />
+							<input type="hidden" name="ageYn" id="ageYn" value="Y" />
+							
+							<span class="section">기본정보</span>
+						    <div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">Email<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="Email" name="email" id="email">								    									
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">사용자명<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">									
+									<input type="text" class="form-control" placeholder="사용자명" name="userName" id="userName">
+								</div>								
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">생년월일<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<input type="text" class="form-control" placeholder="YYYYMMDD" name="birthDay" id="birthDay">		
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">성별<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">	
+									<select required class="form-control" name="sex" id="sex">
+										<option value="F">여</option>
+										<option value="M">남</option>
+									</select>								
+								</div>								
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">휴대폰<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<input type="text" class="form-control" placeholder="01012345678" name="cellphone" id="cellphone">		
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">국적<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" name="country" id="country" >																				
+										<option value="KR">대한민국</option>
+										<option value="CN">중국</option>
+										<option value="JP">일본</option>
+										<option value="TH">태국</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">사용자구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<select required class="form-control" name="userRole" id="userRole">    		
+							    		<option th:each="userRole : ${T(com.beautyjourney.beautage.entity.enums.UserRole).values()}" 
+							        		th:value="${userRole.code}" th:text="${userRole.val}"></option>
+									</select>		
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">로그인구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">									
+									<select required class="form-control" name="oauthType" id="oauthType">    		
+							    		<option th:each="oAuthType : ${T(com.beautyjourney.beautage.entity.enums.OAuthType).values()}" 
+							        		th:value="${oAuthType.code}" th:text="${oAuthType.val}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">마켓팅동의여부<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<select required class="form-control" name="marketingYn" id="marketingYn">
+										<option value="Y">동의</option>
+										<option value="N">미동의</option>
+									</select>		
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">상태<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">									
+									<select required class="form-control" name="status" id="status">    		
+							    		<option th:each="userStatus : ${T(com.beautyjourney.beautage.entity.enums.UserStatus).values()}" 
+							        		th:value="${userStatus.code}" th:text="${userStatus.val}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">웹사이트</label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<input type="text" class="form-control" placeholder="" name="webSite" id="webSite">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">비고<span
+									class="required">*</span></label>
+								<div class="col-md-10 col-sm-10 ">								    							
+									<textarea class="form-control" required="required" rows="5" placeholder="" name="content" id="content"></textarea>		
+								</div>
+							</div>
+							
+							<div >
+								<div class="form-group">
+									<div class="col-md-12 col-sm-12 " style="text-align: right;">
+										<button type='button' class="btn btn-primary" id="saveUserBtn" onClick="saveUser()">저장하기</button>
+										<button type='reset' class="btn btn-success" id="resetUserBtn">취소하기</button>
+									</div>
+								</div>
+							</div>
+							
+						</form>
+					</div>
+					
+				</div>
+			</div>
+			
+				<!-- -----------------  -->
+		</div>
+	</div>
+	
+	
+ 
+</th:block>
+
+    
+</html>

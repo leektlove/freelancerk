@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+	    
+		/*<![CDATA[*/
+		var page = "[[${condition.page}]]";
+		var perPageNum = "[[${condition.perPageNum}]]";
+		
+		/*]]>*/
+		
+		
+		search(page, perPageNum);
+	});    
+	
+	function goDetail(contentId){
+		location.href="/w1/skin/detail/"+contentId;
+	}
+	
+	function search(page, perPageNum){
+		
+		var param = {};	    
+	    
+		if(page !=null){
+	    	param.page = page;
+	    }
+	    
+	    if(perPageNum !=null){
+	    	param.perPageNum = perPageNum;
+	    }	    
+	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+		$.ajax({
+	        url : "/w1/skin/skingroup_list",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            
+	            var rows = "";
+	            $.each(results, function(index, item) {	            	
+	            	rows = rows + getRow(item);
+				});	            
+	            	            
+ 	            $('#listBody').append(rows);
+	            
+// 	            var paging = getPageDiv(data.paging);	            
+// 	            $('#pagination').append(paging);
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });
+	}
+	
+	function getRow(skinGroup){
+		var row = "\n";
+		row = row + "<tr class='even pointer'>                                     ";   
+        row = row + "  <td class='a-center ' style='vertical-align: middle;'>                                      ";
+        row = row + "    <input type='checkbox' class='flat' name='table_records'> ";
+        row = row + "  </td>                                                       ";
+        row = row + "  <td class='' style='vertical-align: middle;'><a href='#' onClick='goDetail(\"" + skinGroup.groupid + "\")'>"+ skinGroup.seq + "</a></td>         ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ skinGroup.groupName + "</td>                         ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ skinGroup.active + "</td>                                        ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ skinGroup.regUser + "</td>                                     ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ skinGroup.regDate + "</td>                                     ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ skinGroup.status + "</td>                                     ";        
+        row = row + "</tr>                                                         ";
+		
+		return row;
+	}
+	
+</script>
+
+ <div class="x_content"> 
+  <div class="row">
+	<label class="control-label col-md-1 col-sm-1 ">그룹명<span class="required">*</span></label>
+	<div class="col-md-4 col-sm-4 ">
+		<input type="text" id="seq" name="seq" class="form-control ">				
+	</div>
+	<label class="control-label col-md-1 col-sm-1 ">Active</label>
+	<div class="col-md-4 col-sm-4 ">		
+		<input type="text" id="userId" name="userId" class="form-control ">
+	</div>
+  </div>
+  <div class="row">
+	<label class="control-label col-md-1 col-sm-1 ">상태</label>	
+	<div class="col-md-4 col-sm-4 ">
+		<input type="text" id="dDay" name="dDay" class="form-control ">
+	</div>
+	<label class="control-label col-md-1 col-sm-1 ">처리</label>	
+	<div class="col-md-2 col-sm-2 center">
+		<button type="button" class="btn btn-round btn-primary" onClick="search()">저장</button>
+	</div>
+	<div class="col-md-2 col-sm-2 center">
+		<button type="button" class="btn btn-round btn-primary" onClick="search()">조회</button>
+	</div>
+	
+  </div>  
+  <p><h5></h5></p>
+  <span class="section" style="text-align: right;padding-right: 10px;"></span>
+    
+  <div class="table-responsive">
+    <table class="table table-striped jambo_table bulk_action">
+      <thead>
+        <tr class="headings">
+          <th>
+            <input type="checkbox" id="check-all" class="flat">
+          </th>
+          <th class="column-title">순번 </th>
+          <th class="column-title">그룹명</th>
+          <th class="column-title">Active</th>
+          <th class="column-title">등록자</th>
+          <th class="column-title">등록일자</th>
+          <th class="column-title">상태</th>                              
+          <th class="bulk-actions" colspan="10">
+            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+          </th>
+        </tr>
+      </thead>
+          <tbody id="listBody">
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12 col-sm-12" id="pagination" style="display: flex;justify-content: center;">
+		   <div class="row">
+             <div class="btn-group" role="group">
+               <button type="button" class="btn btn-secondary">이전</button>
+               
+               <button type="button" class="btn btn-secondary">1</button>
+               <button type="button" class="btn btn-secondary">2</button>
+               <button type="button" class="btn btn-secondary">3</button>
+               
+               <button type="button" class="btn btn-secondary">다음</button>
+             </div>
+           </div>
+      </div>           
+    </div>
+  </div>
+</div>
+
+      
+</th:block>
+</html>

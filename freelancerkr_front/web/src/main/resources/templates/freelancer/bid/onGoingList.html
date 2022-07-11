@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/bid/onGoingList.css">
+
+	<!-- 로컬적용 script-->
+</head>
+	
+	<div id="content" layout:fragment="content">
+		
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>참여중인 입찰</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더//-->
+		
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item active mb-0">
+						<a th:href="@{/freelancer/bid/onGoingList}" class="nav-link active d-flex">
+							<span>참여중인 입찰</span>
+							<span class="count_alarm" th:text="${processingCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/bid/successList}" class="nav-link d-flex" href="#">
+							<span>성공한 입찰</span>
+							<span class="count_alarm" th:text="${cancelledCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/bid/failList}" class="nav-link d-flex" href="#">
+							<span>입찰취소/미낙찰</span>
+							<span class="count_alarm" th:text="${tempSavedCount}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- 탭메뉴// -->
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<div class="">
+						<div class="row mb-3">
+							<div class="col-lg-10 col-md-9 col-sm-8">
+								<p class="mb-0">총 <span class="text-primary" th:text="${page.totalElements}">0</span> 건의 입찰이 있습니다.</p>
+							</div>
+							<div class="col-lg-2 col-md-3 col-sm-4 mt-2 mt-sm-0">
+
+								<!-- 검색 필터 -->
+								<select class="custom-select" name="sortBy">
+									<option value="CREATED_AT" th:selected="${'CREATED_At' == sortBy?.name()}">입찰참여순</option>
+									<option value="END_AT" th:selected="${'END_AT' == sortBy?.name()}">마감임박순</option>
+								</select>
+								<!-- 검색필터// -->
+
+							</div>
+						</div>
+						<div class="">
+							<th:block th:each="item : ${page}">
+
+									<!-- 프로젝트 리스트 -->
+									<article class="project list_card bg-white post post-medium"  th:if="${item.project.projectType.name()} == 'PROJECT'">
+										<div class="row">
+											<div class="col-12">
+												<div class="card_title_date">
+													<div class="title" th:text="${item.project.title}">
+													</div>
+													<div class="date">
+														<!-- <span th:text="|클라이언트 : th:text="${item.project.postingClient.exposeName}"></span> -->
+														<span th:text="${#temporals.format(item.project.postingStartAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+														~
+														<span th:text="${#temporals.format(item.project.postingEndAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+													</div>
+												</div>
+												<div class="cellbox">
+													<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					나의입찰가격 : <span class="font_emp" th:text="|*{#numbers.formatInteger(item.amountOfMoney, 0, 'COMMA')}|"></span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					지급기준 : 
+								    					<span class="font_emp" th:text="${item.project.payCriteria}"></span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					예상프로젝트기간 : <span class="font_emp" th:text="${item.project.expectedPeriodTxt}"></span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					예산 : 
+								    					<span class="font_emp">
+								    						<span th:text="${item.project.payMean?.shortName}"></span>
+								    						<span th:text="${item.project.budget}"></span>
+								    					</span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					지급방식 : <span class="font_emp" th:text="${item.project.payMean?.name}"></span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					작업장소 : <span class="font_emp" th:text="${item.project.workPlace}"></span>
+								    				</div>
+										    	</div>
+										    	<div class="action_line">
+											    	<div class="row">
+														<div class="col-lg-6 align-self-center">
+															<div class="card_info d-block d-lg-flex">
+																<div class="content_wrap">
+																	<i class="icon-calendar icons"></i>
+																	<span th:if="${!item.project.postingEnd}">D-<span th:text="${item.project.remainDays}"></span></span>
+																	<span th:if="${item.project.postingEnd}"><span>선정 중...</span></span>
+																</div>
+																<div class="content_wrap">
+																	<i class="icon-user icons"></i>
+																	<span th:text="|${item.project.numberOfApplyCount}명이 지원하였습니다|">
+																	</span>
+																</div>
+																<div class="content_wrap" th:onclick="|projectDetail(${item.project.id}, '#comment')|">
+																	<i class="icon-envelope icons"></i>
+																	<th:span th:text="|${item.project.commentCountVisibleToMe}개의 메시지가 있습니다|"></th:span>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-6 text-right">
+															<div class="btn-group">
+																<input th:value="${item.id}" type="text" class="txtBidId" hidden>
+																<input th:value="${item.project.postingClient.exposeName}" type="text" class="txtClientName" hidden>
+																<input th:value="${item.project.postingClient.exposedEmail}" type="text" name="clientEmail" hidden>
+																<input th:value="${item.project.postingClient.exposedCellphone}" type="text" name="clientCellphone" hidden>
+																<div class="btn-group">
+																	<button class="btn btn-light rounded-0 btnChangeBidPrice" type="button" data-toggle="modal" data-target="#edit_price" data-id="12">입찰가격수정</button>
+																	<button class="btn btn-light rounded-0 btnBidCancel" type="button" th:attr="data-id=${item.id}">지원취소</button>
+																	<a th:href="@{|/freelancer/projects/${item.project.id}/details|}"><button class="btn btn-primary rounded-0" type="button">프로젝트 상세보기<i class="fas fa-angle-right"></i></button></a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+									<!-- 프로젝트 리스트// -->
+
+									<!-- 컨테스트 리스트 -->
+									<article class="contest list_card bg-white post post-medium"  th:if="${item.project.projectType.name()} == 'CONTEST'">
+										<div class="row">
+											<div class="col-12">
+												<div class="card_title_date">
+													<div class="title" th:text="${item.project.title}">
+													</div>
+													<div class="date">
+														<!-- <span th:text="|클라이언트 : ${item.project.postingClient.exposeName}|></span> -->
+														<span th:text="${#temporals.format(item.project.postingStartAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+														~
+														<span th:text="${#temporals.format(item.project.postingEndAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-12 mb-3">
+														<div class="cellbox">
+															<div class="cell">
+																<span class="list_deco">▪︎</span>
+																확정상금 : 
+																<span class="font_emp red" th:text="|*{#numbers.formatInteger(item.project.totalPrize, 0, 'COMMA')}원|"></span>
+															</div>
+															<div class="cell">
+																<span class="list_deco">▪︎</span>
+																취소 시 참여자 배당포인트 : 
+																<span class="font_emp" th:text="|*{#numbers.formatInteger(item.project.expectedCancelDividend, 0, 'COMMA')}원|">100,000</span>
+																<span class="question-pop text-secondary"data-toggle="tooltip" data-placement="top" title="해당 컨테스트가 기한만료 또는 클라이언트의 취소로 종료되는 경우, 현재의 참여자들이 받게 될 1인당 취소 배당금입니다"><i class="far fa-question-circle"></i></span>
+															</div>
+															<div class="cell">
+																<span class="list_deco">▪︎</span>
+																컨테스트 종료 후 당선자와 프로젝트 진행 : 
+																<span class="font_emp red" th:if="${item.project.proceedProjectAfterContest}">가능</span>
+																<span class="font_emp red" th:if="${!item.project.proceedProjectAfterContest}">불가능</span>
+															</div>
+															<div class="cell">
+																<span class="list_deco">▪︎</span>
+																순위 : 
+																<span class="font_emp" th:text="|*{item.project.prizeTargetPersons}위 까지 선정|"></span>
+															</div>
+									    				</div>
+									    			</div>
+													<div class="col-md-6">
+														<ul class="list text-2">
+															<li>
+																<div class="post-image">
+																	<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+																		<div class="form-row">
+																			<div class="col-4" th:each="entryFile: ${item.allContestEntryFiles}">
+																				<a th:href="${entryFile.fileUrl}" th:if="${entryFile.fileType == null || entryFile.fileType?.name() == 'IMAGE'}">
+																					<span class="profile_img_crop thumb-info thumb-info-centered-icons">
+																						<!-- <span class="thumb-info-wrapper" >
+																							<img th:style="|${'background-image: url(' + entryFile.fileUrl + ')'}; background-position: center;background-size: cover;|">
+																							<span class="thumb-info-action">
+																								<span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+																							</span>
+																						</span> -->
+																						<span class="thumb-info-wrapper center-crop-wrapper rounded d-flex">
+											                                                <img th:src="${entryFile.fileUrl}" class="img-fluid" alt="" >
+											                                                <span class="thumb-info-action">
+											                                                    <span class="thumb-info-action">
+																									<span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+																								</span>
+											                                                </span>
+											                                            </span>
+																					</span>
+																				</a>
+																				<span th:if="${entryFile.fileType?.name() == 'VIDEO'}" data-toggle="modal" data-target="#videoModal" data-keyboard="false" data-backdrop="static" th:data-url="${entryFile.fileUrl}" class="d-flex border w-100 h-100 rounded">
+																					<div class="kind-c" style="width: 100%; height: 100%">
+													                                    <img src="/static/images/card_video.png" class="card_video kind-c" style="width: 60px; display: inline">
+													                                </div>
+																				</span>
+																			</div>
+																			<div class="form-row" th:if="${#lists.isEmpty(item.project.entryFileThumbnailUrl)}">
+																				<div class="col-4">
+																					<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons">
+																						<span class="thumb-info-wrapper">
+																							<img src="/static/images/no-image.jpg" class="img-fluid" alt="">
+																							<span class="thumb-info-action">
+																								<span class="thumb-info-action-icon thumb-info-action-icon-light">
+																									<i class="fas fa-plus text-dark"></i>
+																								</span>
+																							</span>
+																						</span>
+																					</span>
+																				</div>
+																				<div class="col-4">
+																					<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons">
+																						<span class="thumb-info-wrapper">
+																							<img src="/static/images/no-image.jpg" class="img-fluid" alt="">
+																							<span class="thumb-info-action">
+																								<span class="thumb-info-action-icon thumb-info-action-icon-light">
+																									<i class="fas fa-plus text-dark"></i>
+																								</span>
+																							</span>
+																						</span>
+																					</span>
+																				</div>
+																				<div class="col-4">
+																					<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons">
+																						<span class="thumb-info-wrapper">
+																							<img src="/static/images/no-image.jpg" class="img-fluid" alt="">
+																							<span class="thumb-info-action">
+																								<span class="thumb-info-action-icon thumb-info-action-icon-light">
+																									<i class="fas fa-plus text-dark"></i>
+																								</span>
+																							</span>
+																						</span>
+																					</span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</div>
+									    		</div>
+									    		<div class="action_line">
+										    		<div class="row">
+														<div class="col-lg-6 align-self-center">
+															<div class="card_info d-block d-lg-flex">
+																<div class="content_wrap">
+																	<i class="icon-calendar icons"></i>
+																	<span th:if="${!item.project.postingEnd}">D-<span th:text="${item.project.remainDays}"></span></span>
+																	<span th:if="${item.project.postingEnd}"><span>선정 중...</span></span>
+																</div>
+																<div class="content_wrap">
+																	<i class="icon-user icons"></i>
+																	<span th:text="|${item.project.numberOfApplyCount}명이 작품을 제출했습니다|">
+																	</span>
+																</div>
+																<!-- <div class="content_wrap" th:onclick="|contestDetail(${item.project.id}, '#comment')|">
+																	<i class="icon-envelope icons"></i>
+																	<span th:text="|${item.project.commentCountVisibleToMe}개의 메시지가 있습니다|"></span>
+																</div> -->
+															</div>
+														</div>
+														<div class="col-lg-6 text-right">
+															<div aria-label="Buttons Group" class="btn-group" role="group">
+																<button class="btn btn-light rounded-0 btnBidCancel" type="button" th:attr="data-id=${item.id}">지원취소</button>
+																<a th:href="@{|/freelancer/contests/${item.project.id}/details|}"><button class="btn btn-secondary rounded-0" type="button">컨테스트 상세보기<i class="fas fa-angle-right"></i></button></a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+									<!-- 컨테스트 리스트 -->
+
+							</th:block>
+						</div>
+					</div>
+					<div class="no-bid">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<div class="modal fade modal_wrap" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<input id="popUpBidId" type="text" hidden>
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title" id="ModalLabel">제출 동영상</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i>
+							</a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<div class="content modal-body">
+						<video controls style="max-width: 100%"></video>
+					</div>
+					<!-- 팝업 컨텐츠// -->
+
+				</div>
+			</div>
+		</div>
+
+		<!-- 입찰가격수정 팝업 -->
+		<div class="modal fade modal_wrap" id="edit_price" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+		 aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<input id="popUpBidId" type="text" hidden>
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title" id="ModalLabel">입찰가 수정</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i>
+							</a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<div class="content modal-body">
+						<div style="font-size: 13px;">
+							<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+							입찰금액만큼 입찰순서도 중요합니다.
+						</div>
+						<div class="text-secondary" style="font-size: 13px;">
+							<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+							프로필과 포트폴리오를 꼭 다시한번 확인해주세요.
+						</div>
+						<div class="d-flex justify-content-end mt-3 text-4 text-dark font-weight-bold">
+							<img src="/static/images/won_icon.png" style="width: 30px;height: 30px;margin-top:4px;">
+							<span class="align-self-center" style="font-size: 1rem;">입찰수정금액</span>
+							<input id="popUpBidPrice" class="form-control col-6 mx-2 text-right" type="text"  value="" maxlength="11" onkeyup="numberWithCommas(this);" style="color:red" >
+							<span class="align-self-center">원</span>
+						</div>
+						<div class="d-flex justify-content-center mt-4">
+							<input id="popUpProjectId" type="text" hidden>
+							<a href="#" class="btn btn-light btn-lg rounded-0 pop_close mr-2" data-dismiss="modal" aria-label="Close">취소</a>
+							<span class="btn btn-primary btn-lg rounded-0" id="popUpSubmit">수정</span>
+						</div>
+					</div>
+					<!-- 팝업 컨텐츠// -->
+
+				</div>
+			</div>
+		</div>
+		<!-- 입찰가격수정 팝업// -->
+		<script src="/static/js/freelancer/bid/list.js"></script>
+	</div>
+</html>

@@ -1,0 +1,354 @@
+<header layout:fragment="header"
+        xmlns:th="http://www.w3.org/1999/xhtml"
+        xmlns:layout="http://www.springframework.org/schema/security"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        id="header"
+        style="position:fixed;width:100%;top:0;height: 58px;">
+    <div class="header-body bg-gray box-shadow-none border-bottom" style="top: 0px;height: 58px;">
+        <div class="header-container h-100 container-fluid px-lg-5">
+            <div class="header-row h-100">
+                <div class="header-column justify-content-end">
+                    <div class="header-row justify-content-between">
+                        <div class="d-flex">
+                            <div class="header-logo">
+                                <a href="/">
+                                    <img alt="Porto" class="header_main_logo" width="148" height="40" src="/static/images/logo-black.png">
+                                </a>
+                            </div>
+                            <div class="header_btn_group d-flex ml-2 ml-md-4 ml-lg-5">
+                                <a class="text-center mr-0 mr-md-2">
+                                    <button onclick="location.href='/infoPosting'" class="infoPosting btn btn-primary font-weight-semibold rounded-0" style="font-size: 16px;font-family: nanumSquare;font-weight: 700;padding: 0.4rem 0.933rem;">프로젝트/컨테스트 포스팅</button>
+                                </a>
+                                <a class="text-center mr-2 d-none d-lg-block">
+                                    <button onclick="location.href='/view/pick-me-ups'" class="btn font-weight-semibold rounded-0" style="background-color: #ff8301;border: 1px solid #ff8301;color: #fff;font-size: 16px;font-family: nanumSquare;font-weight: 700;padding: 0.4rem 0.933rem;">픽미업</button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="header-nav header-nav-links order-2 order-lg-1 p-0">
+                                <div class="d-none d-lg-flex header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-2 header-nav-main-sub-effect-1">
+                                    <nav class="">
+                                        <ul class="nav nav-pills" id="mainNav">
+                                            <li class="dropdown">
+                                                <a class="dropdown-item" href="/client/profile/index">
+                                                    마이페이지
+                                                </a>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle" href="/client/payment/list">
+                                                    결제/포인트관리
+                                                </a>
+                                                <!-- <span class="new_noti_point" data-parent-menu-code="CLIENT_PAYMENT">●</span> -->
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" href="/client/payment/list">
+                                                            <span style="position: relative;">
+                                                                결제/포인트관리
+                                                                <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_PAYMENT">●</span> -->
+                                                            </span>
+                                                        </a>
+
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="/client/payment/escrowList">
+                                                            <span style="position: relative;">
+                                                                에스크로
+                                                                <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_ESCROW">●</span> -->
+                                                            </span>
+                                                        </a>
+
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a class="dropdown-item" href="/client/directMarket/index">
+                                                    직거래마켓
+                                                </a>
+                                                <!-- <span class="new_noti_point" data-parent-menu-code="CLIENT_DIRECT_MARKET">●</span> -->
+                                            </li>
+                                            <li class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle" href="/client/bid/processingList">
+                                                    입찰현황
+                                                </a>
+                                                <img class="new_noti_point" th:if="${existsUnreadPostedProject != null AND existsUnreadPostedProject}" data-parent-menu-code="CLIENT_BID" src="/static/images/icon/red_point.svg">
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" href="/client/bid/suggestList" data-menu-code="CLIENT_PROPOSITION">
+                                                            <span style="position: relative;">
+                                                                참여요청
+                                                                <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_PROPOSITION">●</span> -->
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="/client/bid/processingList" data-menu-code="CLIENT_POSTING">
+                                                            <span style="position: relative;">
+                                                                진행중인 입찰
+                                                                <img th:if="${existsUnreadPostedProject != null AND existsUnreadPostedProject}" class="new_noti_point_item" data-menu-code="CLIENT_POSTING" src="/static/images/icon/red_point.svg">
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="/client/bid/cancelList" data-menu-code="CLIENT_CANCELLED">
+                                                            <span style="position: relative;">
+                                                                취소(종료)된 입찰
+                                                                <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_CANCELLED">●</span> -->
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" th:href="@{/client/bid/autoSave}" >
+                                                            <span>임시저장한 입찰</span>
+                                                            <!-- <span class="count_alarm" th:text="${tempSavedCount}">0</span> -->
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle" href="/client/project/processingList">
+                                                    나의 프로젝트
+                                                </a>
+                                                <img class="new_noti_point" th:if="${existsUnreadInProgressProject != null AND existsUnreadInProgressProject}" data-parent-menu-code="CLIENT_PROJECT" src="/static/images/icon/red_point.svg">
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" href="/client/project/processingList" data-menu-code="CLIENT_IN_PROGRESS">
+                                                            <span style="position: relative;">
+                                                                낙찰 후 진행중인 프로젝트
+                                                                <img th:if="${existsUnreadInProgressProject != null AND existsUnreadInProgressProject}" class="new_noti_point_item" data-menu-code="CLIENT_IN_PROGRESS" src="/static/images/icon/red_point.svg">
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="/client/project/doneList" data-menu-code="CLIENT_COMPLETED">
+                                                            <span style="position: relative;">
+                                                                완료된 프로젝트
+                                                                <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_COMPLETED">●</span> -->
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown d-flex d-lg-none">
+                                                <a class="dropdown-item" href="/view/pick-me-ups">
+                                                    픽미업
+                                                </a>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a class="dropdown-item" href="/common/howItWorks?role=ROLE_CLIENT">
+                                                    이용안내
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="d-flex justify-content-end">
+                                    <button class="hamburguer-btn hamburguer-btn-sticky-dark" data-set-active="false">
+                                        <span th:if="${existAlarm != null AND existAlarm}" class="new_noti_point">●</span>
+                                        <span class="hamburguer">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="header-nav-features order-1 order-lg-2">
+                                <div class="header-nav-feature mr-3 d-none d-lg-inline-flex">
+                                    <a href="#" class="text-dark">
+                                        <i class="fas fa-user text-4 text-lg-3"></i>
+                                        <span class="d-none d-lg-inline-block" th:text="${user.name}" style="max-width: 100px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;vertical-align: bottom;"></span>
+                                        <span class="cart-info" th:if="${user != null && user.alarm}">
+                                            <span class="cart-qty">1</span>
+                                        </span>
+                                    </a>
+                                    <div th:if="${user != null}" class="my_menu">
+                                        <div class="list-group list-group-flush">
+                                            <div class="client card">
+                                                <div class="card_top">
+                                                    <div class="profile_img">
+                                                        <div class="profile_img_crop">
+                                                            <div class="center-crop-wrapper rounded">
+                                                                <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(user?.profileImageUrl)?'/static/images/default_avatar.jpg':user?.profileImageUrl)}}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info">
+                                                        <div class="username member" th:text="${user.name}"></div>
+                                                        <span class="badge">클라이언트</span>
+                                                        <div class="par">프로젝트 
+                                                            <span id="allpjt_num" class="count" th:text="${#numbers.formatInteger(user.completedProjectCount, 0, 'COMMA')}">10</span>건 중
+                                                            <span id="markpjt_num" class="count" th:text="${#numbers.formatInteger(user.ratedProjectCountAsClient, 0, 'COMMA')}">6</span>건 평가
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card_middle">
+                                                    <div class="rating-container theme-krajee-fas rating-sm rating-animate">
+                                                        <div class="rating-stars">
+                                                            <span class="empty-stars">
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                            </span>
+                                                            <span class="filled-stars" th:style="|width: ${user.ratingPercentageAsClient}%|">
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="price">
+                                                        <div>마이포인트</div>
+                                                        <div th:text="|${#numbers.formatDecimal(user?.points, 0, 'DEFAULT', 0, 'DEFAULT')}P|"></div>
+                                                    </div>
+                                                    <div class="balance">
+                                                        <div>에스크로 예치 잔액</div>
+                                                        <div th:text="|${#numbers.formatInteger(remainEscrow, 0, 'COMMA')}원|"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="card_bottom">
+                                                    <div class="expose_emal" th:text="${user.exposeEmail} ? ${user.email}: '비공개'"></div>
+                                                    <div class="cellphone" th:text="${user.exposeCellphone} ? ${user.cellphone}: '비공개'"></div>
+                                                    <a class="homepageUrl" th:href="${user.homepageUrl}">
+                                                        <i class="fas fa-home"></i>
+                                                        <span th:text="${user.exposeSns} ? ${user.homepageUrl} : 비공개"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="my_menu_list">
+                                                <a href="/common/notice" class="list-group-item list-group-item-action">
+                                                    <span>Blog</span>
+                                                    <span><i class="fas fa-angle-right"></i></span>
+                                                </a>
+                                                <a href="/common/reference" class="list-group-item list-group-item-action">
+                                                    <span>자료실</span>
+                                                    <span><i class="fas fa-angle-right"></i></span>
+                                                </a>
+                                                <a href="/aboutus" class="list-group-item list-group-item-action">
+                                                    <span>프리랜서코리아팀</span>
+                                                    <span><i class="fas fa-angle-right"></i></span>
+                                                </a>
+                                                <a href="/common/helpList" class="list-group-item list-group-item-action">
+                                                    <span>고객센터</span>
+                                                    <span><i class="fas fa-angle-right"></i></span>
+                                                </a>
+                                                <a href="/logout" class="out list-group-item list-group-item-action">
+                                                    <span>로그아웃</span>
+                                                    <span><img src="/static/images/icon/logout_icon.png"/></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header-nav-feature d-none d-lg-inline-flex">
+                                    <a href="/client/profile/index#overview" class="text-dark">
+                                        <i class="fas fa-envelope text-4 text-lg-3"></i>
+                                        <span class="cart-info" th:if="${user != null && user.alarm}">
+                                            <span class="cart-qty">1</span>
+                                        </span>
+                                    </a>
+                                    <div class="my_message p-0" th:if="${user != null && user.message}">
+                                        <div class="list-group">
+                                            <a href="#" class="list-group-item list-group-item-action py-2">
+                                                <div class="media">
+                                                    <img class="mr-3" src="http://placehold.it/50x50" alt="Generic placeholder image">
+                                                    <div class="media-body">
+                                                        <div class="mb-1 title" style="line-height: 17px">프로젝트가 성공적으로 포스팅 되었습니다.
+                                                        </div>
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <span class="text-muted text-1" style="line-height: 15px">프리랜서코리아</span>
+                                                            <span class="text-muted text-1" style="line-height: 15px">3 days ago</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="list-group-item list-group-item-action py-2">
+                                                <div class="media">
+                                                    <img class="mr-3" src="http://placehold.it/50x50" alt="Generic placeholder image">
+                                                    <div class="media-body">
+                                                        <div class="mb-1 title" style="line-height: 17px">프로젝트가 성공적으로 포스팅 되었습니다.
+                                                        </div>
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <span class="text-muted text-1" style="line-height: 15px">프리랜서코리아</span>
+                                                            <span class="text-muted text-1" style="line-height: 15px">3 days ago</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="list-group-item text-center">
+                                                더보기
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toProjectViaProfile() {
+            alert('프로필이 완성되지 않았습니다. 프로필수정 페이지로 이동합니다.');
+            location.href = '/client/profile/modify?after-redirect=%2Fclient%2Fposting%2Fproject&type=PROJECT';
+        }
+
+        function toProjectPostingWhAlert() {
+            alert('인력파견을 업으로 하는 용역업체등의 클라이언트는 포스팅이 불가능하며 등록된 포스트는 삭제됩니다.');
+            location.href = '/client/posting/project';
+        }
+
+        function toContestViaProfile() {
+            alert('프로필이 완성되지 않았습니다. 프로필수정 페이지로 이동합니다.');
+            location.href = '/client/profile/modify?after-redirect=%2Fclient%2Fposting%2Fcontest&type=CONTEST';
+        }
+
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/users/menu-hits',
+                success: function(data) {
+                    let menuHits = data.data;
+
+                    for (var i = 0; i < menuHits.length; i++) {
+                        if (menuHits[i].on) {
+                            $('span[data-parent-menu-code="' + menuHits[i].parentMenuCode +'"]').show();
+                            $('span[data-menu-code="' + menuHits[i].menuCode +'"]').show();
+                        }
+                    }
+                },
+                error: function() {
+                    console.error('failed to get menu hits');
+                }
+
+            })
+        })
+
+    </script>
+</header>

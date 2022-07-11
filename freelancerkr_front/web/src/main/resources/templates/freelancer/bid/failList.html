@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/bid/failList.css">
+</head>
+
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>입찰취소/미낙찰</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/bid/onGoingList}" class="nav-link active d-flex">
+							<span>참여중인 입찰</span>
+							<span class="count_alarm" th:text="${processingCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/bid/successList}" class="nav-link d-flex" href="#">
+							<span>성공한 입찰</span>
+							<span class="count_alarm" th:text="${cancelledCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/freelancer/bid/failList}" class="nav-link d-flex" href="#">
+							<span>입찰취소/미낙찰</span>
+							<span class="count_alarm" th:text="${tempSavedCount}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<div class="">
+						<section class="row mb-3">
+							<div class="col-lg-4 col-md-3 col-sm-4 mt-2 mt-sm-0">
+								<div class="form-row">
+									<div class="col">
+										<select class="custom-select" name="projectType">
+											<option value="">전체</option>
+											<option value="PROJECT" th:selected="${'PROJECT' == projectType?.name()}">프로젝트</option>
+											<option value="CONTEST" th:selected="${'CONTEST' == projectType?.name()}">컨테스트</option>
+										</select>
+									</div>
+									<div class="col">
+										<select class="custom-select" name="sortBy">
+											<option value="CREATED_AT" th:selected="${'CREATED_At' == sortBy?.name()}">최근순</option>
+											<option value="AMOUNT" th:selected="${'AMOUNT' == sortBy?.name()}">금액높은순</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<section>
+							<th:block th:each="item : ${page.content}">
+
+								<!-- 프로젝트 리스트 -->
+								<article class="project list_card bg-white post post-medium" th:if="${item.project.project}">
+									<div class="row">
+										<div class="col-12">
+											<div class="card_title_date">
+												<div class="title" th:text="${item.project.title}">
+												</div>
+												<div class="date">
+													<span th:text="|취소/미낙찰일 : ${#temporals.format(item.failedAt, 'yyyy.MM.dd HH:mm:ss')}|"></span>
+												</div>
+											</div>
+											<div class="cellbox">
+												<div class="cell">
+							    					<span class="list_deco">▪︎</span>
+							    					나의입찰가격 : <span class="font_emp" th:text="|*{#numbers.formatInteger(item.amountOfMoney, 0, 'COMMA')}원|"></span>
+							    				</div>
+							    				<div class="cell">
+							    					<span class="list_deco">▪︎</span>
+							    					평균입찰가격 : <span class="font_emp" th:text="|*{#numbers.formatInteger(item.averageBidMoney, 0, 'COMMA')}원|"></span>
+							    				</div>
+							    				<div class="cell">
+							    					<span class="list_deco">▪︎</span>
+							    					평균입찰자경력 : <span class="font_emp" th:text="|${#numbers.formatDecimal(item.avgCareerYear,  0, 'COMMA', 1, 'POINT')}년|"></span>
+							    				</div>
+							    				<div class="cell">
+							    					<span class="list_deco">▪︎</span>
+							    					총 참여인원 : <span class="font_emp" th:text="|${item.numberOfBids}명|"></span>
+							    				</div>
+									    	</div>
+									    	<div class="action_line">
+												<div class="row">
+										    		<div class="col-lg-6 align-self-center">
+										    			<div class="card_info d-block d-lg-flex">
+															<div class="content_wrap">
+																<i class="fas fa-times-circle" style="color: #df564f;"></i>
+																<span th:if="${item.bidStatus.name() == 'FAILED'}">클라이언트는 다른 프리랜서를 선택했습니다.</span>
+																<span th:if="${item.bidStatus.name() == 'CANCEL'}">취소 또는 기한만료로 종료되었습니다.</span>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-6 text-right">
+														<div class="btn-group">
+															<button class="btn btn-light rounded-0" th:onclick="|deleteItem(${item.id})|">삭제</button>
+															<button class="btn btn-primary rounded-0" th:onclick="|toProjectDetail(${item.project.id})|">
+																프로젝트 상세보기<i class="fas fa-angle-right"></i>
+															</button>
+														</div>
+													</div>
+										    	</div>
+										    </div>
+										</div>
+							    	</div>
+								</article>
+								<!-- 프로젝트 리스트 //-->
+
+								<!-- 컨테스트 리스트 -->
+								<article class="contest list_card bg-white post post-medium" th:if="${item.project.projectType.name()} == 'CONTEST'">
+									<div class="row">
+										<div class="col-12">
+											<div class="card_title_date">
+												<div class="title" th:text="${item.project.title}">
+												</div>
+												<div class="date">
+													<span th:text="|취소/미낙찰일 : ${#temporals.format(item.failedAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+												</div>
+											</div>
+											<div class="action_line">
+												<div class="row">
+										    		<div class="col-lg-6 align-self-center">
+										    			<div class="card_info d-block d-lg-flex">
+															<div class="content_wrap">
+																<i class="fas fa-times-circle" style="color: #df564f;"></i>
+																<span th:if="${item.bidStatus.name() == 'FAILED'}">클라이언트는 다른 프리랜서를 선택했습니다.</span>
+																<span th:if="${item.bidStatus.name() == 'CANCEL'}">본 컨테스트는 취소 또는 기한만료로 종료되었습니다.</span>
+															</div>
+															<div class="content_wrap" th:if="${item.bidStatus.name() == 'CANCEL'}" style="display:inline-block;background: #fffbdc;padding: 0 0.5rem;border-radius: 5px;">
+																<i class="fas fa-coins mr-1"></i>
+																참여 배당포인트 <span th:text="${#numbers.formatInteger(item.pointsForRefund, 0, 'COMMA')}"></span>P 적립!!
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-6 text-right">
+														<div class="btn-group">
+															<button class="btn btn-light rounded-0" th:onclick="|deleteItem(${item.id})|">삭제</button>
+															<button class="btn btn-secondary rounded-0" th:onclick="|toContestDetail(${item.project.id})|">
+																컨테스트 상세보기<i class="fas fa-angle-right"></i>
+															</button>
+														</div>
+													</div>
+										    	</div>
+										    </div>
+										</div>
+							    	</div>
+								</article>
+								<!-- 컨테스트 리스트 //-->
+
+							</th:block>
+						</section>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script>
+			$(document).on('change', 'select[name=sortBy]', function() {
+				var projectType = $('select[name=projectType] option:selected').val();
+				location.href = window.location.href.split('?')[0] + '?sortBy=' + $(this).val() + '&projectType=' + projectType;
+			});
+
+			$(document).on('change', 'select[name=projectType]', function() {
+				var sortBy = $('select[name=sortBy] option:selected').val();
+				location.href = window.location.href.split('?')[0] + '?projectType=' + $(this).val() + '&sortBy=' + sortBy;
+			});
+
+			function deleteItem(id) {
+				if (!confirm('삭제하시겠습까?')) {
+					return;
+				}
+				$.ajax({
+					type: 'DELETE',
+					url: '/project-bids/' + id,
+					success: function() {
+						alert('성공적으로 요청되었습니다.');
+						location.reload();
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						alert('요청 중 문제가 발생했습니다.' + jqXHR.data);
+					}
+				})
+			}
+
+			function toProjectDetail(projectId, postingClientId) {
+				location.href = '/freelancer/projects/' + projectId + '/details';
+			}
+
+			function toContestDetail(id) {
+				location.href = '/freelancer/contests/' + id + '/details';
+			}
+		</script>
+	</div>
+
+
+</html>

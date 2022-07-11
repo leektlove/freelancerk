@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/reset.css">
+	<link rel="stylesheet" href="/static/css/common.css">
+	<link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+	<div id="container_content">
+		<div class="container_inner">
+			<h1>■ 문의 검색</h1>
+			<form id="fsearch" name="fsearch" method="get">
+				<table class="boardform">
+					<colgroup>
+						<col width="150">
+						<col width="350">
+						<col width="150">
+						<col width="">
+					</colgroup>
+					<tbody>
+		                <tr>
+		    				<th>클라이언트/프리랜서</th>
+		    				<td>
+		    					<label><input type="radio" name="s_type" value="" checked> 전체</label>
+		    					<label><input type="radio" name="s_type" value="1"> 클라이언트</label>&nbsp;&nbsp;
+		    					<label><input type="radio" name="s_type" value="2"> 프리랜서</label>&nbsp;&nbsp;
+		    				</td>
+		    				<th>상태</th>
+		    				<td>
+		    					<label><input type="radio" name="s_category" value="" checked> 전체</label>&nbsp;&nbsp;
+		    					<label><input type="radio" name="s_category" value="1"> 접수</label>&nbsp;&nbsp;
+		    					<label><input type="radio" name="s_category" value="2"> 상담중</label>&nbsp;&nbsp;
+		    					<label><input type="radio" name="s_category" value="3"> 상담완료</label>
+		    				</td>
+					    </tr>
+					    <tr>
+		    				<th>키워드</th>
+		    				<td colspan="3">
+		    					<input type="text" name="s_search" value="" size="100" placeholder="제목, 이름, 회사명, 휴대폰, 이메일">
+		    				</td>
+					    </tr>
+				    </tbody>
+		        </table>
+		        <div class="boardbutton">
+		    	    <div class="tc">
+		    			<input type="submit" value="검색" class="btn-color large">
+		    			<a href="#" class="btn-basic large">리셋</a>
+		    		</div>
+		    	</div>
+		    </form>
+			<h1>■ 문의리스트</h1>
+		    <table class="boardlist">
+				<colgroup>
+				</colgroup>
+				<tbody>
+		            <tr>
+		    			<th>상태</th>
+		    			<th>구분</th>
+		    			<th>제목</th>
+		    			<th>이름</th>
+		    			<th>회사명</th>
+		    			<th>휴대폰</th>
+		    			<th>이메일</th>
+		    			<th>답변수</th>
+		    			<th>비고</th>
+		    		</tr>
+					<tr>
+		    			<td>
+		    				접수<br>
+		    				2018-10-22<br>
+		    				04:16:18
+		    			</td>
+		    			<td>
+		    				클라이언트
+		                </td>
+		    			<td>
+		    				<p>
+								Lorem ipsum dolor sit amet, consectetur.
+							</p>
+		                </td>
+		    			<td>손연우</td>
+		    			<td></td>
+		    			<td>010-6293-6278</td>
+		    			<td>sonyw129@gmail.com</td>
+		    			<td>0</td>
+		    			<td>
+		    				<a href="#" class="btn-black mini">수정</a>
+		    				<span class="btn-black mini del_btn">삭제</span>
+		    				<br>
+		    				<a href="#" class="btn-black mini">답변등록</a>
+		    			</td>
+				    </tr>
+				</tbody>
+		    </table>
+		    <div class="boardbutton">
+				<div class="tl"></div>
+				<div class="tc">
+					<div class="boardpage">
+					<span class="current">1</span>
+		            </div>
+				</div>
+				<div class="tr">
+					<a href="#" class="btn-color large">등록</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

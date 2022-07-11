@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<link rel="stylesheet" href="/static/css/freelancer/profile/view.css">
+	<link rel="stylesheet" href="/static/css/freelancer/mypage.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>마이페이지</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<div class="container">
+			
+			<section role="main" class="content-body">
+
+				<!-- start: page -->
+
+				<div class="row">
+					<div class="col-lg-12 col-xl-12 mb-4 mb-xl-0">
+						<section class="card mb-3">
+							<div class="card-body p-3">
+								<div class="">
+									<div class="row">
+										<div class="col-4 col-sm-3 col-lg-2 thumb-info mx-auto" style="max-width: 170px;">
+											<span class="thumb-info-wrapper center-crop-wrapper rounded border p-0">
+												<img th:src="@{${(#strings.isEmpty(user.profileImageUrl)?'/static/images/f_basic.jpg':user.profileImageUrl)}}" class="img-fluid" alt="profile" style="position: relative!important;height: auto!important">
+											</span>
+										</div>
+										<div class="col-lg-5 widget-toggle-expand">
+											<div class="mt-2 mb-0 mb-lg-2 text-center text-sm-left">
+												<span class="text-5" th:text="${user.exposeName}"></span>
+												<span class="text-5 d-none" th:text="${user.exposeName}"></span>
+												<span th:if="${user.exposeType != null}" class="text-2">
+													(<span th:if="${user.exposeType?.name() == 'NAME'}">이름</span>
+													<span th:if="${user.exposeType?.name() == 'NICKNAME'}">닉네임</span>
+													공개중)
+												</span>
+											</div>
+											<div class="row">
+												<div class="col-lg-12 widget-content-expanded">
+													<ul class="simple-todo-list">
+														<li class="completed">
+															<div>이메일 </div>
+															<span class="text-primary" th:text="${user.email}"></span>
+															<span class="text-primary" th:if="${user.exposeEmail}">(공개)</span>
+															<span class="text-primary" th:if="${!user.exposeEmail}">(비공개)</span>
+														</li>
+														<li class="completed">
+															<div>전화번호 </div>
+															<span class="text-primary" th:text="${user.cellphone}"></span>
+															<span class="text-primary" th:if="${user.exposeCellphone}">(공개)</span>
+															<span class="text-primary" th:if="${!user.exposeCellphone}">(비공개)</span>
+														</li>
+														<li class="d-flex">
+															<i class="fas fa-angle-right mr-1" style="position: absolute;left: 0px;top: 7px;font-size: 13px"></i>
+															<div style="width: 90px;align-self: center;font-size: 13px;">SNS/홈페이지 </div>
+															<span class="btn p-0 d-flex" style="line-height: normal;">
+																<span th:class="@{|sns ${!#strings.isEmpty(user.facebookLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.facebookLinkUrl)?user.facebookLinkUrl:''}')|}">
+											                        <i class="fab fa-facebook-square"></i>
+										                        </span>
+										                        <span th:class="@{|sns ${!#strings.isEmpty(user.instagramLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.instagramLinkUrl)?user.instagramLinkUrl:''}')|}">
+											                        <i class="fab fa-instagram"></i>
+											                    </span>
+											                    <span th:class="@{|sns ${!#strings.isEmpty(user.twitterLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.twitterLinkUrl)?user.twitterLinkUrl:''}')|}">
+											                        <i class="fab fa-twitter-square"></i>
+											                    </span>
+											                    <span th:class="@{|sns ${!#strings.isEmpty(user.youtubeLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.youtubeLinkUrl)?user.youtubeLinkUrl:''}')|}">
+																	<i class="fab fa-youtube-square"></i>
+																</span>
+																<span th:class="@{|sns ${!#strings.isEmpty(user.linkedInLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.linkedInLinkUrl)?user.linkedInLinkUrl:''}')|}">
+																	<i class="fab fa-linkedin"></i>
+																</span>
+																<span th:class="@{|sns ${!#strings.isEmpty(user.githubLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.githubLinkUrl)?user.githubLinkUrl:''}')|}">
+																	<i class="fab fa-github-square"></i>
+																</span>
+																<span th:class="@{|sns ${!#strings.isEmpty(user.blogLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.blogLinkUrl)?user.blogLinkUrl:''}')|}">
+																	<i class="fas fa-rss-square"></i>
+																</span>
+										                    </span>
+										                </li>
+													</ul>
+												</div>
+											</div>
+											<button class="modify_btn btn btn-lg btn-primary" th:onclick="'window.location.href = \'' + @{/freelancer/profile/modify} + '\''" >
+												<i class="fas fa-user-cog"></i>
+												프로필수정
+											</button>
+											<hr class="my-2 d-block d-lg-none">
+										</div>
+										<div class="col-lg-5">
+											<div class="private_open_info">
+												<img class="d-block d-lg-none mx-auto" src="/static/images/mypage_pickmeup_upload.png">
+												<div class="q_title">
+													<div class="t">Q</div>
+													<div class="q">나의 연락처는 언제 <span>클라이언트에게 공개</span>되나요?</div>
+												</div>
+												<div class="q_answer">
+													<ul class="simple-todo-list">
+														<li class="completed">픽미업에 포트폴리오를 공개하며 <span class="strong">[직거래] 옵션을 사용</span>했을 때</li>
+														<li class="completed">프로젝트 <span class="strong">입찰에 참여(지원)</span>했을 때</li>
+													</ul>
+												</div>
+											</div>
+											<a href="javascript:toRegisterPortfolio()">
+												<button type="button" class="portfolio_upload_btn btn btn-lg">
+													<i class="fas fa-upload mr-2"></i>
+													포트폴리오(픽미업) 등록하기
+												</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+						<section>
+							<div class="row counters counters-sm with-borders justify-content-between">
+								<div class="col-lg-4 mb-3">
+									<div class="counter p-3 p-md-4">
+										<strong class="text-primary" th:text="${#numbers.formatInteger(user.points, 0, 'COMMA')}"></strong>
+										<div class="mt-2" style="line-height: 16px">보유포인트</div>
+									</div>
+								</div>
+								<div class="col-lg-4 col-xl-5 mb-3">
+									<div class="counter p-3 p-md-4">
+										<strong class="text-primary" th:text="${#numbers.formatInteger(totalIncomeAmount, 0, 'COMMA')}"></strong>
+										<div class="mt-2" style="line-height: 16px">누적수입금액</div>
+									</div>
+								</div>
+								<div class="col-lg-4 col-xl-3 mb-3">
+									<div class="counter p-3 p-md-4">
+										<div class="">
+											<div class="rating-container theme-krajee-fas rating-sm rating-animate">
+                                                <div class="rating-stars" >
+                                                    <span class="empty-stars">
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                    </span>
+                                                    <span class="filled-stars" th:style="|width: ${user.ratingPercentageAsFreelancer}%|">
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="" style="font-size: 13px;">총 <span class="text-primary" th:text="${user.contractedProjectCount}">0</span> 건중
+												<span class="text-primary" th:text="${user.ratedProjectCountAsFreelancer}">0</span> 건의 평가</div>
+                                            </div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 mb-3">
+									<div class="counter counter-primary py-2 py-md-4">
+										<div class="row text-left text-md-center text-3">
+											<p class="m-0 text-dark col-md-4 ">
+												<i class="fas fa-angle-double-right mr-2 text-3 d-inline-block text-dark"></i>
+												총 <span class="text-primary text-4 font-weight-bold" th:data-to="${totalApplyCount}" data-plugin-counter="" data-plugin-options="{'speed': 1000}"></span> 건의 프로젝트에 지원하셨습니다.
+											</p>
+											<p class="m-0 text-dark col-md-4">
+												<i class="fas fa-angle-double-right mr-2 text-3 d-inline-block text-dark"></i>
+												총 <span class="text-primary text-4 font-weight-bold" th:data-to="${totalPickedBidCount}" data-plugin-counter="" data-plugin-options="{'speed': 1000}"></span> 건의 낙찰에 성공하셨습니다.
+											</p>
+											<p class="m-0 text-dark col-md-4">
+												<i class="fas fa-angle-double-right mr-2 text-3 d-inline-block text-dark"></i>
+												총 <span class="text-primary text-4 font-weight-bold" th:data-to="${totalCompletedCount}" data-plugin-counter="" data-plugin-options="{'speed': 1000}"></span> 건의 프로젝트를 완료하셨습니다. 
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+						<div class="my_info">
+							<div class="info_title">내정보</div>
+							<div class="wrap_content">
+								<div class="row">
+									<div class="col-lg-2">
+										나의 섹터와 키워드
+									</div>
+									<div class="col-md-10">
+										<div id="tag_con">
+											<div class="my_key" style="margin-bottom: 1rem;">
+												<th:block th:each="sector: ${user.sectorsByParent}">
+													<div class="tag_list">
+														<div th:text="${sector.key.name}"></div>
+														<div class="tag_sub_list">
+															<a href="#" th:each="childSector: ${sector.value}" th:text="${childSector.name}" class="keyword mr-1"></a>
+														</div>
+													</div>
+												</th:block>
+											</div>
+										</div>
+										<div class="guide">
+											<span class="mark">등록하신 <span class="text-primary">#키워드</span> 와 중복되는 포스팅에 대한 이메일 알림</span>을 받으실 수 있습니다.
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="wrap_content">
+								<div class="row">
+									<div class="col-lg-2">
+										소개
+									</div>
+									<div class="col-md-10">
+										<div th:text="${user.aboutMe}" style="white-space: pre-line;"></div>
+									</div>
+								</div>
+							</div>
+							<div class="wrap_content">
+								<div class="row">
+									<div class="col-lg-2">
+										나의 보유기술
+									</div>
+									<div class="col-md-10">
+										<div class="row mb-2" data-th-each="skill : ${user.userSkillList}">
+											<div class="col-lg-3 mb-1 mb-lg-0" data-th-text="${skill.skillName}">
+											</div>
+											<div class="col-lg-9">
+												<div class="progress progress-no-border-radius">
+													<div th:attr="aria-valuemax=${skill.levelLength}" aria-valuemin="0"
+														 class="progress-bar progress-bar-primary progress-bar-striped progress-bar-animated active "
+														 role="progressbar" th:data-appear-progress-animation="|${skill.levelLength}%|">
+														<span class="" th:text="${skill.skillLevel}"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="wrap_content">
+								<div class="row">
+									<div class="col-lg-2">
+										자격사항
+									</div>
+									<div class="col-md-10">
+										<ul>
+											<li th:each="cert : ${user.userCertificationList}">
+												<div class="" data-th-text="${cert.certificationName}"></div>
+												<div class="" data-th-text="${cert.authOrganization}"></div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="wrap_content">
+								<div class="row">
+									<div class="col-lg-2">
+										경력사항
+									</div>
+									<div class="col-md-10">
+										<ul>
+											<li th:each="career : ${user.userCareerList}">
+												<span th:if="${career != null}" data-th-text="${#temporals.format(career.startDate, 'yyyy-MM-dd')}">
+												</span>
+												~
+												<span th:if="${career != null}" data-th-text="${#temporals.format(career.endDate, 'yyyy-MM-dd')}">
+												</span>
+												<div data-th-text="${career.projectName}"></div>
+												<div data-th-text="${career.jobDescription}"></div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="my_portfolio">
+							<div class="info_title">나의 포트폴리오</div>
+							<section class="text-center p-2 p-md-4" th:if="${totalPortfolioCount == 0}">
+								<div class="">
+									<div class="text-5 text-md-6 font-weight-bold">아직 포트폴리오를<br class="d-block d-sm-none"> 등록하지 않으셨네요!
+									</div>
+									<div class="text-3 text-md-4">포트폴리오는 가장 중요한 프로필입니다</div>
+								</div>
+								<div class="mt-3">
+									<a href="javascript:toRegisterPortfolio()" class="btn btn-primary btn-lg rounded-0">포트폴리오 등록하러가기</a>
+								</div>
+							</section>
+							<div class="my_project_list row">
+								<th:block th:each="item, iter: ${portfolios}">
+								<div class="col-6 col-sm-6 col-md-3 col-lg-1-5 col-xl-2 mb-3">
+		                            <article th:class="${(item.featured?'featured ':' ') + 'post ' + 'pickmeup_card' }">
+		                                <span class="badge-g-list">
+		                                    <span th:if="${item.directDealAvailable}"class="direct" data-toggle="tooltip" data-placement="top" data-original-title="직거래가능"><i class="fas fa-phone"></i></span>
+		                                    <span th:if="${item.highQuality}"class="master" data-toggle="tooltip" data-placement="top" data-original-title="고급인력"><i class="far fa-thumbs-up"></i></span>
+		                                    <span th:if="${item.creative}"class="creative" data-toggle="tooltip" data-placement="top" data-original-title="독창적"><i class="far fa-lightbulb"></i></span>
+		                                </span>
+		                                <a class="image_wrap" th:href="@{/portfolios/__${item.id}__/details(pickMeUpIds=${portfolioIds},currentIndex=${iter.index})}">
+		                                    <div class="post-image" style="position: relative;">
+		                                        <div class="kind-c">
+													<img th:if="${item.contentType == 'VIDEO'}" src="/static/images/card_video.png" class="card_video" style="width: 40px;">
+													<img th:if="${item.contentType == 'AUDIO'}" src="/static/images/card_audio.png" class="card_audio" style="width: 40px;">
+												</div>
+		                                        <div class="pickmeup_portfolio_card">
+		                                            <div class="blog_text" th:if="${item.contentType?.name() == 'BLOG'}">
+		                                            <!-- <div class="blog_text"> -->
+		                                                <div class="text text-dark" th:text="${item.onlyTextDescription}">
+		                                                <!-- <div class="text text-dark">
+		                                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). -->
+		                                                </div>
+		                                            </div>
+		                                            <div class="center-crop-wrapper">
+		                                                <img th:src="${item.representativeImageUrl}" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </a> 
+		                                <div th:class="|pickmeup-profile-image ${item.project != null?'certification':''}|">
+		                                    <img th:src="@{${(#strings.isEmpty(item.user.profileImageUrl)?'/static/images/icon/freelancer_noimg.png':item.user.profileImageUrl)}}">
+		                                </div>
+		                                <div class="pickmeup_card_sector">
+                                            <span class="" th:text="${item.category1st?.name}"></span>
+                                            <i class="fas fa-arrow-right"></i>
+                                            <span class="" th:text="${item.category2nd?.name}"></span>
+                                        </div>
+		                                <!-- <div class="card-infomation">
+				                            <div class="counter">
+				                                <div class="counter_c" th:text="${#numbers.formatInteger(item.directDealCount, 0, 'COMMA')}">0</div>
+				                                <div class="counter_t">직거래</div>
+				                            </div>
+				                            <div class="counter">
+				                                <div class="counter_c" th:text="${#numbers.formatInteger(item.projectPropositionCount, 0, 'COMMA')}">0</div>
+				                                <div class="counter_t">요청</div>
+				                            </div>
+				                            <div class="counter">
+				                                <div class="counter_c" th:text="${#numbers.formatInteger(item.hits, 0, 'COMMA')}">0</div>
+				                                <div class="counter_t">조회수</div>
+				                            </div>
+				                        </div> -->
+		                                <a th:href="|javascript:toPickMeUpDetail('@{/portfolios/__${item.id}__/details(pickMeUpIds=${pickMeUpIds},currentIndex=${iter.index})}', ${isLoggedIn}, ${item.directDealAvailable})|">    
+		                                    <div class="card-title text-dark">
+		                                        <div th:text="${item.title}"></div>
+		                                    </div>
+		                                </a>
+		                            </article>
+		                        </div>
+
+								</th:block>
+							</div>
+						</div>
+						<div class="my_message">
+							<div class="info_title">메시지를 확인하세요</div>
+							<div class="">
+								<div class="timeline timeline-simple mt-3 mb-3">
+									<div class="tm-body">
+										<div class="tm-title" th:if="${topMessageCreatedAt != null}">
+											<h5 class="m-0 pt-2 pb-2 text-uppercase"><span th:text="${topMessageCreatedAt}"></span></h5>
+										</div>
+										<ol class="tm-items" id="messagesContainer">
+											<li th:each="message: ${messages}">
+												<div class="tm-box">
+													<p class="text-muted mb-0" th:text="${message.pastTime}"></p>
+													<p th:text="${message.content}"></p>
+												</div>
+											</li>
+										</ol>
+									</div>
+								</div>
+							</div>
+
+							<div class="detail-view-btn text-center" th:if="${messagePage.totalElements > 5}" id="messageLoadMoreBlock">
+								<a class="read-more btn btn-lg rounded-0 font-weight-bold text-4" href="javascript:loadMoreMessage()" style="width: 100%;max-width: 800px;">
+									<i class="far fa-arrow-alt-circle-down fa-lg mr-2"></i> 더보기
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-12">
+						<div class="tabs">
+							<ul class="nav nav-tabs tabs-primary">
+								<li class="nav-item active">
+									<a class="nav-link" href="#edit" data-toggle="tab">나의 포트폴리오</a>
+								</li>
+							</ul>
+							<div class="pickMeUp tab-content">
+								<div id="edit" class="tab-pane active mt-4">
+									<section class="text-center p-2 p-md-4" th:if="${totalPortfolioCount == 0}">
+										<div class="">
+											<div class="text-5 text-md-6 font-weight-bold">아직 포트폴리오를<br class="d-block d-sm-none"> 등록하지 않으셨네요!
+											</div>
+											<div class="text-3 text-md-4">포트폴리오는 가장 중요한 프로필입니다</div>
+										</div>
+										<div class="mt-3">
+											<a href="javascript:toRegisterPortfolio()" class="btn btn-primary btn-lg rounded-0">포트폴리오 등록하러가기</a>
+										</div>
+									</section>
+									<div class="row">
+										<th:block th:each="item, iter: ${portfolios}">
+										<div class="col-6 col-sm-6 col-md-3 col-lg-1-5 col-xl-2 mb-3">
+				                            <article th:class="${(item.featured?'featured ':' ') + 'post ' + 'pickmeup_card' }">
+				                                <span class="badge-g-list">
+				                                    <span th:if="${item.directDealAvailable}"class="direct" data-toggle="tooltip" data-placement="top" data-original-title="직거래가능"><i class="fas fa-phone"></i></span>
+				                                    <span th:if="${item.highQuality}"class="master" data-toggle="tooltip" data-placement="top" data-original-title="고급인력"><i class="far fa-thumbs-up"></i></span>
+				                                    <span th:if="${item.creative}"class="creative" data-toggle="tooltip" data-placement="top" data-original-title="독창적"><i class="far fa-lightbulb"></i></span>
+				                                </span>
+				                                <a class="image_wrap" th:href="@{/portfolios/__${item.id}__/details(pickMeUpIds=${portfolioIds},currentIndex=${iter.index})}">
+				                                    <div class="post-image" style="position: relative;">
+				                                        <div class="kind-c">
+															<img th:if="${item.contentType == 'VIDEO'}" src="/static/images/card_video.png" class="card_video" style="width: 40px;">
+															<img th:if="${item.contentType == 'AUDIO'}" src="/static/images/card_audio.png" class="card_audio" style="width: 40px;">
+														</div>
+				                                        <div class="pickmeup_portfolio_card">
+				                                            <div class="blog_text" th:if="${item.contentType?.name() == 'BLOG'}">
+				                                            
+				                                                <div class="text text-dark" th:text="${item.onlyTextDescription}">
+				                                                
+				                                                </div>
+				                                            </div>
+				                                            <div class="center-crop-wrapper">
+				                                                <img th:src="${item.representativeImageUrl}" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </a> 
+				                                <div th:class="|pickmeup-profile-image ${item.project != null?'certification':''}|">
+				                                    <img th:src="@{${(#strings.isEmpty(item.user.profileImageUrl)?'/static/images/icon/freelancer_noimg.png':item.user.profileImageUrl)}}">
+				                                </div>
+				                                <div class="pickmeup_card_sector">
+		                                            <span class="" th:text="${item.category1st?.name}"></span>
+		                                            <i class="fas fa-arrow-right"></i>
+		                                            <span class="" th:text="${item.category2nd?.name}"></span>
+		                                        </div>
+				                                <a th:href="|javascript:toPickMeUpDetail('@{/portfolios/__${item.id}__/details(pickMeUpIds=${pickMeUpIds},currentIndex=${iter.index})}', ${isLoggedIn}, ${item.directDealAvailable})|">    
+				                                    <div class="card-title text-dark">
+				                                        <div th:text="${item.title}"></div>
+				                                    </div>
+				                                </a>
+				                            </article>
+				                        </div>
+
+										</th:block>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tabs">
+							<ul class="nav nav-tabs tabs-primary">
+								<li class="nav-item active">
+									<a class="nav-link" href="#overview" data-toggle="tab">메시지</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div id="overview" class="tab-pane active">
+									<div class="p-3">
+										<div class="timeline timeline-simple mt-3 mb-3">
+											<div class="tm-body">
+												<div class="tm-title" th:if="${topMessageCreatedAt != null}">
+													<h5 class="m-0 pt-2 pb-2 text-uppercase"><span th:text="${topMessageCreatedAt}"></span></h5>
+												</div>
+												<ol class="tm-items" id="messagesContainer">
+													<li th:each="message: ${messages}">
+														<div class="tm-box">
+															<p class="text-muted mb-0" th:text="${message.pastTime}"></p>
+															<p th:text="${message.content}"></p>
+														</div>
+													</li>
+												</ol>
+											</div>
+										</div>
+									</div>
+
+									<div class="detail-view-btn text-center" th:if="${messagePage.totalElements > 5}" id="messageLoadMoreBlock">
+										<a class="read-more btn btn-lg rounded-0 font-weight-bold text-4" href="javascript:loadMoreMessage()" style="width: 100%;max-width: 800px;">
+											<i class="far fa-arrow-alt-circle-down fa-lg mr-2"></i> 더보기
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div> -->
+			</section>
+		</div>
+		<script th:inline="javascript">
+            var userInfoInput = [[${user.infoInput}]];
+            let totalPortfolioCount = [[${totalPortfolioCount}]];
+			var currentPage = 0;
+		</script>
+		<script src="/static/js/portfolio-common-popup.js"></script>
+		<script src="/static/js/freelancer/profile/view.js"></script>
+	</section>
+	
+
+</html>

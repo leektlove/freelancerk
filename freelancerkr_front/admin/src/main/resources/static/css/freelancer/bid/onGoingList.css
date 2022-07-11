@@ -1,0 +1,37 @@
+
+/******************************** 입찰없을 때 ********************************/
+.no-bid{
+	width: 100%;
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    background: url(/static/images/use-guide/bid_bg.png)no-repeat;
+    background-position: center;
+    background-size: 50% auto;
+}
+
+/******************************** 반응형 ********************************/
+@media (min-width: 1200px) { 
+
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.no-bid{
+	    background-size: 65% auto;
+	    min-height: 500px;
+	}
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.no-bid{
+	    background-size: 85% auto;
+	    min-height: 500px;
+	}
+}
+@media (max-width: 575.98px) {
+	.no-bid{
+	    background-size: 85% auto;
+	    min-height: 500px;
+	}
+}

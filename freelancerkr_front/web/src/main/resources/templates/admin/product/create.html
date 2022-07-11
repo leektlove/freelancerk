@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+
+	document.addEventListener("DOMContentLoaded", function(){
+		getCategoryData();
+		
+	});    
+
+</script>
+
+
+<script>
+var resSeq = 0;
+var resourceIds = [];
+
+function addResource(){
+	
+	var oldResId = (resSeq + "").lpad(2, "0");
+	
+	resSeq = resSeq + 1;	
+	var resId = (resSeq + "").lpad(2, "0");
+	
+	var currSeq = resSeq;
+	
+	
+	// 기존 resource 복사 
+	var orgRes = $("#resourceTemp").clone();
+	var removeResIcon = orgRes.find('#removeResIconTemp');
+	
+	orgRes.attr('id','resource' + resId);
+	removeResIcon.attr('id','removeResIcon' + resId);
+	
+	resourceIds.push(resId);
+	
+	removeResIcon.on("click", function(){
+		console.log("remove : " + '#resource' + resId);
+		if(currSeq == resSeq){
+			resSeq = resSeq -1;
+		}
+		
+		resourceIds.splice(resourceIds.indexOf(resId),1);   
+		
+		$('#resource' + resId).remove();  
+	});
+	
+	if(resourceIds.length  == 1){		
+		$('#resourceTemp').after(orgRes);
+		orgRes.show();
+	}else{
+		$('#resource' + oldResId).after(orgRes);
+		orgRes.show();
+	}
+	
+}
+
+function saveContent(){
+	
+	showModal("등록 하시겠습니까?", true, function(){
+		form1.submit();		
+	});
+	
+}
+
+
+
+</script>
+
+	<div class="">
+
+		<div class="row">
+		
+		
+			<div class="col-md-12 col-sm-12">
+				<div class="x_panel">
+					
+					<div class="x_title">
+						<h2>
+							제품 등록
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>							
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="x_content">
+						
+						<form class="form-horizontal form-label-left" action="/w1/product/create" th:object=${contentView.content}  method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>													
+							<input type="hidden" id="active"  th:field="*{active}" />
+							<input type="hidden" id="replyYn" th:field="*{replyYn}" />			
+							<input type="hidden" id="contentType" th:field="*{contentType}" />				
+							
+							<input type="hidden" id="priceType" th:field="${contentView.price.priceType}" />
+							<input type="hidden" id="curr" th:field="${contentView.price.curr}" />
+							
+							
+							<span class="section">제품 정보</span>
+
+						    <div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">제품 카테고리<span
+									class="required">*</span></label>
+								<div class="col-md-5 col-sm-5 ">
+								    <select required class="form-control" id="category1" onchange="category1Change()" th:field="*{category1}" >
+										<option value="">대분류</option>										
+									</select>									
+								</div>								
+								<div class="col-md-5 col-sm-5 ">
+								    <select required class="form-control" id="category2"  th:field="*{category2}" >
+										<option value="">중분류</option>										
+									</select>									
+								</div>								
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">대표 이미지</label>
+								<div class="col-md-10 col-sm-10 ">
+									<input type="file" class="form-control" placeholder="" name="mainUploadFile" id="mainUploadFile">
+								</div>																
+							</div>							
+							<div class="form-group row ">
+								<label class="control-label col-md-2 col-sm-2 ">대표 제품명</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="짧은 제품명" id="title" th:field="*{title}" />
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">벤더명</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="벤더명" id="vendor" th:field="*{vendor}" />
+								</div>
+							</div>							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">제품명<span class="required">*</span>
+								</label>
+								<div class="col-md-10 col-sm-10 ">
+<!-- 									<input type="text" class="form-control" placeholder="긴 제품명" id="content" th:field="*{content}" /> -->
+	<textarea class="form-control" placeholder="긴 제품명" id="content" th:field="*{content}" > </textarea>
+	
+								</div>
+							</div>							
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">가격</label>								
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="금액" id="price" th:field="${contentView.price.price}" />									
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">최저가 링크</label>								
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="http://www.naver.com" id="priceUrl"  th:field="${contentView.price.priceUrl}" />									
+								</div>
+							</div>
+							
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">공개 구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" id="viewType" th:field="*{viewType}" />
+										<option value="">선택하세요</option>
+										<option value="9999">전체공개</option>										
+										<option value="8000">관리자보기</option>
+									</select>
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">제품 상태<span class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" id="status" th:field="*{status}" >
+										<option value="">선택하세요</option>
+										<option value="0000">등록</option>										
+									</select>
+								</div>								
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">특장점<span class="required">*</span>
+								</label>
+								
+								<div class="col-md-10 col-sm-10" style="display: flex;justify-content: space-around;">									
+									<div th:each="feature, itemStat : ${contentView.featureList}">
+										
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherId}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherType}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherCode}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherName}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherValue}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherOrder}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherStatus}"  />
+										
+										<input type="checkbox" th:value="${feature.otherValue}" 
+										th:name="${feature.otherCode}" 
+										th:id="${feature.otherCode}"
+										th:checked="${feature.checked}"
+										onClick="checkFeature(this)"
+										/>
+																				
+										<label th:text="${feature.otherName}" >명칭</label>
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">종합설명<span class="required">*</span>
+								</label>
+								<div class="col-md-10 col-sm-10 ">								
+									<textarea class="form-control" required="required" rows="5" placeholder="제품 종합 설명" id="description" th:field="*{description}"></textarea>									
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">전체성분<span class="required">*</span>
+								</label>
+								<div class="col-md-10 col-sm-10 ">								
+									<textarea class="form-control" required="required" rows="5" placeholder="제품 전체성분" id="element" th:field="*{element}"></textarea>									
+								</div>
+							</div>
+							
+<!-- 							<div class="control-group row"> -->
+<!-- 								<label class="control-label col-md-2 col-sm-2 ">Hash Tag</label> -->
+<!-- 								<div class="col-md-10 col-sm-10 "> -->
+<!-- 									<input id="tags_1" type="text" class="tags form-control" value="" name="hashTag"  /> -->
+<!-- 									<div id="suggestions-container" style="position: relative; float: left; width: 200px; margin: 10px;"></div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+							
+							
+							<div id="resourceTemp" style="display:none;">
+								<span class="section">제품상세내역   <i class="fa fa-minus-square" id="removeResIconTemp"></i></span>
+							
+								<div class="form-group row">
+									<label class="control-label col-md-2 col-sm-2 ">제품상세 구분<span class="required">*</span>
+									</label>
+									<div class="col-md-4 col-sm-4 ">
+										<select required class="form-control" name="resourceType" id="resourceType">
+											<option value="">선택하세요</option>
+											<option value="1000">이미지</option>
+											<option value="1010">동영상</option>
+											<option value="1020">YouTube</option>
+										</select>
+									</div>									
+								</div>
+								
+<!-- 								<div class="form-group row "> -->
+<!-- 									<label class="control-label col-md-2 col-sm-2 ">Resource 제목<span class="required">*</span></label> -->
+<!-- 									<div class="col-md-10 col-sm-10 "> -->
+<!-- 										<input type="text" class="form-control" placeholder="제목" name="resourceTitle" id="resourceTitle"> -->
+<!-- 									</div> -->
+<!-- 							    </div> -->
+
+								<input type="hidden" class="form-control" placeholder="제목" name="resourceTitle" id="resourceTitle">
+								
+								<div class="form-group row">
+									<label class="control-label col-md-2 col-sm-2 ">제품상세 내용<span class="required">*</span></label>
+									<div class="col-md-10 col-sm-10 ">								
+										<textarea class="form-control" required="required" rows="5" placeholder="" name="resourceContent" id="resourceContent"></textarea>
+									</div>
+								</div>							
+							
+								<div class="form-group row ">
+									<label class="control-label col-md-2 col-sm-2 ">Link/YouTube Url</label>
+									<div class="col-md-10 col-sm-10 ">
+										<input type="text" class="form-control" placeholder="" name="url" id="url">
+									</div>
+								</div>
+								<div class="form-group row ">
+									<label class="control-label col-md-2 col-sm-2 ">Resource</label>
+									<div class="col-md-10 col-sm-10 ">
+										<input type="file" class="form-control" placeholder="" name="fileName" id="fileName">
+									</div>
+								</div>															
+							</div>
+							
+							<span class="section" style="text-align: right;padding-right: 10px;"><i class="fa fa-plus-square" onClick="addResource()" id="addSection"></i></span>
+							
+							
+							<div >
+								<div class="form-group">									
+									<div class="col-md-12 col-sm-12  justify-content-end" style="display: flex;">
+										<button type='button' class="btn btn-primary" id="saveContentBtn" onClick="saveContent()">저장하기</button>
+										<button type='reset' class="btn btn-success" id="resetContentBtn">취소하기</button>
+									</div>
+								</div>
+							</div>
+							
+						</form>
+					</div>
+					
+				</div>
+			</div>
+			
+				<!-- -----------------  -->
+		</div>
+	</div>
+	
+	
+ 
+</th:block>
+
+    
+</html>

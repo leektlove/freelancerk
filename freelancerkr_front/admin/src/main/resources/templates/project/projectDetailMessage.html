@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/project.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/projectHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 프로젝트보기</h1>
+					<table class="boardform">
+						<tbody>
+							<tr>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/basic|">기본정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/bid|">입찰정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/work|">진행정보</a></td>
+								<th width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/message|">메시지정보</a></th>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<form name="" id="" action="" method="post">
+						<table class="boardform">
+							<colgroup>
+								<col width="85%">
+								<col width="15%">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td>
+										<textarea name="" rows="7" cols="100" class="comment_textarea" style="resize:none;"></textarea>
+									</td>
+									<td>
+										<input type="submit" value="메시지작성" class="comment_submit">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					<div style="height:700px; overflow-y:scroll; margin-top:50px; padding:20px; border:1px solid #ddd;">
+
+						<ul class="comments" th:each="comment: ${commentList}">
+							<li class="send" th:if="${comment.user.id == #authentication.id}">
+								<div class="comment">
+									<div class="img-thumbnail img-thumbnail-no-borders d-none d-sm-block">
+										<img th:src="@{${(#strings.isEmpty(comment.user.profileImageUrl)?'/static/images/c_basic.jpg':comment.user.profileImageUrl)}}" class="avatar">
+									</div>
+									<span class="comment-by" th:text="${comment.project.postingClient.exposeName}"></span>
+									<div class="comment-block media-body">
+										<div class="comment-arrow"></div>
+										<p th:text="${comment.content}"></p>
+										<span class="date float-right" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></span>
+									</div>
+								</div>
+							</li>
+							<li class="receive" th:if="${comment.user.id != #authentication.id}">
+								<div class="comment">
+									<span class="comment-by" th:text="${comment.user.exposeName}"></span>
+									<div class="comment-block">
+										<div class="comment-arrow"></div>
+										<p th:text="${comment.content}"></p>
+										<span class="date float-right" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></span>
+									</div>
+									<div class="img-thumbnail img-thumbnail-no-borders d-none d-sm-block">
+										<img th:src="@{${(#strings.isEmpty(comment.user.profileImageUrl)?'/static/images/f_basic.jpg':comment.user.profileImageUrl)}}" class="avatar">
+									</div>
+								</div>
+							</li>
+						</ul>
+						<div th:each="comment: ${commentList}">
+<!--							<div class="admin clear">-->
+<!--								<div class="admin_img" style="background:url('/static/images/basic_logo.png'); background-size:cover; background-color:#e1e1e1;">-->
+<!--								</div>-->
+<!--								<div class="admin_text">-->
+<!--									<div class="admin_info">-->
+<!--										프리랜서코리아 <span>2018 . 11 . 09 20:49:55</span>-->
+<!--										<span class="btn-black medium comment_delete">삭제</span>-->
+<!--									</div>-->
+<!--									<div class="admin_content">-->
+<!--										작업하시는데 문제는 없으신지 연락드렸습니다.<br>-->
+<!--									</div>-->
+<!--								</div>-->
+<!--							</div>-->
+
+							<div class="client clear">
+								<a href="" target="_blank">
+									<div class="client_img" style="background:url('/static/images/c_basic.jpg'); background-size:cover; background-color:#e1e1e1;">
+									</div>
+								</a>
+								<div class="client_text">
+									<div class="client_info">
+										<span th:text="${comment.user.exposeName}"></span> <span th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|">2018 . 11 . 09 20:51:51</span>
+<!--										<span class="btn-black medium comment_delete">삭제</span>-->
+									</div>
+									<div class="client_content" th:text="${comment.content}">
+										아 감사합니다. 작업중입니다.
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

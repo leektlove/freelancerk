@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<form id="signUpform" action="/users" method="post" style="display: none;">
+    <input type="hidden" name="" value="client">
+    <div class="input">
+        <div class="b_02 b_in">
+            <div class="box">
+                <input id="email" type="text" name="email" class="required" placeholder="이메일" required="" title="이메일" >
+                <input type="hidden" name="thirdPartyUserId">
+                <input type="hidden" name="thirdPartyAccessToken">
+            </div>
+        </div>
+        <div class="b_03 b_in">
+            <div class="box">
+                <input id="password" type="password" name="password" class="required i_pass" placeholder="패스워드(4자 이상) : 영문, 숫자, 특수문자의 조합이 가장 좋습니다." required="" title="패스워드" maxlength="16">
+            </div>
+            <div id="password-txt" class="b_notice"></div>
+        </div>
+        <div class="b_04 b_in">
+            <div class="box">
+                <input type="password" name="password_confirm" class="required i_pass" placeholder="패스워드(확인)" required="" title="패스워드(확인)" maxlength="16">
+            </div>
+            <div id="password-confirm-txt" class="b_notice"></div>
+        </div>
+        <div class="b_05 b_in">
+            <div class="box">
+                <input type="text" name="name" class="required" placeholder="이름" required="" title="이름" maxlength="15">
+            </div>
+        </div>
+        <div class="b_06 b_in">
+            <div class="box">
+                <input type="text" name="cellphone" class="required" placeholder="휴대번호" required="" title="휴대번호" maxlength="13">
+            </div>
+        </div>
+    </div>
+    <div id="client_regi_pass">패스워드 사용되지 않는 특수문자 : \"'?/</div>
+    <div class="privacy">
+        <div class="mt-2 d-flex justify-content-between">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="agree3"  id="agree3" data-text="프리랜서코리아 이용약관">
+                <label class="custom-control-label" for="agree3">프리랜서코리아 이용약관에 동의합니다(필수)</label>
+            </div>
+            <div class="btn">
+                <div data-toggle="modal" data-target="#privacy_03">전문보기</div>
+            </div>
+        </div>
+        <div class="mt-2 d-flex justify-content-between">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="agree1"  id="agree1" data-text="개인정보취급방침">
+                <label class="custom-control-label" for="agree1">개인정보 취급방침에 동의합니다(필수)</label>
+            </div>
+            <div class="btn">
+                <div data-toggle="modal" data-target="#privacy_01">전문보기</div>
+            </div>
+        </div>
+        <div class="mt-2 d-flex justify-content-between">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="agree2" value="1" id="agree2" data-text="에스크로서비스 이용약관">
+                <label class="custom-control-label" for="agree2">에스크로서비스 이용약관에 동의합니다(필수)</label>
+            </div>
+            <div class="btn">
+                <div data-toggle="modal" data-target="#privacy_02">전문보기</div>
+            </div>
+        </div>
+    </div>
+    <div class="btn_join">
+        <input type="hidden" name="role" th:value="${role}" />
+        <input type="hidden" name="authType" value="EMAIL" />
+        <input type="button" value="회원가입" onclick="join()">
+    </div>
+</form>
+
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+
+<script th:inline="javascript">
+    var naverClientId = [[${naverClientId}]];
+    var role = [[${role}]];
+    var type = [[${type}]];
+    var naverCallbackUrl = serverUrl + '/callback/oauth2/naver?role=' + role + '&type=' + type;
+</script>
+<script>
+    var naverLogin = new naver.LoginWithNaverId(
+        {
+            clientId: naverClientId,
+            callbackUrl: naverCallbackUrl,
+            isPopup: false,
+            callbackHandle: true
+            /* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */
+        }
+    );
+
+    /* (3) 네아로 로그인 정보를 초기화하기 위하여 init을 호출 */
+    naverLogin.init();
+
+    /* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) */
+    window.addEventListener('load', function () {
+        naverLogin.getLoginStatus(function (status) {
+            if (status) {
+                /* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */
+                var email = naverLogin.user.getEmail();
+                // if( email == undefined || email == null) {
+                //     alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
+                //     /* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 */
+                //     naverLogin.reprompt();
+                //     return;
+                // }
+
+                $('input[name=email]').val('');
+                $('input[name=thirdPartyUserId]').val(naverLogin.user.getId());
+                $('input[name=authType]').val('NAVER');
+                $.ajax({
+                    type: "POST",
+                    url: $('#signUpform').attr('action'),
+                    data: new FormData($('#signUpform')[0]),
+                    processData: false,
+                    contentType: false,
+                    success: function(data)
+                    {
+                        close();
+                        window.opener.reload();
+                    },
+                    error: function(jqXHR, textStatus) {
+                        if (jqXHR.status === 409) {
+                            alert("이미 가입한 계정입니다.");
+                        } else {
+                            alert("가입 시도에 실패했습니다.");
+                        }
+                        close();
+                    }
+                });
+            } else {
+                console.log("callback 처리에 실패하였습니다.");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

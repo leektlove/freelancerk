@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){
+    	changeContentType($('#contentType').val());
+        
+	});    
+
+</script>
+
+
+<script>
+var resSeq = 0;
+var resourceIds = [];
+
+function addResource(){
+	
+	var oldResId = (resSeq + "").lpad(2, "0");
+	
+	resSeq = resSeq + 1;	
+	var resId = (resSeq + "").lpad(2, "0");
+	
+	var currSeq = resSeq;
+	
+	
+	// 기존 resource 복사 
+	var orgRes = $("#resourceTemp").clone();
+	var removeResIcon = orgRes.find('#removeResIconTemp');
+	
+	orgRes.attr('id','resource' + resId);
+	removeResIcon.attr('id','removeResIcon' + resId);
+	
+	resourceIds.push(resId);
+	
+	removeResIcon.on("click", function(){
+		console.log("remove : " + '#resource' + resId);
+		if(currSeq == resSeq){
+			resSeq = resSeq -1;
+		}
+		
+		resourceIds.splice(resourceIds.indexOf(resId),1);   
+		
+		$('#resource' + resId).remove();  
+	});
+	
+	if(resourceIds.length  == 1){		
+		$('#resourceTemp').after(orgRes);
+		orgRes.show();
+	}else{
+		$('#resource' + oldResId).after(orgRes);
+		orgRes.show();
+	}
+	
+}
+
+function saveContent(){
+	//var activeChk = $("#activeChk").attr('checked') ? 'Y' : 'N';
+	//$("#active").val(activeChk);		
+	
+	setActive('activeChk', 'active');
+	setYn('replyYnChk', 'replyYn');	
+	
+	if($('#contentType').val()=='9000'){
+		$('#vendor').val($('#noticeType').val());
+	}
+	
+	showModal("등록 하시겠습니까?", true, function(){
+		form1.submit();		
+	});
+	
+}
+
+function changeContentType(type){
+	var row;
+	if(type=='9000'){
+		$('#noticeDiv').show();
+		$('#vendorDiv').hide();
+	}else{
+		$('#vendorDiv').show();
+		$('#noticeDiv').hide();
+	}
+}
+</script>
+
+	<div class="">
+
+		<div class="row">
+		
+		
+			<div class="col-md-12 col-sm-12">
+				<div class="x_panel">
+					
+					<div class="x_title">
+						<h2>
+							Content 등록
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>							
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="x_content">
+						
+						<form class="form-horizontal form-label-left" action="/w1/content/create" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>													
+							<input type="hidden" name="active" id="active"/>
+							<input type="hidden" name="replyYn" id="replyYn"/>							
+							
+							<span class="section">Content Info</span>
+
+						    <div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">Content 구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+								    <select required class="form-control" name="contentType" id="contentType" onchange="changeContentType(this.value)">    		
+							    		<option th:each="contentType : ${T(com.beautyjourney.beautage.entity.enums.ContentType).values()}" 
+							        		th:value="${contentType.code}" th:text="${contentType.val}"></option>
+									</select>
+								</div>
+								<div class="col-md-6 col-sm-6 ">
+									<div class="">
+										<label>
+											<input type="checkbox" class="js-switch" disabled="disabled" onclick="setActive()" name="activeChk" id="activeChk"/> App 게시
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row ">
+								<label class="control-label col-md-2 col-sm-2 ">제목</label>
+								<div class="col-md-10 col-sm-10 ">
+									<input type="text" class="form-control" placeholder="제목" name="title" id="title">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">내용<span class="required">*</span>
+								</label>
+								<div class="col-md-10 col-sm-10 ">								
+									<textarea class="form-control" required="required" rows="5" placeholder="" name="content" id="content"></textarea>									
+								</div>
+							</div>
+								
+							<!--공지 컨텐츠일때  -->
+							<div class="form-group row" id="noticeDiv">
+								<label class="control-label col-md-2 col-sm-2 ">공지타입</label>
+								<div class="col-md-4 col-sm-4 ">
+								<select required class="form-control" name="noticeType" id="noticeType">    		
+							    		<option th:each="noticeType : ${T(com.beautyjourney.beautage.entity.enums.NoticeType).values()}" 
+							        		th:value="${noticeType.code}" th:text="${noticeType.val}"></option>
+									</select>	
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">위치명</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="위치명" name="geoName" id="geoName" th:value="*{geoName}">
+								</div>								
+							</div>										
+							<!--공지 컨텐츠일때 div box 끝 -->
+								
+							<div class="form-group row" id="vendorDiv">
+								<label class="control-label col-md-2 col-sm-2 ">벤더명</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="화면에보이는 등록자" name="vendor" id="vendor">
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">위치명</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="위치명" name="geoName" id="geoName">
+								</div>								
+							</div>		
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">기간</label>
+								<div class="col-md-2 col-sm-2 ">	
+									<input type="text" class="form-control" placeholder="시작일자" name="startDate" id="startDate">								
+								</div>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="text" class="form-control" placeholder="종료일자" name="endDate" id="endDate">									
+								</div>
+								<div class="col-md-6 col-sm-6 ">
+									<div class="">
+										<label>
+											<input type="checkbox" class="js-switch" checked name="replyYnChk"  id="replyYnChk" onclick="setReply()" /> 댓글 여부
+										</label>
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">공개 구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" name="viewType" id="viewType">
+										<option value="">선택하세요</option>
+										<option value="9999">전체공개</option>
+										<option value="1000">나만보기</option>
+										<option value="2000">Follower보기</option>
+										<option value="8000">관리자보기</option>
+									</select>
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">Content 상태<span class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" name="status" id="status">
+										<option value="">선택하세요</option>
+										<option value="0000">등록</option>										
+									</select>
+								</div>								
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">Link</label>
+								<div class="col-md-10 col-sm-10 ">
+									<input type="text" class="form-control" placeholder="링크값이 입력되면 상세 페이지 조회 없이 링크로 이동됨" name="mainLink" id="mainLink">
+								</div>																
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">대표 이미지</label>
+								<div class="col-md-10 col-sm-10 ">
+									<input type="file" class="form-control" placeholder="" name="mainUploadFile" id="mainUploadFile">
+								</div>																
+							</div>
+
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 " >Hash Tag</label>
+								<div class="col-md-10 col-sm-10 ">
+									<input id="tags_1" type="text" class="tags form-control" value="" name="hashTag"  />
+									<div id="suggestions-container" style="position: relative; float: left; width: 200px; margin: 10px;"></div>
+								</div>
+							</div>
+							
+							
+							<div id="resourceTemp" style="display:none;">
+								<span class="section">Resource   <i class="fa fa-minus-square" id="removeResIconTemp"></i></span>
+							
+								<div class="form-group row">
+									<label class="control-label col-md-2 col-sm-2 ">Resource 구분<span class="required">*</span>
+									</label>
+									<div class="col-md-4 col-sm-4 ">
+										<select required class="form-control" name="resourceType" id="resourceType">
+											<option value="">선택하세요</option>
+											<option value="1000">이미지</option>
+											<option value="1010">동영상</option>
+											<option value="1020">YouTube</option>
+											<option value="1040">제품순번</option>
+										</select>
+									</div>									
+								</div>
+								<div class="form-group row ">
+									<label class="control-label col-md-2 col-sm-2 ">Resource 제목<span class="required">*</span></label>
+									<div class="col-md-10 col-sm-10 ">
+										<input type="text" class="form-control" placeholder="제목" name="resourceTitle" id="resourceTitle">
+									</div>
+							    </div>
+								<div class="form-group row">
+									<label class="control-label col-md-2 col-sm-2 ">Resource 내용<span class="required">*</span></label>
+									<div class="col-md-10 col-sm-10 ">								
+										<textarea class="form-control" required="required" rows="5" placeholder="" name="resourceContent" id="resourceContent"></textarea>
+									</div>
+								</div>							
+							
+								<div class="form-group row ">
+									<label class="control-label col-md-2 col-sm-2 ">Link/YouTube Url</label>
+									<div class="col-md-10 col-sm-10 ">
+										<input type="text" class="form-control" placeholder="" name="url" id="url">
+									</div>
+								</div>
+								<div class="form-group row ">
+									<label class="control-label col-md-2 col-sm-2 ">Resource</label>
+									<div class="col-md-10 col-sm-10 ">
+										<input type="file" class="form-control" placeholder="" name="fileName" id="fileName">
+									</div>
+								</div>															
+							</div>
+							
+							<span class="section" style="text-align: right;padding-right: 10px;"><i class="fa fa-plus-square" onClick="addResource()" id="addSection"></i></span>
+							
+							
+							<div >
+								<div class="form-group">
+									<div class="col-md-6 offset-md-3">
+										<button type='button' class="btn btn-primary" id="saveContentBtn" onClick="saveContent()">저장하기</button>
+										<button type='reset' class="btn btn-success" id="resetContentBtn">취소하기</button>
+									</div>
+								</div>
+							</div>
+							
+						</form>
+					</div>
+					
+				</div>
+			</div>
+			
+				<!-- -----------------  -->
+		</div>
+	</div>
+	
+	
+ 
+</th:block>
+
+    
+</html>

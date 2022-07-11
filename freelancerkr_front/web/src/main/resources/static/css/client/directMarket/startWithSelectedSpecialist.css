@@ -1,0 +1,52 @@
+.go_market {text-align: center; background-color: #EEEEEE; border: 1px solid #DBDBDB;}
+
+/* .filebox */
+.filebox { display: flex; }
+.filebox div { flex: 70%; }
+.filebox .form-control:disabled { background-color: #FFFFFF; }
+.filebox label { display: inline-block; padding: .300rem .85rem; color: #FFFFFF; font-size: inherit; line-height: normal; vertical-align: middle; background-color: #A7A7A7; cursor: pointer;
+	            border: 1px solid #ebebeb; 	border-bottom-color: #e2e2e2; border-radius: 0;}
+.filebox input { border-radius: 0; }
+.filebox .upload-display { /* 이미지가 표시될 지역 */ margin-bottom: 5px; }
+.filebox .upload-thumb-wrap { /* 추가될 이미지를 감싸는 요소 */ display: inline-block; width: 54px; padding: 2px; vertical-align: middle; border: 1px solid #ddd; border-radius: 5px; background-color: #fff; }
+.filebox .upload-display img { /* 추가될 이미지 */ display: block; max-width: 100%; width: 100% \9; height: auto; }
+
+.pjt_posting .filebox label { height: 38px; line-height: 38px; padding: 0 .75rem; }
+
+#start_pjt .pay, #company_info .pay, #company_info span#allpjt_num, #company_info span#markpjt_num { color: #E92131; font-weight: 400; }
+
+#start_pjt { background-color: #FFFFFF; }
+#start_pjt .form-control { font-size: 13px; border-radius: 0; }
+#start_pjt .upload_hidden, .pjt_posting .upload_hidden  { display: none; }
+#start_pjt .upload-display, .pjt_posting .upload-display { color: #FFFFFF; background-color: #434445; }
+#start_pjt .remove, .pjt_posting .remove { background: none; border: none; width: 10px; }
+
+#company_info .info_container, #company_info .image { background-color: #FFFFFF; }
+#company_info .name { font-size: 17px; font-weight: 400; }
+#company_info .sub_title { width: 100px; height: 30px; display: inline-block; }
+#detail_info > .sub_contents { text-align: right; }
+#detail_info p { float: right; }
+.fa-star {color: #DDDDDD;}
+.fa-star.checked {color: #565656;}
+
+.profile_container { background-color: #FFFFFF; }
+.member{position: relative;}
+.member .badge{
+	position: absolute;
+	top:-35px;
+}
+
+@media(min-width: 768px) { 
+	.filebox .upload-display { 
+		display: inline-block; margin-right: 5px; margin-bottom: 0; 
+	} 
+}
+
+@media(max-width: 1200px) {
+	/* # { display: inline-block; margin-right: 5px; margin-bottom: 0; }  */
+	
+}
+@media(max-width: 992px) {
+	/* # { display: inline-block; margin-right: 5px; margin-bottom: 0; }  */
+}
+

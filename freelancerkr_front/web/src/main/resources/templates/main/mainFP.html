@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html class="side-header-hamburguer-sidebar side-header-hamburguer-sidebar-right side-header-above side-header-right-no-reverse" lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="프리랜서코리아">
+    <meta property="og:description" content="대한민국 크라우드소싱 플랫폼">
+    <meta property="og:image" content="http://www.freelancerk.com/static/images/banner_new.png">
+    <meta property="fb:app_id" content="690678911131522">
+    <meta property="og:url" content="https://www.freelancerk.com" />
+	
+
+    <title>F+PLUS</title>  
+
+    <meta name="keywords" content="프리랜서코리아, 크라우드소싱플랫폼" />
+    <meta name="description" content="대한민국 크라우드소싱 플랫폼">
+    <meta name="author" content="프리랜서코리아">
+    <meta name="naver-site-verification" content="e43e72eaa788db600d47a9f3da8f7e8f265f2cac"/>
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css"rel="stylesheet" type="text/css">
+    <link href="//db.onlinewebfonts.com/c/67680f2eb947c5cbd58b40961b4a61e9?family=Apple+SD+Gothic+Neo" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spectral:600,600i,700,700i&display=swap&subset=latin-ext" rel="stylesheet">
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+    <link rel="stylesheet" href="/static/vendor/simple-line-icons/css/simple-line-icons.min.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/images/favi.ico" type="image/x-icon" />
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+
+
+    <!-- 전역적용 css -->
+    <link rel="stylesheet" href="/static/css/common/jhtest.css">
+    <link rel="stylesheet" href="/static/css/plugin/jquery/ui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="/static/css/common/reset.css">
+    <link rel="stylesheet" href="/static/css/common/common.css">
+    <link rel="stylesheet" href="/static/css/common/header.css">
+    <link rel="stylesheet" href="/static/css/common/navigation.css">
+    <link rel="stylesheet" href="/static/css/common/custom_component.css">
+    <link rel="stylesheet" href="/static/css/common/style.css">
+    <link rel="stylesheet" href="/static/css/common/animate.css">
+    <link rel="stylesheet" href="/static/css/common/card.css">
+    <link rel="stylesheet" href="/static/css/common/message.css">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/static/vendor/owl.carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/vendor/owl.carousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/static/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="/static/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="/static/vendor/bootstrap-star-rating/css/star-rating.min.css">
+    <link rel="stylesheet" href="/static/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.css">
+
+    <!-- Specific Page Vendor CSS -->
+    <link rel="stylesheet" href="/static/vendor/pnotify/pnotify.custom.css" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/theme.css" />
+    <link rel="stylesheet" href="/static/css/tmp/theme-elements.css">
+    <link rel="stylesheet" href="/static/css/tmp/theme-blog.css">
+    <link rel="stylesheet" href="/static/css/tmp/theme-shop.css">
+
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/skins/default.css" />
+    <link rel="stylesheet" href="/static/vendor/rs-plugin/css/settings.css">
+    <link rel="stylesheet" href="/static/vendor/rs-plugin/css/layers.css">
+    <link rel="stylesheet" href="/static/vendor/rs-plugin/css/navigation.css">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/custom.css">
+    <link rel="stylesheet" href="/static/css/auth/main.css">
+    <link rel="stylesheet" href="/static/css/common/card.css">
+    <link rel="stylesheet" href="/static/css/common/category.css">
+
+    <!-- Head Libs -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.appear/0.4.1/jquery.appear.min.js"></script>
+
+    <!-- 전역적용 Js -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
+    <script src="/static/js/plugin/jquery/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/detail-common.js"></script>
+    <script src="/static/js/plugin/bootstrap/4.0.0/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery.uploadPreview.min.js"></script>
+    <script src="/static/js/datePicker.js"></script>
+
+    <title>F+PLUS</title>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-52R8MD5');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (noscript) -->
+<!--    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52R8MD5"-->
+<!--                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
+    <!-- End Google Tag Manager (noscript) -->
+</head>
+<body style="padding-top:58px;">
+
+	<!-- FPlus 로그인 헤더 -->
+	<th:block th:if="${loggedIn != null && loggedIn}">
+        <header th:replace="fragments/headerFPlus :: header">
+            <p>This is default header area for default layout</p>
+        </header>
+        <header id="header" class="side-header side-header-lg side-header-hide">
+            <div class="header-body">
+                <div class="header-container container d-flex h-100 p-0">
+                    <div class="header-column flex-lg-column justify-content-center h-100" style="overflow-y: scroll;">
+                        <div class="header-row header-row-side-header flex-row h-100 pb-3">
+                            <button class="hamburguer-btn hamburguer-btn-side-header active" data-set-active="false" style="z-index: 100">
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                            <div class="side-header-scrollable scrollable colored-slider h-100" data-plugin-scrollable>
+                                <div class="scrollable-content p-0 h-100">
+                                    <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-expand header-nav-click-to-open align-self-start h-100">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1 h-100" style="padding:5px;">
+                                            <nav class="d-none d-md-block h-100" style="padding:1rem;">
+                                                <div class="my_menu" style="width: 100%;">
+                                                    <div class="card">
+                                                        <div class="card_top">
+                                                            <div class="profile_img">
+                                                                <div class="profile_img_crop">
+                                                                    <div class="center-crop-wrapper rounded">
+                                                                        <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(user?.profileImageUrl)?'/static/images/default_avatar.jpg':user?.profileImageUrl)}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="info">
+                                                                <div class="username member" th:text="${user.name}"></div>
+                                                                <span class="badge" style="color:#303038">가입일시</span>
+                                                                <div class="par"> 
+                                                                    <span id="allpjt_num" class="count" th:text="${user.createdAt}" style="color:#303038;"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card_middle">
+                                                        </div>
+                                                        <div class="card_bottom">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="nav nav-pills" id="mainNav">
+                                                    <li class="dropdown">
+                                                        <a href="/noticef/list" class="dropdown-item">
+                                                            <span>공지사항</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/logout" class="dropdown-item" style="color:  #1f87cc;">
+                                                            <span>로그아웃</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- FPlus 로그인 헤더//-->
+    <!-- 비로그인 헤더 -->
+    <th:block th:if="${loggedIn == null || !loggedIn}" >
+        <div style="position:fixed;width:100%;top:0;height: 58px; z-index: 1000!important;">
+            <div class="bg-gray container-fluid border-bottom p-0" style="height:58px;">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-2">
+                            <div class="">
+                                <a href="/fplus">
+                                    <img alt="프리랜서코리아" class="header_main_logo" width="120" src="/static/img/fplus_logo.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-10 header-column p-0">
+                            <nav class="d-none d-lg-flex justify-content-between">
+                                <ul class="nav nav-pills">
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/noticef/list"  style="padding:0.5rem 1rem;">
+                                            공지사항
+                                        </a>	
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-pills" id="mainNav">
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/login/fplus" style="padding:0.5rem 1rem;">
+                                            로그인
+                                        </a>
+                                    </li>
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/join/fplus" style="padding:0.5rem 1rem;">
+                                            회원가입
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <div class="d-flex justify-content-end">
+                                <button class="d-block d-lg-none hamburguer-btn hamburguer-btn-dark hamburguer-btn-sticky-dark" data-set-active="false">
+                                    <!-- <span class="new_noti_point">●</span> -->
+                                    <span class="hamburguer">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header id="header" class="side-header side-header-lg side-header-hide d-flex d-lg-none">
+            <div class="header-body">
+                <div class="header-container container d-flex h-100 p-0">
+                    <div class="header-column flex-lg-column justify-content-center h-100">
+                        <div class="header-row header-row-side-header flex-row h-100 pb-5 mt-5">
+                            <button class="hamburguer-btn hamburguer-btn-side-header active" data-set-active="false">
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                            <div class="side-header-scrollable scrollable colored-slider" data-plugin-scrollable>
+                                <div class="scrollable-content p-0">
+                                    <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-expand header-nav-click-to-open align-self-start">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1">
+                                            <nav class="d-none d-md-block" style="padding: 1rem;">
+                                                <ul class="nav nav-pills p-0" id="mainNav">
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/noticef/list">
+                                                            공지사항
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/login/fplus">
+                                                            로그인
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/join/fplus">
+                                                            회원가입
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- 비로그인 헤더// -->
+      
+	<!-- 로그인 헤더  -->
+	<th:block th:if="${loggedIn != null && loggedIn && false}">
+        <div style="position:fixed;width:100%;top:0;height: 58px; z-index: 1000!important;">
+            <div class="bg-gray container-fluid border-bottom p-0" style="height:58px;">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-2">
+                            <div class="">
+                                <a href="/fplus">
+                                    <img alt="프리랜서코리아" class="header_main_logo" width="120" src="/static/img/fplus_logo.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-10 header-column p-0">
+                            <nav class="d-none d-lg-flex justify-content-between">
+                                <ul class="nav nav-pills">
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/noticef/list"  style="padding:0.5rem 1rem;">
+                                            공지사항
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-pills" id="mainNav">
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/logout" style="padding:0.5rem 1rem;">
+                                            로그아웃
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <div class="d-flex justify-content-end">
+                                <button class="d-block d-lg-none hamburguer-btn hamburguer-btn-dark hamburguer-btn-sticky-dark" data-set-active="false">
+                                    <!-- <span class="new_noti_point">●</span> -->
+                                    <span class="hamburguer">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header id="header" class="side-header side-header-lg side-header-hide d-flex d-lg-none">
+            <div class="header-body">
+                <div class="header-container container d-flex h-100 p-0">
+                    <div class="header-column flex-lg-column justify-content-center h-100">
+                        <div class="header-row header-row-side-header flex-row h-100 pb-5 mt-5">
+                            <button class="hamburguer-btn hamburguer-btn-side-header active" data-set-active="false">
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                            <div class="side-header-scrollable scrollable colored-slider" data-plugin-scrollable>
+                                <div class="scrollable-content p-0">
+                                    <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-expand header-nav-click-to-open align-self-start">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1">
+                                            <nav class="d-none d-md-block" style="padding: 1rem;">
+                                                <ul class="nav nav-pills p-0" id="mainNav">
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/noticef/list">
+                                                            공지사항
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/logout">
+                                                            로그아웃
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- 로그인 헤더 -->
+    
+    <!-- 크로스브라우징과 로그인 안내 -->
+    <div class="bottom-pop">
+        <div class="optimization_info text-center" style="position: relative;">
+            <div class="row">
+                <div class="col-md-8 text-light text-4 mb-3 mb-md-0 align-self-center">
+                    이 웹사이트는 <br class="d-block d-md-none">크롬(Chrome)브라우저에 최적화 되어 있습니다.
+                </div>
+                <div class="col-md-4 text-center text-md-left">
+                    <a href="https://www.google.co.kr/chrome/?brand=CHBD&gclid=EAIaIQobChMIqrKM44jh4wIVRHRgCh35aAGKEAAYASAAEgLYd_D_BwE&gclsrc=aw.ds" target="_blank">
+                        <div class="btn btn-light btn-outline font-weight-bold mt-2">
+                            크롬 다운로드
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <button type="button" class="close close_btn" onclick="this.parentNode.style.display = 'none'" style="position: absolute;top:5px;right:10px;">
+                <span class="text-light" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <!-- 크로스브라우징과 로그인 안내//-->
+
+    <!-- 메인 테스트 -->
+    <div id="header-carousel" class="bg-gray carousel slide carousel-fade" data-ride="carousel" data-interval="3000" data-pause="false">
+		<div class="fplusBannerDiv">
+            <img src="/static/img/movie2.jpg" class="fplusBannerImg">
+            <div class="fplusBannerInfoBox"> <!-- absolute 박스-->
+                <div class="fplusBannerTitle">
+                  나의 해방일지 조연오디션
+                </div>
+                <div class="fplusBannerTitlesub">
+                 	
+                </div>
+                <div class="fplusBannerTitlesub2">
+                  일시: 2022-06-30 15:00 <br>
+                  장소: 서울특별시 강남구 학동로12길 8, 3층
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 메인 테스트 //-->
+    <!-- 협찬 -->
+    <div class="brand_list border-bottom">
+        <div class="container py-4">
+            <div class="as-used-by">
+                <h4 class="title">Audition By</h4>
+                <img class="logo-img" src="/static/img/mLogo1.png" alt="">
+                <img class="logo-img" src="/static/img/mLogo2.png" alt="">
+                <img class="logo-img" src="/static/img/mLogo3.png" alt="">
+                <img class="logo-img" src="/static/img/mLogo4.png" alt="">
+            </div>
+            <div class="as-used-by">
+	            <img class="logo-img" src="/static/img/mLogo5.png" alt="">
+	            <img class="logo-img" src="/static/img/mLogo6.png" alt="">
+	            <img class="logo-img" src="/static/img/mLogo7.png" alt="">
+	            <img class="logo-img" src="/static/img/mLogo8.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- 협찬//-->
+   
+    <!-- 오디션 공고 -->
+    <div class="pickMeUp">
+        <div class="pt-4 pt-md-5 pb-4 pb-md-5">
+            <div class="container">
+                <div class="position-relative">
+                    <h2 class="mb-3 mb-lg-4">
+                        <div class="line"></div>
+                        <span class="title">오디션 공고</span>
+                    </h2>
+                </div>
+                <input type="hidden" name="uid" th:if="${user}" th:value="${user.uid}" id="uid">
+                
+            	<div class="row" style="padding: 0 0.7rem!important;margin-top:2rem;" id="ajaxAuditionArea">
+	                <div class="col-6 col-sm-6 col-md-3 mb-3">
+	           			<input type="hidden" name="work" value="1">
+	                    <article class=" post pickmeup_card">
+	                        <span class="badge-g-list">
+	                        </span>
+	                        <a class="image_wrap" href="javascript:toPickMeUpDetail(&#39;/portfolios/7189/details?pickMeUpIds=7179,7190,7189,7187,7186,7183,7182,7177,7176,7175,7174,7171,7169,7168,7165,7163,7162,7160,7159,7158,7156,7152,7151,7150&amp;currentIndex=2&#39;, true, false)">
+	                            <div class="post-image" style="position: relative;">
+	                                <div class="kind-c">
+	                                </div>
+	                                <div class="pickmeup_portfolio_card">
+	                                    <div class="center-crop-wrapper">
+	                                        <img src="/static/img/movie1.jpg" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+	                                    </div>
+	                                </div> 	
+	                            </div>
+	                        </a> 
+	                        <a href="javascript:toPickMeUpDetail(&#39;/portfolios/7189/details?pickMeUpIds=7179,7190,7189,7187,7186,7183,7182,7177,7176,7175,7174,7171,7169,7168,7165,7163,7162,7160,7159,7158,7156,7152,7151,7150&amp;currentIndex=2&#39;, true, false)">    
+	                            <div class="card-title text-dark" style="margin-bottom: 5px;">
+	                                <div style="font-weight:600; margin-top: 10px;">범죄도시 오디션 공고</div>
+	                                <div style="font-weight:600; font-size: 11px; color:666; text-align: center; margin-top: 3px;">2022-05-25 13:00</div>
+	                            </div>
+	                        </a>
+	                        <div class="c_action_btn">
+	                       		 <div class="c_propose_btn" onclick="ajaxApplyAudition(1)">오디션 신청</div>
+	                        	<!--<div t th:if="${loggedIn != null && loggedIn}" class="c_propose_btn" onclick="ajaxApplyAudition(1)">오디션 신청</div>-->
+	                            <!--<div t th:if="${loggedIn != null && loggedIn}" class="c_propose_btn" onclick="$('#auditionFrom1').submit();">오디션 신청</div>-->
+	                            <!--<div th:if="${!loggedIn}"  class="c_propose_btn" onclick="alert('로그인 후 이용해주세요');">오디션 신청</div>-->
+	                        </div>
+	                    </article>
+	                </div>
+	                <div class="col-6 col-sm-6 col-md-3 mb-3">
+	                    <article class=" post pickmeup_card">
+	                        <span class="badge-g-list">
+	                        </span>
+	                        <a class="image_wrap" href="javascript:toPickMeUpDetail(&#39;/portfolios/7189/details?pickMeUpIds=7179,7190,7189,7187,7186,7183,7182,7177,7176,7175,7174,7171,7169,7168,7165,7163,7162,7160,7159,7158,7156,7152,7151,7150&amp;currentIndex=2&#39;, true, false)">
+	                            <div class="post-image" style="position: relative;">
+	                                <div class="kind-c">
+	                                </div>
+	                                <div class="pickmeup_portfolio_card">
+	                                    <div class="center-crop-wrapper">
+	                                        <img src="/static/img/movie2.jpg" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </a> 
+ 	                        <a href="javascript:toPickMeUpDetail(&#39;/portfolios/7189/details?pickMeUpIds=7179,7190,7189,7187,7186,7183,7182,7177,7176,7175,7174,7171,7169,7168,7165,7163,7162,7160,7159,7158,7156,7152,7151,7150&amp;currentIndex=2&#39;, true, false)">    
+	                            <div class="card-title text-dark" style="margin-bottom: 5px;">
+	                                <div style="font-weight:600; margin-top: 10px;">나의 해방일지</div>
+	                                <div style="font-weight:600; font-size: 11px; color:666; text-align: center; margin-top: 3px;">2022-05-25 13:00</div>
+	                            </div>
+	                        </a>
+	                        <div class="c_action_btn">
+	                            <div class="c_propose_btn" onclick="openProposeModal(7189)">오디션 신청</div>
+	                        </div>
+	                    </article>
+	                </div>
+	                <div class="col-6 col-sm-6 col-md-3 mb-3">
+	                    <article class=" post pickmeup_card">
+	                        <span class="badge-g-list">
+	                        </span>
+	                        <a class="image_wrap" href="javascript:toPickMeUpDetail(&#39;/portfolios/7189/details?pickMeUpIds=7179,7190,7189,7187,7186,7183,7182,7177,7176,7175,7174,7171,7169,7168,7165,7163,7162,7160,7159,7158,7156,7152,7151,7150&amp;currentIndex=2&#39;, true, false)">
+	                            <div class="post-image" style="position: relative;">
+	                                <div class="kind-c">
+	                                </div>
+	                                <div class="pickmeup_portfolio_card">
+	                                    <div class="center-crop-wrapper">
+	                                        <img src="/static/img/movie3.png" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </a> 
+ 	                        <a href="javascript:toPickMeUpDetail(&#39;/portfolios/7189/details?pickMeUpIds=7179,7190,7189,7187,7186,7183,7182,7177,7176,7175,7174,7171,7169,7168,7165,7163,7162,7160,7159,7158,7156,7152,7151,7150&amp;currentIndex=2&#39;, true, false)">    
+	                            <div class="card-title text-dark" style="margin-bottom: 5px;">
+	                                <div style="font-weight:600; margin-top: 10px;">우리들의 블루스</div>
+	                                <div style="font-weight:600; font-size: 11px; color:666; text-align: center; margin-top: 3px;">2022-05-25 13:00</div>
+	                            </div>
+	                        </a>
+	                        <div class="c_action_btn">
+	                            <div class="c_propose_btn" onclick="openProposeModal(7189)">오디션 신청</div>
+	                            
+	                        </div>
+	                    </article>
+	                </div>	
+                </div>
+              <div class="detail-view-btn text-center mt-2 mt-md-3 mb-2 mb-md-0" style="margin-top: 30px !important;">
+                    <a class="hvr-icon-forward" href="javascript:toPortfolio2()">
+                        <div class="d-inline-block" style="margin-right:0.5rem; vertical-align: middle;">
+                            <img class="hvr-icon" src="/static/images/icon/plus.png">
+                        </div>
+                        <div class="d-inline-block " style="font-family: 'nanumSquare';font-size:20px;vertical-align: middle;">
+                          더 보기
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 오디션 공고// -->
+    <script>
+    
+  	  	search();
+  	  	
+  	  	$(document).on('click', '.ajaxApplyAudition', function(e){
+			var work = $(this).attr('workid');
+			console.log("ajaxApplyAudition: "+work);
+			//var loggedIn = '${loggedIn}';
+			var uid = $('#uid').val();
+			if(uid){
+				console.log(uid);
+				var param = {};
+			    param.uid = uid;
+			    param.work = work;
+			    
+			    param = JSON.stringify(param);
+			    
+				$.ajax({
+			        url : "/ajax_audition_apply",
+			        data : param,
+			        type : 'post',
+			        contentType:"application/json; charset=UTF-8",
+			        dataType:"json",
+			        success : function(data){
+			           if(data.status!="200"){
+				 			alert(data.errorMsg);
+						}else{
+							alert("신청이 완료되었습니다.")
+						}
+			        },
+			        error : function(request,status,error){
+			        	alert("신청중 문제가 발생했습니다. 계속 해당문제가 발생시 고객센터에 문의해주세요");
+			        }
+			    });
+			}else{
+				alert('로그인 후 이용해주세요');
+			}
+		});
+		
+	    function search(){
+		
+			var param = {};
+		    param.status = "2000";
+		    
+		    param = JSON.stringify(param);
+		    
+		    $('#ajaxAuditionArea').empty();
+		    
+			$.ajax({
+		        url : "/audition_list",
+		        data : param,
+		        type : 'post',
+		        contentType:"application/json; charset=UTF-8",
+		        dataType:"json",
+		        success : function(data){
+			
+		            var results = data.list;
+		            var rows = "";
+		            $.each(results, function(index, item) {
+		            	rows = rows + getRow(item);
+					});	            
+		            	            
+		            $('#ajaxAuditionArea').append(rows);
+		            
+		        },
+		        error : function(request,status,error){
+		       		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		        }
+		    });
+		}
+		
+		function getRow(audition){
+			var date = ''+audition.auditionAt;
+			var row = '';
+			row = row + '<div class="col-6 col-sm-6 col-md-3 mb-3">';
+			row = row + '	<article class=" post pickmeup_card">';
+			row = row + '		<span class="badge-g-list"></span>';
+			row = row + '		<a class="image_wrap">';
+			row = row + '			<div class="post-image" style="position: relative;">';
+			row = row + '				<div class="kind-c"></div>';
+			row = row + '				<div class="pickmeup_portfolio_card">';
+			row = row + '					<div class="center-crop-wrapper">';
+			row = row + '						<img src="'+audition.imageUrl+'" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">';
+			row = row + '					</div>';
+			row = row + '				</div> ';
+			row = row + '			</div>';
+			row = row + '		</a> ';
+			row = row + '		<a href="javascript:toPickMeUpDetail(&#39;/portfolios/7189/details?pickMeUpIds=7179,7190,7189,7187,7186,7183,7182,7177,7176,7175,7174,7171,7169,7168,7165,7163,7162,7160,7159,7158,7156,7152,7151,7150&amp;currentIndex=2&#39;, true, false)">';
+			row = row + '			 <div class="card-title text-dark" style="margin-bottom: 5px;">';
+			row = row + '				<div style="font-weight:600; margin-top: 10px;">'+audition.name+'</div>';
+			row = row + '				<div style="font-weight:600; font-size: 11px; color:666; text-align: center; margin-top: 3px;">'+date.substr(0,10)+' '+date.substr(11,5)+'</div>';
+			row = row + '			 </div>';
+			row = row + '		</a>';
+			row = row + '		<div class="c_action_btn">';
+			row = row + '			<div class="c_propose_btn ajaxApplyAudition" workid = "'+audition.auditionId+'"> 오디션 신청</div>';
+			row = row + '		</div>';
+			row = row + '	</article>';
+			row = row + '</div>';
+		                
+			return row;
+		}
+	
+    </script>
+    
+    <!-- With Out -->
+    <div class="pickMeUp">
+        <div class="pt-4 pt-md-5 pb-4 pb-md-5">
+            <div class="container">
+                <div class="position-relative">
+                    <h2 class="mb-3 mb-lg-4">
+                        <div class="line"></div>
+                        <span class="title">With</span>
+                    </h2>
+                </div>
+            	<div class="row" style="padding: 0 0.7rem!important;margin-top:2rem;">
+                	<div class="col-6 col-sm-6 col-md-3 mb-3">
+	                    <article class=" post pickmeup_card">
+	                        <div style="height:100px; text-align: center; line-height: 100px; font-size: 20px; font-weight: 600;">
+	                        	운상
+	                        	미디어 
+	                        </div>
+	                    </article>
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- With -->
+    <!-- 빈 영역 -->
+	<div style="min-height: 300px;"> 
+		
+	</div>
+	<!-- 빈 영역 -->
+	 
+	
+    <!-- 푸터 -->
+    <footer id="footer" class="py-5 gradation">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <img src="/static/images/logo-white.png" style="width: 148px;">
+                    <div class="text-1 mt-2 text-light">
+                        Copyright ⓒ 2014 - 2020 <b>플랫폼위즈컴퍼니</b>&nbsp;All Rights Reserved. 프리랜서코리아는 법에 의해 보호받는 (주)플랫폼위즈컴퍼니의 등록상표입니다. (114-87-19492) 대표이사는 박정용이며, 본사는 서울시 송파구 백제고분로 202, 오케이202빌딩 6에 위치하고 있습니다. 통신판매업 2020-서울영등포-0047호, 직업정보제공사업 서울청 제 2020-1호
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- 푸터//-->
+
+
+    <!-- 이벤트 팝업-->
+    <div class="modal fade modal_wrap" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="close mr-0" data-dismiss="modal">&times;</button>
+                </div>
+                <div>
+                    <img src="/static/images/initial.png" style="width: 100%"/>
+                </div>
+                <div style="padding: 5px;">
+                    <div class="form-check">
+                        <input type="checkbox" name="notshowpopup" class="form-check-input" id="notshowpopup">
+                        <label class="form-check-label" for="notshowpopup">24시간 동안 이 팝업을 보지 않음</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 이벤트 팝업//-->
+
+    <th:block th:include="modal/request-bid-modal" th:with="preventRefresh=true"></th:block>
+
+
+    <!-- 회원탈퇴 팝업 -->
+    <div class="modal fade modal_wrap" id="leaveModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+
+                <!-- 팝업 헤더 -->
+                <div class="head modal-header">
+                    <h5 class="modal-title" id="ModalLabel">회원을 탈퇴합니다.</h5>
+                    <div class="">
+                        <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                    </div>
+                </div>
+                <!-- 팝업 헤더// -->
+
+                <!-- 팝업 컨텐츠 -->
+                <div class="content modal-body">
+                    <h4>탈퇴하고자 하는 이유를 선택해주세요.</h4>
+                    <select class="w-100 form-control" name="leaveReason" onchange="showDiv('hidden_div', this)">
+                        <option value="1">더 이상 이용 할 필요가 없습니다.</option>
+                        <option value="2">이용하기 매우 어렵습니다.</option>
+                        <option value="3">기타사유.</option>
+                    </select>
+                    <textarea type="text" class="form-control mt-3" placeholder="탈퇴하고 싶은 이유를 적어주세요." rows="3" id="hidden_div" style="display: none"></textarea>
+                    <div class="btn-group d-block mb-3 mt-3">
+                        <button class="btn btn-primary rounded-0" id="leaveBtn">회원 탈퇴하기</button>
+                        <button class="btn btn-light rounded-0" data-dismiss="modal" aria-label="Close">닫기</button>
+                    </div>
+                </div>
+                <!-- 팝업 컨텐츠//-->
+
+            </div>
+        </div>
+    </div>
+    <!-- 회원탈퇴 팝업// -->
+
+    <script th:inline="javascript">
+        var category1stId = [[${category1stId}]];
+        var category2ndId = [[${category2ndId}]];
+        var loggedIn = [[${loggedIn}]];
+        var isLoggedIn = [[${loggedIn}]];
+        var loginAsClient = [[${loginAsClient}]];
+        var userInfoInput = [[${user?.infoInput}]];
+        var userId = [[${user?.id}]];
+        console.log("mainFP.html loggedIn:"+loggedIn);
+
+        var message = [[${message}]];
+        if (message && message === 'DIRECT_DEAL_NEED_LOGIN') {
+            // alert('직거래 포트폴리오는 로그인 후 열람하실 수 있습니다. 1분이면 회원가입이 가능합니다. :)');
+        }
+
+    </script>
+    <script>
+        function showDiv(divId, element)
+        {
+            document.getElementById(divId).style.display = element.value == 3 ? 'block' : 'none';
+        }
+    </script>
+
+    <!-- <script src="/static/js/jquery.js"></script> -->
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/portfolio-common.js"></script>
+
+    <!-- Vendor -->
+    <script src="/static/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="/static/vendor/common/common.js"></script>
+    <script src="/static/vendor/nanoscroller/jquery.nanoscroller.js"></script>
+    <script src="/static/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="/static/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+    <script src="/static/vendor/jquery.appear/jquery.appear.min.js"></script>
+    <script src="/static/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="/static/vendor/jquery.cookie/jquery.cookie.min.js"></script>
+    
+    <script src="/static/vendor/jquery.validation/jquery.validate.min.js"></script>
+    <script src="/static/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="/static/vendor/jquery.gmap/jquery.gmap.min.js"></script>
+    <script src="/static/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
+    <script src="/static/vendor/isotope/jquery.isotope.min.js"></script>
+    <script src="/static/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <!-- <script src="/static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script> -->
+    <script src="/static/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/static/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/static/vendor/bootstrap-star-rating/js/star-rating.min.js"></script>
+    <script src="/static/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.js"></script>
+    <!-- Theme Base, Components and Settings -->
+    <script src="/static/js/tmp/theme.js"></script>
+    
+    <!-- Theme Custom -->
+    <script src="/static/js/tmp/custom.js"></script>
+    
+    <!-- Theme Initialization Files -->
+    <script src="/static/js/tmp/theme.init.js"></script> 
+
+</body>
+</html>

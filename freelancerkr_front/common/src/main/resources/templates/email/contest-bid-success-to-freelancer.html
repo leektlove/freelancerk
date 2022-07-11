@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>프리랜서코리아 이메일</title>
+</head>
+<body>
+<div class="email-container" style="padding: 2rem 1rem;max-width: 700px;margin: auto;">
+
+    <!-- 헤더 -->
+    <div class="header" style="display: block;padding-bottom:10px;border-bottom: 1px solid #ddd;">
+        <img src="https://freelancerk.s3.ap-northeast-2.amazonaws.com/static/logo.png" style="max-width: 150px;">
+        <span class="email-title" style="font-size:20px;font-weight: 600;margin-top: 0.3rem;float: right;">프코 알림</span>
+    </div>
+    <div style="display: block;clear: both;"></div>
+    <div class="title" style="font-size: 25px;padding: 1rem 0;border-bottom: 1px solid #ddd;">
+        컨테스트에 당선되셨습니다.
+    </div>
+    <!-- 헤더//-->
+
+    <!-- 본문 -->
+    <div class="discription" style="font-size: 17px;border-bottom: 1px solid #ddd;padding-top: 1rem;padding-bottom: 1rem;margin-bottom: 2.5rem;line-height: 1.5rem;">
+        <div class="content" style="margin-bottom: 2rem;">
+            <span class="username" th:text="${client.exposeName}" style="font-weight: 700;margin-right: 0.5rem;line-height: 30px;">박은진</span>님께서 포스팅 하신
+            <span class="project_title" th:text="${project.title}" style="font-weight: 700;">캐릭터디자인</span> 컨테스트에
+            <span  class="name" th:text="${freelancerExposeNames}" style="font-weight: 700;">전서규</span>님이 당선되셨습니다.<br/><br/>
+            <strong>당선 후 일주일 내 상금지급이 완료됩니다.</strong><br/>
+            따라서 수정/보완에 대한 클라이언트의 요구에 적극적인 대응을 해주시면
+            더 좋은 평가를 기대할 수 있습니다.
+        </div>
+    </div>
+    <th:block th:include="email/bottom-button-container"></th:block>
+    <!-- 본문//-->
+
+    <th:block th:include="email/footer"></th:block>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,524 @@
+/** 레이아웃 **/
+.contest-container{
+    max-width: 1750px;
+    margin:auto;
+
+}
+
+
+
+/** 타이틀 **/
+.contest-container .contest_title{
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.contest-container .contest_title .img{
+    width: 83px;
+}
+.contest-container .contest_title .text{
+    font-family: nanumSquqre;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -2px;
+    font-weight: 700;
+    color: #333;
+    margin-top: 10px;
+}
+.contest-container .contest_title .text span{
+    color: #df564f;
+}
+
+
+
+
+
+/** 카드상단 네비게이션 **/
+.card-header .wizard-progress .wizard-steps li.active a span, 
+.card-header.dark .wizard-progress .wizard-steps li.active a span{
+    background: #FFF;
+    color: #df564f;
+    border-color: #df564f;
+    border: 4px solid #df564f;
+    font-weight: 700;
+}
+
+.card-header .wizard-progress .wizard-steps li.completed a span,
+.card-header.dark .wizard-progress .wizard-steps li.completed a span{
+    background: #df564f;
+    color: #FFF;
+    border-color: #df564f;
+}
+.card-header .wizard-progress .steps-progress .progress-indicator,
+.card-header.dark .wizard-progress .steps-progress .progress-indicator{
+    background: #df564f;
+}
+.card-header .wizard-progress .wizard-steps li.completed.active a span,
+.card-header.dark .wizard-progress .wizard-steps li.completed.active a span{
+    background: #fff;
+    color: #df564f;
+}
+
+
+
+
+
+/** 카드 본문 **/
+.card-body{
+    padding: 0;
+    padding-top: 3rem;
+}
+.card-body .list.list-icons li > [class*="fa-"]:first-child,
+.card-body .list.list-icons li a:first-child > [class*="fa-"]:first-child, .list.list-icons li > .icons:first-child,
+.card-body .list.list-icons li a:first-child > .icons:first-child{
+    color: #df564f;
+    border-color: #df564f;
+}
+.card-body .sub_title{
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+.card-body .text{
+    font-size: 14px;
+}
+.card-body .help-block .fa-caret-right{
+    color: #e75751;
+}
+.card-body .table{
+    max-width: 500px;
+    margin: auto;
+    margin-top: 2rem;
+}
+.card-body .table.min_prize th{
+    border: 0;
+    border-bottom: 1px solid #F44336;
+}
+.card-body .table.min_prize td{
+    border: 0;
+    font-size: 15px;
+}
+.card-body .table.min_prize td .custom-control{
+    text-align: left;
+}
+.card-body .table.min_prize td .form-group{
+    display: flex;
+    margin-bottom: 0;
+}
+.card-body .table.min_prize td .form-group span{
+    align-self: center;
+    margin-left: 0.5rem;
+}
+.card-body .table.min_prize .title{
+    min-width: 110px;
+    font-size: 17px;
+    font-weight: 700;
+}
+.card-body .table.min_prize .content{
+    font-size: 17px;
+    text-align: right;
+}
+.card-body .table.min_prize .content .count{
+    font-size: 20px;
+    font-weight: 700;
+
+} 
+.card-body .table.total_prize th{
+    border: 0;
+    border-bottom: 1px solid #F44336;
+}
+.card-body .table.total_prize td{
+    border: 0;
+    font-size: 15px;
+}
+.card-body .table.total_prize td .custom-control{
+    text-align: left;
+}
+.card-body .table.total_prize td .form-group{
+    display: flex;
+    margin-bottom: 0;
+}
+.card-body .table.total_prize td .form-group span{
+    align-self: center;
+    margin-left: 0.5rem;
+}
+.card-body .table.total_prize .title{
+    min-width: 110px;
+    font-size: 17px;
+    font-weight: 700;
+}
+.card-body .table.total_prize .content{
+    font-size: 17px;
+    text-align: right;
+}
+.card-body .table.total_prize .content .count{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.card-body .table.pay_for_fee th{
+    border: 0;
+    border-bottom: 1px solid #F44336;
+}
+.card-body .table.pay_for_fee td{
+    border: 0;
+    font-size: 15px;
+}
+.card-body .table.pay_for_fee td .custom-control{
+    text-align: left;
+}
+.card-body .table.pay_for_fee td .form-group{
+    display: flex;
+    margin-bottom: 0;
+}
+.card-body .table.pay_for_fee td .form-group span{
+    align-self: center;
+    margin-left: 0.5rem;
+}
+.card-body .table.pay_for_fee .title{
+    min-width: 110px;
+    font-size: 17px;
+    font-weight: 700;
+}
+.card-body .table.pay_for_fee .content{
+    font-size: 17px;
+    text-align: right;
+}
+.card-body .table.pay_for_fee .content .count{
+    font-size: 20px;
+    font-weight: 700;
+}
+.card-body .table.bill_total_table .total_count{
+    font-size: 25px;
+    text-align: right;
+    color: #0088cc;
+    font-weight: bold;
+}
+.card-body .tab-content-4{
+    max-width: 700px;
+    margin: auto;
+}
+.card-body .tab-content-4 .table{
+    max-width: 100%;
+}
+.card-body .tab-content-5{
+    max-width: 500px;
+    margin: auto;
+}
+
+
+.chk_container{
+    white-space: nowrap;
+}
+.contest_post { padding: 3rem;}
+.table td span.plus, .table td span.minus {border: 1px solid #F0F0F0;
+    padding: 2px 8px 2px 8px;
+    margin-right: 2px;
+    margin-left: 2px;
+    background-color: #FFFFFF;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+.table th, .table td {color: #0D0D0D;}
+.table td:last-child {text-align: right;}
+.table .disabled th, .table .disabled td {color: #919191;border: none!important;background-color: #f9f9f9;vertical-align: middle;white-space: nowrap;}
+.table .disabled th span.plus, .table .disabled th span.minus {border: 1px solid #919191;}
+.table .disabled td>span.plus, .table .disabled td>span.minus {border: 1px solid #E7E7E7;}
+.table .priority, .table .economy {background-color: #F5AA10;}
+.table .easy, .table .premium {background-color: #41AC64;}
+.table .luxury, .table .platinum {background-color: #4A9CE8;}
+.table .supureme, .table .platinum {background-color: #4A689E;}
+.table .pack th {color: #FFFFFF;}
+.table th.product-limit, .table td.product-limit{text-align:center;}
+.table .disabled .product-quantity{text-align: center;}
+
+.totalAmount { color: #646464;font-size: 15px;text-align: right;margin-bottom: 3rem;}
+span.money { color: #2a2a2a; font-size: 19px; }
+
+.btn_container { text-align: center; }
+.btn_container .btn { width: 220px;  height: 50px;  }
+.btn_container .btn_pay { background-color: #499AE9; border-color: #499AE9; }
+.btn_container .btn_register { background-color: #7B7B7B; border-color: #7B7B7B;  }
+
+.btn {border-radius: 0px;}
+table.cart th {
+    font-weight: bold;
+}
+
+
+.pack_title{color:#fff;font-weight:bold;font-size: 12pt;}
+.pack_subtitle{color:#fff;font-size:12px;}
+.product-limit .col-md-6{padding:0 10px;}
+
+/*.table th, .table td {
+    padding: 0.3rem 0rem;
+    vertical-align: middle;
+}*/
+#sticky_point{
+    width: 100px;
+    text-align: center;
+    padding:0.8rem 0.5rem;
+}
+#sticky_point img{
+    width: 50px;
+    height:50px;
+    border-radius: 50%;
+    border:1px solid #ddd;
+    margin-bottom:5px;
+}
+#sticky_point .point{
+    color: #0088cc;
+    font-size: 15px;
+}
+#sticky_point div{
+    display: block;
+}
+#sticky_point .user_name,
+#sticky_point .user_nickname{
+    font-size: 13px;
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+#sticky_point .user_point{
+    color: #0088cc;
+    font-size: 17px;
+    font-weight: 800;
+    width: calc(100% - 15px);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+#sticky_point .user_point:before{
+    content: 'P';
+    color: #000;
+    font-size: 13px;
+    margin-right: 2px;
+
+}
+#sticky_point .user_point_label{
+    display: none;
+    font-size: 13px;
+    vertical-align: middle;
+}
+.btnDecreaseMonth,
+.btnIncreaseMonth{
+    zoom:0.8;
+}
+.discountRate {
+    color: #eee;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.pack {
+    display: none;
+}
+
+.question-pop {
+    position: relative;
+}
+
+.popup-content{
+    display: none;
+    z-index: 10;
+    background-color: transparent;
+    position: absolute;
+    left:10px;
+    width: 300px;
+}
+.question-pop:hover .popup-content {
+    display: block
+}
+
+.tooltip_profile_detail {
+    color: white;
+    background-color: darkgray;
+    font-size: 9pt;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;;
+}
+
+
+/** 반응형 **/
+@media (min-width: 1200px) { 
+    .product-name{width: 40%!important}
+    .limit-quantity{width: 40%!important}
+    
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    .product-name{width: 40%!important}
+    .limit-quantity{width: 40%!important}
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    .contest-container{
+        max-width: 700px;
+    }
+    .product-name{width: 40%!important}
+    .table .disabled .product-quantity{padding-right:0;padding-left:0;}
+    .limit-quantity{width: 40%!important}
+    .totalAmount { margin-bottom: 1.5rem;}
+    #sticky_point{
+        position: fixed;
+        width: 100%;
+        left:0;
+        bottom:0;
+        text-align: center;
+        z-index: 501;
+        border:0;
+        border-top:1px solid #ddd;
+        border-radius: 0;
+    }
+    #sticky_point div{
+        display: inline-block;
+    }
+    #sticky_point .point{
+        font-size: 17px;
+    }
+    #sticky_point .user_point{
+        width: auto;
+        vertical-align: middle;
+        text-align: left;
+        margin-left:5px;
+    }
+    #sticky_point .user_name{
+        margin-left:3px;
+    }
+    #sticky_point .user_name,
+    #sticky_point .user_nickname{
+        max-width: 60px;
+    }
+    #sticky_point .user_point_label{
+        display: inline-block;
+        margin-left:1rem;
+    }
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .contest-container{
+        max-width: 520px;
+    }
+    .contest-container .contest_title{
+        display: none;
+    }
+    .featured-box .box-content{ padding: 1rem;}
+    .product-limit .col-md-6{padding:0 10px;}
+    .table .disabled .product-quantity{padding-right:0;padding-left:0;}
+    .totalAmount { margin-bottom: 1.5rem;}
+    #sticky_point{
+        position: fixed;
+        width: 100%;
+        left:0;
+        bottom:0;
+        text-align: center;
+        z-index: 501;
+        border:0;
+        border-top:1px solid #ddd;
+        border-radius: 0;
+    }
+    #sticky_point .point{
+        font-size: 17px;
+    }
+    #sticky_point div{
+        display: inline-block;
+    }
+    #sticky_point .user_point{
+        width: calc(100% - 270px);
+        vertical-align: middle;
+        text-align: left;
+        margin-left:5px;
+        max-width: 200px;
+    }
+    #sticky_point .user_name{
+        margin-left:3px;
+    }
+    #sticky_point .user_name,
+    #sticky_point .user_nickname{
+        max-width: 60px;
+    }
+    #sticky_point .user_point_label{
+        display: inline-block;
+        margin-left:1rem;
+    }
+}
+@media (max-width: 575.98px) {
+    .contest-container{
+        max-width: 400px;
+    }
+    .contest-container .contest_title{
+        display: none;
+    }
+    .card-body .tab-content-5 .deposit_money_btn .br{
+        display: block;
+    }
+    .card-body .table.bill_total_table .total_count{
+        font-size: 14px;
+    }
+    .featured-box .box-content{ padding: 1rem;}
+    .product-limit .col-md-6{padding:0 10px;}
+    .table .disabled .product-quantity{padding-right:0;padding-left:0;}
+    .totalAmount { margin-bottom: 1.5rem;}
+    #sticky_point{
+        position: fixed;
+        width: 100%;
+        left:0;
+        bottom:0;
+        text-align: center;
+        z-index: 501;
+        border:0;
+        border-top:1px solid #ddd;
+        border-radius: 0;
+    }
+    #sticky_point div{
+        display: inline-block;
+    }
+    #sticky_point .point{
+        font-size: 17px;
+    }
+    #sticky_point .user_point{
+        width: calc(100% - 270px);
+        vertical-align: middle;
+        text-align: left;
+        margin-left:5px;
+        max-width: 200px;
+    }
+    #sticky_point .user_name{
+        margin-left:3px;
+    }
+    #sticky_point .user_name,
+    #sticky_point .user_nickname{
+        max-width: 60px;
+    }
+    #sticky_point .user_point_label{
+        display: inline-block;
+        margin-left:1rem;
+    }
+    .table th, .table td{
+        font-size: 12px;
+    }
+    .table .disabled th, .table .disabled td{
+        font-size: 12px;
+    }
+}
+@media (max-width: 375px) {
+    .contest-container{
+        max-width: 350px;
+    }
+    #sticky_point .user_name{
+        margin-left:3px;
+    }
+    .table th, .table td{
+        font-size: 12px;
+    }
+    .table .disabled th, .table .disabled td{
+        font-size: 12px;
+    }
+}
+

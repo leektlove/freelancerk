@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/common/howitworks.css">
+</head>
+
+    <section id="content" layout:fragment="content">
+
+        <!-- 페이지헤더 -->
+        <div class="page-header bg-primary d-flex justify-content-center mb-0" style="min-height: 300px;">
+            <div class="text-light align-self-center text-center"style="z-index: 10">
+                <div class="text-8 font-weight-bold">How It Works</div>
+                <div class="text-4">프리랜서코리아 이용안내</div>
+                <div class="mt-3">
+                    <a href="/common/howItWorks?role=ROLE_FREELANCER" style="margin-right:0.3rem">
+                        <button class="btn freelancer active">프리랜서</button>
+                    </a>
+                    <a href="/common/howItWorks?role=ROLE_CLIENT">
+                        <button class="btn client">클라이언트</button>
+                    </a>
+                </div>
+            </div>
+            <img src="/static/images/assets/3_2.png" style="position: absolute;left:0;bottom:0;width: 100%;">
+        </div>
+        <!-- 페이지헤더// -->
+
+        <div class="page-body">
+
+            <!-- 픽미업등록 -->
+            <section id="pickMeUp_f">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="title_wrap">
+                                <div class="title">Pick Me Up<span class="sub_title">당신을 광고하세요</span></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                        </div>
+                    </div>
+                    <div class="ad row">
+                        <div class="contents_container col-lg-7">
+                            <div class="ad_info">
+                                "당신을 원하는 클라이언트와 함께 일하고 싶으신가요?<br> 당신이 작업한 최고의 포트폴리오를 픽미업으로 보내세요."
+                            </div>
+                            <div class="guide">
+                                <ul>
+                                    <li>회원 가입 후 [포트폴리오 관리]에 당신의 멋진 결과물을 업로드하세요. 당신이 입찰에 참여한 경우, <em>클라이언트는 당신의 포트폴리오를 열람합니다.</em> </li>
+                                    <li>프리랜서코리아를 방문하는 <em>모든 클라이언트에게 당신을 광고하고 싶으시다면</em><br>업로드한 포트폴리오를 [픽미업]으로 보내세요. 클라이언트에게 [참여제안]을 받을 거에요.</li>
+                                    <li>입찰 참여가 번거롭고 당신의 포트폴리오가 충분히 매력적이라면,<br>포트폴리오 옵션 중 <em>[직거래옵션]으로 직접 클라이언트를 만나실 수 있습니다.</em></li>
+                                </ul>
+                            </div>
+                            <div class="btn_container">
+                                <a th:href="@{/freelancer/pickMeUp/create}">
+                                    <button class="btn btn-lg btn-primary rounded-0">포트폴리오 등록하기</button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="image_container col-lg-5">
+                            <a class="lightbox position-relative" href="/static/images/assets/hiw_f_2.png" data-plugin-options="{'type':'image'}">
+                                <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons thumb-info-no-zoom">
+                                    <span class="thumb-info-wrapper">
+                                        <img src="/static/images/assets/hiw_f_2.png" alt="" class="img-fluid">
+                                        <span class="thumb-info-action">
+                                            <span class="thumb-info-action-icon"><img src="/static/images/assets/view.png"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 픽미업등록--//-->
+
+            <!--컨테스트 -->
+            <section id="contest_f" class="bg-gray">
+                <div class="">
+                    <div class="container">
+                        <img class="arrow" src="/static/images/assets/2-2.png">
+                        <div class="row">
+                            <div class="col-lg-5">
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="title_wrap">
+                                    <div class="title">Contest<span class="sub_title">작품을 제출하고 상금을 받으세요</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ad row">
+                            <div class="image_container col-lg-5">
+                                <a class="lightbox position-relative" href="/static/images/assets/hiw_c_2.png" data-plugin-options="{'type':'image'}">
+                                    <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons thumb-info-no-zoom">
+                                        <span class="thumb-info-wrapper">
+                                            <img src="/static/images/assets/hiw_c_2.png" alt="" class="img-fluid">
+                                            <span class="thumb-info-action">
+                                                <span class="thumb-info-action-icon"><img src="/static/images/assets/view.png"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="contents_container col-lg-7">
+                                <div class="ad_info">
+                                    "애써 작업한 작품을 제출하고도 컨테스트가 취소되어 아무 대가도 없다는 건 부당하죠. 프코의 컨테스트는 이번에도 달라요."
+                                </div>
+                                <div class="guide">
+                                    <ul>
+                                        <li> 프리랜서코리아의 <em>컨테스트 수수료는 단 10%!</em><br>
+                                             프코는 클라이언트분께[등록비]를 받지 않고, [보증금]을 받아 보관합니다.<br>
+                                             <em>만약 취소가 발생하는 경우</em> 상금과 보증금의 일정부분이 참여한 <em>프리랜서분들께 배당됩니다.</em>
+                                        </li>
+                                        <li> 1회성 컨테스트 당선 후 <i class="fas fa-arrow-right"></i> 프로젝트를 진행 할 수 있습니다.<br>
+                                            예) 책표지 디자인 1페이지 컨테스트 당선 <i class="fas fa-arrow-right"></i> 책 100p 일러스트 프로젝트 진행 
+                                        </li>
+                                        <li><a href="#" data-toggle="modal" data-target="#deposit_money_refund_info">
+                                                컨테스트 환불 및 배당정책 <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="btn_container" th:if="${loggedIn && !loginAsClient}">
+                                    <a th:href="@{/freelancer/pickMeUp/create}">
+                                        <button class="show_Contest_f btn btn-lg btn-primary rounded-0">컨테스트 바로가기</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--컨테스트// -->
+
+            <!-- 입찰 -->
+            <section id="bid_f">
+                <div class="">
+                    <div class="container">
+                        <img class="gray_arrow" src="/static/images/assets/2_2.png">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="title_wrap">
+                                    <div class="title">Project<span class="sub_title">입찰에 참여해서 돈을 벌어보세요</span></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                            </div>
+                        </div>
+                        <div class="ad row">
+                            <div class="contents_container col-lg-7">
+                                <div class="ad_info">
+                                    "가장 많은 입찰에 참여한 프리랜서가 가장 많은 돈을 벌게 됩니다"
+                                </div>
+                                <div class="guide">
+                                    <ul>
+                                        <li>꼼꼼히 프로젝트를 검토하시고, <em>입찰가를 제시</em>하세요. 클라이언트는 입찰가격과 함께 입찰에 참여한 프리랜서의 <em>경력/포트폴리오/자기소개 등을 확인</em>한 후 프리랜서를 고용합니다</li>
+                                        <li>낙찰 받은 후 표준계약서를 통해 서면 계약 하신 후 작업을 시작하세요</li>
+                                        <li><a href="/common/reference" target="_blank">자료실 <i class="fas fa-external-link-alt mr-1"></i></a>에 표준계약서가 있습니다</li>
+                                    </ul>
+                                </div>
+                                <div class="btn_container" th:if="${loggedIn && !loginAsClient}">
+                                    <a th:href="@{/freelancer/bid/onGoingList}">
+                                        <button class="show_Project_f btn btn-lg btn-primary rounded-0">입찰 바로가기</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="image_container col-lg-5">
+                                <a class="lightbox position-relative" href="/static/images/assets/hiw_f_3.png" data-plugin-options="{'type':'image'}">
+                                    <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons thumb-info-no-zoom">
+                                        <span class="thumb-info-wrapper">
+                                            <img src="/static/images/assets/hiw_f_3.png" alt="" class="img-fluid">
+                                            <span class="thumb-info-action">
+                                                <span class="thumb-info-action-icon"><img src="/static/images/assets/view.png"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 입찰// -->
+            
+            <!-- 에스크로 -->
+            <section id="ascrow_f" style="background-color: #0a3368">
+                <div class="container">
+                    <img class="arrow" src="/static/images/assets/2-2.png">
+                    <div class="title_wrap text-center">
+                        <h1 class="title text-light border-bottom-0">Project - Escrow Service</h1>
+                    </div>
+                    <div class="additional_guide row">
+                        <div class="col-lg-6 text-center text-light">
+                            <div class="image_container">
+                                <a class="lightbox position-relative" href="/static/images/assets/hiw_escrow.png" data-plugin-options="{'type':'image'}">
+                                    <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons thumb-info-no-zoom">
+                                        <span class="thumb-info-wrapper">
+                                            <img src="/static/images/assets/hiw_escrow.png" class="" alt="">
+                                            <span class="thumb-info-action">
+                                                <span class="thumb-info-action-icon"><img src="/static/images/assets/view.png"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="contents_container p-3">
+                                <div class="ad_info">
+                                    3%의 수수료로 안전하게 거래하세요
+                                </div>
+                                <div class="guide">
+                                    <em>10% 20%? 다른 모든 프리랜서 사이트들과 프코를 비교해보세요.</em><br> 작업은 '프리랜서전문가'분들이 하십니다.<br> 따라서 플랫폼의 댓가는 5%면 충분합니다.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-center text-light">
+                            <div class="image_container">
+                                <a class="lightbox position-relative" href="/static/images/assets/hiw_evel.png" data-plugin-options="{'type':'image'}">
+                                    <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons thumb-info-no-zoom">
+                                        <span class="thumb-info-wrapper">
+                                            <img src="/static/images/assets/hiw_evel.png" class="img-fluid" alt="">
+                                            <span class="thumb-info-action">
+                                                <span class="thumb-info-action-icon"><img src="/static/images/assets/view.png"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="contents_container p-3">
+                                <div class="ad_info">
+                                    <div class="">경력관리로 입찰에 우위를 점하세요</div>
+                                </div>
+                                <div class="guide">
+                                    <em>에스크로서비스가 적용된 프로젝트에서는<br>프리랜서의 [평가]와 [거래금액]이 누적됩니다.</em><br> 그리고 누적된 이 평점은 입찰에서 유리하게 작용합니다.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 에스크로//-->
+
+            <!-- 프로세스 -->
+            <section class="process">
+                <div class="container">
+                    <div class="title_wrap text-center">
+                        <h1 class="title border-bottom-0 mb-3">Project - Process</h1>
+                        <div class="ad_info">가장 안전한 방법으로 프로젝트를 진행하세요!</div>
+                    </div>
+                    <div class="step_wrap">
+                        <div class="step">
+                            <div class="one process_number">
+                                1
+                            </div>
+                            <div class="cont-box-rotate"></div>
+                            <div class="image_container">
+                                <img src="/static/images/assets/hiw_f_icon1.png" alt="" class="">
+                            </div>
+                            <div class="image_des">
+                                <h3>충분히 소통 & 서면계약</h3>
+                                <div class=""><a href="/common/reference" target="_blank">자료실 <i class="fas fa-external-link-alt mr-1"></i></a>에 표준 계약서가 업로드 되어 있습니다.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="two process_number">
+                                2
+                            </div>
+                            <div class="image_container">
+                                <img src="/static/images/assets/hiw_f_icon2.png" alt="" class="">
+                            </div>
+                            <div class="image_des">
+                                <h3>대금예치 & 프로젝트 시작</h3>
+                                <div class="">대금을 예치하시고, 프로젝트를 시작하세요.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="three process_number">
+                                3
+                            </div>
+                            <div class="image_container">
+                                <img src="/static/images/assets/hiw_f_icon3.png" alt="" class="">
+                            </div>
+                            <div class="image_des">
+                                <h3>프리랜서의 청구</h3>
+                                <div class="">계약서에 의해 지급 시점이 되면, 프리랜서가 [지급청구] 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="four process_number">
+                                4
+                            </div>
+                            <div class="image_container">
+                                <img src="/static/images/assets/hiw_f_icon4.png" alt="" class="">
+                            </div>
+                            <div class="image_des">
+                                <h3>클라이언트의 승인</h3>
+                                <div class="">[지급 청구]에 의해 클라이언트가 [승인]하면 플랫폼이 대금을 프리랜서에게 지급합니다.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 프로세스//-->
+            
+        </div>
+
+        <!-- 보증금환불규정 팝업 -->
+        <div class="modal fade modal_wrap" id="deposit_money_refund_info" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <!-- 팝업 헤더 -->
+                    <div class="head modal-header">
+                        <h5 class="modal-title" id="ModalLabel">보증금환불규정</h5>
+                        <div class="">
+                            <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                    <!-- 팝업 헤더// -->
+
+                    <!-- 팝업 컨텐츠 -->
+                    <div class="content modal-body">
+                        <div class="content modal-body">
+                        <table class="table table-sm table-bordered text-center">
+                            <thead class="text-center" style="background-color: #c43f40">
+                                <tr>
+                                    <th class="text-light" colspan="5">환불규정</th>
+                                </tr>
+                            </thead>
+                            <tr class="table-active text-center">
+                                <td>구분</td>
+                                <td>상황</td>
+                                <td>보증금</td>
+                                <td>확정상금</td>
+                                <td class="text-center">저작권이전</td>
+                            </tr>
+                            <tr>
+                                <td class="table-active">선정</td>
+                                <td class="table-active">기한 내 선정</td>
+                                <td class="table-active">전액환불</td>
+                                <td class="table-active">수상자에게 상금 지급</td>
+                                <td class="table-active text-center">가능</td>
+                            </tr>
+                            <tr>
+                                <td class="table-active">-</td>
+                                <td class="table-active">무응찰</td>
+                                <td class="table-active">전액환불</td>
+                                <td class="table-active">전액환불</td>
+                                <td class="table-active text-center">N/A</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3" style="vertical-align: middle;">미선정</td>
+                                <td>1~2인 참여</td>
+                                <td><strong>80%환불</strong><br>20%참여자배당</td>
+                                <td><strong>70%환불</strong><br>20%참여자배당<br>10%수수료</td>
+                                <td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+                            </tr>
+                            <tr>
+                                <td>3~5인 참여</td>
+                                <td><strong>50%환불</strong><br>50%참여자배당</td>
+                                <td><strong>50%환불</strong><br>40%참여자배당<br>10%수수료</td>
+                                <td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+                            </tr>
+                            <tr>
+                                <td>6인 이상 참여</td>
+                                <td><strong>20%환불</strong><br>80%참여자배당</td>
+                                <td><strong>20%환불</strong><br>70%참여자배당<br>10%수수료</td>
+                                <td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">** 미선정 : 컨테스트를 취소하거나 포스팅 기한이 만료된 경우를 의미합니다.</td>
+                            </tr>
+                        </table>
+                        <div class="btn-group w-100">
+                            <div class="btn btn-lg btn-primary mx-auto rounded-0" data-dismiss="modal" aria-label="Close" style="min-width: 200px">확인</div>
+                        </div>
+                    </div>
+                    <!-- 팝업 컨텐츠//-->
+                    
+                </div>
+            </div>
+        </div>
+        <!-- 보증금환불규정 팝업// -->
+    </section>
+    
+
+</html>

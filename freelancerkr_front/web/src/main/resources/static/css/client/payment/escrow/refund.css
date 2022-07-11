@@ -1,0 +1,29 @@
+#fcash .input_cp_price{
+	display: flex;
+	margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+#fcash .input_cp_price .text{
+	white-space: nowrap;
+    padding: 0.5rem 0.8rem;
+}
+#fcash .textarea_cp_price{
+	margin-bottom: 2rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid #ddd;
+}
+#cp_price{
+	max-width: 200px;
+	text-align: right;
+	border: 0;
+	background-color: #eee;
+}
+#cp_memo{
+	border: 0;
+	box-shadow: none;
+}
+#fcash .btn_area{
+	text-align: center;
+	margin-bottom: 5rem;
+}

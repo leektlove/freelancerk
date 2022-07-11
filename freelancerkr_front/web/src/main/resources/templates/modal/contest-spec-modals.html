@@ -1,0 +1,81 @@
+
+<!-- 명세서 팝업 -->
+<div class="modal fade modal_wrap" id="contestSpecModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+            <!-- 팝업 헤더 -->
+            <div class="head modal-header">
+                <h5 class="modal-title">컨테스트 전체 결제 내역</h5>
+                <div class="">
+                    <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+            <!-- 팝업 헤더// -->
+
+            <!-- 팝업 컨텐츠 -->
+            <div class="content modal-body">
+
+                <div class="title mt-3">최종 결제내역</div>
+                <table class="popup_boardlist">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="">
+                        <col width="30%">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>항목</th>
+                        <th colspan="2">금액</th>
+                    </tr>
+                    <tr>
+                        <th class="tl" >확정상금</th>
+                        <td colspan="2" id="confirmativePrice" class="tr"></td>
+                    </tr>
+                    <tr>
+                        <th class="tl">
+                            보증금
+                            <button type="button" data-toggle="modal" data-target="#deposit_money_refund_info"class="btn btn-sm rounded-0" style="background-color: #bc3f3f;color: #fff;cursor: pointer;margin-top: 5px;">보증금 환불 조건</button>
+                        </th>
+                        <td class="tl"></td>
+                        <td id="depositMoney" class="tr"></td>
+                    </tr>
+                    <tr>
+                        <th class="tl">옵션결제내역</th>
+                        <td colspan="2" id="optionPrice" class="tr"></td>
+                    </tr>
+                    <tr>
+                        <th class="tl">수수료부담</th>
+                        <td colspan="2" id="fee" class="tr"></td>
+                    </tr>
+                    <tr>
+                        <th class="tl">공급가액</th>
+                        <td colspan="2" id="supplyAmount" class="tr"></td>
+                    </tr>
+                    <tr class="tax-type vat">
+                        <th class="tl colspanvar">부가가치세</th>
+                        <td colspan="2" id="vat" class="tr"></td>
+                    </tr>
+                    <tr>
+                        <th class="tl" >최종금액</th>
+                        <td colspan="2" id="totalPrice" class="tr"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="text-secondary text-2 my-3" style="padding:5px">
+                    <span style="font-weight: 900">[주의]</span> 상기 내역은 최초 결제 내역이며, 각 컨테스트별 환불(결제 취소)내역에 따라 실제 정산 예정 금액은 다릅니다. 컨테스트 완료/취소 후 보증금/확정상금 등의 결제취소에는 약 10일이 소요됩니다. 정산 내역을 꼭 확인해주시기 바랍니다.
+                </div>
+                <div class="popup_boardbutton mb-3">
+                    <div class="tc">
+                        <a href="#" class="btn btn-light rounded-0 btn-lg pop_close" data-dismiss="modal" aria-label="Close">닫기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 팝업 컨텐츠//-->
+
+        </div>
+    </div>
+
+    <script src="/static/js/contest-spec.js"></script>
+</div>
+<!-- 명세서 팝업// -->

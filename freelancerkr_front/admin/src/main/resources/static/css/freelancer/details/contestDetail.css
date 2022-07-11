@@ -1,0 +1,315 @@
+
+/******************************** 레이아웃 ********************************/
+.contest .detail_container{
+	margin-bottom: 6.5rem;
+}
+.contest .detail_container .main_title{
+	color: #e36159;
+}
+.contest .detail_container .list li{
+	margin-bottom: 1rem;
+	padding-left: 22px;
+}
+.contest .detail_container .list .list_title{
+	font-weight: 700;
+	font-size: 17px;
+}
+.contest .detail_container .list .list_content{
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+/******************************** 당선작품 ********************************/
+.prize_rank_container{
+    
+}
+.prize_rank_container .col-sm-4{
+    margin-bottom: 1rem;
+}
+.thumb-info .thumb-info-wrapper{
+    overflow: visible;
+}
+.thumb-info .thumb-info-wrapper .img{
+	background-position: center;
+	background-size: cover;
+	height: 260px;
+}
+.thumb-info .thumb-info-wrapper .order.order1 + .img{
+    border:3px solid #f08781;
+}
+.thumb-info .thumb-info-wrapper .order.order2 + .img{
+    border:3px solid #fed24b;
+}
+.thumb-info .thumb-info-wrapper .order.order3 + .img{
+    border:3px solid #78c6f8;
+}
+.thumb-info .thumb-info-wrapper .order ~ .rank-label::after {
+    position: absolute;
+    left: 8px;
+    top: -8px;
+    border-radius: 10px;
+    padding: 1px 1rem;
+    display: inline-block;
+}
+.thumb-info .thumb-info-wrapper .order.order1 ~ .rank-label::after{
+    content: "1위";
+    background-color: #f08781;
+    color: #fff;
+}
+.thumb-info .thumb-info-wrapper .order.order2 ~ .rank-label::after{
+    content:"2위";
+    background-color: #fed24b;
+    color: #fff;
+}
+.thumb-info .thumb-info-wrapper .order.order3 ~ .rank-label::after{
+    content:"3위";
+    background-color: #78c6f8;
+    color: #fff;
+}
+.prize_rank_container .lank_container{
+	margin-top: 0.5rem;
+}
+.prize_rank_container .lank_container .lank{
+	display: flex;
+	justify-content: flex-end;
+}
+.prize_rank_container .lank_container .lank span:first-child{
+	font-size: 15px;
+	align-self: center;
+}
+.prize_rank_container .lank_container .lank span:last-child{
+	font-size: 20px;
+	font-weight: 700;
+	align-self: center;
+	margin-left: 0.5rem;
+}
+
+
+
+/******************************** 분량 ********************************/
+.contest .detail_container .list .amount .list_content{
+	display: flex;
+}
+.contest .detail_container .list .amount .list_content .num{
+	position: relative;
+    border: 1px solid #ddd;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.contest .detail_container .list .amount .list_content .num .text{
+	position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    top: calc(50% - 12px);
+}
+.contest .detail_container .list .amount .list_content .explanation{
+	width: calc(100% - 80px);
+	padding-left: 1rem;
+}
+
+
+
+/******************************** 상세설명 ********************************/
+.contest .detail_container .list .description .list_content{
+	white-space: pre-line;
+}
+
+
+
+
+/******************************** 확정상금 ********************************/
+.contest .detail_container .list .prize_money .list_content{
+	display: flex;
+}
+.contest .detail_container .list .prize_money .wrap{
+	min-width: 130px;
+	white-space: nowrap;
+}
+.contest .detail_container .list .prize_money .wrap .title{
+	font-size: 13px;
+}
+.contest .detail_container .list .prize_money .wrap .content{
+	font-size: 20px;
+	font-weight: 300;
+}
+.contest .detail_container .list .prize_money .arithmetic{
+	font-size: 20px;
+    font-weight: 300;
+    align-self: center;
+    padding: 0 1rem;
+}
+.contest .detail_container .list .prize_money .totalPrize.wrap .content{
+	color:  #e36159;
+}
+
+
+/******************************** 몇위까지 선정 ********************************/
+.contest .detail_container .list .price .list_content .lank{
+	display: flex;
+	text-align: center;
+	margin-bottom: 0.5rem;
+}
+.contest .detail_container .list .price .list_content .lank i{
+    align-self: center;
+    margin-right: 0.5rem;
+}
+.contest .detail_container .list .price .list_content .one.lank i{
+	color: #ce4545;
+}
+.contest .detail_container .list .price .list_content .two.lank i{
+	color: #edb508;
+}
+.contest .detail_container .list .price .list_content .three.lank i{
+	color: #2e9de4;
+}
+.contest .detail_container .list .price .list_content .lank .title{
+	font-size: 13px;
+	min-width: 50px;
+}
+.contest .detail_container .list .price .list_content .lank .content{
+	font-weight: 300;
+    font-size: 20px;
+    white-space: nowrap;
+    min-width: 130px;
+    text-align: right;
+}
+
+
+
+/******************************** 남은기간/참여인원 ********************************/
+#count_applicant{
+	margin-top:1rem!important;
+	padding:0;
+}
+#count_applicant .count_card{
+	display: flex;
+	border:1px solid #ddd;
+	justify-content: space-around;
+	align-items: center;
+	height: 150px;
+}
+#count_applicant .remainDays{
+	font-size: 18px;
+	text-align: center;
+}
+#count_applicant .applicant_count{
+	font-size: 18px;
+	text-align: center;
+}
+
+
+
+/******************************** 썸네일 ********************************/
+.mainPictureContainer {position: relative;}
+.mainPictureContainer .nda-layer {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+}
+
+/******************************** 업로드 ********************************/
+#fileupload .cancel{
+	position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0rem 2rem;
+}
+
+
+
+/******************************** 취소 배당금 ********************************/
+.side_container .cancel_card{
+	border: 1px solid #ddd;
+	border-radius: 0;
+	margin-bottom: 1rem;
+}
+.side_container .cancel_card .card-header{
+	background-color: transparent;
+	border-bottom:0;
+	padding: 1rem;
+	text-align: center;
+	font-weight: 700;
+	font-size: 15px;
+    padding-bottom: 0.5rem;
+}
+.side_container .cancel_card .card-body{
+	padding: 0 1rem;
+}
+.side_container .cancel_card .card-body .expected_cancel_divided{
+	text-align: center;
+	margin-bottom: 0.5rem;
+}
+.side_container .cancel_card .card-body .expected_cancel_divided .count{
+	font-size: 20px;
+	font-weight: 700;
+	color: #0088cc;
+}
+.side_container .cancel_card .card-body .expected_cancel_divided .text{
+	font-size: 12px;
+}
+.side_container .cancel_card .card-body .description{
+	font-size: 12px;
+	padding: 0.5rem;
+	border-top: 1px solid #ddd;
+}
+.side_container .cancel_card .card-bottom{
+	padding: 1rem;
+	text-align: center;
+	padding-top: 0.5rem;
+}
+.side_container .cancel_card .card-bottom .btn{
+	border: 1px solid #0088cc;
+	color: #0088cc;
+	border-radius: 0;
+	font-size: 13px;
+	padding: 0.5rem;
+}
+
+
+
+/******************************** 반응형 ********************************/
+@media (min-width: 1200px) { 
+
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	.thumb-info .thumb-info-wrapper .img{
+		height: 200px;
+	}
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.thumb-info .thumb-info-wrapper .img{
+		height: 197.5px;
+	}
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.thumb-info .thumb-info-wrapper .img{
+		height: 227px;
+	}
+}
+@media (max-width: 575.98px) {
+	.thumb-info .thumb-info-wrapper .img{
+		height: 200px;
+	}
+	.contest .detail_container{
+		margin-bottom: 1rem; 
+	}
+	.contest .detail_container .list .price .list_content .lank .title{
+		text-align: left;
+	}
+	.contest .detail_container .list .prize_money .wrap{
+		min-width: 70px;
+	    margin-right: 0;
+	    margin: auto;
+	    margin-top: 0;
+	}
+	.contest .detail_container .list .prize_money .wrap .content{
+		font-size: 15px;
+	}
+	.contest .detail_container .list .price .list_content .lank .content{
+		font-size: 15px;
+	}
+}

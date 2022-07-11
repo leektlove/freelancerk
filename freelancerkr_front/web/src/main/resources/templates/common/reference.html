@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/reference.css">
+</head>
+
+	
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>자료실 목록</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+        <!-- 페이지헤더// -->
+
+        <!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item mb-0">
+						<a th:href="@{/common/notice}" class="nav-link d-flex active">
+							<span>Blog</span>
+							<span class="count_alarm" th:text="${totalNotice}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/common/reference}" class="nav-link d-flex disabled">
+							<span>자료실</span>
+							<span class="count_alarm" th:text="${totalPageInfo.countOfTotalElements}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+		
+		<section>
+			<div class="container">
+				<div class="content-body">  
+					<div class="container pr-0 pl-0">
+						<div class="container_inner">
+							<div id="sub_search" class="mt-5">
+								<form id="searchForm" action="#" th:action="@{/common/reference}" method="get">
+									<div class="row">
+										<div class="col-lg-7 sub_search_text">
+											총 <span th:text="${totalPageInfo.countOfTotalElements}"></span>건의 자료가 있습니다.
+										</div>
+										<div class="col-lg-5 sub_search_date">
+											<!-- <div class="input-group">
+												<input th:name="searchWord" th:value="${searchWord}" type="text" class="search_input form-control" size="50"
+												 placeholder="제목, 내용을 입력해 주세요">
+												 <span class="input-group-append">
+						                            <button class="btn btn-dark search_submit" type="submit">
+						                                검색
+						                            </button>
+						                        </span>
+											</div> -->
+										</div>
+									</div>
+								</form>
+							</div>
+							<table class="boardlist mb-5">
+								<tbody>
+									<tr>
+										<th>등록일</th>
+										<th>제목</th>
+										<th>조회수</th>
+									</tr>
+									<tr th:each="reference, iter : ${referencePage.content}">
+										<td th:text="${#temporals.format(reference.createdAt, 'yyyy-MM-dd')}">2018-10-18</td>
+										<td class="tl">
+											<a th:href="@{/common/reference(referenceId=${reference.id})}" class="subject_con">
+												<span th:text="${reference.title}" class="subject">회원간 계약서 - 양식</span>
+												<!-- <span th:if="${iter.index == 0}" class="subject_new">
+													<img src="/static/images/icon_new.gif" align="absmiddle">
+												</span> -->
+											</a>
+										</td>
+										<td th:text="${reference.hits}">52</td>
+									</tr>
+								</tbody>
+							</table>
+							<!-- <div class="paging_con">
+								<th:block th:each="i: ${#numbers.sequence(0, totalPageInfo.countOfTotalPages - 1)}">
+									<span th:if="${currentPageNumber == i} " th:text="${i}+1" class="current">[[${i}+1]]</span>
+									<span th:unless="${currentPageNumber == i} ">
+										<a th:href="@{/common/reference(currentPageNumber=${i}, searchWord=${searchWord})}" class="btnPageNumber"
+										 th:text="${i}+1">1</a>
+									</span>
+								</th:block>
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+			
+	</div>
+	
+
+</html>

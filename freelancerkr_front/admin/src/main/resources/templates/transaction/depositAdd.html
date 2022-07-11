@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/cash.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/transactionHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 에스크로 등록</h1>
+					<form id="form" action="/escrow-logs" method="post">
+						<input type="hidden" name="id" th:value="${escrowLog?.id}"/>
+						<input type="hidden" name="projectId" th:value="${item?.id}"/>
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>입금(일, 시간)</th>
+									<td>
+										<div style="margin-bottom:10px;">
+											<input type="text" name="date" value="" size="20" class=" search_date required hasDatepicker" required="" title="날짜">
+											<button type="button" class="btn-black medium" onclick="today()">오늘</button>
+										</div>
+
+										<div style="margin-bottom:10px;">
+											<select name="hour" class="required" required="" title="시간">
+												<option value="">-- 시 --</option>
+												<option th:value="${i}" th:text="|${i}시|" th:each="i: ${#numbers.sequence(0, 23)}"></option>
+											</select>
+
+											<select name="minute" class="required" required="" title="분">
+												<option value="">-- 분 --</option>
+												<option th:value="${i}" th:text="|${i}분|" th:each="i: ${#numbers.sequence(0, 59)}"></option>
+											</select>
+
+											<select name="second" class="required" required="" title="초">
+												<option value="">-- 초 --</option>
+												<option th:value="${i}" th:text="|${i}초|" th:each="i: ${#numbers.sequence(0, 59)}">
+											</select>
+
+											<span class="btn-black medium">현재 시간</span>
+										</div>
+										(클라이언트 나의 예치금액 순서 출력을 위한 시간 입력)
+									</td>
+								</tr>
+								<tr>
+									<th>클라이언트</th>
+									<td>
+										<input type="hidden" name="clientUserId" th:value="${item?.postingClient?.id}" />
+										<input type="text"  readonly="" required="" class="readonly required" th:value="${item?.postingClient?.name}" style="width:400px;" title="클라이언트">
+										<div id="">예치잔액(VAT제외) : <span id="cm_price" style="color:#d50c0c; font-weight:bold;" th:text="${#numbers.formatInteger(totalDepositMoneyByUser, 0, 'COMMA')}">0</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>입금</th>
+									<td>
+										<table class="boardform">
+											<colgroup>
+												<col width="34%">
+												<col width="33%">
+												<col width="33%">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th style="text-align:center;">총입금액</th>
+													<th style="text-align:center;">공급가액</th>
+													<th style="text-align:center;">부가가치세</th>
+												</tr>
+												<tr>
+													<td style="text-align:center;">
+														<input type="number" name="depositAmount" th:value="${item?.totalEscrowAmount}" required="" class="required" title="총입금액" maxlength="13"> 원
+													</td>
+													<td style="text-align:center;">
+														<span id="supplyAmount"></span>
+													</td>
+													<td style="text-align:center;">
+														<span id="vatAmount"></span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<th>입금내용</th>
+									<td colspan="3">
+										<textarea rows="20" cols="100" name="memoFromAdmin"></textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<h4 style="margin-top: 20px;">이전 입금처리 내역</h4>
+						<table class="boardform">
+							<tbody>
+							<tr>
+								<th style="text-align:center;">입금시각</th>
+								<th style="text-align:center;">총입금액</th>
+								<th style="text-align:center;">공급가액</th>
+								<th style="text-align:center;">부가가치세</th>
+								<th style="text-align:center;">메모내용</th>
+								<th style="text-align:center;"></th>
+							</tr>
+							<tr th:each="escrowItem: ${item?.escrowLogs}">
+								<td th:text="${#temporals.format(escrowItem.depositAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+								<td th:text="${#numbers.formatInteger(escrowItem.amountWhVat, 0, 'COMMA')}"></td>
+								<td th:text="${#numbers.formatInteger(escrowItem.amount, 0, 'COMMA')}"></td>
+								<td th:text="${#numbers.formatInteger(escrowItem.amountWhVat - escrowItem.amount, 0, 'COMMA')}"></td>
+								<td th:text="${escrowItem.memoFromAdmin}"></td>
+								<td><button type="button" class="btn-black medium" th:onclick="|deleteItem(${escrowItem.id})|">삭제</button></td>
+							</tr>
+							</tbody>
+						</table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="저장" class="btn-color large">
+								<a href="/transaction/depositList" class="btn-colorline large">목록</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+		<script>
+			function today() {
+				$('input[name=date]').val(moment().format('YYYYMMDD'));
+			}
+			$(document).on('keyup', 'input[name=depositAmount]', function() {
+				var amount = 1*$(this).val();
+				var supplyAmount = Math.round(amount / 1.1);
+				$('span#vatAmount').text(amount - supplyAmount);
+				$('span#supplyAmount').text(supplyAmount);
+			});
+
+			$(document).ready(function() {
+				$('#form').submit(function(e) {
+					if (!confirm('입금처리 하시겠습니까?')) {
+						e.preventDefault();
+						return false;
+					}
+					if (!$('input[name=clientUserId]').val() || !$('input[name=date]').val() || !$('input[name=depositAmount]').val()
+							|| !$('select[name=hour] option:selected').val() || !$('select[name=minute] option:selected').val()
+							|| !$('select[name=second] option:selected').val()) {
+						e.preventDefault();
+						alert('필수 값을 입력해 주세요');
+						return false;
+					}
+				});
+			});
+
+			function deleteItem(itemId) {
+				if (!confirm('해당내역을 삭제하시겠습니까?')) {
+					return;
+				}
+
+				$.ajax({
+					type: 'DELETE',
+					url: '/escrow-logs/' + itemId,
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							alert('성공적으로 요청되었습니다');
+							location.reload();
+						} else {
+							alert('요청 중 문제가 발생했습니다');
+						}
+					},
+					error: function(error) {
+						console.error(error);
+						alert('문제가 발행했습니다.');
+					}
+
+				})
+			}
+		</script>
+	</section>
+	<!-- container//-->
+
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){
+    	setChecked('replyYnChk', 'replyYn');
+    	setActiveChecked('activeChk', 'active');
+    	
+	});    
+
+</script>
+
+
+<script th:inline="javascript">
+	var report = null;
+
+	/*<![CDATA[*/
+   		 report = /*[[${reportView.report}]]*/ "";
+	/*]]>*/
+ 
+</script>
+
+<script>
+function saveContent(){
+	//var activeChk = $("#activeChk").attr('checked') ? 'Y' : 'N';
+	//$("#active").val(activeChk);		
+	
+	setActive('activeChk', 'active');
+	setYn('replyYnChk', 'replyYn');
+	
+	form1.submit();
+}
+
+function editContent(){	
+	setActive('activeChk', 'active');
+	setYn('replyYnChk', 'replyYn');
+	
+	if($('#contentType').val()=='9000'){
+		$('#vendor').val($('#noticeType').val());
+	}
+	showModal("수정 하시겠습니까?", true, function(){
+		form1.action = "/w1/content/save_content";
+		form1.submit();
+	});
+		
+}
+
+function deleteContent(){
+	showModal("삭제 하시겠습니까?", true, function(){
+		form1.action = "/w1/content/delete_content";
+		form1.submit();
+	});
+}
+
+function goList(){
+	location.href="/w1/content/go_list";		
+}
+
+function getRow(content, count){
+	var row = "\n";
+	row = row + "<tr class='even pointer'>                                     ";
+    row = row + "  <td class=''>"+ content.seq + "</td>         ";
+    row = row + "  <td class='' style='vertical-align: middle;'><img src='" + content.ownerImgUrl + "' class='img-responsive img-rounded' style='width:70px;height:75px;'></td>";
+    row = row + "  <td class=''>"+ content.ownerName + "</td>";
+    // row = row + "<td class=''>"+ content.content + "</td>";
+    // <input type='text' class='form-control' id='replyContent' key='' >
+    // <textarea class="form-control" required="required" rows="2" placeholder="" name="replyContent" id="replyContent"></textarea>
+    row = row + "<td class=''>";
+    row = row + "<textarea type='text' class='form-control' id='replyContent" + content.seq + "' key='" + content.seq + "' value='" + content.content + "' rows='2'>" + content.content + "</textarea>";    
+    row = row + "</td>";
+    
+    
+    row = row + "<td class=''>";
+    
+    row = row + "<div class='btn-group'>                                                                                                                                  ";
+    row = row + "  <button type='button' class='btn btn-danger' onClick='modifyReply(" + content.seq + ")'>수정</button>                                                                                             ";
+    row = row + "  <button type='button' class='btn btn-danger dropdown-toggle dropdown-toggle-split' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>  ";
+    row = row + "    <span class='sr-only'>Toggle Dropdown</span>                                                                                                         ";
+    row = row + "  </button>                                                                                                                                              ";
+    row = row + "  <div class='dropdown-menu'>                                                                                                                            ";
+    row = row + "    <a class='dropdown-item' onClick='deleteReply(" + content.seq + ")'>삭제</a>                                                                                                           ";
+    row = row + "  </div>                                                                                                                                                 ";
+    row = row + "</div>                                                                                                                                                   ";
+    
+    //row = row + "<td class=''>";
+    row = row + "</td>";
+    
+    
+    row = row + "</tr>                                      ";
+	
+	return row;
+}
+
+var replyList = null;
+
+function getReplyId(seq){
+	var result = null;
+	$.each(replyList, function(index, item) {	           	
+		if(item.content.seq == seq){
+			console.log(item.content.contentId);			
+			result = item.content.contentId;			
+		}		
+   });
+   return result;
+}
+
+function deleteMainImg(){
+	showModal("이미지 삭제 하시겠습니까?", true, function(){
+		var param = {};        	    
+	    param.contentId = $("#contentId").val();    
+	    param = JSON.stringify(param);
+		
+		$.ajax({
+	        url : "/w1/content/delete_mainimg",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(result){
+	        	console.log("SUCCESS : ", result.code);
+	            if(result.code == "0000"){  
+	            	$("#mainImg").attr("src", result.mainUrl);
+	            }
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });	
+	});
+}
+
+function search(page, perPageNum){
+	// $('#pagination').empty();
+	
+	var param = {};
+    param.contentId = $("#contentId").val();    
+	
+	
+    if(page !=null){
+    	param.page = page;
+    }
+    
+    if(perPageNum !=null){
+    	param.perPageNum = perPageNum;
+    }
+    
+    param = JSON.stringify(param);
+	
+	$('#listBody').empty();
+    $('#pagination').empty();
+    $("#replyContent").val("");
+
+	$.ajax({
+           type: "POST",           
+           url: "/w1/content/reply_list",
+           data: param,
+           contentType:"application/json; charset=UTF-8",
+	       dataType:"json",
+           success: function (data) {
+               console.log("SUCCESS : ", data.code);
+               var results = data.list;
+	           var rows = "";
+	           $.each(results, function(index, item) {	           	
+	           	rows = rows + getRow(item.content, item.count);
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+			   });	            
+            	            
+               $('#listBody').append(rows);
+            
+               var paging = getPageDiv(data.paging);	            
+               $('#pagination').append(paging);
+               
+               replyList = results;
+           },
+           error: function (e) {
+               console.log("ERROR : ", e);
+               alert("처리 중 오류가 발생하였습니다.");
+           }
+       });
+	
+}
+
+function changeContentType(type){
+	var row;
+	if(type=='9000'){
+		$('#noticeDiv').show();
+		$('#vendorDiv').hide();
+	}else{
+		$('#vendorDiv').show();
+		$('#noticeDiv').hide();
+	}
+}
+
+
+</script>
+
+	<div class="">
+		<div class="row">		
+		
+			<div class="col-md-12 col-sm-12">
+				<div class="x_panel">
+					
+					<div class="x_title">
+						<h2>
+							Report 상세
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>							
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="x_content">
+						
+						<form class="form-horizontal form-label-left" th:object=${reportView.report} th:action="@{/w1/report/save}" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
+							<input type="hidden" name="seq" id="seq" th:value="*{seq}" />
+							<input type="hidden" name="reportId" id="reportId" th:value="*{reportId}" />																				
+							
+							
+							<span class="section">Report Info : <span th:text="*{seq}"></span></span>
+							
+						    <div class="form-group row align-items-center">
+								<label class="control-label col-md-2 col-sm-2 ">Report 구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" name="reportType" id="reportType" >    		
+							    		<option th:each="reportType : ${T(com.beautyjourney.beautage.entity.enums.ReportType).values()}" 
+							        		th:value="${reportType.code}" th:text="${reportType.val}"></option>
+									</select>									
+								</div>
+								
+							</div>
+							<div class="form-group row align-items-center">
+								<label class="control-label col-md-2 col-sm-2 ">유저</label>
+								<div class="col-md-10 col-sm-10 ">
+									<input type="text" class="form-control" placeholder="제목" name="title" id="title" th:value="*{userId}">
+								</div>
+							</div>
+								
+								
+							<div class="form-group row" id="vendorDiv">
+								<label class="control-label col-md-2 col-sm-2 ">신고 피드</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="화면에보이는 등록자" name="vendor" id="vendor" th:value="*{contentId}">
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">위치명</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="위치명" name="geoName" id="geoName">
+								</div>								
+							</div>	
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">기간</label>
+								<div class="col-md-2 col-sm-2 ">	
+									<input type="text" class="form-control" placeholder="시작일자" name="startDate" id="startDate" th:value="*{startDate}">								
+								</div>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="text" class="form-control" placeholder="종료일자" name="endDate" id="endDate" th:value="*{endDate}">									
+								</div>
+								<div class="col-md-6 col-sm-6 ">
+									<div class="">
+										<label>
+											<input type="checkbox" class="js-switch" checked name="replyYnChk"  id="replyYnChk" /> 댓글 여부
+										</label>
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group row align-items-center">
+								<label class="control-label col-md-2 col-sm-2 ">공개 구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" name="viewType" id="viewType" th:value="*{viewType}">
+										<option value="">선택하세요</option>										
+										<option value="9999" th:selected="*{viewType}=='9999'">전체공개</option>
+										<option value="1000" th:selected="*{viewType}=='1000'">나만보기</option>
+										<option value="2000" th:selected="*{viewType}=='2000'">Follower보기</option>
+										<option value="8000" th:selected="*{viewType}=='8000'">관리자보기</option>
+									</select>
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">Content 상태<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" name="status" id="status">
+										<option value="">선택하세요</option>
+										<option value="0000" th:selected="*{status}=='0000'">등록</option>	
+									</select>
+								</div>								
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">Link</label>
+								<div class="col-md-10 col-sm-10 ">									
+									<input type="text" class="form-control" placeholder="링크값이 입력되면 상세 페이지 조회 없이 링크로 이동됨" name="mainLink" id="mainLink" th:value="*{mainLink}">
+								</div>																
+
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">대표 이미지</label>
+								<div class="col-md-4 col-sm-4 ">
+									<img class='img-responsive' style='width:70px;height:75px;' th:src="*{mainUrl}" id="mainImg">
+									<button type="button" class="btn btn-primary" onClick="deleteMainImg()">이미지 삭제</button>
+								</div>																
+								<label class="control-label col-md-2 col-sm-2 ">대표 이미지 변경</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="file" class="form-control" placeholder="" name="mainUploadFile" id="mainUploadFile" th:value="*{mainFilename}">
+								</div>
+							</div>							
+							
+							<div class="form-group row align-items-center">
+								<label class="control-label col-md-2 col-sm-2 ">Hash Tag</label>
+								<div class="col-md-10 col-sm-10 ">
+									<input id="tags_1" type="text" class="tags form-control" value="" name="hashTag"  />
+									<div id="suggestions-container" style="position: relative; float: left; width: 200px; margin: 10px;"></div>
+								</div>
+							</div>
+							
+							<div class="control-group row ">								
+								<div class="col-md-12 col-sm-12  justify-content-end" style="display: flex;">
+									<a class="btn btn-app">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.viewCnt}" >102</span>
+		                    			<i class="fa fa-eye"></i> Views
+		                  			</a>
+		                  			
+									<a class="btn btn-app">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.likeCnt}" >102</span>
+		                    			<i class="fa fa-heart"></i> Likes
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.favCnt}">102</span>
+		                    			<i class="fa fa-star"></i> Favorite
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app" onClick="showReply()">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.favCnt}">102</span>
+		                    			<i class="fa fa-comment"></i> Reply
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app"  onClick="goList()">		                    			
+		                    			<i class="fa fa-list"></i> List
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app" onClick="editContent()">		                    			
+		                    			<i class="fa fa-edit"></i> Edit
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app" onClick="deleteContent()">		                    			
+		                    			<i class="fa fa-remove"></i> Delete
+		                  			</a>
+		                  			
+								</div>
+							</div>
+							
+							<input type="hidden" name="deleteResourceId" id="deleteResourceId" value="" />
+														
+							<div id="resourceTemp" th:each="resource : ${contentView.resourceList}">
+								<span class="section">Resource : <span th:text="${resource.seq}"></span></span>								
+								<div class="form-group row">									
+									
+									<div class="col-md-12 col-sm-12 " th:if="${resource.resourceType.equals('1000')}">
+										<!--모서리를 둥글게-->
+										<img src="./images/tree.jpg" 
+										th:attr="src=${resource.resourceUrl}"
+										class="img-responsive img-rounded"> 					
+									</div>
+									
+									<div class="col-md-12 col-sm-12 " th:if="${resource.resourceType.equals('1040')}">
+										<!--모서리를 둥글게-->
+										<img src="./images/tree.jpg" 
+										th:attr="src=${resource.resourceUrl}"
+										class="img-responsive img-rounded"> 					
+									</div>
+									
+									<div class="col-md-12 col-sm-12 " th:if="${resource.resourceType.equals('1010')}">
+										<div class="video-container">
+										  	<video width="100%" height="auto" 
+											  id="v1"
+											  th:attr="src=${resource.resourceUrl}"
+											  src="" 
+											  loop muted autoplay 
+											  oncontextmenu="return false;"
+											  playsinline    
+											  preload											  
+											  ></video>											
+										</div>					
+									</div>
+									
+									
+									<div class="col-md-12 col-sm-12 " th:if="${resource.resourceType.equals('1020')}">	
+										<style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
+										<div class='embed-container'>											
+											<iframe width="560" height="315" th:attr="src=${resource.resourceUrl}" src="https://www.youtube.com/embed/TQvgUW8Ydhs?controls=0" frameborder="0" 
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+										</div>							
+									</div>
+										
+									
+								</div>
+								
+								<div class="form-group row align-items-center">
+									<label class="control-label col-md-2 col-sm-2 ">Resource 제목</label>
+									<div class="col-md-10 col-sm-10 ">
+										<input type="text" class="form-control" placeholder="제목" name="resourceTitle" id="resourceTitle" th:value="${resource.resourceTitle}">
+									</div>
+								</div>
+								
+								<div class="form-group row align-items-center">
+									<label class="control-label col-md-2 col-sm-2 ">Resource 내용 </label>
+									<div class="col-md-10 col-sm-10 ">
+										<textarea class="form-control" required="required" rows="5" placeholder="" name="resourceContent" id="resourceContent" th:text="${resource.resourceContent}">
+										</textarea>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<div class="col-md-12 col-sm-12  justify-content-end" style="display: flex;">	
+									
+										<a class="btn btn-app" style="font-size:1em;">
+										순번:
+											<span th:text="${resource.orders}" style="font-size:1.5em;"></span>
+		                  				</a>
+		                  											
+										<a class="btn btn-app">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.likeCnt}" >102</span>
+		                    			<i class="fa fa-heart"></i> Likes
+		                  				</a>
+		                  				
+										<a class="btn btn-app" 
+										th:attr="onClick=|javascript:editResource('${resource.seq}')|"
+										>	
+										  <i class="fa fa-edit"></i> Edit
+			                  			</a>
+			                  						                  			
+			                  			<a class="btn btn-app" 
+			                  			th:attr="onClick=|javascript:deleteResource('${resource.contentId}', '${resource.resourceId}')|"
+			                  			>		                    			
+			                    			<i class="fa fa-remove"></i> Delete
+			                  			</a>	
+									</div>									
+								</div>
+							</div>
+							
+							</form>
+							
+							<span class="section" style="text-align: right;padding-right: 10px;"><i class="fa fa-plus-square" onClick="addResource()" id="addSection"></i></span>
+							
+							<!-- --------- resource 추가 모달 start --------  -->
+							<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="resourceForm">
+							    <input type="hidden" name="resourceSeqM" id="resourceSeqM" value="0" />
+							    <input type="hidden" name="contentIdM" id="contentIdM" value="" />
+							    <input type="hidden" name="resourceIdM" id="resourceIdM" value="" />
+							    <input type="hidden" name="resourceIdM" id="resourceIdM" value="" />
+							    
+			                    <div class="modal-dialog modal-lg">
+			                      <div class="modal-content">
+			                        <div class="modal-header">
+			                          <h4 class="modal-title" id="myModalLabel">Resource <span id="resourceSeqSpan"></span></h4>
+			                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+			                          </button>
+			                        </div>
+			                        
+			                        <div class="modal-body">
+									  <div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">Resource 구분<span class="required">*</span>
+										</label>
+										<div class="col-md-5 col-sm-5 ">
+											<select required class="form-control" name="resourceTypeM" id="resourceTypeM">
+												<option value="">선택하세요</option>
+												<option value="1000">이미지</option>
+												<option value="1010">동영상</option>
+												<option value="1020">YouTube</option>
+												<option value="1040">제품순번</option>
+											</select>
+										</div>		
+									  </div>
+									  <div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">Resource 제목<span class="required">*</span></label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" class="form-control" placeholder="제목" name="resourceTitleM" id="resourceTitleM">
+										</div>
+								      </div>
+									  <div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">Resource 내용<span class="required">*</span></label>
+										<div class="col-md-9 col-sm-9 ">								
+											<textarea class="form-control" required="required" rows="5" placeholder="" name="resourceContentM" id="resourceContentM"></textarea>
+										</div>
+									  </div>							
+								
+									  
+									  <div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">순번</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" class="form-control" value="0" name="resourceOrderM" id="resourceOrderM">											
+										</div>
+									  </div>		
+									  
+									  
+									  <div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">Link/YouTube Url</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" class="form-control" placeholder="" name="urlM" id="urlM">
+										</div>
+									  </div>
+									  <div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">Resource</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="file" class="form-control" placeholder="" name="fileNameM" id="fileNameM">
+										</div>
+									  </div>									  
+			                        </div>
+			                        
+									<div class="modal-footer">
+			                          <button type="button" class="btn btn-primary" onClick="saveResource()">저장하기</button>
+			                          <button type="button" class="btn btn-secondary" onClick = "hideResource()">닫기</button>			                          
+			                        </div>
+			
+			                      </div>
+			                    </div>
+			                </div>
+							<!-- --------- resource 추가 모달 end --------  -->
+
+							<!-- --------- 댓글 관리 모달 start --------  -->
+							<div class="modal fade modeless" tabindex="-1" role="dialog" aria-hidden="true" id="replyForm">
+							    
+			                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+			                      <div class="modal-content">
+			                        <div class="modal-header">
+			                          <h4 class="modal-title" id="myModalLabel">댓글 <span id="resourceSeqSpan"></span></h4>
+			                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+			                          </button>
+			                        </div>
+			                        
+			                        <div class="modal-body">
+									
+									 <span class="section"></span>	
+									 
+									 <div class="table-responsive" style="margin-bottom: 16px;">
+									    <table class="table table-striped jambo_table bulk_action">
+									      <thead>
+									        <tr class="headings">									          
+									          <th class="column-title">순번 </th>
+									          <th class="column-title">등록자</th>
+									          <th class="column-title">등록자명</th>
+									          <th class="column-title">댓글내용</th>
+									          <th class="column-title">구분</th>
+									        </tr>
+									      </thead>
+									      <tbody id="listBody">            
+									      </tbody>
+									    </table>									    
+									    <div class="col-md-12 col-sm-12" id="pagination" style="display: flex;justify-content: center;">
+										   <div class="row">
+									            <div class="btn-group" role="group">
+									              <button type="button" class="btn btn-secondary">이전</button>
+									              
+									              <button type="button" class="btn btn-secondary">1</button>
+									              <button type="button" class="btn btn-secondary">2</button>
+									              <button type="button" class="btn btn-secondary">3</button>
+									               
+									              <button type="button" class="btn btn-secondary">다음</button>
+									            </div>
+									          </div>
+									     </div> 
+									 </div>
+								     
+									 
+									 <span class="section"></span>
+									  
+									 <div class="form-group row">
+										<label class="control-label col-md-2 col-sm-2 ">댓글입력<span class="required">*</span></label>
+										<div class="col-md-10 col-sm-10 ">								
+											<textarea class="form-control" required="required" rows="2" placeholder="" name="replyContent" id="replyContent"></textarea>
+										</div>
+									  </div> 
+			                        
+			                        </div>
+			                        
+									<div class="modal-footer">
+			                          <button type="button" class="btn btn-primary" onClick="saveReply()">저장하기</button>
+			                          <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>			                          
+			                        </div>
+			
+			                      </div>
+			                    </div>
+			                </div>
+							<!-- --------- 댓글 관리 모달 end --------  -->
+
+													
+					</div>
+					
+				</div>
+			</div>
+			
+				<!-- -----------------  -->
+		</div>
+	</div>
+	
+	
+ 
+</th:block>
+
+    
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/audition.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/style.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui.css">
+	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-noscript.css"></noscript>
+	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui-noscript.css"></noscript>
+	
+    <!--<link rel="stylesheet" href="/static/css/freelancer/profile/modify.css">-->
+	<link rel="stylesheet" href="/static/vendor/slim-image-cropper/slim.min.css">
+	
+</head>
+	<script src="/static/js/freelancer/profile/modify.js"></script>
+	<script src="/static/js/freelancer/profile/modify-step.js"></script>
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/auditionHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+				<h1>■ 오디션 등록</h1>
+
+				<form name="" id="" action="/audition/save" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="auditionId" th:value="${audition.auditionId}" id="auditionId">
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>이름</th>
+								<td>
+									<input type="text" name="name" th:value="${audition.name}" id="" title="타이틀" maxlength="20">								</td>
+							</tr>
+							<tr>
+								<th>설명</th>
+								<td>
+									<input type="text" name="text" th:value="${audition.text}" id="" maxlength="100" title="설명">
+								</td>
+							</tr>
+								<tr>
+								<th>상태</th>
+								<td>
+									<select name="status" th:if="${audition.status=='2000'}">
+									    <option value="2000" selected>정상</option>
+									    <option value="0000">종료</option>
+									</select>
+									<select name="status" th:if="${audition.status=='0000'}">
+									    <option value="2000">정상</option>
+									    <option value="0000" selected>종료</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>일시</th>
+								<td>
+									<input type="datetime-local" id="dateTime" name="auditionAt" th:value="${audition.auditionAt}">
+								</td>
+							</tr>
+							<tr>
+								<th>사진</th>
+								<td colspan="3">
+									<div style="margin-top:10px;">
+										<input type="file" name="file" id="fileVal" class="imgext imgsize">
+									</div>
+									<div style="width:300px; margin-top:20px;">
+										<img th:src="${audition.imageUrl}" style="margin-bottom: 10px; width:100%;">
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tc">
+							<input type="submit" value="저장" class="btn-color large">
+							<a href="/audition/list" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+				</form>
+				<!-- 오디션 지원한 사람 -->
+				<div style="margin-top: 30px ;">
+					<div style=" margin-bottom: 20px;">
+						<h1>■ 오디션 지원자</h1>
+					</div>
+					<div class="passTypeDiv">
+						<span class="passTypeSpan onPassType" passok = "N" failok="N" applylistnum = "0">전체보기</span>
+						<span class="passTypeSpan" passok = "Y" failok="N" passnum="1" applylistnum = "-1">미합격자</span>
+						<span class="passTypeSpan" passok = "Y" failok="Y" passnum="2" applylistnum = "1">1차합격자</span>
+						<span class="passTypeSpan" passok = "Y" failok="Y" passnum="3" applylistnum = "2">2차합격자</span>
+						<span class="passTypeSpan" passok = "N" failok="Y" applylistnum = "3">3차합격자</span>
+					</div>
+						<table class="boardlist" >
+								<tbody>
+								<tr>
+									<th rowspan="2">
+										<input type="checkbox" name="applyAllCheck" value="1" id="" onclicK="changeAllCheck();">
+									</th>
+									<th rowspan="2">순서</th>
+									<th rowspan="2">이름</th>
+									<th rowspan="2">이메일</th>
+									<th rowspan="2">전화번호</th>
+									<th rowspan="2">지원일시</th>
+										<th rowspan="2">1차합격유무</th>
+										<th rowspan="2">2차합격유무</th>
+									<th rowspan="2">3차합격유무</th>
+									<th rowspan="2">상세보기</th>
+								</tr>
+								<tr>
+								</tr>
+								<div id="applyListBox">
+									<tr th:each="item: ${list}" style="line-height: 0.5;" id = "applyListBox">
+										<td>
+											<input type="checkbox" name="applyUserCheck" th:value="${item.id}" class="applyCheckList" onclick="checkAllList(event)">
+										</td>
+										<td th:text="${item.id}">
+										</td>
+										<td th:text="${item.name}"></td>
+										<td th:text="${item.email}"></td>
+										<td th:text="${item.cellphone}"></td>
+										<td th:text="|${#temporals.format(item.createdAt, 'yy-MM-dd HH:mm:ss')}|"></td>
+										<td th:text="${item.pass1}"></td>
+										<td th:text="${item.pass2}"></td>
+										<td th:text="${item.pass3}"></td>									
+										<td>
+											<a th:href="@{/freelancer/detail/{id}(id = ${item.uid})}" class="btn-black medium">보기</a>
+										</td>
+									</tr>
+								</div>
+								</tbody>
+							</table>
+							<div class="boardbutton">
+								<div class="tc">
+									<input type="button" value="합격" class="btn-black auditionBtn applyPassBtn" onclick="auditionPass()">
+									<input type="button" value="합격취소" class="btn-black auditionBtn applyFailBtn" onclick="auditionFail()">
+									<input type="button" value="TXT 뽑기" class="btn-black auditionBtn">
+								</div>
+							</div>
+							<script>
+								//$("input:checkbox[name=applyUserCheck]").prop("checked",false);
+								//$("input:checkbox[name=applyUserCheck]").prop("checked",true);
+								$(document).on('click', '.passTypeSpan', function(e){
+									$(".passTypeSpan").removeClass('onPassType');
+									$(this).addClass('onPassType');
+									passBtnOnCheck();
+								});
+								function changeAllCheck(){
+									if( $("input:checkbox[name=applyAllCheck]").is(":checked")){
+										$("input:checkbox[name=applyUserCheck]").prop("checked",true);
+									}else{
+										$("input:checkbox[name=applyUserCheck]").prop("checked",false);
+									}
+								}									
+								function checkAllList(e) { 
+									let checkCount = 0;
+									document.querySelectorAll(".applyCheckList").forEach(function(v, i) {
+										if(v.checked === false){
+											checkCount++;
+										}
+									});
+									if(checkCount>0) {
+										$("input:checkbox[name=applyAllCheck]").prop("checked",false);
+									} else if(checkCount === 0) {
+										$("input:checkbox[name=applyAllCheck]").prop("checked",true);
+									}
+								}
+								function passBtnOnCheck(){
+									if($(".onPassType").attr('passok')=='Y'){
+										$(".applyPassBtn").show();
+									}else{
+										$(".applyPassBtn").hide();
+									}
+									if($(".onPassType").attr('failok')=='Y'){
+										$(".applyFailBtn").show();
+									}else{
+										$(".applyFailBtn").hide();
+									}
+									if($(".onPassType").attr('passnum')){
+										$(".applyPassBtn").val($(".onPassType").attr('passnum')+"차 합격");									
+									}
+									var num = $(".onPassType").attr('applylistnum');
+								}
+								function auditionPass(){
+									var passNumArray = [];
+									$("input:checkbox[name=applyUserCheck]:checked").each(function(){
+										var checkVal = $(this).val();
+										console.log(checkVal+"를 합격처리합니다.");
+									});	
+								}
+								function auditionFail(){
+									var passNumArray = [];
+									$("input:checkbox[name=applyUserCheck]:checked").each(function(){
+										var checkVal = $(this).val();
+										console.log(checkVal+"를 합격취소 처리합니다.");
+									});	
+								}
+								passBtnOnCheck();
+								
+								
+								function getRow(apply){
+									var date = ''+apply.auditionAt;
+									var row = '';
+									row = row + '<td>';
+									row = row + '	<input type="checkbox" name="applyUserCheck" value="'+apply.id+'" class="applyCheckList" onclick="checkAllList(event)">';
+									row = row + '</td>';
+									row = row + '<td>'+apply.id;
+									row = row + '</td>';
+									row = row + '<td>'+apply.name+'</td>';
+									row = row + '	<td>'+apply.email+'</td>';
+									row = row + '<td>'+apply.cellphone+'</td>';
+									row = row + '<td>'+date.substr(0,10)+' '+date.substr(11,5)+'</td>';
+									row = row + '<td>'+apply.pass1+'</td>';
+									row = row + '<td>'+apply.pass2+'</td>';
+									row = row + '<td>'+apply.pass3+'</td>';									
+									row = row + '<td>';
+									row = row + '	<a href="/freelancer/detail/'+apply.id+'" class="btn-black medium">보기</a>';
+									row = row + '</td>';
+									return row;
+								}
+							</script>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- for file upload start -->
+		<script src="/static/vendor/jquery-file-uploader/js/vendor/jquery.ui.widget.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+		<script src="https://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.iframe-transport.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-process.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-image.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-audio.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-video.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-validate.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-ui.js"></script>
+		<!-- for file upload end -->
+		<script>
+			$(function () {
+				'use strict';
+
+				// Initialize the jQuery File Upload widget:
+				$('#fileupload').fileupload({
+					// Uncomment the following to send cross-domain cookies:
+					//xhrFields: {withCredentials: true},
+					// url: '/files/for-jquery-upload'
+					maxNumberOfFiles: 2,
+					maxFileSize: 100000000,
+					messages: {
+						maxFileSize: '추가 이미지 혹은 동영상은 100MB 이상 업로드 할 수 없습니다.',
+						maxNumberOfFiles: "추가 이미지 혹은 동영상은 2개 이상 업로드 할 수 없습니다."
+					}
+				}).on('fileuploadadd', function (e, data) {
+					data.context = $('<div class="col-md-3 videopreview" />').appendTo('#files');
+					$.each(data.files, function (index, file) {
+						var node = $('<p/>');
+						if (!index) {
+							node
+									.append('<br>')
+						}
+						node.appendTo(data.context);
+					});
+				});
+				// Load existing files:
+				$('#fileupload').addClass('fileupload-processing');
+				$.ajax({
+					// Uncomment the following to send cross-domain cookies:
+					//xhrFields: {withCredentials: true},
+					url: '/audition/files/for-jquery-upload',
+					dataType: 'json',
+					context: $('#fileupload')[0]
+				}).always(function () {
+					$(this).removeClass('fileupload-processing');
+				}).done(function (result) {
+					$(this).fileupload('option', 'done')
+							.call(this, $.Event('done'), {result: result});
+				});
+
+			});
+		</script>
+
+		<script id="template-upload" type="text/x-tmpl" th:inline="javascript">
+		{% for (var i=0, file; file=o.files[i]; i++) { %}
+		    <tr class="template-upload fade">
+		        <td>
+		        	<div class="row">
+			            <div class="col-4 preview"></div>
+			            <div class="col-8">
+				            {% if (window.innerWidth > 480 || !o.options.loadImageFileTypes.test(file.type)) { %}
+				                <p class="name">{%=file.name%}</p>
+				            {% } %}
+				            <strong class="error text-danger"></strong>
+				            {% if (!i && !o.options.autoUpload) { %}
+				                <button class="btn btn-primary start" disabled>
+				                    <i class="glyphicon glyphicon-upload"></i>
+				                    <span>업로드</span>
+				                </button>
+				            {% } %}
+				            {% if (!i) { %}
+				                <button class="cancel">
+				                    <i class="glyphicon glyphicon-ban-circle"></i>
+				                    <span>삭제</span>
+				                </button>
+				            {% } %}
+				        </div>
+					</div>
+		        </td>
+		    </tr>
+		{% } %}
+		</script>
+		<script id="template-download" type="text/x-tmpl" th:inline="javascript">
+		{% for (var i=0, file; file=o.files[i]; i++) { %}
+		    <tr class="template-download fade">
+		        <td>
+		        	<div class="row">
+			            <div class="col-4 preview">
+			            	{% if (file.videoUrl) { %}
+			                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><video src="{%=file.thumbnailUrl%}"></a>
+			                {% } else if (file.thumbnailUrl) { %}
+			                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+			                {% } %}
+			            </div>
+			            <div class="col-8">
+				            {% if (window.innerWidth > 480 || !file.thumbnailUrl) { %}
+				                <p class="name">
+				                    {% if (file.url) { %}
+				                    	<input type="hidden" name="subPiecesFileUrl[]" value="{%=file.url%}" />
+				                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+				                    {% } else { %}
+				                        <span>{%=file.name%}</span>
+				                    {% } %}
+				                </p>
+				            {% } %}
+				            {% if (file.error) { %}
+				                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+				            {% } %}
+				            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+				            <button class="cancel">
+			                    <i class="glyphicon glyphicon-ban-circle"></i>
+			                    <span>삭제</span>
+			                </button>
+			            </div>
+			        </div>
+		        </td>
+		    </tr>
+		{% } %}
+		</script>
+		
+	</section>
+	
+
+</html>

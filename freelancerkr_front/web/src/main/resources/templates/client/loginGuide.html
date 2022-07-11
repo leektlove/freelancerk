@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client/loginGuide.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div class="container">
+			<div id="guide">
+				<div class="contents">
+					<div class="img">
+						<img src="/static/images/icon_client.gif">
+					</div>
+					<!--<div class="title">
+						Find Your <span>Freelancer</span>
+					</div>-->
+					<div class="sub_title">
+						<p>우수한 인재는 <span>회사 밖에</span>서 활동하고 있습니다!</p>
+						유능한 수많은 프리랜서들이 당신의 Project Posting을 기다리고 있습니다.
+					</div>
+					<div class="btn_project" onclick="javascript:location.href='/client/profile/modify'">
+						나의 프로필 업로드
+					</div>
+					<div class="btn_mypage" onclick="javascript:location.href='/client/mypage'">
+						마이페이지 바로가기
+					</div>
+					<div class="text clearfix">
+						<div>
+							<img src="/static/images/c_com_icon_a.png">
+							<p>프리랜서코리아의<br>기본서비스에는 수수료가<br>없습니다.</p>
+						</div>
+						<div>
+							<img src="/static/images/c_com_icon_b.png">
+							<p>프리랜서코리아는<br>
+							당신의 프로젝트에 개입하지 않으며<br>
+							자유롭게 대금 지급 방법을<br>
+							선택할 수 있습니다.</p>
+						</div>
+						<div>
+							<img src="/static/images/c_com_icon_c.png">
+							<p>당신의 프로젝트는 관련 직종<br>
+							프리랜서들에게만 공개되며.<br>
+							유능한 프리랜서들에게 바로<br>
+							입찰을  받아볼 수 있습니다.</p>
+						</div>
+						<div>
+							<img src="/static/images/c_com_icon_d.png">
+							<p> 자유로운 대화를 통해<br>
+							당신의 프로젝트에 대한<br>
+							다양한 피드백을 확인할 수<br>
+							있습니다.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

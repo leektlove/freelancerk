@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <title>프리랜서코리아 이메일</title>
+</head>
+<body>
+<div class="email-container" style="padding: 2rem 1rem;max-width: 700px;margin: auto;">
+
+    <!-- 헤더 -->
+    <div class="header" style="display: block;padding-bottom:10px;border-bottom: 1px solid #ddd;">
+        <img src="https://freelancerk.s3.ap-northeast-2.amazonaws.com/static/logo.png" style="max-width: 150px;">
+        <span class="email-title" style="font-size:20px;font-weight: 600;margin-top: 0.3rem;float: right;">프코 알림</span>
+    </div>
+    <div style="display: block;clear: both;"></div>
+    <div class="title" style="font-size: 25px;padding: 1rem 0;border-bottom: 1px solid #ddd;">
+        낙찰이 완료되어 프로젝트를 시작합니다.
+    </div>
+    <!-- 헤더//-->
+
+    <!-- 본문 -->
+    <div class="discription" style="font-size: 17px;border-bottom: 1px solid #ddd;padding-top: 1rem;padding-bottom: 1rem;margin-bottom: 2.5rem;line-height: 1.5rem;">
+        <div class="content" style="margin-bottom: 2rem;">
+            <span class="username" th:text="${client.exposeName}" style="font-weight: 700;margin-right: 0.5rem;line-height: 30px;">박은진</span>님께서 포스팅 하신<br/>
+            <span class="project_title" th:text="${project.title}" style="font-weight: 700;">캐릭터사업</span> 프로젝트에 
+            <span class="name" th:text="${freelancer.exposeName}" style="font-weight: 700;margin-right: 0.5rem;line-height: 30px;">양미현</span>님을 낙찰하셨습니다.
+            <br/><br/>
+            구두계약이 아닌, 서면계약을 통해 프로젝트를 진행하시는게 안전합니다.
+            <br/>
+            <span class="small" style="font-size: 13px;">(표준 양식은 자료실에 있습니다.)</span>
+        </div>
+        <div class="list_title">※ 에스크로서비스 이용 프로젝트의 경우</div>
+        <ol class="list" style="padding: 1rem 1.5rem;margin-top: 0.3rem;border: 1px solid #ddd;">
+            <li style="padding-left: 1rem;font-size: 13px;padding: 0.5rem;">클라이언트의 용역대금 예치 <span class="small" style="font-size: 13px;">(KB, 400437-01-020230, 플랫폼위즈컴퍼니)</span></li>
+            <li style="padding-left: 1rem;font-size: 13px;padding: 0.5rem;">프리랜서의 [지급청구]</li>
+            <li style="padding-left: 1rem;font-size: 13px;padding: 0.5rem;">용역 (중간)결과 점검 및 확인</li>
+            <li style="padding-left: 1rem;font-size: 13px;padding: 0.5rem;">클라이언트의 [지급승인]</li>
+            <li style="padding-left: 1rem;font-size: 13px;padding: 0.5rem;">프리랜서코리아 확인 후 프리랜서에게 대금 지급</li>
+        </ol>
+    </div>
+    <th:block th:include="email/bottom-button-container"></th:block>
+    <!-- 본문//-->
+
+    <th:block th:include="email/footer"></th:block>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/reset.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/main.css">
+<div id="container">
+	<div id="container_content">
+	    <div class="container_inner">
+	        <h1>■ 결제 검색</h1>
+	            <form id="fsearch" name="fsearch" method="get">
+	                <table class="boardform">
+		                <colgroup>
+                            <col width="150">
+		                    <col width="">
+	                    </colgroup>
+                        <tbody>
+                            <tr>
+                    			<th>요청일</th>
+                    			<td>
+                    				<input type="text" name="s_date_1" value="" size="8" readonly="" class="readonly search_date hasDatepicker" id="">
+                    				 ~
+                    				<input type="text" name="s_date_2" value="" size="8" readonly="" class="readonly search_date hasDatepicker" id="">
+                    				<span class="btn-black mini" onclick="dateInput('2018-10-30', '2018-10-30');">오늘</span>
+                    				<span class="btn-black mini" onclick="dateInput('2018-10-28', '2018-11-03');">이번주</span>
+                    				<span class="btn-black mini" onclick="dateInput('2018-10-01', '2018-10-31');">이번달</span>
+                    			</td>
+                    		</tr>
+                    		<tr>
+                    			<th>진행상태</th>
+                    			<td>
+                    				<label><input type="radio" name="s_type" value="" checked> 전체</label>&nbsp;&nbsp;
+                    				<label><input type="radio" name="s_type" value="1"> 프리랜서 입금요청</label>&nbsp;&nbsp;
+                    				<label><input type="radio" name="s_type" value="2"> 클라이언트 결제승인</label>&nbsp;&nbsp;
+                    				<label><input type="radio" name="s_type" value="3"> 프리랜서코리아 지불완료</label>&nbsp;&nbsp;
+                    			</td>
+                    		</tr>
+                    		<tr>
+                    			<th>키워드</th>
+                    			<td>
+                    				<input type="text" name="s_search" value="" size="50" placeholder="프로젝트명, 프리랜서, 클라이언트을 입력해주세요.">
+                    			</td>
+                    		</tr>
+	                    </tbody>
+                    </table>
+            		<div class="boardbutton">
+            			<div class="tc">
+            				<input type="submit" value="검색" class="btn-color large">
+            				<a href="#" class="btn-basic large">리셋</a>
+            			</div>
+            		</div>
+	            </form>
+	            <div class="Hspace"></div>
+	            <h1>■ 49건의 결제가 검색되었습니다.</h1>
+                <table class="boardlist">
+		            <tbody>
+                        <tr>
+                			<th>요청일</th>
+                			<th>클라이언트</th>
+                			<th>프리랜서</th>
+                			<th>프로젝트정보</th>
+                			<th>진행사항</th>
+                			<th>결제금액</th>
+                			<th>명세서</th>
+                			<th>비고</th>
+                		</tr>
+			            <tr>
+                			<td>2018-10-29 14:16:07</td>
+                			<td>
+                				김정호				<br>
+                				(george@wiznet.io)
+                			</td>
+                			<td>
+                				이화범				<br>
+                				(3pdesigner@naver.com)
+                			</td>
+                			<td class="tl">
+                				성우			</td>
+                			<td>클라이언트 결제승인</td>
+                			<td class="tr">136,363원</td>
+                			<td>
+                				<a href="#" class="tax_detail btn-black mini" data-fp-no="775" data-fa-no="53">명세서</a>
+                			</td>
+                			<td>
+                			    <a href="#" class="btn-black mini">수정</a>
+                			</td>
+                		</tr>
+                    </tbody>
+                </table>
+            	<div class="boardbutton">
+            		<div class="tl"></div>
+            		<div class="tc">
+            			<div class="boardpage">
+            			<span class="current">1</span><a href="#">2</a>
+                        <a href="#">3</a>
+                    </div>
+            		</div>
+            		<div class="tr">
+
+            		</div>
+            	</div>
+            </div>
+            <form name="fcashed_del" id="fcashed_del" action="#" method="post">
+            	<input type="hidden" name="fa_no" id="fa_no">
+            </form>
+	</div>
+</div>

@@ -1,0 +1,218 @@
+<!-- 내가받은평가 팝업 -->
+<div class="modal fade modal_wrap" id="ratedModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+            <!-- 팝업 헤더 -->
+            <div class="head modal-header">
+                <h5 class="modal-title">나에 대한 평가보기</h5>
+                <div class="">
+                    <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+            <!-- 팝업 헤더// -->
+
+            <!-- 팝업 컨텐츠 -->
+            <div class="content modal-body">
+                <div class="score_graph">
+                    <div class="g_01">
+                        <div id="type1RateGraph" class="n" style="width:0%;"></div>
+                        <div id="type1RateNumber" class="p">0.0</div>
+                        <div class="t">전반적인 만족도</div>
+                    </div>
+                    <div class="g_02">
+                        <div id="type2RateGraph" class="n" style="width:0%;"></div>
+                        <div id="type2RateNumber" class="p">0.0</div>
+                        <div class="t">존중하는 태도</div>
+                    </div>
+                    <div class="g_03">
+                        <div id="type3RateGraph" class="n" style="width:0%;"></div>
+                        <div id="type3RateNumber" class="p">0.0</div>
+                        <div class="t">명확한 업무지시</div>
+                    </div>
+                    <div class="g_04">
+                        <div id="type4RateGraph" class="n" style="width:0%;"></div>
+                        <div id="type4RateNumber" class="p">0.0</div>
+                        <div class="t">신뢰성 (대금 관련)</div>
+                    </div>
+                    <div class="g_05">
+                        <div id="type5RateGraph" class="n" style="width:0%;"></div>
+                        <div id="type5RateNumber" class="p">0.0</div>
+                        <div class="t">소통능력</div>
+                    </div>
+                </div>
+                <div class="score_memo border" style="position: relative;padding: 25px 10px;font-size: 13px;">
+                    <div class="memo" style="position: absolute;top:-10px;border:1px solid #ddd;padding:3px 6px;font-size: 11px;background-color: #fff;font-size: 13px;">
+                        <i class="fas fa-pen mr-1"></i>
+                        평가내용
+                    </div>
+                    <span class="rateContent"></span>
+                </div>
+                <div class="popup_boardbutton mb-3">
+                    <div class="tc">
+                        <a href="#" class="btn btn-light rounded-0 btn-lg pop_close" data-dismiss="modal" aria-label="Close">닫기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 팝업 컨텐츠//-->
+
+        </div>
+    </div>
+</div>
+<!-- 내가받은평가 팝업// -->
+<!-- 내가한평가 팝업 -->
+<div class="modal fade modal_wrap" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+            <!-- 팝업 헤더 -->
+            <div class="head modal-header">
+                <h5 class="modal-title">내가 한 평가보기</h5>
+                <div class="">
+                    <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+            <!-- 팝업 헤더// -->
+
+            <!-- 팝업 컨텐츠 -->
+            <div class="content modal-body">
+                <div class="score_graph">
+                    <div class="score_graph">
+                        <div class="g_01">
+                            <div class="type1RateGraph n" style="width:0%;"></div>
+                            <div class="type1RateNumber p">0.0</div>
+                            <div class="t">만족도</div>
+                        </div>
+                        <div class="g_02">
+                            <div class="type2RateGraph n" style="width:0%;"></div>
+                            <div class="type2RateNumber p">0.0</div>
+                            <div class="t">속도</div>
+                        </div>
+                        <div class="g_03">
+                            <div class="type3RateGraph n" style="width:0%;"></div>
+                            <div class="type3RateNumber p">0.0</div>
+                            <div class="t">정확성</div>
+                        </div>
+                        <div class="g_04">
+                            <div class="type4RateGraph n" style="width:0%;"></div>
+                            <div class="type4RateNumber p">0.0</div>
+                            <div class="t">신뢰성</div>
+                        </div>
+                        <div class="g_05">
+                            <div class="type5RateGraph n" style="width:0%;"></div>
+                            <div class="type5RateNumber p">0.0</div>
+                            <div class="t">소통능력</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="score_memo border" style="position: relative;padding: 25px 10px;font-size: 13px;">
+                    <div class="memo" style="position: absolute;top:-10px;border:1px solid #ddd;padding:3px 6px;font-size: 11px;background-color: #fff;font-size: 13px;">
+                        <i class="fas fa-pen mr-1"></i>
+                        평가내용
+                    </div>
+                    <span class="rateContent"></span>
+                </div>
+                <div class="popup_boardbutton mb-3">
+                    <div class="tc">
+                        <a href="#" class="btn btn-light rounded-0 btn-lg pop_close" data-dismiss="modal" aria-label="Close">닫기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 팝업 컨텐츠//-->
+            
+
+        </div>
+    </div>
+</div>
+<!-- 내가한평가 팝업// -->
+
+<!-- 명세서 팝업 -->
+<div class="modal fade modal_wrap" id="specModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+            <!-- 팝업 헤더 -->
+            <div class="head modal-header">
+                <h5 class="modal-title">명세서</h5>
+                <div class="">
+                    <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+            <!-- 팝업 헤더// -->
+
+            <!-- 팝업 컨텐츠 -->
+            <div class="content modal-body">
+                <div class=" title">담당 프리랜서</div>
+                <table class="popup_boardform">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>성명</th>
+                        <td id="freelancerName"></td>
+                    </tr>
+                    <tr>
+                        <th>입금계좌</th>
+                        <td id="freelancerBankAccountInfo"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="title mt-3">상세항목</div>
+                <table class="popup_boardlist">
+                    <colgroup>
+                        <col width="15%">
+                        <col width="30%">
+                        <col width="">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th colspan="2">항목</th>
+                        <th>금액</th>
+                    </tr>
+                    <tr>
+                        <th class="tl" colspan="2">지급총액</th>
+                        <td id="totalAmount" class="tr"></td>
+                    </tr>
+                    <tr>
+                        <th class="tl tax-type collection-in-advance" rowspan="3">공제내역</th>
+                        <th class="tl colspanvar">플랫폼수수료</th>
+                        <td id="fee" class="tr"></td>
+                    </tr>
+                    <tr class="tax-type collection-in-advance">
+                        <th class="tl">사업소득세</th>
+                        <td id="businessIncomeTax" class="tr"></td>
+                    </tr>
+                    <tr class="tax-type collection-in-advance">
+                        <th class="tl">지방소득세</th>
+                        <td id="localIncomeTax" class="tr"></td>
+                    </tr>
+                    <tr class="tax-type collection-in-advance">
+                        <th class="tl" colspan="2">공제총액</th>
+                        <td id="totalDeductedAmount" class="tr"></td>
+                    </tr>
+                    <tr class="tax-type vat">
+                        <th class="tl colspanvar" colspan="2">부가가치세</th>
+                        <td id="vat" class="tr"></td>
+                    </tr>
+                    <tr>
+                        <th class="tl" colspan="2">차인지급액</th>
+                        <td id="realAmount" class="tr"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="popup_boardbutton mb-3">
+                    <div class="tc">
+                        <a href="#" class="btn btn-light rounded-0 btn-lg pop_close" data-dismiss="modal" aria-label="Close">닫기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 팝업 컨텐츠//-->
+
+        </div>
+    </div>
+</div>
+<!-- 명세서 팝업// -->

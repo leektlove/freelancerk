@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/profile/view.css">
+</head>
+
+
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>마이페이지</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+	    <!-- 페이지헤더// -->
+
+		<div class="container">
+			<section role="main" class="content-body">
+				<div class="row">
+					<div class="col-lg-12 col-xl-12 mb-4 mb-xl-0">
+
+						<section class="card mb-3">
+							<div class="card-body p-3">
+								<div class="row">
+									<div class="col-lg-9 col-xl-10">
+										<div class="row">
+											<div class="col-4 col-sm-3 col-lg-3 col-xl-2 thumb-info mx-auto">
+												<span class="thumb-info-wrapper center-crop-wrapper rounded border p-0">
+													<img th:src="@{${(#strings.isEmpty(user.profileImageUrl)?'/static/images/c_basic.jpg':user.profileImageUrl)}}" class="img-fluid" alt="profile" style="position: relative!important;height: auto!important">
+												</span>
+											</div>
+
+											<div class="col-sm-9 col-lg-9 col-xl-10 widget-toggle-expand">
+												<div class="mt-2 mb-0 mb-lg-2 text-center text-sm-left">
+													<span class="text-5" th:text="${user.exposeName}"></span>
+													<span class="text-5 d-none" th:text="${user.exposeName}"></span>
+													<span th:if="${user.exposeType != null}" class="text-2">
+														(<span th:if="${user.exposeType?.name() == 'NAME'}">이름</span>
+														<span th:if="${user.exposeType?.name() == 'NICKNAME'}">닉네임</span>
+														공개중)
+													</span>
+												</div>
+												<div class="row">
+													<div class="col-lg-7 widget-content-expanded">
+														<hr class="mt-1 mb-2 d-block d-lg-none">
+														<ul class="simple-todo-list">
+															<li class="completed">
+																<div>이메일</div>
+																<span class="text-primary" th:text="${user.email}"></span>
+																<span class="text-primary" th:if="${user.exposeEmail}">(공개)</span>
+																<span class="text-primary" th:if="${!user.exposeEmail}">(비공개)</span>
+															</li>
+															<li class="completed">
+																<div>전화번호</div>
+																<span class="text-primary" th:text="${user.cellphone}"></span>
+																<span class="text-primary" th:if="${user.exposeCellphone}">(공개)</span>
+																<span class="text-primary" th:if="${!user.exposeCellphone}">(비공개)</span>
+															</li>
+															<li class="d-flex">
+																<i class="fas fa-angle-right mr-1" style="font-size: 13px;position: absolute;left: 0px;top: 7px;"></i>
+																<div style="font-size: 13px; width: 80px;align-self: center;">홈페이지</div>
+																<span class="btn p-0" style="line-height: normal;">
+																	<span th:class="|sns ${#strings.isEmpty(user.homepageUrl)?'':'active'}|" th:onclick="@{|openWindow('${(#strings.isEmpty(user.homepageUrl)?'return false':user.homepageUrl)}')|}">
+																		<i class="fas fa-home"></i>
+																	</span>
+																</span>
+															</li>
+														</ul>
+														<hr class="my-2 d-block d-lg-none">
+													</div>
+													<div class="col-lg-5 widget-content-expanded">
+														<ul class="simple-todo-list">
+															<li class="completed">
+																<div>사업자종류</div>
+																<span class="text-primary" th:text="${user.businessType?.name}"></span>
+															</li>
+															<li class="completed">
+																<div>회사명</div>
+																<span class="text-primary" th:text="${user.corporateName}"></span>
+															</li>
+															<li class="completed">
+																<div>사업자번호</div>
+																<span class="text-primary" th:text="${user.corporateNumber}"></span>
+															</li>
+														</ul>
+														<hr class="my-2 d-block d-lg-none">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3 col-xl-2">
+										<button class="modify_btn btn btn-lg btn-primary" onclick="toProfileModifyView()" >
+											<i class="fas fa-user-cog"></i>
+											프로필수정
+										</button>
+									</div>
+								</div>
+							</div>
+						</section>
+						<section>
+							<div class="row counters counters-sm with-borders">
+								<div class="col-xl-4 col-lg-6 col-md-6 mb-3 order-2 order-xl-1">
+									<div class="counter counter-primary p-3 p-md-4">
+										<strong class="" th:text="${#numbers.formatInteger(user.points, 0, 'COMMA')}"></strong>
+										<div class="mt-2" style="line-height: 16px">보유포인트</div>
+									</div>
+								</div>
+								<div class="col-xl-5 col-lg-12 col-md-12 mb-3 order-1 order-xl-2">
+									<div class="text-left text-md-center">
+										<div class="counter counter-primary py-3 py-md-4 text-3">
+											<div class="text-dark" style="line-height: 24px;">
+												<i class="fas fa-angle-double-right mr-2 mb-0 text-3 d-inline-block text-dark"></i>
+												총 <span class="text-primary font-weight-bold text-4" th:data-to="${totalProjectCount}" data-plugin-counter="" data-plugin-options="{'speed': 1000}"></span> 건의 프로젝트를 등록하셨습니다.
+											</div>
+											<div class="text-dark" style="line-height: 24px;">
+												<i class="fas fa-angle-double-right mr-2 mb-0 text-3 d-inline-block text-dark"></i>
+												총 <span class="text-primary font-weight-bold text-4" th:data-to="${totalContestCount}" data-plugin-counter="" data-plugin-options="{'speed': 1000}"></span> 건의 컨테스트를 등록하셨습니다.
+											</div>
+											<!-- <p class="m-0">Porto has more than <span data-to="30000" data-plugin-counter="" data-plugin-options="{'speed': 3500}">30000</span> happy customers.</p> -->
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-3 col-lg-6 col-md-6 mb-3 order-3 order-xl-3">
+									<div class="counter p-3 p-md-4">
+										<div class="">
+											<div class="rating-container theme-krajee-fas rating-sm rating-animate">
+                                                <div class="rating-stars">
+                                                    <span class="empty-stars">
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                    </span>
+                                                    <span class="filled-stars" th:style="|width: ${user.ratingPercentageAsClient}%|">
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="" style="font-size: 13px;">총 <span class="text-primary" th:text="${user.completedProjectCount}">0</span> 건중
+												<span class="text-primary" th:text="${user.ratedProjectCountAsClient}">0</span> 건의 평가</div>
+                                            </div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</section>
+						<div class="my_info">
+							<div class="info_title">내정보</div>
+							<div class="wrap_content">
+								<div class="row">
+									<div class="col-lg-2">
+										소개
+									</div>
+									<div class="col-md-10">
+										<div class="" th:text="${user.myClientInfo}" style="white-space: pre-line;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="my_project">
+							<div class="info_title">진행중인 입찰</div>
+							<section class="no_project" th:if="${page.totalElements == 0}">
+								<div class="info_no_project_title">
+									<i class="fas fa-exclamation-circle fa-2x"></i>
+									<div class="title">진행중인 프로젝트가 없네요...
+									</div>
+									<span class="subtitle">수많은 전문가들이 당신의 포스트를 기다리고 있습니다</span>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="project_card featured-box featured-box-primary" >
+											<div class="box-content">
+												<div class="info_card_title">프로젝트</div>
+												<div class="form-row">
+													<div class="d-flex d-md-none d-lg-flex col-6 col-md-12 col-lg-6 justify-content-center">
+														<img src="/static/images/card_icon.png" class="align-self-center mb-2">
+													</div>
+													<div class="col-6 col-md-12 col-lg-6 d-flex justify-content-center">
+														<div class="text-box">
+															<div>금액 미확정</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>견적 받아보기</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>입찰자들과 소통</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>낙찰(구인)</div>
+														</div>
+													</div>
+												</div>
+												<button class="btn" type="button" onclick="toProjectPosting()">포스팅</button>
+												<div class="emcontent">100페이지 디자인</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="contest_card featured-box featured-box-secondary" >
+											<div class="box-content">
+												<div class="info_card_title">컨테스트</div>
+												<div class="form-row">
+													<div class="d-flex d-md-none d-lg-flex col-6 col-md-12 col-lg-6 justify-content-center">
+														<img src="/static/images/card_icon2.png" class="align-self-center">
+													</div>
+													<div class="col-6 col-md-12 col-lg-6 d-flex justify-content-center">
+														<div class="text-box">
+															<div>상금확정</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>시안 받아보기</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>낙찰 후 수정</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>상금 지급</div>
+														</div>
+													</div>
+												</div>
+												<button class="btn" type="button" onclick="toContestPosting()">포스팅</button>
+												<div class="emcontent">1페이지 디자인</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="project_contest_card featured-box featured-box-dark" >
+											<div class="box-content">
+												<div class="info_card_title">컨테스트 X 프로젝트</div>
+												<div class="form-row">
+													<div class="d-flex d-md-none d-lg-flex col-6 col-md-12 col-lg-6 justify-content-center">
+														<img src="/static/images/card_icon3.png" class="align-self-center">
+													</div>
+													<div class="col-6 col-md-12 col-lg-6 d-flex justify-content-center">
+														<div class="text-box">
+															<div>컨테스트 개최</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>컨테스트 완료</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>낙찰자와 소통</div>
+															<i class="fas fa-angle-down fa-lg"></i>
+															<div>프로젝트 진행</div>
+														</div>
+													</div>
+												</div>
+												<button class="btn" type="button" onclick="toProjectAndContestPosting()" style="background-color: #11597d;color: #fff;">포스팅</button>
+												<div class="emcontent">1페이지 디자인으로 평가후 100페이지 디자인 의뢰</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<div class="my_project_list row">
+								<div class="col">
+									<div class="">
+										<div class="masonry row" data-plugin-options="{'itemSelector': '.masonry-item'}">
+											<th:block th:each="item: ${page.content}">
+
+												<!-- 프로젝트 카드 -->
+												<div th:if="${item.projectType.name() == 'PROJECT'}" class="masonry-item no-default-style col-md-4 col-lg-3 mb-4">
+													<div class="project card">
+							                            <div class="badge-g-list">
+							                                <img th:if=${item.useEscrow} src="/static/images/escrow.png" class="badge-g">
+							                                <img th:if=${item.urgency} src="/static/images/em.png" class="badge-g">
+							                            </div>
+							                            <div class="row card-layout">
+							                                <div class="col-4 col-md-12">
+							                                	<a th:href="|javascript:toProjectDetail(${item.id}, ${item.postingClient.id}, ${item.myProjectBid != null}, ${item.denyable})|">
+								                                    <div class="client-logo-img" th:style="|${'background-image: url(' + (#strings.isEmpty(item.postingClient.logoImageUrl)?'/static/images/project_logo_new.png':item.postingClient.logoImageUrl) + ')'}; background-position: center;background-size: contain;|"></div>
+								                                </a>
+							                                </div>
+							                                <div class="col-8 col-md-12">
+							                                    <div class="">
+							                                        <div class="client-basic-info pt-0 pt-md-2">
+							                                            <a th:href="|javascript:toProjectDetail(${item.id}, ${item.postingClient.id}, ${item.myProjectBid != null}, ${item.denyable})|">
+							                                                <span class="project_title" th:text="${item.title}"></span>
+							                                            </a>
+							                                            <hr class="mt-1 mb-1" style="background-color:#b1b1b1;">
+							                                            <a th:href="|javascript:toProjectDetail(${item.id}, ${item.postingClient.id}, ${item.myProjectBid != null})|">
+							                                                <div class="card-des">
+							                                                    <span th:text="${item.onlyTextDescription}"></span>
+							                                                </div>
+							                                            </a>
+							                                        </div>
+							                                        <div class="card-tag">
+							                                            <th:block th:each="projectCategory: ${item.projectCategories}">
+							                                            <a th:href="|/view/pick-me-ups?keyword=${projectCategory.category.name}|"><span class="keyword text-primary" th:text="${projectCategory.category.name}"></span></a>
+							                                            </th:block>
+							                                        </div>
+							                                        <div style="font-size: 13px;line-height: 17px;white-space: nowrap;width: 100%;overflow: hidden;text-overflow: ellipsis;">
+							                                            <i class="fas fa-map-marker-alt text-primary"></i>
+							                                            <span th:text="${item.workPlace}"></span>
+							                                        </div>
+							                                        <hr class="mt-1 mb-1" style="background-color:#b1b1b1;">
+							                                        <div class="text-right mb-1" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+							                                            <span class="budget_label" th:text="${item.payMean?.shortName}"></span>
+							                                            <span class="budget" th:text="${item.budget}"></span>
+							                                        </div>
+							                                        <div class="card-bottom mb-3">
+							                                            <div>
+							                                                <span class="d-day mr-2">
+							                                                    <th:block th:if="${!item.postingEnd}"><span >D-</span><span th:text="${item.remainDays}">30</span></th:block>
+																				<span th:if="${item.postingEnd}">
+																					<span th:if="${item.pickEnd}" th:text="${item.status.desc}"></span>
+																					<span th:if="${!item.pickEnd}">선정 중</span>
+																				</span>
+							                                                </span>
+							                                                <!-- <span>
+							                                                    <i class="fas fa-users fa-md"></i>
+							                                                    <span th:text="*{#numbers.formatInteger(item.numberOfApplyCount, 0, 'COMMA')}"></span>
+							                                                </span> -->
+							                                            </div>
+							                                            <div class="more">
+							                                                <a class="read-more text-color-primary font-weight-semibold text-2 text-right" th:href="|javascript:toProjectDetail(${item.id}, ${item.postingClient.id}, ${item.myProjectBid != null})|" >
+							                                                    더보기 <i class="fas fa-angle-right position-relative top-1 ml-1"></i>
+							                                                </a>
+							                                            </div>
+							                                        </div>
+							                                    </div>
+							                                </div>
+							                            </div>
+							                        </div>
+												</div>
+												<!-- 프로젝트 카드//-->
+
+												<!-- 컨테스트 카드 -->
+												<div th:if="${item.projectType.name() == 'CONTEST'}" class="masonry-item no-default-style col-md-4 col-lg-3 mb-4">
+													<div class="contest card">
+							                            <div class="contest-img" th:style="|background-image:url('@{${item.contestSectorMetaTypeImageUrl}}'); background-position: center;background-size: cover;|"></div>
+							                            <div class="badge-g-list d-none d-md-block">
+							                                <img th:if=${item.useEscrow} src="/static/images/escrow.png" class="badge-g">
+							                                <img th:if=${item.urgency} src="/static/images/em.png" class="badge-g">
+							                            </div>
+							                            <div class="card-layout">
+							                                <div class="contest-sector_01">
+							                                    <div class="wrap">
+							                                        <th:block th:each="contestSectorItem : ${item.contestSectors}">
+							                                            <span th:text="${contestSectorItem.contestSectorType.contestSectorMetaType.name}"></span>
+							                                        </th:block>
+							                                        <span>Contest</span>
+							                                    </div>
+							                                </div>
+							                                <div class="trophy">
+							                                    <span class="text">상금</span>
+							                                    <span class="count">
+							                                        <span th:text="${item.totalPrize/10000}">
+							                                        </span>
+							                                        <span>만원</span>
+							                                    </span>
+							                                </div>
+							                                <div class="client-basic-info">
+							                                    <a th:href="|javascript:toContestDetail(${item.id}, ${item.postingClient.id}, ${item.myProjectBid != null})|">
+							                                        <div class="contest_title" th:text="${item.title}">
+							                                        </div>
+							                                    </a>
+							                                    <div class="box">
+								                                    <div class="contest_sector_02">
+								                                        <span th:text="${item.mainContestMetaType}"></span>
+								                                        <i class="fas fa-arrow-right"></i>
+								                                        <span th:text="${item.mainContestName}"></span>
+								                                    </div>
+								                                    <div class="after_contest" th:if="${item.proceedProjectAfterContest}">
+								                                        당선자와 프로젝트 진행
+								                                    </div>
+								                                    <div class="target_person">
+								                                        <span th:text="${item.prizeTargetPersons}"></span>위까지 선정
+								                                    </div>
+								                                </div>
+							                                </div>
+							                                <div class="card-bottom mb-3">
+							                                    <div class="left-area">
+							                                        <span class="d-day mr-2">
+							                                            <span>D-</span><span th:text="${item.remainDays}">30</span>
+							                                        </span>
+							                                    </div>
+							                                    <div class="more">
+							                                        <a class="read-more font-weight-semibold text-right" th:href="|javascript:toContestDetail(${item.id}, ${item.postingClient.id}, ${item.myProjectBid != null})|">
+							                                            더보기 <i class="fas fa-angle-right position-relative top-1 ml-1"></i>
+							                                        </a>
+							                                    </div>
+							                                </div>
+							                            </div>
+							                        </div>
+						                        </div>
+											</th:block>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="my_message">
+							<div class="info_title">메시지를 확인하세요</div>
+							<div class="">
+								<div class="timeline timeline-simple mt-3 mb-3">
+									<div class="tm-body">
+										<div class="tm-title" th:if="${topMessageCreatedAt != null}">
+											<h5 class="m-0 pt-2 pb-2 text-uppercase" th:text="${topMessageCreatedAt}"></h5>
+										</div>
+										<ol class="tm-items" id="messagesContainer">
+											<li th:each="message: ${messages}">
+												<div class="tm-box">
+													<p class="text-muted mb-0" th:text="${message.pastTime}"></p>
+													<p th:text="${message.content}"></p>
+												</div>
+											</li>
+										</ol>
+									</div>
+								</div>
+							</div>
+
+							<div class="detail-view-btn text-center" th:if="${messagePage.totalElements > 5}" id="messageLoadMoreBlock">
+								<a class="read-more btn btn-lg rounded-0 font-weight-bold text-4" href="javascript:loadMoreMessage()" style="width: 100%;max-width: 800px;">
+									<i class="far fa-arrow-alt-circle-down fa-lg mr-2"></i> 더보기
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- 로컬적용 script -->
+		<script>
+			var currentPage = 0;
+			$(function () {
+			  $('[data-toggle="tooltip"]').tooltip()
+			})
+		</script>
+		<script th:inline="javascript">
+			var userProfile = [[${user.nickname != null}]];
+			function toProjectPosting() {
+				if (userProfile) {
+					location.href='/client/posting/project';
+				} else {
+					location.href='/client/profile/modify?after-redirect=%2Fclient%2Fposting%2Fproject&type=PROJECT';
+				}
+			}
+			function toContestPosting() {
+				if (userProfile) {
+					location.href='/client/posting/contest';
+				} else {
+					location.href='/client/profile/modify?after-redirect=%2Fclient%2Fposting%2Fcontest&type=CONTEST';
+				}
+			}
+			function toProjectAndContestPosting() {
+				if (userProfile) {
+					location.href='/client/posting/contest?withProject=true';
+				} else {
+					location.href='/client/profile/modify?after-redirect=%2Fclient%2Fposting%2Fcontest%3FwithProject%3Dtrue&type=CONTEST';
+				}
+			}
+			function toProfileModifyView() {
+
+                location.href='/client/profile/modify';
+			}
+
+			function toContestDetail(id) {
+				location.href = '/client/contest/' + id + '/details';
+			}
+
+			function toProjectDetail(id) {
+				location.href = '/client/project/' + id + '/details';
+			}
+
+			function loadMoreMessage() {
+				var url = '/users/messages?pageNumber=' + (parseInt(currentPage)+1);
+
+				$.ajax({
+					url: url,
+					type: 'GET',
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							currentPage++;
+							var data = response.data;
+							for (var i = 0; i < data.length; i++) {
+								var item = data[i];
+								var elem = '<li>\n' +
+										'<div class="tm-box">\n' +
+										'<p class="text-muted mb-0">' + item.pastTime + '</p>\n' +
+										'<p>' + item.content + '</p>\n' +
+										'</div>\n' +
+										' </li>';
+								$('#messagesContainer').append(elem);
+							}
+							if (currentPage === response.totalPages) {
+								$('#messageLoadMoreBlock').hide();
+							}
+						}
+					},
+					error: function(error) {
+						console.error(error);
+					}
+				});
+			}
+		</script>
+	</section>
+
+
+</html>

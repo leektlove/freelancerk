@@ -1,0 +1,121 @@
+.enroll_portfolio .list.list-icons li{
+	padding-left: 22px;
+}
+.enroll_portfolio .info_title {
+	margin-top: 50px;
+	font-size: 28px;
+	text-align: center;
+}
+.enroll_portfolio .info{
+	margin-top: 120px;
+	margin-bottom: 120px;
+}
+.enroll_portfolio .info .img{
+	padding-bottom: 1rem;
+	text-align: center;
+}
+.enroll_portfolio .info .text{
+	font-size: 15px;
+	text-align: center;
+	align-self: center;
+}
+.enroll_portfolio .info_line{
+	width: 70px;
+	/*border-top: 2px solid #ddd;*/
+	margin: auto;
+	margin-bottom:50px;
+}
+
+.enroll_portfolio .shop table.cart img {
+    height: auto;
+    width: auto!important;
+}
+.enroll_portfolio .fileupload-buttonbar{
+	margin-bottom: 1rem;
+}
+.enroll_portfolio .files .name{
+	width: auto!important;
+}
+.enroll_portfolio .template-download .cancel,
+.enroll_portfolio .template-upload .cancel{
+	cursor: pointer;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0 15px;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+	
+	.enroll_portfolio .info_title {
+		font-size: 25px;
+		margin-top: 50px;
+	}
+	.enroll_portfolio .info .text{
+		text-align: left;
+	}
+	.enroll_portfolio .info{
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	.enroll_portfolio .info_line{
+		margin-bottom:50px;
+	}
+	
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {	
+	
+	.enroll_portfolio .info_title {
+		font-size: 25px;
+		margin-top: 50px;
+	}
+	.enroll_portfolio .info .text{
+		text-align: left;
+	}
+	.enroll_portfolio .info{
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	.enroll_portfolio .info_line{
+		margin-bottom:50px;
+	}
+	
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+	
+	.enroll_portfolio .info_title {
+		margin-top: 80px;
+	}
+	.enroll_portfolio .info{
+		margin-top: 80px;
+		margin-bottom: 80px;
+	}
+	.enroll_portfolio .info_line{
+		margin-bottom:80px;
+	}
+	
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+	
+	.enroll_portfolio .info_title {
+		margin-top: 80px;
+	}
+	.enroll_portfolio .info{
+		margin-top: 80px;
+		margin-bottom: 80px;
+	}
+	.enroll_portfolio .info_line{
+		margin-bottom:80px;
+	}
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
+

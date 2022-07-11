@@ -1,0 +1,238 @@
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/common/reset.css">
+<link rel="stylesheet" href="/static/css/common/common.css">
+<link rel="stylesheet" href="/static/css/common/main.css">
+<div id="container">
+	<div id="container_content">
+		<div class="container_inner">
+	        <h1>■ 캐쉬등록</h1>
+                <form name="fcash" id="fcash" action="#" onsubmit="return fcash_submit(this);" method="post" enctype="multipart/form-data">
+            		<input type="hidden" name="w" value="u">
+            		<input type="hidden" name="cp_no" value="54">
+            		<table class="boardform">
+			            <colgroup>
+                            <col width="150">
+		                    <col width="">
+			            </colgroup>
+                        <tbody>
+                            <tr>
+            				<th>입금(일, 시간)</th>
+            				<td>
+            					<div style="margin-bottom:10px;">
+            						<input type="text" name="cp_day_1" value="" size="8" readonly="" class="readonly search_date required hasDatepicker" required="" title="날짜" id="">
+            						<span class="btn-black mini" onclick="dateInput('2018-10-30');">오늘</span>
+            					</div>
+            				    <div style="margin-bottom:10px;">
+            						<select name="cp_day_2" class="required" required="" title="시간">
+            							<option value="">-- 시 --</option>
+            							<option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                    </select>
+                                    <select name="cp_day_3" class="required" required="" title="분">
+							            <option value="">-- 분 --</option>
+						                <option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                        <option value="24">24</option>
+                                        <option value="25">25</option>
+                                        <option value="26">26</option>
+                                        <option value="27">27</option>
+                                        <option value="28">28</option>
+                                        <option value="29">29</option>
+                                        <option value="30">30</option>
+                                        <option value="31">31</option>
+                                        <option value="32">32</option>
+                                        <option value="33">33</option>
+                                        <option value="34">34</option>
+                                        <option value="35">35</option>
+                                        <option value="36">36</option>
+                                        <option value="37">37</option>
+                                        <option value="38">38</option>
+                                        <option value="39">39</option>
+                                        <option value="40">40</option>
+                                        <option value="41">41</option>
+                                        <option value="42">42</option>
+                                        <option value="43">43</option>
+                                        <option value="44">44</option>
+                                        <option value="45">45</option>
+                                        <option value="46">46</option>
+                                        <option value="47">47</option>
+                                        <option value="48">48</option>
+                                        <option value="49">49</option>
+                                        <option value="50">50</option>
+                                        <option value="51">51</option>
+                                        <option value="52">52</option>
+                                        <option value="53">53</option>
+                                        <option value="54">54</option>
+                                        <option value="55">55</option>
+                                        <option value="56">56</option>
+                                        <option value="57">57</option>
+                                        <option value="58">58</option>
+                                        <option value="59">59</option>
+                                    </select>
+            						<select name="cp_day_4" class="required" required="" title="초">
+            							<option value="">-- 초 --</option>
+            							<option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                        <option value="24">24</option>
+                                        <option value="25">25</option>
+                                        <option value="26">26</option>
+                                        <option value="27">27</option>
+                                        <option value="28">28</option>
+                                        <option value="29">29</option>
+                                        <option value="30">30</option>
+                                        <option value="31">31</option>
+                                        <option value="32">32</option>
+                                        <option value="33">33</option>
+                                        <option value="34">34</option>
+                                        <option value="35">35</option>
+                                        <option value="36">36</option>
+                                        <option value="37">37</option>
+                                        <option value="38">38</option>
+                                        <option value="39">39</option>
+                                        <option value="40">40</option>
+                                        <option value="41">41</option>
+                                        <option value="42">42</option>
+                                        <option value="43">43</option>
+                                        <option value="44">44</option>
+                                        <option value="45">45</option>
+                                        <option value="46">46</option>
+                                        <option value="47">47</option>
+                                        <option value="48">48</option>
+                                        <option value="49">49</option>
+                                        <option value="50">50</option>
+                                        <option value="51">51</option>
+                                        <option value="52">52</option>
+                                        <option value="53">53</option>
+                                        <option value="54">54</option>
+                                        <option value="55">55</option>
+                                        <option value="56">56</option>
+                                        <option value="57">57</option>
+                                        <option value="58">58</option>
+                                        <option value="59">59</option>
+                                    </select>
+    						        <span class="btn-black mini" onclick="timeInput();">현재 시간</span>
+            					</div>
+            					(클라이언트 나의 예치금액 순서 출력을 위한 시간 입력)
+            				</td>
+            			</tr>
+            			<tr>
+            				<th>클라이언트</th>
+            				<td>
+            					<input type="hidden" name="cm_id" value="simyeon@naver.com" id="cm_id">
+            					<input type="text" value="이철호 (simyeon@naver.com)" readonly="" required="" class="readonly required" id="cm_info" style="width:400px;" title="클라이언트">
+    								<div id="cm_price_con">
+            						현재 클라이언트 예치금 : <span id="cm_price" style="color:#d50c0c; font-weight:bold;">0</span>
+            					    </div>
+            				</td>
+            			</tr>
+            			<tr>
+            				<th>입금</th>
+            				<td>
+            					<table class="boardform">
+            						<colgroup>
+            							<col width="34%"><col width="33%"><col width="33%">
+            						</colgroup>
+            						<tbody><tr>
+            							<th style="text-align:center;">총입금액</th>
+            							<th style="text-align:center;">공급가액</th>
+            							<th style="text-align:center;">부가가치세</th>
+            						</tr>
+            						<tr>
+            							<td style="text-align:center;">
+            								<input type="text" name="cp_total_price" value="" required="" class="required" title="총입금액" onkeyup="inputNumberFormat(this);" maxlength="13" id="cp_total_price"> 원
+            							</td>
+            							<td style="text-align:center;">
+            								<input type="hidden" name="cp_price" value="" required="" class="required" title="공급가액" id="cp_price">
+            								<span id="cp_price_text"></span>
+            							</td>
+            							<td style="text-align:center;">
+            								<span id="cp_tax_price_text"></span>
+            							</td>
+            						</tr>
+            					</tbody></table>
+            				</td>
+            			</tr>
+            			<tr>
+            				<th>입금내용</th>
+            				<td colspan="3">
+            					<textarea name="cp_memo" rows="20" cols="100"></textarea>
+            				</td>
+            			</tr>
+            		</tbody>
+                </table>
+        		<div class="boardbutton">
+        			<div class="tc">
+        				<input type="submit" value="저장" class="btn-color large">
+        				<a href="#" class="btn-colorline large">목록</a>
+        			</div>
+        		</div>
+            </form>
+        </div>
+	</div>
+</div>

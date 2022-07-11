@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/freelancerHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 유저 정보보기</h1>
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+
+						<tbody><tr>
+							<th>아이디(이메일)</th>
+							<td colspan="3">
+								
+								<a href="#" class="btn-color small adlg">아이디로그인</a>
+							</td>
+						</tr>
+						<tr>
+							<th>이름</th>
+							<td th:text="${user.name}">
+							</td>
+							<th>닉네임</th>
+							<td th:text="${user.nickname}">
+							</td>
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td th:text="${user.email}">
+								jaycay@naver.com
+							</td>
+							<th>휴대폰</th>
+							<td th:text="${user.cellphone}">
+								010-2862-0188
+							</td>
+						</tr>
+						<tr>
+							<th>사용</th>
+							<td colspan="3">
+								이름
+							</td>
+						</tr>
+						<tr>
+							<th>이메일수신</th>
+							<td colspan="3">
+								수신
+							</td>
+						</tr>
+						<tr>
+							<th>사진</th>
+							<td colspan="3">
+							</td>
+						</tr>
+						
+						<tr>
+							<th>메모</th>
+							<td colspan="3">
+							</td>
+						</tr>
+
+						<tr>
+							<th>휴대폰인증</th>
+							<td colspan="3">
+							</td>
+						</tr>
+
+						<tr>
+							<th>가입일</th>
+							<td colspan="3">
+							</td>
+						</tr>
+						<tr>
+							<th>최근접속일</th>
+							<td colspan="3">
+							</td>
+						</tr>
+						<tr>
+							<th>탈퇴</th>
+							<td colspan="3">
+							</td>
+						</tr>
+						<tr>
+							<th>탈퇴이유</th>
+							<td colspan="3">
+							</td>
+						</tr>
+						<tr>
+							<th>탈퇴기타사유</th>
+							<td colspan="3">
+							</td>
+						</tr>
+					</tbody></table>
+
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<a href="" class="btn-color large">수정</a>
+							<a href="" class="btn-colorline large">목록</a>
+						</div>
+						<div class="tr">
+							<span class="btn-color large del_btn">삭제</span>
+						</div>
+					</div>
+					<form name="" id="" action="" method="post">
+						<table class="boardform" style="margin-top:20px;">
+							<colgroup><col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+							</colgroup><tbody><tr>
+								<th>상담내용</th>
+								<td colspan="3" style="color:#ddd;">
+									<textarea name="" rows="20" style="width:90%;"></textarea>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="저장" class="btn-color large">
+								<a href="" class="btn-colorline large">목록</a>
+							</div>
+						</div>
+					</form>
+					<div style="height:50px;"></div>
+					<a name=""></a>
+					<h1>■ 프로젝트 이력</h1>
+					<table class="boardlist">
+						<tbody>
+							<tr>
+								<th>순서</th>
+								<th>프로젝트명</th>
+								<th>
+									에스크로사용여부
+									<span class="obtn obtn_now" data-no="2|a">▽</span>			</th>
+								<th>최종입찰개시일</th>
+								<th>낙찰일</th>
+								<th>프로젝트시작일</th>
+								<th>프로젝트종료일</th>
+								<th>낙찰금액</th>
+								<th>평점</th>
+								<th>프로젝트보기</th>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><span class="btn-black medium">보기</span></td>
+							</tr>
+							</tbody>
+						</table>
+					
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+							</div>
+						</div>
+						<div class="tr"></div>
+					</div>
+					<div style="height:50px;"></div>
+					<a name=""></a>
+					<h1>■ 예치내역</h1>
+					<table class="boardlist">
+						<tbody><tr>
+							<th>회차</th>
+							<th>일자</th>
+							<th>입금</th>
+							<th>출금</th>
+							<th>프로젝트</th>
+						</tr>
+						<tr>
+							<td colspan="2">합계</td>
+							<td class="tr">0</td>
+							<td class="tr">0</td>
+							<td></td>
+						</tr>
+					</tbody>
+					</table>
+					
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+										</div>
+						</div>
+						<div class="tr"></div>
+					</div>
+					<div style="height:50px;"></div>
+					<a name=""></a>
+					<h1>■ 컨테스트 이력</h1>
+					<table class="boardlist">
+						<tbody>
+							<tr>
+								<th>순서</th>
+								<th>컨테스트명</th>
+								<th>개최일</th>
+								<th>낙찰여부</th>
+								<th>상금</th>
+								<th>낙찰일</th>
+								<th>프로젝트진행여부</th>
+								<th>컨테스트보기</th>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>프코웹디자인</td>
+								<td>2018.17.26</td>
+								<td>Y</td>
+								<td>500,000</td>
+								<td>2018,07,28</td>
+								<td>N</td>
+								<td><span class="btn-black medium">보기</span></td>
+							</tr>
+						</tbody>
+					</table>
+					<p>* 프로젝트 진행여부는 선정한 사람과 프로젝트를 진행(이 경우 진행중인 프로젝트로 담김)하는 경우</p>
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+							</div>
+						</div>
+						<div class="tr"></div>
+					</div>
+
+					<div style="height:100px;"></div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

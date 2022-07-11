@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/clientHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 프리랜서 문자 보기</h1>
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>발송일</th>
+								<td colspan="3">
+								</td>
+							</tr>
+							<tr>
+								<th>내용</th>
+								<td>
+									[프리랜서코리아] 지원하신 프로젝트의 내용이 수정/변경되었습니다. 확인하시고 다시 지원해주시기 바랍니다. 감사합니다.
+								</td>
+							</tr>
+							<tr>
+								<th>발송수</th>
+								<td>
+									1
+								</td>
+							</tr>
+							<tr>
+								<th>발송리스트</th>
+								<td>
+									<style>
+										.boardformsub{width:50%;}
+										.boardformsub th, .boardformsub td{text-align:center;}
+									</style>
+									<table class="boardform boardformsub">
+										<tbody>
+											<tr>
+												<th>이름</th>
+												<th>발송번호</th>
+											</tr>
+											<tr>
+												<td>김교식</td>
+												<td>010-8651-5425</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<a href="" class="btn-colorline large">목록</a>
+						</div>
+						<div class="tr"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/findproject/list.css">
+</head>
+
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>프로젝트 찾기</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/freelancer/findProject/list}" class="nav-link active d-flex">
+							<span>프로젝트 찾기</span>
+							<span class="count_alarm" th:text="${processingCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/bid/suggestedList}" class="nav-link d-flex" href="#">
+							<span>제안받은 프로젝트</span>
+							<span class="count_alarm" th:text="${propositionsCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/project/pickList}" class="nav-link disabled d-flex">
+							<span>찜한 프로젝트</span>
+							<span class="count_alarm" th:text="${tempSavedCount}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<div>
+						<form id="searchForm" th:action="@{/freelancer/findProject/list}" method="get">
+
+							<!-- 검색필터 -->
+							<div class="filter">
+								<div class="mt-3 mt-md-5 mb-2 col-lg-9 mx-auto">
+									<div class="input-group">
+										<input id="search_keyword_input" type="text" class="form-control form-control-lg" name="keyword" th:value="${keyword}" placeholder="프로젝트명 또는 내용을 입력해 주세요." style="border: 1px solid #d2d2d2;border-radius: 10px 0 0 10px;border-right: 0;font-size:15px">
+										<!-- <i id="reset_btn" class="fas fa-times" style="position: absolute;right: 60px;z-index: 10;top: 13px;color: #b1b1b1;cursor: pointer;font-size: 1.25rem;"></i> -->
+										<span class="input-group-append">
+				                            <button id="submit" class="btn btn-light" type="submit"  style="border: 1px solid #d2d2d2;border-left: 0;border-radius: 0 10px 10px 0">
+				                                <img src="/static/images/icon/search.png" style="width:25px">
+				                            </button>
+				                        </span>
+									</div>
+								</div>
+								<div class="mb-4 col-lg-9 mx-auto">
+									<textarea id="txtKeywords" hidden></textarea>
+									<a th:href="|javascript:searchByTag('${category?.name}')|" th:each="category : ${freelancerSectors}" class="btnKeyword text-primary text-2 mb-1">
+										# <span th:text="${category?.name}">BI</span>
+									</a>
+								</div>
+								<div style="margin-bottom: 2rem">
+									<div class="form-row p-2" style="background-color: #f7f7f7;border-bottom: 1px solid #ddd;">
+										<div class="col-md-4">
+											<div class="form-row mb-2 mb-md-0">
+											    <label for="category" class="col-4 col col-form-label font-weight-bold text-dark text-right align-self-center">
+											    	<i class="fas fa-stream mr-2 d-inline-block" style="font-size: 15px;color: #2f88cc;"></i>
+												    섹터별검색
+												</label>
+											    <div class="col-8">
+													<select id="category" name="category" class="form-control">
+														<option value="">전체</option>
+														<option th:each="categoryItem : ${categories}"
+																th:value="${categoryItem.id}"
+																th:text="${categoryItem.name}"
+																th:data-valid-in-contest="${categoryItem.validInContest}"
+																th:selected="${categoryItem.id == selectedCategory?.id}">
+														</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-row mb-2 mb-md-0">
+											    <label for="projectType" class="col-4 col-form-label font-weight-bold text-dark text-right align-self-center">
+											    	<i class="fas fa-paste mr-2 d-inline-block" style="font-size: 15px;color: #2f88cc;"></i>
+												    포스트구분
+												</label>
+											    <div class="col-8">
+													<select id="projectType" class="form-control" name="projectType">
+														<option value="">전체</option>
+														<option value="PROJECT" th:selected="${'PROJECT' == projectType?.name()}">프로젝트</option>
+														<option value="CONTEST" th:selected="${'CONTEST' == projectType?.name()}">컨테스트</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-row mb-2 mb-md-0">
+											    <label for="sortBy" class="col-4 col-form-label font-weight-bold text-dark text-right align-self-center">
+											    	<i class="fas fa-sort-amount-down mr-2 d-inline-block" style="font-size: 15px;color: #2f88cc;"></i>
+												    정렬기준
+												</label>
+											    <div class="col-8">
+													<select id="sortBy" class="form-control" name="sortBy">
+														<option value="KEYWORDS" th:selected="${'KEYWORDS' == sortBy?.name()}">관련도순</option>
+														<option value="URGENT" th:selected="${'URGENT' == sortBy?.name()}">긴급순</option>
+														<option value="CREATED_AT" th:selected="${'CREATED_At' == sortBy?.name()}">최근등록순</option>
+														<option value="POSTING_END_AT" th:selected="${'POSTING_END_AT' == sortBy?.name()}">최근마감순</option>
+														<option value="AMOUNT" th:selected="${'AMOUNT' == sortBy?.name()}">규모순</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="text-center">
+									<button id="submit" type="submit" class="btn btn-quaternary rounded-0 mt-3 mb-5 pop_close" style="width: 120px">검색</button>
+									<a th:href="@{/freelancer/findProject/list}"><button type="button" class="btn btn-light rounded-0 mt-3 mb-5 pop_close" style="width: 120px">초기화</button></a>
+								</div> -->
+							</div>
+							<!-- 검색필터// -->
+
+						</form>
+					</div>
+
+					<!-- 정렬// -->
+					<div class="card-list">
+	                    <ul class="row">
+	                    	<!-- 광고 -->
+		                    <!-- <li class="col-12 col-md-4 col-lg-3 mb-3">
+		                        <div class="ad card text-center">
+		                            <div class="spon_text">sponsored</div>
+		                            <div class="row">
+		                                <div class="col-12">
+		                                    <img src="/static/images/ad/two_person.png">
+		                                </div>
+		                                <div class="col-12">
+		                                    <a href="">
+		                                        <div class="title">나만의 전문성을 높여주는<span class="br"></span> 취업성공패키지!</div>
+		                                        <div class="card-des">
+		                                        프리랜서에게 꼭 필요한 직업훈련은 물론, <span class="br"></span>
+		                                        최대 <span>150만원의 구직촉진수당</span>도 지원해드립니다.
+		                                        </div>
+		                                    </a>
+		                                </div>
+		                            </div>
+		                            <div class="more">
+		                                <a class="read-more text-color-primary font-weight-semibold text-right" >
+		                                    고용노동부 취업성공패키지 GO <i class="fas fa-angle-right position-relative top-1 ml-1"></i>
+		                                </a>
+		                            </div>
+		                        </div>
+		                    </li> -->
+		                    <!-- 광고//-->
+	                        <th:block th:each="item : ${page.content}">
+	                        <li th:if="${item.projectType.name()} == 'PROJECT'" class="col-12 col-md-4 col-lg-3 mb-4">
+	                            <div class="project card">
+		                            <div class="badge-g-list">
+		                                <img th:if=${item.useEscrow} src="/static/images/escrow.png" class="badge-g">
+		                                <img th:if=${item.urgency} src="/static/images/em.png" class="badge-g">
+		                            </div>
+		                            <div th:class="|like btnLike ${item.liked?'active':''}|" th:id="${item.id}">
+		                                <i class="far fa-heart fa-lg mr-2 like-off"></i>
+		                                <i class="fas fa-heart fa-lg mr-2 like-on"></i>
+		                            </div>
+		                            <div class="row card-layout">
+		                                <div class="col-4 col-md-12">
+		                                	<a th:href="|javascript:toProjectDetail(${item.id}, ${item.denyable})|">
+			                                    <div class="client-logo-img" th:style="|${'background-image: url(' + (#strings.isEmpty(item.postingClient.logoImageUrl)?'/static/images/project_logo_new.png':item.postingClient.logoImageUrl) + ')'}; background-position: center;background-size: contain;|"></div>
+			                                </a>
+		                                </div>
+		                                <div class="col-8 col-md-12">
+		                                    <div class="">
+		                                        <div class="client-basic-info pt-0 mt-md-2">
+		                                        	<a th:href="|javascript:toProjectDetail(${item.id}, ${item.denyable})|">
+		                                            	<span class="project_title" th:text="${item.title}"></span>
+		                                            </a>
+		                                            <hr class="mt-1 mb-1" style="background-color:#b1b1b1;">
+			                                        <a th:href="|javascript:toProjectDetail(${item.id}, ${item.denyable})|">
+				                                        <div class="card-des">
+				                                            <span th:text="${item.onlyTextDescription}"></span>
+				                                        </div>
+				                                    </a>
+		                                        </div>
+		                                        <div class="card-tag">
+		                                            <th:block th:each="projectCategory: ${item.projectCategories}">
+		                                            <span class="keyword text-primary" th:text="${projectCategory.category.name}"></span>
+		                                            </th:block>
+		                                        </div>
+		                                        <div style="font-size: 13px;white-space: nowrap;width: 100%;overflow: hidden;text-overflow: ellipsis;">
+		                                            <i class="fas fa-map-marker-alt text-primary"></i>
+		                                            <span th:text="${item.workPlace}"></span>
+		                                        </div>
+		                                        <hr class="mt-1 mb-1" style="background-color:#b1b1b1;">
+		                                        <div class="text-right mb-1" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+		                                            <span class="budget_label" th:text="${item.payMean?.shortName}"></span>
+		                                            <span class="budget" th:text="${item.budget}"></span>
+		                                        </div>
+		                                        <div class="card-bottom mb-3">
+		                                            <div>
+		                                                <span class="d-day mr-2">
+		                                                    <span th:if="${!item.postingEnd}">D-</span><span th:text="${item.remainDays}"></span>
+															<span th:if="${item.postingEnd}"><span>선정 중...</span></span>
+		                                                </span>
+		                                                <!-- <span><i class="fas fa-users fa-md"></i> <span th:text="*{#numbers.formatInteger(item.numberOfApplyCount, 0, 'COMMA')}"></span></span> -->
+		                                            </div>
+		                                            <div class="more">
+		                                                <a class="read-more text-color-primary font-weight-semibold text-right" th:href="|javascript:toProjectDetail(${item.id}, ${item.denyable})|" >
+		                                                    더보기 <i class="fas fa-angle-right position-relative top-1 ml-1"></i>
+		                                                </a>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+	                        </li>
+	                        <li th:if="${item.projectType.name()} == 'CONTEST'" class="col-12 col-md-4 col-lg-3 mb-4">
+	                        	<div class="contest card">
+		                            <div class="contest-img" th:style="|background-image:url('@{${item.contestSectorMetaTypeImageUrl}}'); background-position: center;background-size: cover;|"></div>
+		                            <div class="badge-g-list d-none d-md-block">
+		                                <img th:if=${item.useEscrow} src="/static/images/escrow.png" class="badge-g">
+		                                <img th:if=${item.urgency} src="/static/images/em.png" class="badge-g">
+		                            </div>
+		                            <div th:class="|like btnLike ${item.liked?'active':''}|" th:id="${item.id}">
+		                                <i class="far fa-heart fa-lg mr-2 like-off"></i>
+		                                <i class="fas fa-heart fa-lg mr-2 like-on"></i>
+		                            </div>
+		                            <div class="card-layout">
+		                                <div class="contest-sector_01">
+		                                    <div class="wrap">
+		                                        <th:block th:each="contestSectorItem : ${item.contestSectors}">
+		                                            <span th:text="${contestSectorItem.contestSectorType.contestSectorMetaType.name}"></span>
+		                                        </th:block>
+		                                        <span>Contest</span>
+		                                    </div>
+		                                </div>
+		                                <div class="trophy">
+		                                    <span class="text">상금</span>
+		                                    <span class="count">
+		                                        <span th:text="${item.totalPrize/10000}">
+		                                        </span>
+		                                        <span>만원</span>
+		                                    </span>
+		                                </div>
+		                                <div class="client-basic-info">
+		                                    <a th:href="|javascript:toContestDetail(${item.id}, ${item.postingClient.id}, ${item.denyable})|">
+		                                        <div class="contest_title" th:text="${item.title}">
+		                                        </div>
+		                                    </a>
+		                                    <div class="box">
+			                                    <div class="contest_sector_02">
+			                                        <span th:text="${item.mainContestMetaType}"></span>
+			                                        <i class="fas fa-arrow-right"></i>
+			                                        <span th:text="${item.mainContestName}"></span>
+			                                    </div>
+			                                    <div class="after_contest" th:if="${item.proceedProjectAfterContest}">
+			                                        당선자와 프로젝트 진행
+			                                    </div>
+			                                    <div class="target_person">
+			                                        <span th:text="${item.prizeTargetPersons}"></span>위까지 선정
+			                                    </div>
+			                                </div>
+		                                </div>
+		                                <div class="card-bottom mb-3">
+		                                    <div class="left-area">
+		                                        <span class="d-day mr-2">
+		                                            <span>D-</span><span th:text="${item.remainDays}">30</span>
+		                                        </span>
+		                                    </div>
+		                                    <div class="more">
+		                                        <a class="read-more font-weight-semibold text-right" th:href="|javascript:toContestDetail(${item.id}, ${item.postingClient.id}, ${item.denyable})|">
+		                                            더보기 <i class="fas fa-angle-right position-relative top-1 ml-1"></i>
+		                                        </a>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+	                        </li>
+	                        <!-- <li th:if="${item.projectType.name()} == 'CONTEST'" class="col-12 col-md-4 col-lg-3 mb-3">
+	                        	<div class="contest card">
+		                            <div class="badge-g-list d-none d-md-block">
+		                                <img th:if="${item.useEscrow}" src="/static/images/escrow.png" class="badge-g">
+		                                <img th:if="${item.urgency}" src="/static/images/em.png" class="badge-g">
+		                            </div>
+		                            <div th:class="|like btnLike ${item.liked?'active':''} d-none d-md-block|" th:id="${item.id}">
+		                                <i class="far fa-heart fa-lg mr-2 like-off"></i>
+		                                <i class="fas fa-heart fa-lg mr-2 like-on"></i>
+		                            </div>
+		                            <div class="card-layout">
+		                                <div class="col-4 col-md-12 p-0">
+		                                    <div class="contest-sector">
+		                                        <div class="wrap">
+		                                            <th:block th:each="contestSectorItem : ${item.contestSectors}">
+		                                                <span th:text="${contestSectorItem.contestSectorType.contestSectorMetaType.name}"></span>
+		                                            </th:block>
+		                                            <span>Contest</span>
+		                                        </div>
+		                                    </div>
+		                                    <div class="contest-img-top cover-img" th:style="|background-image:url('@{${item.contestSectorMetaTypeImageUrl}}'); background-position: center;background-size: cover;|"></div>
+		                                    <div class="contest-img-top"></div>
+		                                </div>
+		                                <div class="col-8 col-md-12">
+		                                    <div th:class="|like btnLike ${item.liked?'active':''} d-block d-md-none px-0|" th:id="${item.id}">
+		                                        <span class="">찜하기</span>
+		                                        <i class="far fa-bookmark fa-lg like-off"></i>
+		                                        <i class="fas fa-bookmark fa-lg like-on"></i>
+		                                    </div>
+		                                    <div class="client-basic-info mt-0 mt-md-2">
+		                                        <a th:href="|javascript:toContestDetail(${item.id}, ${item.postingClient.id}, ${item.myProjectBid != null})|">
+		                                            <span class="font-weight-bold project-title" th:text="${item.title}">
+		                                            </span>
+		                                        </a>
+		                                        <hr class="mt-1 mb-1" style="background-color:#b1b1b1;">
+		                                        <a th:href="|javascript:toContestDetail(${item.id}, ${item.postingClient.id}, ${item.myProjectBid != null})|">
+		                                            <div class="card-des" th:text="${item.onlyTextDescription}">
+		                                            </div>
+		                                        </a>
+		                                    </div>
+		                                    <div>
+		                                    	<div class="contest_sector">
+			                                        <div class="color_pen"></div>
+			                                        <div class="sector_name">        
+			                                            <span th:text="${item.mainContestMetaType}"></span>
+			                                            <i class="fas fa-arrow-right"></i>
+			                                            <span th:text="${item.mainContestName}">간판(로고제외)</span>
+			                                        </div>
+			                                    </div>
+		                                        <div class="trophy_label pr-1">
+		                                        	<span th:if="${item.proceedProjectAfterContest}">
+			                                            <i class="fas fa-angle-right"></i>
+			                                            당선자와 프로젝트 진행
+			                                        </span>
+		                                        </div>
+		                                        <div class="trophy_label">
+			                                        <i class="fas fa-angle-right"></i>
+			                                        <span th:text="${item.prizeTargetPersons}"></span>위까지 선정</span>
+			                                    </div>
+		                                    </div>
+		                                    <hr class="mt-1 mb-1" style="background-color:#b1b1b1;">
+		                                    <div class="text-right mb-1">
+		                                        <span class="">상금</span>
+		                                        <span class="trophy">
+		                                            <span th:text="${item.totalPrize/10000}">
+		                                            </span>
+		                                            <span>만원</span>
+		                                        </span>
+		                                    </div>
+		                                    <div class="card-bottom mb-3">
+		                                        <div>
+		                                            <span class="d-day mr-2">
+		                                                <span>D-</span><span th:text="${item.remainDays}">30</span>
+		                                            </span>
+		                                        </div>
+		                                        <div class="more">
+		                                            <a class="read-more text-color-primary font-weight-semibold text-right" th:href="|javascript:toContestDetail(${item.id}, ${item.postingClient.id}, ${item.denyable})|">
+		                                                더보기 <i class="fas fa-angle-right position-relative top-1 ml-1"></i>
+		                                            </a>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+	                        </li> -->
+	                        </th:block>
+	                    </ul>
+	                </div>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- 인풋박스 초기화-->
+		<script>
+			$(document).ready(function(){
+			    $( "#reset_btn").click(function () {
+			        $('#search_keyword_input').val('');
+			    });
+			});
+		</script>
+		<!-- 인풋박스 초기화//-->
+
+		<script th:inline="javascript">
+			var loggedIn = [[${loggedIn}]];
+			var loginAsClient = [[${loginAsClient}]];
+			var userInfoInput = [[${user?.infoInput}]];
+		</script>
+
+		<script src="/static/js/freelancer/findProject/list.js"></script>
+		</div>
+
+</html>

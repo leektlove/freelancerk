@@ -1,0 +1,375 @@
+.escrow_info{
+    margin-top: 1rem;
+}
+.escrow_info .font_emp{
+    color: #0088cc;
+}
+.escrow_info ul{
+    margin-top: 1.5rem;
+}
+.escrow_info li {
+    position: relative;
+    width:24%;
+    vertical-align:top;
+    display:inline-block;
+    text-align:center;
+    color:#222;
+    font-size:14px;
+    padding:2rem 1rem;
+}
+.escrow_info li:hover .icon:first-child{
+    color: #0088cc;
+}
+.escrow_info .icon{
+    color: #ddd;
+    margin-bottom: 1rem;
+    font-size: 2.3em;
+}
+.escrow_info li div {
+    font-size:15px;
+    letter-spacing: -1px;
+}
+.escrow_info span.br{
+    display: block;
+}
+.escrow_info .arrow{
+    position: absolute;
+    right: -5px;
+    color: #0088cc;
+    top: 17%;
+    font-size: 18px;
+}
+.account{
+    text-align: center;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem 1rem;
+    max-width: 500px;
+}
+.account .escrow_account{
+    display: flex;
+    justify-content: space-between;
+}
+.account .escrow_account .title{
+    align-self: center;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+}
+.account .escrow_account .content{
+    text-align: left;
+}
+.account .escrow_account .content .bank{
+    font-size: 20px;
+}
+.account .escrow_account .content .name{
+
+}
+.account .text{
+    background-color: #0088cc;
+    padding: 5px 12px;
+    color: #fff;
+    margin-top: 1rem;
+}
+.cash_inner {
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 5rem;
+}
+.cash_inner .escrow_balance_info{
+    margin-bottom: 2rem;
+}
+.cash_inner .escrow_balance_info .text{
+    display: flex;
+}
+.cash_inner .escrow_balance_info .text .wrap{
+    align-self: flex-end;
+    margin-left: 0.5rem;
+}
+.cash_inner .escrow_balance_info .text .wrap .s_text{
+    font-size: 13px;
+}
+.cash_inner .escrow_balance_info .text .wrap .b_text{
+    font-size: 20px;
+}
+.cash_inner .escrow_balance_info .count{
+    display: flex;
+    justify-content: flex-end;
+}
+.cash_inner .escrow_balance_info .count span{
+    align-self: flex-end;
+    font-size: 20px;
+}
+.cash_inner .escrow_balance_info .button{
+    display: flex;
+    justify-content: flex-end;
+}
+.cash_inner .escrow_balance_info .btn{
+    font-size: 11px;
+    padding: 0.5rem;
+    align-self: flex-end;
+}
+.cash_inner th{
+    font-size: 13px;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid #d0d0d0!important;
+    border-top: 1px solid #d0d0d0;
+}
+.cash_inner tr:nth-child(2n){
+    background-color: #fafafa;
+}
+.cash_inner td{
+    vertical-align: middle;
+    font-size: 12px;
+    padding: 1rem;
+    border: 0;
+}
+.cash_inner .btn_wrap{
+    display: block;
+    text-align: right;
+}
+.cash_inner .btn_wrap .refund_list_btn{
+    font-size: 13px;
+    color: #898989;
+    border: 1px solid #898989;
+    padding: 0.3rem 0.7rem;
+    margin-right: 1rem;
+}
+}
+#display_day{
+    font-size: 12px;
+    width: 20%;
+    min-width: 80px;
+}
+#deposit{
+    /*width: 40%;*/
+}
+#payment{
+    /*width: 40%;*/
+}
+.cash_inner .deposit{
+    text-align: right;
+    color: #0088cc;
+    font-size: 15px;
+}
+.cash_inner .payment{
+    text-align: right;
+}
+.cash_inner .payment .project_title{
+    float: right;
+    font-size: 12px;
+    color: #999;
+    width: 100%;
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cash_inner .payment .project_title:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.cash_inner .payment .withdraw{
+    color: #e36159;
+    font-size: 15px;
+}
+.cash_inner  tr.total_title {
+    border-top: 1px solid #d0d0d0;
+}
+.cash_inner .total_title .title{
+    font-size: 13px;
+    text-align: right;
+}
+.cash_inner .total_title td:first-child{
+    border-bottom: 0;
+    background-color: #fff;
+}
+.cash_inner .total td{
+    text-align: right;
+}
+.cash_inner .total td:first-child{
+    border: 0;
+    background-color: #fff;
+}
+.cash_inner tr.balance td{
+    text-align: right;
+    border-bottom: 1px solid #ddd;
+}
+.cash_inner .balance td:first-child{
+    border: 0;
+    background-color: #fff;
+    border-bottom: 0;
+}
+.cash_inner .balance .title{
+    font-size: 13px;
+    text-align: right;
+}
+.cash_inner .balance td:last-child{
+    font-size: 17px;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+    .escrow_info{
+        margin-top: 0rem;
+        padding: 2rem 0 1rem 0;
+    }
+    .escrow_info ul{
+        margin-top: 0rem;
+    }
+    .escrow_info li{
+        display: block;
+        width: 90%;
+        padding: 0;
+        margin: auto;
+        margin-bottom: 3rem;
+    }
+    .escrow_info li div {
+        font-size: 13px;
+    }
+    .escrow_info .arrow{
+        display: block;
+        right: inherit;
+        top:inherit;
+        bottom: -30px;
+        left: 48%;
+        font-size: 20px;
+        transform: rotate(90deg);
+    }
+    .escrow_info span.br{
+        display: none;
+    }
+    .account span.in_br{
+        display: block;
+    }
+    .account{
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 350px;
+    }
+    .account .escrow_account .title {
+        font-size: 12px;
+        padding: 10px;
+    }
+    .account .escrow_account .content .bank {
+        font-size: 15px;
+    }
+    .account .escrow_account .content .name {
+        font-size: 12px;
+    }
+    .account .text{
+        font-size: 13px;
+        letter-spacing: -1px;
+    }
+    .cash_inner .escrow_balance_info {
+        /*border: 1px solid #ddd;*/
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    .cash_inner .escrow_balance_info img {
+        width: 30px;
+        align-self: center;
+    }
+    .cash_inner .escrow_balance_info .text{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .cash_inner .escrow_balance_info .text .wrap .b_text{
+        font-size: 18px;
+    }
+    .cash_inner .escrow_balance_info .count{
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .cash_inner .escrow_balance_info .button{
+        justify-content: center;
+    }
+    .cash_inner th{
+        padding: 0.5rem 0.2rem
+    }
+    .cash_inner td {
+        padding: 0.5rem 0.2rem;
+    }
+    .cash_inner .payment .project_title{
+        max-width: 130px;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .escrow_info{
+        margin-top: 0rem;
+        padding: 2rem 0 1rem 0;
+    }
+    .escrow_info ul{
+        margin-top: 0rem;
+    }
+    .escrow_info li{
+        display: block;
+        width: 90%;
+        padding: 0;
+        margin: auto;
+        margin-bottom: 3rem;
+    }
+    .escrow_info span.br{
+        display: none;
+    }
+    .escrow_info .arrow{
+        right: inherit;
+        top:inherit;
+        bottom: -30px;
+        left: 49%;
+        font-size: 20px;
+        transform: rotate(90deg);
+	}
+    .cash_inner th{
+        padding: 0.5rem 0.2rem
+    }
+    .cash_inner td {
+        padding: 0.5rem 0.2rem;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    .escrow_info{
+        margin-top: 0rem;
+        padding: 2rem 0 1rem 0;
+    }
+    .escrow_info ul{
+        margin-top: 0rem;
+    }
+    .escrow_info li{
+        display: block;
+        width: 90%;
+        padding: 0;
+        margin: auto;
+        margin-bottom: 3rem;
+    }
+    .escrow_info span.br{
+        display: none;
+    }
+    .escrow_info .arrow{
+        right: inherit;
+        top:inherit;
+        bottom: -30px;
+        left: 49%;
+        font-size: 20px;
+        transform: rotate(90deg);
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}

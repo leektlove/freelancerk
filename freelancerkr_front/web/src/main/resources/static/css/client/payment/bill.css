@@ -1,0 +1,52 @@
+#container_center {display: block;}
+.represent_images { position: relative; }
+.represent .btn_container:first-child, .pickme .btn_container:first-child { padding-right: 2px; padding-left: 2px; }
+.represent .btn_container:last-child, .pickme .btn_container:last-child { padding-right: 2px; padding-left: 2px; }
+.badge1 { position: absolute; width: 53px; height: 30px; top: -7px; left: 30px; }
+.badge2 { position: absolute; width: 53px; height: 30px; top: -7px; left: 85px; }
+.badge3 { position: absolute; width: 53px; height: 30px; top: -7px; left: 140px; }
+.badge4 { position: absolute; width: 53px; height: 30px; top: -7px; left: 195px; }
+
+.card .badge1 { position: absolute; width: 53px; height: 30px; top: -7px; left: 10px; }
+.card .badge2 { position: absolute; width: 53px; height: 30px; top: -7px; left: 65px; }
+.card .badge3 { position: absolute; width: 53px; height: 30px; top: -7px; left: 120px; }
+.card .badge4 { position: absolute; width: 53px; height: 30px; top: -7px; left: 175px; }
+
+.card_ad { border: 1px solid #DADADA; }
+.card { border: none; }
+
+.manage_bill { border: 1px solid #E3E3E3; background-color: #FFFFFF; padding-left: 15px; padding-right: 15px; }
+.manage_bill .h6, .manage_bill .h5 { font-weight: 400; }
+
+
+.ad_title span {color: #0088cc;}
+/* .ad_images {border: 1px solid #E3E3E3; background-color: #FFFFFF;} */
+.ad_images .title {color: #5A5B5C;}
+.ad_images .contents {color: #1B1C1D;}
+.ad_cnt {border-top: 1px solid #DDDDDD;}
+.ad_cnt>div {float: left; width: 33.33333%; border-right: 1px solid #DDDDDD;}
+.ad_cnt>div:last-child {border: none;}
+button.expand, button.expand:hover {background-color: #FD4B61; border-color: #FD4B61;}
+button.bill,  button.bill:hover{background-color: #7B7B7B; border-color: #7B7B7B;}
+.ad_cnt .contents {color: #0088cc;}
+.pickme>.h5, .bid>.h5, .point>.h5{border-bottom: 2px solid #282828;}
+.ad_contents {font-size: 12px;}
+.ad_contents {padding-bottom: 0px !important;}
+.bid .ad_contents>div {border-top: 1px solid #E4E4E4;}
+.table {border: 1px solid #E3E3E3; text-align: center; background-color: #FFFFFF;}
+.table td {border-top: none;}
+#cashlist tr:nth-child(odd) #history{color: #F83D3D;}
+.ad_images_small {text-align: center;}
+.img-circle {border-radius: 50%;}
+#pay_bill {width: 100%;}
+
+
+@media screen and (max-width: 1199px) {
+    .card_ad { margin-bottom: 20px; }
+}
+
+@media screen and (max-width: 767px) {
+    /* .card_ad { margin-bottom: 20px; } */
+    button { margin-bottom: 10px; }
+    #photos img { margin-bottom: 10px; }
+}

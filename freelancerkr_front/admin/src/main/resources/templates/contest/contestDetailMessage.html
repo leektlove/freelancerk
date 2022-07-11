@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/contest.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<div id="cs_list">
+					<ul>
+						<li><a href="">컨테스트 리스트</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 컨테스트 보기</h1>
+					<table class="boardform">
+						<tbody>
+							<tr>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">기본정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">입찰정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">진행정보</a></td>
+								<th width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">메시지정보</a></th>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<table class="msg-list boardform">
+						<colgroup>
+							<col width=10%>
+							<col width=30%>
+							<col width=30%>
+							<col width=30%>
+						</colgroup>
+						<tr>
+							<th>구분</th>
+							<td>1위</td>
+							<td>2위</td>
+							<td>3위
+							</td>
+						</tr>
+						<tr>
+							<th>프리랜서닉네임</th>
+							<td>박은진</td>
+							<td>이현주</td>
+							<td>양미현</td>
+						</tr>
+						<tr>
+							<th>
+								메시지
+							</th>
+							<!--1위채팅-->
+							<td>
+								<form name="" id="" action="" method="post">
+									<table class="boardform">
+										<colgroup>
+											<col width="85%">
+											<col width="15%">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>
+													<textarea name="" rows="7" cols="100" class="comment_textarea" style="resize:none;"></textarea>
+												</td>
+												<td>
+													<input type="submit" value="메시지작성" class="comment_submit">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+								<div style="height:700px; overflow-y:scroll; margin-top:50px; padding:20px; border:1px solid #ddd;">
+									<div>
+										<div class="admin clear">
+											<div class="admin_img" style="background:url('/static/images/basic_logo.png'); background-size:cover; background-color:#e1e1e1;"></div>
+												<div class="admin_text">
+												<div class="admin_info">
+													프리랜서코리아 
+													<span>
+														2018 . 11 . 09 20:49:55
+													</span>
+													<span class="btn-black medium comment_delete">삭제</span>
+												</div>
+												<div class="admin_content">
+													작업하시는데 문제는 없으신지 연락드렸습니다.<br>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="admin clear">
+											<div class="admin_img" style="background:url('https://www.freelancerk.com:443/admin/img/basic_logo.png'); background-size:cover; background-color:#e1e1e1;"></div>
+											<div class="admin_text">
+												<div class="admin_info">
+													프리랜서코리아
+													<span>
+													2018 . 11 . 09 20:50:13
+													</span>
+													<span class="btn-black medium comment_delete">
+													삭제</span>
+												</div>
+												<div class="admin_content">
+													안녕하세요 프리랜서코리아 입니다.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="client clear">
+											<a href="" target="_blank">
+												<div class="client_img" style="background:url('https://www.freelancerk.com:443/admin/img/c_basic.jpg'); background-size:cover; background-color:#e1e1e1;">
+												</div>
+											</a>
+										<div class="client_text">
+											<div class="client_info">
+												박은진 <span>2018 . 11 . 09 20:51:51</span>
+												<span class="btn-black medium comment_delete" data-no="23241">삭제</span>
+											</div>
+											<div class="client_content">
+												아 감사합니다. 작업중입니다.
+											</div>
+										</div>
+										</div>
+									</div>
+								</div>
+							</td>
+							<!--1위채팅//-->
+
+							<!-- 2위채팅 -->
+							<td>
+								<form name="" id="" action="" method="post">
+									<table class="boardform">
+										<colgroup>
+											<col width="85%">
+											<col width="15%">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>
+													<textarea name="" rows="7" cols="100" class="comment_textarea" style="resize:none;"></textarea>
+												</td>
+												<td>
+													<input type="submit" value="메시지작성" class="comment_submit">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+								<div style="height:700px; overflow-y:scroll; margin-top:50px; padding:20px; border:1px solid #ddd;">
+									<div>
+										<div class="admin clear">
+											<div class="admin_img" style="background:url('/static/images/basic_logo.png'); background-size:cover; background-color:#e1e1e1;"></div>
+												<div class="admin_text">
+												<div class="admin_info">
+													프리랜서코리아 
+													<span>
+														2018 . 11 . 09 20:49:55
+													</span>
+													<span class="btn-black medium comment_delete">삭제</span>
+												</div>
+												<div class="admin_content">
+													작업하시는데 문제는 없으신지 연락드렸습니다.<br>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="admin clear">
+											<div class="admin_img" style="background:url('https://www.freelancerk.com:443/admin/img/basic_logo.png'); background-size:cover; background-color:#e1e1e1;"></div>
+											<div class="admin_text">
+												<div class="admin_info">
+													프리랜서코리아
+													<span>
+													2018 . 11 . 09 20:50:13
+													</span>
+													<span class="btn-black medium comment_delete">
+													삭제</span>
+												</div>
+												<div class="admin_content">
+													안녕하세요 프리랜서코리아 입니다.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="client clear">
+											<a href="" target="_blank">
+												<div class="client_img" style="background:url('https://www.freelancerk.com:443/admin/img/c_basic.jpg'); background-size:cover; background-color:#e1e1e1;">
+												</div>
+											</a>
+										<div class="client_text">
+											<div class="client_info">
+												박은진 <span>2018 . 11 . 09 20:51:51</span>
+												<span class="btn-black medium comment_delete" data-no="23241">삭제</span>
+											</div>
+											<div class="client_content">
+												아 감사합니다. 작업중입니다.
+											</div>
+										</div>
+										</div>
+									</div>
+								</div>
+							</td>
+							<!-- 2위채팅//-->
+
+							<!-- 3위채팅 -->
+							<td>
+								<form name="" id="" action="" method="post">
+									<table class="boardform">
+										<colgroup>
+											<col width="85%">
+											<col width="15%">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>
+													<textarea name="" rows="7" cols="100" class="comment_textarea" style="resize:none;"></textarea>
+												</td>
+												<td>
+													<input type="submit" value="메시지작성" class="comment_submit">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+								<div style="height:700px; overflow-y:scroll; margin-top:50px; padding:20px; border:1px solid #ddd;">
+									<div>
+										<div class="admin clear">
+											<div class="admin_img" style="background:url('/static/images/basic_logo.png'); background-size:cover; background-color:#e1e1e1;"></div>
+												<div class="admin_text">
+												<div class="admin_info">
+													프리랜서코리아 
+													<span>
+														2018 . 11 . 09 20:49:55
+													</span>
+													<span class="btn-black medium comment_delete">삭제</span>
+												</div>
+												<div class="admin_content">
+													작업하시는데 문제는 없으신지 연락드렸습니다.<br>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="admin clear">
+											<div class="admin_img" style="background:url('https://www.freelancerk.com:443/admin/img/basic_logo.png'); background-size:cover; background-color:#e1e1e1;"></div>
+											<div class="admin_text">
+												<div class="admin_info">
+													프리랜서코리아
+													<span>
+													2018 . 11 . 09 20:50:13
+													</span>
+													<span class="btn-black medium comment_delete">
+													삭제</span>
+												</div>
+												<div class="admin_content">
+													안녕하세요 프리랜서코리아 입니다.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="client clear">
+											<a href="" target="_blank">
+												<div class="client_img" style="background:url('https://www.freelancerk.com:443/admin/img/c_basic.jpg'); background-size:cover; background-color:#e1e1e1;">
+												</div>
+											</a>
+										<div class="client_text">
+											<div class="client_info">
+												박은진 <span>2018 . 11 . 09 20:51:51</span>
+												<span class="btn-black medium comment_delete" data-no="23241">삭제</span>
+											</div>
+											<div class="client_content">
+												아 감사합니다. 작업중입니다.
+											</div>
+										</div>
+										</div>
+									</div>
+								</div>
+							</td>
+							<!-- 3위채팅//-->
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

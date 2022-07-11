@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/pickmeup.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/pickMeUpHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 포트폴리오 리스트</h1>
+					<form id="form" name="" method="get" action="/pickMeUp/list">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="350">
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>등록일</th>
+									<td colspan="3">
+										<input type="text" name="createdFrom" th:value="${#request.getParameter('createdFrom')}" size="20" readonly="" class="readonly search_date datepicker" id="">
+										~
+										<input type="text" name="createdTo" th:value="${#request.getParameter('createdTo')}" size="20" readonly="" class="readonly search_date datepicker" id="">
+										<span class="btn-black medium" onclick="today()">오늘</span>
+										<span class="btn-black medium" onclick="thisWeek()">이번주</span>
+										<span class="btn-black medium" onclick="thisMonth()">이번달</span>
+									</td>
+								</tr>
+								<tr>
+									<th>키워드</th>
+									<td colspan="3">
+										<input type="text" name="keyword" value="" size="50" placeholder="이름, 닉네임, 회사명, 이메일, 휴대폰을 입력해주세요.">
+									</td>
+								</tr>
+
+								<tr>
+									<th>키워드분류</th>
+									<td colspan="3">
+										<select name="category1st">
+											<option value="">전체</option>
+											<option value="" th:each="categoryItem: ${allCategory1st}"
+													th:text="${categoryItem.name}" th:value="${categoryItem.id}">전체</option>
+										</select>
+										<select name="category2nd">
+											<option value="">전체</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>포트폴리오 현황</th>
+									<td colspan="3">
+										<label th:each="productItem: ${productItems}"><input type="checkbox" th:name="${productItem.id}" th:text="${productItem.name}"></label>
+									</td>
+								</tr>
+								<tr>
+									<th>활성옵션선택</th>
+									<td colspan="3">
+										<label><input type="checkbox" name="" checked>활성옵션만</label>
+										<label><input type="checkbox" name="">비활성옵션만</label>
+									</td>
+								</tr>
+								<tr>
+									<th>플랫폼공개여부</th>
+									<td>
+										<label><input type="radio" name="" value="" checked> 전체</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="Y"> Y</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="N"> N</label>
+									</td>
+									<th>관리자권한노출여부</th>
+									<td>
+										<label><input type="radio" name="" value="" checked> 전체</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="Y"> Y</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="N"> N</label>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+
+					<div class="Hspace"></div>
+					
+					<div class="clearfix">
+						<h1 class="title">■ <span th:text="${#numbers.formatInteger(page.totalElements, 0, 'COMMA')}">1</span>개의 포트폴리오이 검색되었습니다.</h1>
+						<div class="filter">
+							<div><span class="obtn" data-no="1|d">▽</span>조회수</div>
+							<div><span class="obtn" data-no="2|d">▽</span>참여제안순</div>
+							<div><span class="obtn" data-no="3|d">▽</span>직거래검토</div>
+						</div>
+					</div>
+					<div>
+						<ul id="portfolio_list">
+							<li th:each="item: ${page.content}">
+								<!-- 포트폴리오카드 -->
+								<div class="pl_img_area">
+									<div class="pl_img" th:style="|background-image:url('${item.representativeImageUrl}');|">
+									</div>
+									<div class="pl_notice">
+										<span th:if="${item.directDealAvailable}">직거래</span>
+										<span th:if="${item.creative}">독창적</span>
+										<span th:if="${item.priority}">상위노출</span>
+										<span th:if="${item.highQuality}">고급인력</span>
+										<span th:if="${item.frkCertified}">프코인증</span>
+									</div>
+								</div>
+								<div class="pl_info_area">
+									<div class="pl_subject" th:text="${item.title}">
+									</div>
+									<div>
+										<span th:text="${item.user.name}">조아진</span> |
+										<span th:text="${item.user.nickname}">닉네임</span> |
+										<span th:text="|${#temporals.format(item.createdAt, 'yyyy-MM-dd')}|">2018-11-08</span>
+									</div>
+									<div>
+										<span>플랫폼공개</span> | 
+										<span th:text="${item.pickMeUpExpose?'노출':'미노출'}"></span>
+									</div>
+									<div>
+										<span>+ 참여제안받은횟수</span> <span th:text="${#numbers.formatInteger(item.projectPropositionCount, 0, 'COMMA')}">3</span>
+									</div>
+									<div>
+										<span>+ 조회수</span> <span th:text="${#numbers.formatInteger(item.hits, 0, 'COMMA')}">3</span>
+									</div>
+									<div>
+										<span>+ 직거래검토횟수</span> <span th:text="${#numbers.formatInteger(item.projectPropositionCount, 0, 'COMMA')}"></span>
+									</div>
+									<div class="pl_btn">
+										<a th:href="|/pickMeUp/${item.id}|" class="btn-black mini">상세보기</a>
+									</div>
+								</div>
+								<!-- 포트폴리오카드// -->
+							</li>		
+						</ul>
+					</div>
+					<div class="boardbutton">
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/pickMeUp/list?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- container-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+			});
+			function today() {
+				$('input[name=createdFrom]').val(moment().format('YYYY-MM-DD'));
+				$('input[name=createdTo]').val(moment().add(1, 'day').format('YYYY-MM-DD'));
+			}
+
+			function thisWeek() {
+				$('input[name=createdFrom]').val(moment().startOf('week').format('YYYY-MM-DD'));
+				$('input[name=createdTo]').val(moment().add(1, 'week').startOf('week').format('YYYY-MM-DD'));
+			}
+
+			function thisMonth() {
+				$('input[name=createdFrom]').val(moment().startOf('month').format('YYYY-MM-DD'));
+				$('input[name=createdTo]').val(moment().add(1, 'month').startOf('month').format('YYYY-MM-DD'));
+			}
+
+			function orderBy(orderBy, direction) {
+				location.href = '/project/list?' + $('#form').serialize() + '&ordering=' + orderBy + '&direction=' + direction;
+			}
+
+			function resetSearch() {
+				location.href = '/project/list';
+			}
+
+			function search() {
+				$('#form').submit();
+			}
+		</script>
+	</section>
+	
+
+</html>

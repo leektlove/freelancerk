@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="vewport" content="width=device-width, initial-scale=1" />
+
+    <!-- 폰트 css -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+
+    <!-- 아이콘 css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="/static/images/favi.ico">
+
+    <title>프리랜서코리아</title>
+    
+
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client/posting/project/option.css">
+
+</head>
+
+<body>
+    
+    <div layout:fragment="content">        
+
+        <!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md ">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-12 align-self-center p-static order-2 text-center">
+                                <div class="overflow-hidden pb-2">
+                                    <h1 class="text-dark">
+                                        <strong th:if="${mode != null AND mode == 'EXTEND'}">프로젝트 포스팅 옵션 연장, 추가</strong>
+                                        <strong th:if="${mode == null OR mode != 'EXTEND'}">프로젝트 포스팅 옵션</strong>
+                                    </h1>
+                                </div>
+                            </div>
+                            <div class="col-md-12 align-self-center order-1">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 페이지헤더// -->
+        
+        <section>
+            <div class="container project-container mt-3">
+                <div class="row">
+                    <div class="col-lg-1 col-xl-2">
+                    </div>
+                    <div class="col-lg-9 col-xl-8">
+                        <div class="featured-box featured-box-primary text-left mt-2" style="">
+                            <div class="box-content">
+                                <h5><span th:if="${mode != null && mode == 'EXTEND'}">기존에 구매하신 옵션의 연장, 새로운 옵션의 추가가 가능합니다.</span><span th:if="${mode == null OR mode != 'EXTEND'}">포스팅 옵션을 확정해 주세요</span> <span class="required"> *</span></h5>
+
+                                <form name="foption" id="foption" action="" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="mode" th:value="${mode}"/>
+                                    <input type="hidden" name="optionAmountOfMoney" value="0"/>
+                                    <input type="hidden" name="postingPeriodExtend" value="false"/>
+                                    <input type="hidden" name="postingEndAt" th:value="${project.postingEndAt.toLocalDate()}"/>
+                                    <table class="table cart">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th class="product-name" style="width: 50%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">옵션상품</th>
+                                                <th class="limit-quantity" style="width: 30%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">
+                                                    <div class="row">
+                                                        <div class="product-limit col-lg-5">
+                                                            기한
+                                                        </div>
+                                                        <div class="product-quantity col-lg-7">
+                                                            기간연장
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th class="product-subtotal" style="width: 20%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">금액</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="optionItem: ${options}" th:class="${optionItem.category != null?'disabled':''}" th:style="${optionItem.code.name() == 'ESCROW'?'display:none':''}">
+                                                <th:block th:if="${optionItem.category != null}">
+                                                    <td scope="row" class="product-name text-left pl-0 pl-md-2" style="vertical-align: middle;">
+                                                        <div class="custom-control custom-checkbox paid-option-container ml-0 ml-md-3">
+                                                            <input type="hidden" value="0" name="projectPaymentOptionCount[]" th:data-option-code="${optionItem.code}" >
+                                                            <input type="checkbox" th:value="${optionItem.id}" name="projectPaymentOptionId[]" class="custom-control-input"
+                                                                   data-checked="false"
+                                                                   th:attr="data-option-code=${optionItem.code}, data-option-category=${optionItem.category}, data-price=${optionItem.mountOfMoneyUnit},
+                                                                   data-previous-checked=${project?.isContainProjectOption(optionItem.id)}, data-name=${optionItem.name}"
+                                                                   th:data-previous-end-at="${project?.getPreviousEndAt(optionItem.id)}"
+                                                                   th:checked="${project?.isContainProjectOption(optionItem.id)}"
+                                                                   th:id="|projectPaymentOptionId-${optionItem.id}|"
+                                                            >
+                                                            <label class="custom-control-label" th:for="|projectPaymentOptionId-${optionItem.id}|" style="padding-top: 3px">
+                                                                <span th:if="${optionItem.category!=null}" class="mr-1">+</span><span th:text="${optionItem.name}" class=""></span>
+                                                                <span class="question-pop text-secondary">
+                                                                    <i class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="" th:data-original-title="${optionItem.description}"></i>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="row text-center">
+                                                            <div th:if="${mode != null && mode == 'EXTEND'}" class="col-lg-5 product-limit" style="vertical-align: middle;">
+                                                                <span class="option-limit" th:data-option-code="${optionItem.code}" th:text="|${#temporals.format(productTypeIdTicketMap?.get(optionItem.id)?.expiredAt, 'yyyy.MM.dd')}|">~2019.01.02</span>
+                                                            </div>
+                                                            <div th:if="${mode == null OR mode != 'EXTEND'}" class="col-lg-5 product-limit" style="vertical-align: middle;">
+                                                                <span class="option-limit" th:data-option-code="${optionItem.code}"></span>
+                                                            </div>
+                                                            <div class="col-lg-7 product-quantity p-0">
+                                                                <span class="minus">-</span>
+                                                                <i data-count="1" class="data-count">1</i>주일
+                                                                <span class="plus">+</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="product-subtotal" style="vertical-align: middle;">
+                                                        <span class="bill" th:text="${#numbers.formatDecimal(optionItem.mountOfMoneyUnit, 0, 'DEFAULT', 0, 'DEFAULT')}"></span>원
+                                                    </td>
+                                                </th:block>
+                                                <th:block th:if="${optionItem.category == null}" >
+                                                    <td class="product-name pl-0 pl-md-2">
+                                                        <div class="custom-control custom-checkbox paid-option-container">
+                                                            <input type="hidden" value="0" name="projectPaymentOptionCount[]" th:data-option-code="${optionItem.code}">
+                                                            <input type="checkbox" name="projectPaymentOptionId[]" class="custom-control-input checkboxProductItem"
+                                                                   th:attr="data-option-code=${optionItem.code}, data-option-category=${optionItem.category}, data-price=${optionItem.mountOfMoneyUnit},
+                                                                   data-previous-checked=${project?.isContainProjectOption(optionItem.id)}, data-name=${optionItem.name}"
+                                                                   th:data-previous-end-at="${project?.getPreviousEndAt(optionItem.id)}"
+                                                                   th:checked="|${project?.isContainProjectOption(optionItem.id) || optionItem.code.name() == 'EXTERNAL' || optionItem.code.name() == 'INTERNAL'?'checked':'false'}|"
+                                                                   th:value="${optionItem.id}"
+                                                                   th:data-checked="|${optionItem.code.name() == 'ESCROW' && !project.useEscrow?'false':'checked'}|"
+                                                                   th:onclick="@{|${optionItem.code.name() == 'INTERNAL' OR project?.isContainProjectOption(optionItem.id)?'return false;':''}|}"
+                                                                   th:id="|projectPaymentOptionId-${optionItem.id}|">
+                                                            <label class="custom-control-label" th:for="|projectPaymentOptionId-${optionItem.id}|" style="padding-top:3px;">
+                                                                <span th:text="${optionItem.name}"></span>
+                                                                <span class="question-pop text-secondary">
+                                                                    <i class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="" th:data-original-title="${optionItem.description}"></i>
+                                                                </span>
+                                                            </label>
+                                                            <span th:if="${optionItem.code.name() == 'NDA_IP'}" class="btn btn-primary rounded-0 btn-sm py-1 px-2 text-1 ml-2" data-toggle="modal" data-target="#nda-ip-option-info">내용보기</span>
+                                                        </div>
+                                                    </td>
+                                                    <td th:if="${optionItem.code.name() != 'INTERNAL' AND optionItem.code.name() != 'EXTERNAL'}">
+                                                    <div class="row text-center">
+                                                            <div th:if="${mode != null && mode == 'EXTEND'}" class="col-lg-5 product-limit" style="vertical-align: middle;">
+                                                                <span class="option-limit" th:data-option-code="${optionItem.code}" th:text="|${#temporals.format(productTypeIdTicketMap?.get(optionItem.id)?.expiredAt, 'yyyy.MM.dd')}|">~2019.01.02</span>
+                                                            </div>
+                                                            <div th:if="${mode == null OR mode != 'EXTEND'}" class="col-lg-5 product-limit" style="vertical-align: middle;">
+                                                                <span class="option-limit" th:data-option-code="${optionItem.code}"></span>
+                                                            </div>
+                                                            <div class="col-lg-7 product-quantity p-0">
+                                                                <span class="minus">-</span>
+                                                                <i data-count="1" class="data-count">1</i>주일
+                                                                <span class="plus">+</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td th:if="${( optionItem.code.name() == 'INTERNAL' OR optionItem.code.name() == 'EXTERNAL' ) AND (mode != null AND mode == 'EXTEND')}" class="product-limit" style="vertical-align: middle;">
+                                                        <div class="row text-center">
+                                                            <span class="col-lg-5 option-limit" th:data-option-code="${optionItem.code}" th:text="|${#temporals.format(productTypeIdTicketMap?.get(optionItem.id)?.expiredAt, 'yyyy.MM.dd')}|"></span>
+                                                            <span class="col-lg-7"></span>
+                                                        </div>
+                                                    </td>
+                                                    <td th:if="${( optionItem.code.name() == 'INTERNAL' OR optionItem.code.name() == 'EXTERNAL' ) AND (mode == null OR mode != 'EXTEND')}" class="product-limit" style="vertical-align: middle;">
+                                                        <div class="row text-center">
+                                                            <span class="col-lg-5 option-limit" th:data-option-code="${optionItem.code}"></span>
+                                                            <span class="col-lg-7"></span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td th:if="${optionItem.mountOfMoneyUnit == 0}" style="vertical-align: middle;text-align: center">
+                                                        <span>무료</span>
+                                                        <span th:if="${optionItem.mountOfMoneyUnit > 0}"><span class="bill" th:text="|${#numbers.formatDecimal(optionItem.mountOfMoneyUnit, 0, 'DEFAULT', 0, 'DEFAULT')}|"></span>원</span>
+                                                    </td>
+                                                    <td th:if="${optionItem.mountOfMoneyUnit > 0}" class="product-subtotal">
+                                                        <span><span class="bill" th:text="|${#numbers.formatDecimal(optionItem.mountOfMoneyUnit, 0, 'DEFAULT', 0, 'DEFAULT')}|"></span>원</span>
+                                                    </td>
+                                                </th:block>
+                                            </tr>
+                                            <tr style="border-top:4px double #dee2e6">
+                                                <td colspan="2"><span class="ml-4">할인금액(옵션</span><span id="selectedOptionCount">0</span><span>개 선택)</span></td>
+                                                <td th:if="${mode != null && mode == 'EXTEND'}" colspan="2">
+                                                    <span class="optionDiscountAmount">0</span>원
+                                                </td>
+                                                <td th:if="${mode == null OR mode != 'EXTEND'}" colspan="1">
+                                                    <span class="optionDiscountAmount">0</span>원
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <ul class="col-md-9 mt-4 mx-auto p-0">
+                                        <li>
+                                            <i class="fas fa-angle-right"></i>
+                                            <span>옵션 선택, 구매 수</strong>에 따라 할인율이 적용됩니다.</span>
+                                            <table class="table text-center table-sm">
+                                                <tr>
+                                                    <th style="font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">옵션 갯수 또는 기간 연장</th>
+                                                    <th style="font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">할인율</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>2개</td>
+                                                    <td class="text-center">10%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3개</td>
+                                                    <td class="text-center">15%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="border-bottom">4개이상</td>
+                                                    <td class="text-center border-bottom">20%</td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-plus"></i>
+                                            <span><span style="font-weight: bold">결제금액(공급가액)의 5%</span>가 포인트로 적립되며 1년간 유효합니다.(1포인트는 1원)</span>
+                                        </li>
+                                    </ul>
+                                    <div class="totalAmount">합계 (VAT 별도)<span id="totalAmount" class="money pl-2">0</span>원</div>
+                                    <section class="btn_container">
+                                        <div class="d-block d-md-flex mx-auto">
+                                            <button id="btnReview" type="button" class="btn btn-lg btn-default mb-2 mr-0 mr-lg-1 w-100"  data-toggle="modal" data-target="#preview_pop">미리보기</button>
+                                            <button th:if="${'EXTEND' != mode}" id="btnStartWithoutPurchase" type="button" class="btn btn-lg btn-default btn-cancel mb-2 mr-0 mr-lg-1 w-100">결제없이 등록 완료</button>
+                                            <button id="btnPay" type="button" class="btn btn-lg btn-primary mb-2 w-100">선택한 옵션 결제하기</button>
+                                        </div>
+                                    </section>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <aside class="sidebar" id="sidebar" data-plugin-sticky="" data-plugin-options="{'minWidth': 991, 'containerSelector': '.container', 'padding': {'top': 110}}">
+                            <div id="sticky_point" class="card">
+                                <img class="round" th:src="@{${(#strings.isEmpty(user?.profileImageUrl)?'/static/images/default_avatar.jpg':user?.profileImageUrl)}}">
+                                <div class="user_name" th:text="${user.name}">김예진</div>
+                                <div class="user_nickname">(<span th:text="${user.nickname}">omama</span>)</div>
+                                <div class="user_point_label">보유포인트</div>
+                                <div class="user_point point" th:text="|${#numbers.formatDecimal(user?.points, 0, 'DEFAULT', 0, 'DEFAULT')}|"></div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 미리보기 팝업 -->
+        <div class="modal fade modal_wrap" id="preview_pop" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width:1000px">
+                <div class="modal-content">
+
+                    <!-- 팝업헤더 -->
+                    <div class="head modal-header">
+                        <h5 class="modal-title" id="ModalLabel">미리보기</h5>
+                        <div class="">
+                            <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                    <!-- 팝업헤더// -->
+
+                    <!-- 팝업컨텐츠 -->
+                    <div class="content">
+
+                        <!-- 상세페이지 미리보기-->
+                        <div class="row">
+                            <div class="col-md-8 mb-4 mb-md-0">
+                                <h2 class="text-primary mb-3" th:text="${project.title}" id="project-title"></h2>
+                                <ul class="list list-icons list-icons-style-1 list-primary list-borders">
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <div class="text-4 font-weight-bold">
+                                            예상기간
+                                        </div>
+                                        <div class="mb-1">
+                                            <span th:text="${project.expectedPeriodTxt}"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <div class="text-4 font-weight-bold">
+                                            급여방식
+                                        </div>
+                                        <div class="mb-1">
+                                            <span th:text="${project.payMean?.name}"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <div class="text-4 font-weight-bold">
+                                            지급기준
+                                        </div>
+                                        <div class="mb-1">
+                                            <span th:if="${project.payMean?.name() == 'PER_UNIT'}" th:text="${project.payCriteria}"></span>
+                                            <span th:if="${project.payMean?.name() != 'PER_UNIT'}" th:text="${project.payMean?.shortName}"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <div class="text-4 font-weight-bold">
+                                            작업장소
+                                        </div>
+                                        <div class="mb-1">
+                                            <span th:text="${project.workPlace}"></span>
+                                            <div th:if="${!#strings.isEmpty(project.workPlaceDescription)}" th:text="${project.workPlaceDescription}"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <div class="text-4 font-weight-bold">
+                                            상세설명
+                                        </div>
+                                        <div class="mb-1">
+                                            <div th:utext="${project.description}" style="white-space:pre-line"></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <div class="text-4 font-weight-bold">
+                                            관련키워드
+                                        </div>
+                                        <div class="mb-1">
+                                            <span th:each="projectCategory : ${project.projectCategories}" class="k-list">
+                                                <span class="text-2 ml-1 text-primary">#<span th:text="${projectCategory.category.name}"></span></span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check"></i>
+                                        <div class="text-4 font-weight-bold">
+                                            관련문서
+                                        </div>
+                                        <div class="mb-1">
+                                            <th:block th:if="${#strings.isEmpty(project.projectDescriptionFileName)}">
+                                                관련문서가 없습니다
+                                            </th:block>
+                                            <th:block th:if="${!#strings.isEmpty(project.projectDescriptionFileName)}">
+                                                <a th:href="@{${project.projectDescriptionFileUrl}}" th:text="${project.projectDescriptionFileName}"></a>
+                                            </th:block>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card p-3 mb-2 rounded-0">
+                                    <div class="form-row" style="margin: 5px">
+                                        <div class="col-4 col-md-12 col-lg-4">
+                                            <!-- <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                                                <a th:href="${project.postingClient.profileImageUrl}"> -->
+                                                    <div class="profile_img_crop" style="position: relative;">
+                                                        <div class="center-crop-wrapper rounded">
+                                                            <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(project.postingClient.profileImageUrl)?'/static/images/c_basic.jpg':project.postingClient.profileImageUrl)}}">
+                                                        </div>
+                                                    </div>
+                                                    <span class="badge badge-light px-2 py-1 mt-1 text-primary" style="justify-content: center;align-content: flex-start;display: flex;margin-bottom: 2px;text-align: center;">클라이언트</span>
+                                                <!-- </a>
+                                            </div> -->
+                                        </div>
+                                        <div class="col-8 col-md-12 col-lg-8 align-self-end">
+                                            <div class="member font-weight-bold" style="line-height: 20px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${project.postingClient.exposeName}"></div>
+                                            <div class="text-1" style="line-height: 17px" th:text="${project.postingClient.businessType?.name}"></div>
+                                            <div id="star">
+                                                <div class="rating-container theme-krajee-fas rating-xs rating-animate">
+                                                    <div class="rating-stars">
+                                                        <span class="empty-stars">
+                                                            <span class="star">
+                                                                <i class="far fa-star"></i>
+                                                            </span>
+                                                            <span class="star">
+                                                                <i class="far fa-star"></i>
+                                                            </span>
+                                                            <span class="star">
+                                                                <i class="far fa-star"></i>
+                                                            </span>
+                                                            <span class="star">
+                                                                <i class="far fa-star"></i>
+                                                            </span>
+                                                            <span class="star">
+                                                                <i class="far fa-star"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="filled-stars" th:style="|width: ${project.postingClient.ratingPercentageAsClient}%|">
+                                                            <span class="star">
+                                                                <i class="fas fa-star"></i>
+                                                            </span>
+                                                            <span class="star">
+                                                                <i class="fas fa-star"></i>
+                                                            </span>
+                                                            <span class="star">
+                                                                <i class="fas fa-star"></i>
+                                                            </span>
+                                                            <span class="star">
+                                                                <i class="fas fa-star"></i>
+                                                            </span>
+                                                            <span class="star">
+                                                                <i class="fas fa-star"></i>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <div style="font-size: 12px;margin-bottom:2px;">프로젝트 <span id="allpjt_num" class="text-primary" th:text="${#numbers.formatInteger(project.postingClient.completedProjectCount, 0, 'COMMA')}">10</span>건 중
+                                                    <span id="markpjt_num" class="text-primary" th:text="${#numbers.formatInteger(project.postingClient.ratedProjectCountAsClient, 0, 'COMMA')}">6</span>건 평가</div>
+                                                </div>
+                                                <!-- <div class="star-point" style="line-height: 23px;width: 120px">
+                                                    <img src="/static/images/star_grade_area.png">
+                                                    <div class="star_point_con" th:style="|width: ${project.postingClient.ratingPercentageAsClient}%|">
+                                                        <img src="/static/images/star_grade_point.png">
+                                                    </div>
+                                                </div>
+                                                (<span th:text="${project.postingClient.ratingsAsClient}">0</span>)
+                                                <div class="text-1">프로젝트 <span id="allpjt_num" class="text-primary" th:text="${#numbers.formatInteger(project.postingClient.completedProjectCount, 0, 'COMMA')}">10</span>건 중
+                                                    <span id="markpjt_num" class="text-primary" th:text="${#numbers.formatInteger(project.postingClient.ratedProjectCountAsClient, 0, 'COMMA')}">6</span>건 평가</div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-1" style="background-color: #c1c1c1;" />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="d-flex" style="margin:4px">
+                                                <span class="text-2 ellipsis" style="line-height: 20px" th:text="${project.postingClient.exposeEmail} ? ${project.postingClient.email}: '비공개'">
+                                                </span>
+                                            </div>
+                                            <div class="d-flex" style="margin:4px">
+                                                <span class="text-2" style="line-height: 20px" th:text="${project.postingClient.exposeCellphone} ? ${project.postingClient.cellphone}: '비공개'">
+                                                </span>
+                                            </div>
+                                            <div class="d-flex" style="margin:4px">
+                                                <a th:href="${project.postingClient.homepageUrl}"  style="width:100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 20px;">
+                                                    <span class="text-2" th:text="${project.postingClient.exposeSns} ? ${project.postingClient.homepageUrl} : 비공개">
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-2" th:if="${project.postingClient.id == #authentication.id}">
+                                        <i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+                                        입찰자들에게 노출되는 정보입니다.
+                                    </div>
+                                </div>
+                                <button type="button" data-dismiss="modal" class=" btnLike btn btn-primary text-light btn-lg btn-block rounded-0 mb-2">확인</button>
+                            </div>
+                        </div>
+
+                        <!-- 상세페이지 미리보기//-->
+                    </div>
+                    <!-- 팝업컨텐츠// -->
+
+                </div>
+            </div>
+        </div>
+        <!-- 미리보기 팝업// -->
+
+        <th:block th:include="modal/common-modals"></th:block>
+
+        <script src="/static/lib/moment/moment.min.js"></script>
+        <script th:inline="javascript">
+           var projectId = [[${projectId}]];
+           var projectFirstTopCategoryId = [[${project.firstTopCategoryId}]];
+           var mode = [[${mode}]];
+           var postingEndAt = [[${project.postingEndAt.toLocalDate()}]];
+           var postingEndMoment = moment(postingEndAt);
+        </script>
+
+        <script src="/static/js/client/posting/project/option.js"></script>
+    </div>
+    
+
+</body>
+</html>

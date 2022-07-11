@@ -1,0 +1,69 @@
+.mypage_form .btn_container { margin: auto; }
+.mypage_form input { height: 40px; }
+.mypage_form .mypage_form_left { font-size: 20px; font-weight: normal; }
+.mypage_form_right.pb-60px { padding-bottom: 60px; }
+.right-content .cm_display_1_3_con table th{color: #fff;padding: 5px 10px;text-align: center;background: #222d32;}
+.right-content .cm_display_1_3_con table td{color: #666;padding: 5px 10px;text-align: center;border-bottom: 1px solid #ddd;}
+.right-content .cm_display_1_3_con table td input{height: 40px;border: 1px solid #ddd;padding: 0px 10px;line-height: 40px;vertical-align: middle;}
+
+.image_container{position: relative;height:150px;width:150px;}
+.image_container .filebox.preview-image{position: absolute;bottom: 0;width: 100%;color: white;height: 100%;}
+.image_container .filebox.preview-image .input_file{width: 100%;height: 100%;background-color:#00000061;opacity: 0}
+.image_container .filebox.preview-image .input_file:hover{width: 100%;height: 100%;opacity: 1}
+.image_container .filebox.preview-image .input_file div:first-child{margin-top:45px;}
+
+.context {border-color: #fc4c60; background-color: #fc4c60;}
+.pro_and_con {border-color: #30406e; background-color: #30406e;}
+.edit_profile {border-color: #7a7a7a; background-color: #7a7a7a;}
+.boardpost{margin-top: 30px;}
+.boardbutton {text-align: center; padding-top: 60px;}
+.postcontent {background-color: #ffffff; text-align: left; font-size: 16px; padding: 20px; margin-bottom: 10px; border: 1px solid #dbdbdb;}
+.emcontent {color: deepskyblue;}
+.form-check {float: left; margin-right: 10px;}
+.form-check-input {position: static; margin-top: 0px;}
+/*td{font-size: 13px; font-weight: 400; padding-bottom: 20px;}*/
+p{margin-bottom: 0;}
+.cm_nick, .cm_ascro {width: 70%; float: left; margin-right: 5px;}
+.cm_ascro{width: 50%;}
+/*.rounded{width:100px; height:100px; border-radius:50px !important; float: left; margin-right: 30px;}*/
+.myphoto{float:left; font-size:13px; font-weight:400; line-height:20px;}
+.btn-save, .btn-save:hover{background-color: #0088cc; border-color: #0088cc;}
+.btn-cancel, .btn-cancel:hover{width: 115px; color: #666666; background-color: #ffffff; border: 1px solid #dddddd;}
+.registerfor, .registerform tbody,.registerform tr, .registerform td{display: block;}
+.mypage_form_right .chk_container, .file_container span, .file_container a, .escrow select, .nickname input { display: inline-block; }
+.file_container  { margin-top: 16px; }
+.file_container button { margin-bottom: 8px; }
+.filebox label { height: 40px; line-height: normal; padding: 9px 10px 8px 10px; font-size: 14px; }
+
+.pms_c {width: 32%;padding: 1%;cursor: pointer;}
+.modal td{padding:2px;}
+
+/* 기존 소스 common.css 부분 */
+.btn-blue{color: #fff; background-color: #4f99df; border: 1px solid #4f99df;}
+.medium{display: inline-block; font-size: 14px; padding: 5px 10px 5px 10px;}
+/*.file_con input[type="file"]{position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;}*/
+.form-control input[type="text"] {border-radius: 0; border: 1px solid #ddd; font-size: 13px;}
+.register tr{ margin-bottom: 10px;}
+
+@media screen and (max-width: 1200px) {
+    .file_container { width: 330px; }
+}
+
+@media screen and (max-width: 991px) {
+    .mypage_form_left { text-align: left; }
+    .mypage_form_left, .mypage_form_right .mobile { font-size: 17px; }
+    .mypage_form { margin-left: 0!important; }
+    .file_container { width: 100%; }
+    .file_container span { width: 100%; }
+    .file_container a { display: block }
+}
+
+@media screen and (max-width: 767px) {
+    input.form-control, select.form-control { width: 100%; }
+    .escrow select { width: calc( 100% - 158px ); }
+    .nickname input { width: calc( 100% - 77px ); }
+}
+
+.previous.disabled a {
+    opacity: 0;
+}

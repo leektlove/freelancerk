@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		
+		<div id="container_side">
+			<th:block th:include="fragments/freelancerHeader"></th:block>
+		</div>
+		<div id="container_content">
+			<div class="container_inner">
+				<h1>■ 프리랜서 보기</h1>
+				<table class="boardform">
+					<colgroup>
+						<col width="150">
+						<col width="350">
+						<col width="150">
+						<col width="">
+					</colgroup>
+					<tbody>
+					<tr>
+						<th>아이디(이메일)</th>
+						<td colspan="3">
+							&nbsp;&nbsp;<a href="#" class="btn-color small adlg">아이디로그인</a>
+						</td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td th:text="${user.name}">
+							
+						</td>
+						<th>닉네임</th>
+						<td th:text="${user.nickname}">
+						</td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td th:text="${user.email}">
+							
+						</td>
+						<th>휴대폰</th>
+						<td th:text="${user.cellphone}">
+						</td>
+					</tr>
+					<tr>
+						<th>Instagram</th>
+						<td colspan="3">
+							<span th:text="${user.instagramLinkUrl}"> </span>
+							<span th:if="${user.instagramLinkUrl}!=null">
+								<a th:href="@{{id}(id = ${user.instagramLinkUrl})}">
+									<img src="https://cdn-icons-png.flaticon.com/128/174/174855.png" class="replaced-svg" style="width: 24px;
+																														    height: 24px;
+																													    display: inline-block;
+																													    vertical-align: middle;">
+							    </a>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<th>가입일</th>
+						<td colspan="3" th:text="${user.createdAt}">
+						</td>
+					</tr>
+					<tr>
+						<th>탈퇴</th>
+						<td colspan="3">
+						</td>
+					</tr>
+					<tr>
+						<th>탈퇴이유</th>
+						<td colspan="3">
+						</td>
+					</tr>
+					<tr>
+						<th>탈퇴기타사유</th>
+						<td colspan="3">
+						</td>
+					</tr>
+				</tbody></table>
+				<div class="userModifyPrifleImgDiv">
+					<img th:src="${user.profileImageUrl1}">
+					<img th:src="${user.profileImageUrl2}">
+					<img th:src="${user.profileImageUrl3}">
+					<img th:src="${user.profileImageUrl4}">
+					<img th:src="${user.profileImageUrl5}">
+					<img th:src="${user.profileImageUrl6}">
+				</div>
+			
+				<style type="text/css">
+					.userModifyPrifleImgDiv{
+						margin-top: 20px;
+					}
+		
+					.userModifyPrifleImgDiv img{
+						width:30%;
+						margin-bottom: 3px;
+					}
+				 </style>
+	
+
+				<div class="boardbutton">
+					<div class="tl"></div>
+					<div class="tc">
+						<a href="" class="btn-color large">수정</a>
+						<a href="" class="btn-colorline large">목록</a>
+					</div>
+					<div class="tr">
+						<span class="btn-color large del_btn">삭제</span>
+					</div>
+				</div>
+				
+
+				<div style="height:100px;"></div>
+			</div>
+		</div>
+	</section>
+	<!-- conetent//-->
+
+</html>

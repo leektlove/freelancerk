@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/audition.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/style.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui.css">
+	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-noscript.css"></noscript>
+	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui-noscript.css"></noscript>
+	
+	 
+    <!--<link rel="stylesheet" href="/static/css/freelancer/profile/modify.css">-->
+	<link rel="stylesheet" href="/static/vendor/slim-image-cropper/slim.min.css">
+	
+</head>
+	<script src="/static/js/freelancer/profile/modify.js"></script>
+	<script src="/static/js/freelancer/profile/modify-step.js"></script>
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/auditionHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+				<h1>■ 오디션 등록</h1>
+
+				<form name="" id="" action="/audition/save" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="auditionId" th:value="${audition.auditionId}" id="auditionId">
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>이름</th>
+								<td>
+									<input type="text" name="name" th:value="${audition.name}" id="" title="타이틀" maxlength="20">								</td>
+							</tr>
+							<tr>
+								<th>설명</th>
+								<td>
+									<input type="text" name="text" th:value="${audition.text}" id="" maxlength="100" title="설명">
+								</td>
+							</tr>
+								<tr>
+								<th>상태</th>
+								<td>
+									<select name="status" th:if="${audition.status=='2000'}">
+									    <option value="2000" selected>정상</option>
+									    <option value="0000">종료</option>
+									</select>
+									<select name="status" th:if="${audition.status=='0000'}">
+									    <option value="2000">정상</option>
+									    <option value="0000" selected>종료</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>일시</th>
+								<td>
+									<input type="datetime-local" id="dateTime" name="auditionAt" th:value="${audition.auditionAt}">
+								</td>
+							</tr>
+							<tr>
+								<th>사진</th>
+								<td colspan="3">
+									<div style="margin-top:10px;">
+										<input type="file" name="file" id="fileVal" class="imgext imgsize">
+									</div>
+									<div style="width:300px; margin-top:20px;">
+										<img th:src="${audition.imageUrl}" style="margin-bottom: 10px; width:100%;">
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tc">
+							<input type="submit" value="저장" class="btn-color large">
+							<a href="/audition/list" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+				</form>
+				<!-- 오디션 지원한 사람 -->
+				<div style="margin-top: 30px ;">
+					<div style=" margin-bottom: 20px;">
+						<h1>■ 오디션 지원자</h1>
+					</div>
+					<div class="passTypeDiv">
+						<span class="passTypeSpan onPassType" passok = "N" failok="N" applylistnum = "0">전체보기</span>
+						<span class="passTypeSpan" passok = "Y" failok="N" passnum="1" applylistnum = "-1">미합격자</span>
+						<span class="passTypeSpan" passok = "Y" failok="Y" passnum="2" applylistnum = "1">1차합격자</span>
+						<span class="passTypeSpan" passok = "Y" failok="Y" passnum="3" applylistnum = "2">2차합격자</span>
+						<span class="passTypeSpan" passok = "N" failok="Y" applylistnum = "3">3차합격자</span>
+					</div>
+						<table class="boardlist" >
+								<tbody id="applyListBox">
+									<tr>
+										<th rowspan="2">
+											<input type="checkbox" name="applyAllCheck" value="1" id="" onclicK="changeAllCheck();">
+										</th>
+										<th rowspan="2">순서</th>
+										<th rowspan="2">이름</th>
+										<th rowspan="2">이메일</th>
+										<th rowspan="2">전화번호</th>
+										<th rowspan="2">지원일시</th>
+											<th rowspan="2">1차합격유무</th>
+											<th rowspan="2">2차합격유무</th>
+										<th rowspan="2">3차합격유무</th>
+										<th rowspan="2">상세보기</th>
+									</tr>
+									<tr>
+									</tr>
+									<tr th:each="item: ${list}" style="line-height: 0.5;">
+										<td>
+											<input type="checkbox" name="applyUserCheck" th:value="${item.id}" class="applyCheckList" onclick="checkAllList(event)">
+										</td>
+										<td th:text="${item.id}">
+										</td>
+										<td th:text="${item.name}"></td>
+										<td th:text="${item.email}"></td>
+										<td th:text="${item.cellphone}"></td>
+										<td th:text="|${#temporals.format(item.createdAt, 'yy-MM-dd HH:mm:ss')}|"></td>
+										<td th:text="${item.pass1}"></td>
+										<td th:text="${item.pass2}"></td>
+										<td th:text="${item.pass3}"></td>									
+										<td>
+											<a th:href="@{/freelancer/detail/{id}(id = ${item.uid})}" class="btn-black medium">보기</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="boardbutton">
+								<div class="tc" style="position:relative;">
+									<input type="button" value="합격" class="btn-black auditionBtn applyPassBtn" onclick="auditionPass()">
+									<input type="button" value="합격취소" class="btn-black auditionBtn applyFailBtn" onclick="auditionFail()">
+									<input type="button" value="TXT 뽑기" class="btn-black auditionBtn txtBtn">
+								</div>
+							</div>
+							<script>
+								//$("input:checkbox[name=applyUserCheck]").prop("checked",false);
+								//$("input:checkbox[name=applyUserCheck]").prop("checked",true);
+								$(document).on('click', '.passTypeSpan', function(e){
+									$(".passTypeSpan").removeClass('onPassType');
+									$(this).addClass('onPassType');
+									passBtnOnCheck();
+								});
+								function changeAllCheck(){
+									if( $("input:checkbox[name=applyAllCheck]").is(":checked")){
+										$("input:checkbox[name=applyUserCheck]").prop("checked",true);
+									}else{
+										$("input:checkbox[name=applyUserCheck]").prop("checked",false);
+									}
+								}									
+								function checkAllList(e) { 
+									let checkCount = 0;
+									document.querySelectorAll(".applyCheckList").forEach(function(v, i) {
+										if(v.checked === false){
+											checkCount++;
+										}
+									});
+									if(checkCount>0) {
+										$("input:checkbox[name=applyAllCheck]").prop("checked",false);
+									} else if(checkCount === 0) {
+										$("input:checkbox[name=applyAllCheck]").prop("checked",true);
+									}
+								}
+								function passBtnOnCheck(){
+									if($(".onPassType").attr('passok')=='Y'){
+										$(".applyPassBtn").show();
+									}else{
+										$(".applyPassBtn").hide();
+									}
+									if($(".onPassType").attr('failok')=='Y'){
+										$(".applyFailBtn").show();
+									}else{
+										$(".applyFailBtn").hide();
+									}
+									if($(".onPassType").attr('passnum')){
+										$(".applyPassBtn").val($(".onPassType").attr('passnum')+"차 합격");									
+									}
+									applySearch();
+								}
+								function auditionPass(){
+									var num = $(".onPassType").attr('applylistnum')
+									var passNumArray = [];
+									$("input:checkbox[name=applyUserCheck]:checked").each(function(){
+										var checkVal = $(this).val();
+										passNumArray.push(checkVal);
+										console.log(checkVal+"를 합격처리합니다.");
+									});	
+									console.log("passNumArray : " + passNumArray +"& num : "+num);
+									
+									$.ajax({
+							      		url : "/audition/passApply",
+							      		traditional: true,
+							          	data: {
+												"array" : passNumArray,
+												"num" : num,
+										},
+								        type : 'get',
+								        contentType:"application/json; charset=UTF-8",
+								        dataType: "text",
+							        	success : function(data){
+											console.log("code: "+ data);
+											if(data=="200"){
+												alert(passNumArray.length+"명이 합격 처리되었습니다.");												
+												applySearch();
+											}            						            
+								        },
+								        error : function(request,status,error){
+								       		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+								        }
+								    });
+								}
+								
+								function auditionFail(){
+									var num = $(".onPassType").attr('applylistnum')
+									var passNumArray = [];
+									$("input:checkbox[name=applyUserCheck]:checked").each(function(){
+										var checkVal = $(this).val();
+										passNumArray.push(checkVal);
+										console.log(checkVal+"를 합격취소 처리합니다.");
+									});	
+									console.log("passNumArray : " + passNumArray +"& num : "+num);
+									$.ajax({
+							      		url : "/audition/failApply",
+							      		traditional: true,
+							          	data: {
+												"array" : passNumArray,
+												"num" : num,
+										},
+								        type : 'get',
+								        contentType:"application/json; charset=UTF-8",
+								        dataType: "text",
+							        	success : function(data){
+											console.log("code: "+ data);
+											if(data=="200"){
+												alert(passNumArray.length+"명이 합격취소 처리되었습니다.");												
+												applySearch();
+											}            						            
+								        },
+								        error : function(request,status,error){
+								       		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+								        }
+								    });
+								}
+								
+								passBtnOnCheck();
+								
+								function applySearch(){
+									var num = $(".onPassType").attr('applylistnum');
+								   $('#applyListBox').empty();
+									var auditionId = $("#auditionId").val();
+									console.log(" auditionId : " + auditionId + "\n num : "+ num);
+									
+									var param = {};
+								    param.name = num;
+								    param.work = auditionId;	
+								    
+								    param = JSON.stringify(param);
+							      	$.ajax({
+								        url : "/audition/getApplyList",
+								          data : param,
+									        type : 'post',
+									        contentType:"application/json; charset=UTF-8",
+									        dataType:"json",
+								        	success : function(data){
+											console.log(data);
+								            var results = data.list;
+								            var rows = "";
+								            rows = rows + '<tr>'+
+																'<th rowspan="2">'+
+																	'<input type="checkbox" name="applyAllCheck" value="1" id="" onclicK="changeAllCheck();">'+
+																'</th>'+
+																'<th rowspan="2">순서</th>'+
+																'<th rowspan="2">이름</th>'+
+																'<th rowspan="2">이메일</th>'+
+																'<th rowspan="2">전화번호</th>'+
+																'<th rowspan="2">지원일시</th>'+
+																'<th rowspan="2">1차합격유무</th>'+
+																'<th rowspan="2">2차합격유무</th>'+
+																'<th rowspan="2">3차합격유무</th>'+
+																'<th rowspan="2">상세보기</th>'+
+															'</tr>\n <tr></tr>';
+								            $.each(results, function(index, item) {
+								            	rows = rows + getRow(item);
+											});	            
+								            	            
+								            $('#applyListBox').append(rows);
+								            
+								        },
+								        error : function(request,status,error){
+								       		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+								        }
+								    });
+								}
+								
+								function applySearch2(num){
+								    $('#applyListBox').empty();
+									var auditionId = $("#auditionId").val();
+						        	console.log("num : ", num, "auditionId : ", auditionId);
+									
+							        var formData = new FormData();
+							        formData.append('num', parseInt(num));
+						         	formData.append('auditionId', auditionId);
+            						
+							      	$.ajax({
+								        url : "/audition/getApplyList",
+								        data: formData,
+								        type : 'post',
+								        contentType: false,
+								        dataType:"json",
+								        success : function(data){
+								            var results = data.list;
+								            var rows = "";
+								            $.each(results, function(index, item) {
+								            	rows = rows + getRow(item);
+											});	            
+								            $('#applyListBox').append(rows);
+								        },
+								        error : function(request,status,error){
+								       		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+								        }
+								    });
+								}		
+								
+								function getRow(apply){
+									var date = apply.dateTime;
+									var row = '';
+									row = row + '<tr style="line-height: 0.5;">\n';
+									row = row + '<td>\n';
+									row = row + '	<input type="checkbox" name="applyUserCheck" value="'+apply.id+'" class="applyCheckList" onclick="checkAllList(event)" cellphone="'+apply.cellphone+'" email="'+apply.email+'" username = "'+apply.name+'" >\n';
+									row = row + '</td>\n';
+									row = row + '<td>'+apply.id+'\n';
+									row = row + '</td>\n';
+									row = row + '<td>'+apply.name+'</td>\n';
+									row = row + '	<td>'+apply.email+'</td>\n';
+									row = row + '<td>'+apply.cellphone+'</td>\n';
+									row = row + '<td>'+date.substr(0,10)+' '+date.substr(11,5)+'</td>\n';
+									row = row + '<td>'+apply.pass1+'</td>\n';
+									row = row + '<td>'+apply.pass2+'</td>\n';
+									row = row + '<td>'+apply.pass3+'</td>\n';									
+									row = row + '<td>\n';
+									row = row + '	<a href="/freelancer/detail/'+apply.uid+'" class="btn-black medium">보기</a>\n';
+									row = row + '</td>\n';
+									row = row + '</tr>\n';
+									return row;
+								}
+								
+								$(document).on('click', '.txtBtn', function(e){
+									var num = $(".onPassType").attr('applylistnum');
+									
+									var passNumArray = [];
+									var emailArray = [];
+									var cellphoneArray = [];
+									var nameArray = [];
+									$("input:checkbox[name=applyUserCheck]:checked").each(function(){
+										var checkVal = $(this).val();
+										var email = $(this).attr("email");
+										var cellphone = $(this).attr("cellphone");
+										var name = $(this).attr("username");
+										console.log(checkVal+ "를 합격처리합니다.");
+										console.log(email)
+										console.log(cellphone)
+										console.log(name)
+										passNumArray.push(checkVal);
+										emailArray.push(email);
+										cellphoneArray.push(cellphone);
+										nameArray.push(name);
+									});
+									console.log("emailArray : "+ emailArray);
+									console.log("cellphoneArray : "+cellphoneArray);
+									console.log("nameArray : "+nameArray);	
+									
+									
+									var auditionName = $("input[name=name]").val();
+									
+									
+									$.ajax({
+							      		url : "/audition/createApplyListTxt",
+							      		traditional: true,
+							          	data: {
+												"array" : passNumArray,
+												"emailArr" : emailArray,
+												"cellphoneArr" : cellphoneArray,
+												"nameArr" : nameArray,
+												"auditionName" : auditionName,
+												"num" : num
+										},
+								        type : 'get', 	
+								        contentType:"application/json; charset=UTF-8",
+								        dataType: "text",
+							        	success : function(data){
+											console.log("code: "+ data);
+											if(data!="400"){
+												alert("C:/applyList 에 파일이 생성되었습니다.");
+											}else{
+												alert("정상적으로 작동되지 않았습니다");												
+											}
+								        },
+								        error : function(request,status,error){
+								       		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+								        }
+								    });
+								    
+								});
+		
+							</script>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- for file upload start -->
+		<script src="/static/vendor/jquery-file-uploader/js/vendor/jquery.ui.widget.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+		<script src="https://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.iframe-transport.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-process.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-image.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-audio.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-video.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-validate.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-ui.js"></script>
+		<!-- for file upload end -->
+	
+	</section>
+	
+
+</html>

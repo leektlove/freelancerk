@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/bid/successList.css">
+</head>
+
+	<div id="content" layout:fragment="content">
+	
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>성공한 입찰</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/bid/onGoingList}" class="nav-link active d-flex">
+							<span>참여중인 입찰</span>
+							<span class="count_alarm" th:text="${processingCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/freelancer/bid/successList}" class="nav-link d-flex" href="#">
+							<span>성공한 입찰</span>
+							<span class="count_alarm" th:text="${cancelledCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/bid/failList}" class="nav-link d-flex" href="#">
+							<span>입찰취소/미낙찰</span>
+							<span class="count_alarm" th:text="${tempSavedCount}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<div class="">
+						<section class="row mb-3">
+							<div class="col-lg-10 col-md-9 col-sm-8">
+								<p class="mb-0">총 <span class="text-primary" th:text="${page.totalElements}">0</span> 건의 성공한 입찰이 있습니다.</p>
+							</div>
+							<div class="col-lg-2 col-md-3 col-sm-4 mt-2 mt-sm-0">
+
+								<!-- 검색 필터 -->
+								<select class="custom-select" name="sortBy">
+									<option value="CREATED_AT" th:selected="${'CREATED_At' == sortBy?.name()}">최근순</option>
+									<option value="AMOUNT" th:selected="${'AMOUNT' == sortBy?.name()}">금액높은순</option>
+								</select>
+								<!-- 검색필터// -->
+
+							</div>
+
+						</section>
+
+						<section>
+							<th:block th:each="item : ${page}">
+
+								<!-- 프로젝트 리스트 -->
+								<article class="project list_card bg-white post post-medium" th:if="${item.project.project}">
+									<div class="row">
+										<div class="col-12">
+											<div class="card_title_date">
+												<div class="title" th:text="${item.project.title}">
+												</div>
+												<div class="date">
+													<span th:if="${item.applyAt != null}" th:text="|지원일 : ${#temporals.format(item.applyAt, 'yyyy.MM.dd HH:mm:ss')}|"></span>
+													<span th:if="${item.applyAt == null}" th:text="|지원일 : 클라이언트의 선택(직거래)|"></span>
+													<br class="d-block d-sm-none">
+													<span th:text="|낙찰일 : ${#temporals.format(item.successBidAt, 'yyyy.MM.dd HH:mm:ss')}|"></span>
+												</div>
+											</div>	
+											<div class="cellbox">
+												<div class="cell">
+							    					<span class="list_deco">▪︎</span>
+							    					<span th:text="${item.project.payMean?.shortName}"></span> :
+							    					<span class="font_emp" th:text="${item.project.budget}"></span>
+							    				</div>
+							    				<div class="cell" >
+							    					<span class="list_deco">▪︎</span>
+							    					나의 낙찰가격 : 
+							    					<span class="font_emp" th:text="|*{#numbers.formatInteger(item.project.successBidPrice, 0, 'COMMA')}원|"></span>
+							    				</div>
+							    				<div class="cell" th:if="${item.applyAt != null}">
+							    					<span class="list_deco">▪︎</span>
+							    					참여자 평균 경력 : <span class="font_emp" th:text="|${item.avgCareerYear}년|"></span>
+							    				</div>
+							    				<div class="cell" th:if="${item.applyAt != null}">
+							    					<span class="list_deco">▪︎</span>
+							    					참여자 평균 입찰가격 : <span class="font_emp" th:text="|*{#numbers.formatInteger(item.averageBidMoney, 0, 'COMMA')}원|"></span>
+							    				</div>
+									    	</div>
+									    	<div class="action_line">
+										    	<div class="row">
+													<div class="col-lg-6 align-self-center">
+														<div class="card_info d-block d-lg-flex">
+															<div class="content_wrap">
+																<i class="fas fa-heart" style="color:red"></i>
+																축하합니다! <span class="d-none d-md-inline-block mx-1"> 클라이언트가 당신을 선택하여 </span> 입찰이 마감되었습니다!
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-6 text-right">
+														<div class="btn-group">
+															<button class="btn btn-primary rounded-0" th:onclick="|projectDetail(${item.project.id})|">
+																프로젝트 상세보기<i class="fas fa-angle-right"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+							    	</div>
+								</article>
+								<!-- 프로젝트 리스트// -->
+
+								<!-- 컨테스트 리스트 -->
+								<article class="contest list_card bg-white post post-medium" th:if="${item.project.projectType.name()} == 'CONTEST'">
+									<div class="row">
+										<div class="col-12">
+											<div class="card_title_date">
+												<div class="title" th:text="${item.project.title}">
+												</div>
+												<div class="date">
+													<span th:text="|지원일 : ${#temporals.format(item.applyAt, 'yyyy.MM.dd HH:mm:ss')}|"></span>
+													<br class="d-block d-sm-none">
+													<span th:text="|낙찰일 : ${#temporals.format(item.successBidAt, 'yyyy.MM.dd HH:mm:ss')}|"></span>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-12 mb-3">
+													<div class="cellbox">
+														<div class="cell">
+															<span class="list_deco mr-2">▪︎</span><span>지원자평균경력 :</span> <span class="font_emp" th:text="|${item.avgCareerYear}년|"></span>
+														</div>
+														<div class="cell">
+															<span class="list_deco mr-2">▪︎</span><span>나의 당선상금 : <span class="font_emp red" th:text="|*{#numbers.formatInteger(item.myPrizeMoney, 0, 'COMMA')}원 (${item.myRank}위)|"></span></span>
+														</div>
+								    				</div>
+								    			</div>
+												<div class="col-md-6">
+													<ul class="list text-2">
+														<li>
+															<div class="post-image">
+																<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+																	<div class="form-row">
+																		<div class="col-4" th:each="entryFile: ${item.allContestEntryFiles}">
+																			<a th:href="${entryFile.fileUrl}" th:if="${entryFile.fileType?.name() == 'IMAGE'}">
+																				<span class="profile_img_crop thumb-info thumb-info-no-borders thumb-info-centered-icons">
+																					<span class="thumb-info-wrapper center-crop-wrapper rounded d-flex">
+																						<img th:style="|${'background-image: url(' + entryFile.fileUrl + ')'}; background-position: center;background-size: cover;|">
+																						<span class="thumb-info-action">
+																							<span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+																						</span>
+																					</span>
+																				</span>
+																			</a>
+																			<span th:if="${entryFile.fileType?.name() == 'VIDEO'}" data-toggle="modal" data-target="#videoModal" th:data-url="${entryFile.fileUrl}">
+																				<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons">
+																				<span class="thumb-info-wrapper center-crop-wrapper rounded d-flex">
+																					<img th:style="|${'background-image: url(' + entryFile.videoImageUrl + ')'}; background-position: center;background-size: cover;|">
+																				</span>
+																				</span>
+																				<!--<video th:src="${entryFile.fileUrl}" controls style="height: 125px;"></video>-->
+																			</span>
+																		</div>
+																		<div class="col-4" th:if="${#lists.isEmpty(item.project.entryFileThumbnailUrl)}">
+																			<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons">
+																				<span class="thumb-info-wrapper center-crop-wrapper rounded d-flex">
+																					<img src="/static/images/no-image.jpg" class="img-fluid" alt="">
+																						<span class="thumb-info-action">
+																							<span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+																						</span>
+																				</span>
+																			</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</li>
+													</ul>
+												</div>
+								    		</div>
+								    		<div class="action_line">
+									    		<div class="row">
+													<div class="col-lg-6 align-self-center">
+														<div class="card_info d-block d-lg-flex">
+															<div class="content_wrap">
+																<i class="fas fa-heart" style="color:red"></i>
+																<span>축하합니다 <strong>컨테스트에 당선</strong> 되셨습니다!</span>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-6 text-right">
+														<div class="btn-group">
+															<button class="btn btn-secondary rounded-0" type="button" th:onclick="|contestDetail(${item.project.id})|">당선작 확인<i class="fas fa-angle-right"></i></button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>											
+								</article>
+								<!-- 컨테스트 리스트// -->
+
+							</th:block>
+
+						</section>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 내가받은평가 팝업 -->
+		<div class="modal fade modal_wrap" id="rated" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title" id="ModalLabel">나에대한평가보기</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<div class="content modal-body">
+						<div id="popup_member_mini" style="width:270px;margin:0 auto 30px">
+							<div class="popup_member_mini_image">
+								<div style="background-image:url('/static/images/f_basic.jpg'); background-repeat:no-repeat; background-size:cover; background-position:center center; width:100px; height:100px; border-radius:50px;"></div>
+							</div>
+							<p class="popup_member_mini_name">홍길동</p>
+
+							<div class="star">
+								<div class="star_con">
+									<img src="/static/images/star_grade_area.png">
+									<div class="star_point_con">
+										<img src="/static/images/star_grade_point.png">
+									</div>
+								</div>
+							</div>
+
+							<p class="popup_member_mini_number"></p>
+						</div>
+						<div class="titleBig" style="text-align:center;">
+							<p>
+								회원님의 모든 프로젝트에서 받은 평균 평점은 <span>1004</span> 입니다.
+							</p>
+						</div>
+						<div class="score_graph">
+							<div class="score_graph">
+								<div class="g_01">
+									<div class="n" style="width:50%;"></div>
+									<div class="p">5.0</div>
+									<div class="t">만족도</div>
+								</div>
+								<div class="g_02">
+									<div class="n"></div>
+									<div class="p">5.0</div>
+									<div class="t">속도</div>
+								</div>
+								<div class="g_03">
+									<div class="n"></div>
+									<div class="p">5.0</div>
+									<div class="t">정확성</div>
+								</div>
+								<div class="g_04">
+									<div class="n"></div>
+									<div class="p">5.0</div>
+									<div class="t">신뢰성</div>
+								</div>
+								<div class="g_05">
+									<div class="n"></div>
+									<div class="p">5.0</div>
+									<div class="t">소통능력</div>
+								</div>
+							</div>
+						</div>
+
+						<div style="clear:both;"></div>
+
+						<div class="title">총 2개의 프로젝트</div>
+						<table class="popup_boardlist">
+							<colgroup>
+								<col width="100">
+								<col width="">
+								<col width="100">
+							</colgroup>
+							<tr>
+								<th>평가일</th>
+								<th>프로젝트정보</th>
+								<th>평점</th>
+							</tr>
+							<tr>
+								<td>2017.07.08</td>
+								<td>
+									<a href="">
+										반응형 웹페이지 제작
+									</a>
+								</td>
+								<td>4.5</td>
+							</tr>
+							<tr>
+								<td>2016.10.15</td>
+								<td>
+									<a href="">
+										안드로이드 제작
+									</a>
+								</td>
+								<td>3</td>
+							</tr>
+
+						</table>
+
+						<!-- <div class="paging_con">
+							<a href='#' class='prev'></a><span class='current'></span><a href='#'></a><a href='#' class='next'></a>
+						</div> -->
+
+					</div>
+					<!-- 팝업 컨텐츠//-->
+
+				</div>
+			</div>
+		</div>
+		<!-- 내가받은평가 팝업// -->
+
+		<!-- 내가한평가 팝업 -->
+		<div class="modal fade modal_wrap" id="rating" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title" id="ModalLabel">내가한평가보기</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<div class="content modal-body">
+						<div id="popup_member_mini" style="width:270px;margin:0 auto 30px">
+							<div class="popup_member_mini_image">
+								<div style="background-image:url('https://www.freelancerk.com:443/data/file/client/10_client.png'); background-repeat:no-repeat; background-size:cover; background-position:center center; width:100px; height:100px; border-radius:50px;"></div>
+							</div>
+							<p class="popup_member_mini_name">
+								프리랜서코리아
+							</p>
+							<div class="star">
+								<div class="star_con">
+									<img src="https://www.freelancerk.com:443/my_freelancer/img/star_grade_area.png">
+									<div class="star_point_con" style="width:100%;">
+										<img src="https://www.freelancerk.com:443/my_freelancer/img/star_grade_point.png">
+									</div>
+								</div>
+								(5)
+							</div>
+
+							<p class="popup_member_mini_number">2018 . 08 . 27</p>
+						</div>
+						<div class="score_graph">
+							<div class="g_01">
+								<div class="n" style="width:100%;"></div>
+								<div class="p">
+									<!--100%-->
+									5.0 </div>
+								<div class="t">전반적인 만족도</div>
+							</div>
+							<div class="g_02">
+								<div class="n" style="width:100%;"></div>
+								<div class="p">
+									<!--100%-->
+									5.0 </div>
+								<div class="t">존중하는 태도</div>
+							</div>
+							<div class="g_03">
+								<div class="n" style="width:100%;"></div>
+								<div class="p">
+									<!--100%-->
+									5.0 </div>
+								<div class="t">명확한 업무지시</div>
+							</div>
+							<div class="g_04">
+								<div class="n" style="width:100%;"></div>
+								<div class="p">
+									<!--100%-->
+									5.0 </div>
+								<div class="t">신뢰성 (대금 관련)</div>
+							</div>
+							<div class="g_05">
+								<div class="n" style="width:100%;"></div>
+								<div class="p">
+									<!--100%-->
+									5.0 </div>
+								<div class="t">소통능력</div>
+							</div>
+						</div>
+						<div class="score_memo">
+						</div>
+						<div class="popup_boardbutton">
+							<div class="tc">
+								<a href="#" class="btn-basic large pop_close" data-dismiss="modal" aria-label="Close">닫기</a>
+							</div>
+						</div>
+					</div>
+					<!-- 팝업 컨텐츠//-->
+
+				</div>
+			</div>
+		</div>
+		<!-- 내가한평가 팝업// -->
+
+		<script>
+			function projectDetail(id) {
+				location.href = '/freelancer/projects/' + id + '/details?referer=successList';
+			}
+
+			function contestDetail(id) {
+				location.href = '/freelancer/contests/' + id + '/details';
+			}
+
+			$(document).on('change', 'select[name=sortBy]', function() {
+				location.href = window.location.href.split('?')[0] + '?sortBy=' + $(this).val();
+			});
+		</script>
+	</div>
+	
+
+</html>

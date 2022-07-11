@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator=" layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/pickmeup.css">
+</head>
+
+<section id="content" layout:fragment="content">
+    <div id="container">
+        <div id="container_side">
+            <div id="cs_list">
+                <ul>
+                    <li><a href="">포트폴리오리스트</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="container_content">
+            <div class="container_inner">
+                <h1>■ 포트폴리오 보기</h1>
+                <table class="boardform">
+                    <colgroup>
+                        <col width="150">
+                        <col width="">
+                    </colgroup>
+
+                    <tbody>
+                    <tr>
+                        <th>등록일</th>
+                        <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd')}">
+                            2018-11-08
+                        </td>
+                    </tr>
+                    <tr style="display: none">
+                        <th>플랫폼 공개여부</th>
+                        <td>
+                            플랫폼미공개
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>프리랜서</th>
+                        <td>
+                            <a target=" _blank" th:text="${item.user.exposeName}">조아진</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>분류</th>
+                        <td th:text="|${item.category1st.name} > ${item.category2nd.name}|">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>작업일</th>
+                        <td th:text="|${item.workStartAt} ~ ${item.workEndAt}|">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>소개내용</th>
+                        <td colspan="3" th:text="${item.description}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>대표 이미지</th>
+                        <td>
+                            <div>
+                                <img th:src="${item.mainImageUrl}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상세 이미지</th>
+                        <td>
+                            <div>
+
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="Hspace"></div>
+
+                <h1>■ 직거래 검토한 클라이언트 확인</h1>
+                <table class="boardform">
+                    <colgroup>
+                        <col width=150>
+                        <col width=200>
+                        <col width=100>
+                        <col width=100>
+                        <col width=100>
+                        <col width=100>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>직거래 담은 날짜</th>
+                        <th>프로필이미지</th>
+                        <th>이름</th>
+                        <th>휴대폰</th>
+                        <th>이메일</th>
+                        <th>아이디로 로그인</th>
+                    </tr>
+                    <tr th:each="deal: ${directDeals}">
+                        <td th:text="${#temporals.format(deal.createdAt, 'yyyy-MM-dd')}"></td>
+                        <td>
+                            <img th:src="${deal.user.profileImageUrl}" style="width: 100px;"/>
+                        </td>
+                        <td th:text="${deal.user.name}"></td>
+                        <td th:text="${deal.user.cellphone}"></td>
+                        <td th:text="${deal.user.email}"></td>
+                        <td>
+                            <a th:href="${'http://www.freelancerk.com/redirect/users/' + deal.user.id + '?role=ROLE_CLIENT'}" target="_blank" class="btn-black medium">보기</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="Hspace"></div>
+
+                <h1>■ 누적 결제내역(포트폴리오 옵션을 결제한 총 내역)</h1>
+                <table class="boardform">
+                    <colgroup>
+                        <col width=150>
+                        <col width=200>
+                        <col width=100>
+                        <col width=100>
+                        <col width=100>
+                        <col width=100>
+                        <col width=100>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>항목</th>
+                        <th>이용기간</th>
+                        <th>상태</th>
+                        <th>등록</th>
+                        <th>조회수</th>
+                        <th>참여제안</th>
+                        <th>직거래검토</th>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="Hspace"></div>
+
+                <div class="boardbutton">
+                    <div class="tl"></div>
+                    <div class="tc">
+                        <a href="" class="btn-color large">수정</a>
+                        <a href="" class="btn-colorline large">목록</a>
+                    </div>
+                    <div class="tr">
+                        <span class="btn-color large del_btn">삭제</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div><!-- container-->
+</section>
+
+
+</html>

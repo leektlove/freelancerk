@@ -1,0 +1,29 @@
+/* 평가그래프 */
+.score_graph {}
+.score_graph {float:left; width:100%;margin-bottom:30px;overflow:hidden;}
+.score_graph .g_01 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:10px; position:relative;}
+.score_graph .g_01 .n {background-color:#f6567f; border-radius:3px; height:100%;}
+.score_graph .g_01 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_01 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_01 .t img {margin-right:3px;}
+.score_graph .g_02 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:10px; position:relative;}
+.score_graph .g_02 .n {background-color:#0088cc; border-radius:3px; height:100%;}
+.score_graph .g_02 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_02 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_02 .t img {margin-right:3px;}
+.score_graph .g_03 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:10px; position:relative;}
+.score_graph .g_03 .n {background-color:#0088cc; border-radius:3px; height:100%;}
+.score_graph .g_03 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_03 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_03 .t img {margin-right:3px;}
+.score_graph .g_04 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:10px; position:relative;}
+.score_graph .g_04 .n {background-color:#0088cc; border-radius:3px; height:100%;}
+.score_graph .g_04 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_04 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_04 .t img {margin-right:3px;}
+.score_graph .g_05 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:0px; position:relative;}
+.score_graph .g_05 .n {background-color:#0088cc; border-radius:3px; height:100%;}
+.score_graph .g_05 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_05 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_05 .t img {margin-right:3px;}
+.score_memo {text-align:justify;}

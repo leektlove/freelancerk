@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/freelancerHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+
+					<h1>■ 프리랜서 리스트</h1>
+
+					<form id="" name="" action="/freelancer/list" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="350">
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody><tr>
+								<th>가입일</th>
+								<td colspan="3">
+									<input type="text" name="" value="" size="8" readonly="" class="readonly search_date hasDatepicker">
+									 ~ 
+									<input type="text" name="" value="" size="8" readonly="" class="readonly search_date hasDatepicker" >
+									<span class="btn-black medium">오늘</span>
+									<span class="btn-black medium">이번주</span>
+									<span class="btn-black medium">이번달</span>
+								</td>
+							</tr>
+
+							<tr>
+								<th>키워드</th>
+								<td colspan="3">
+									<input type="text" name="keyword" th:value="${#request.getParameter('keyword')}" size="50" placeholder="이름, 닉네임, 회사명, 이메일, 휴대폰을 입력해주세요.">
+								</td>
+							</tr>
+
+							<tr>
+								<th>카테고리 분류</th>
+								<td colspan="3">
+									<select name="categoryId" class="form-control"/>
+								</td>
+							</tr>
+
+							<tr>
+								<th>카테고리 키워드</th>
+								<td colspan="3">
+									<input name="categoryKeyword" class="form-control" th:value="${#request.getParameter('categoryKeyword')}" placeholder="카테고리 키워드를 입력해 주세요."/>
+								</td>
+							</tr>
+
+							<tr>
+								<th>에스크로</th>
+								<td>
+									<label><input type="radio" name="" value="" checked> 전체</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="Y"> Y</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="N"> N</label>
+								</td>
+								<th>사업자종류</th>
+								<td>
+									<label><input type="radio" name="" value="" checked> 전체</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="1"> 개인</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="2"> 개인사업자</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="3"> 법인사업자</label>
+								</td>
+							</tr>
+							<tr>
+								<th>F+ 유저</th>
+								<td>
+									<label><input type="radio" name="fpUser" value="" checked> 전체</label>&nbsp;&nbsp;
+									<label><input type="radio" name="fpUser" value="N"> 프리랜서코리아 유저</label>&nbsp;&nbsp;
+									<label><input type="radio" name="fpUser" value="Y"> F+ 유저</label>
+								</td>
+							</tr>
+							<tr>
+								<th>탈퇴유무</th>
+								<td>
+									<label><input type="radio" name="" value="" checked> 전체</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="N"> 이용</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="Y"> 탈퇴</label>
+								</td>
+								<th>누적건수</th>
+								<td>
+									<input type="text" name="" value="" size="8">
+									 ~ 
+									<input type="text" name="" value="" size="8">
+								</td>
+							</tr>
+
+							<tr>
+								<th>누적금액</th>
+								<td>
+									<input type="text" name="" value="" size="8"> 원
+									 ~ 
+									<input type="text" name="" value="" size="8"> 원
+								</td>
+								<th>평점</th>
+								<td>
+									<input type="text" name="" value="" size="8" maxlength="3"> 점
+									 ~ 
+									<input type="text" name="" value="" size="8" maxlength="3"> 점
+								</td>
+							</tr>
+						</tbody></table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href=""class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+
+					<div class="Hspace"></div>
+
+					<h1>■ <span th:text="${page.totalElements}">1</span>명의 프리랜서가 검색되었습니다.</h1>
+					<button type="button" class="btn-basic btm" onclick="downloadExcel()">프리랜서 유저 다운로드</button>
+
+					<form name="" id="" method="post">
+
+						<table class="boardlist">
+							<tbody>
+							<tr>
+								<th rowspan="2">
+									<input type="checkbox" name="chkall" value="1" id="">
+								</th>
+								<th rowspan="2">순서</th>
+								<th rowspan="2">탈퇴유무</th>
+								<th rowspan="2">가입방법</th>
+								<th rowspan="2">사진미리보기</th>
+								<th rowspan="2">가입일</th>
+								<th rowspan="2">최근접속일</th>
+								<th rowspan="2">이름</th>
+								<th rowspan="2">닉네임</th>
+								<th rowspan="2">회사명</th>
+								<th rowspan="2">휴대폰</th>
+								<th rowspan="2">이메일</th>
+								<th rowspan="2">
+									사업자종류
+									<span class="obtn" data-no="2|d">▽</span>				</th>
+								<th rowspan="2">
+									에스크로유무
+									<span class="obtn" data-no="3|d">▽</span>				</th>
+								<th colspan="2">누적거래</th>
+								<th rowspan="2">아이디로 로그인</th>
+								<th rowspan="2">상세보기</th>
+								<th rowspan="2">동의서</th>
+							</tr>
+							<tr>
+								<th>
+									건수
+									<span class="obtn" data-no="4|d">▽</span>				</th>
+								<th>
+									금액
+									<span class="obtn" data-no="5|d">▽</span>
+								</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td>
+									<input type="checkbox" th:name="${item.id}" value="">
+								</td>
+								<td th:text="${item.id}">
+								</td>
+								<td th:text="${item.leaveAt!=null}">
+								</td>
+								<td th:text="${item.authType?.name()}"></td>
+								<td>
+									<img th:src="${item.profileImageUrl}" style="width: 100px"/>
+								</td>
+								<td th:text="|${#temporals.format(item.createdAt, 'yy-MM-dd HH:mm:ss')}|"></td>
+								<td th:text="|${#temporals.format(item.lastAccessAt, 'yy-MM-dd HH:mm:ss')}|">2018-11-08<br>20:19:12</td>
+								<td th:text="${item.name}"></td>
+								<td th:text="${item.nickname}"></td>
+								<td th:text="${item.corporateName}"></td>
+								<td th:text="${item.cellphone}"></td>
+								<td>
+									<a href="#" class="email_send_btn" th:text="${item.email}"></a>
+								</td>
+								<td th:text="${item.businessType?.name}"></td>
+								<td th:text="${item.useEscrow}"></td>
+								<td th:text="*{#numbers.formatDecimal(item.totalTransactionCount, 0, 'DEFAULT', 0, 'DEFAULT')}">0</td>
+								<td th:text="*{#numbers.formatDecimal(item.totalTransactionAmount, 0, 'DEFAULT', 0, 'DEFAULT')}">0</td>
+								<td>
+									<a th:href="${'http://www.freelancerk.com/redirect/users/' + item.id + '?role=ROLE_FREELANCER'}" target="_blank" class="btn-black medium">보기</a>
+								</td>
+								<td>
+									<a th:href="@{/freelancer/detail/{id}(id = ${item.uid})}" class="btn-black medium">보기</a>
+								</td>
+								<td>
+									<a th:href="${item.agreeFileUrl}" download class="btn-black medium">다운</a>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</form>
+
+					<div class="boardbutton">
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|javascript:toPage(${pageIndex})|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>|${category?.parentCategory?.name} > ${category?.name}|
+		<script th:inline="javascript">
+			var selectedCategoryId = [[${category?.id}]];
+			var selectedParentCategoryName = [[${category?.parentCategory?.name}]];
+			var selectedCategoryName = [[${category?.name}]];
+			var categoryKeyword = [[${#request.getParameter('categoryKeyword')}]];
+
+			function downloadExcel() {
+				location.href = '/freelancer/excel/download' + window.location.search;
+			}
+
+			$(document).ready(function() {
+				$('select[name=categoryId]').select2({
+					width: '250px',
+					ajax: {
+						url: '/categories/for-select',
+						dataType: 'json'
+						// Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+					}
+				});
+
+				if (selectedCategoryId) {
+					$('select[name=categoryId]').append('<option selected="selected" value="' + selectedCategoryId + '">' + selectedParentCategoryName + ' > ' + selectedCategoryName + '</option>');
+					search();
+				}
+			});
+
+			function toPage(pageIndex) {
+				var url = '/freelancer/list?pageNumber=' + pageIndex;
+				if (selectedCategoryId) {
+					url += ('&categoryId=' + selectedCategoryId);
+				}
+				if (categoryKeyword) {
+					url += ('&categoryKeyword=' + categoryKeyword);
+				}
+
+				location.href = url;
+			}
+		</script>
+	</section>
+	
+
+</html>

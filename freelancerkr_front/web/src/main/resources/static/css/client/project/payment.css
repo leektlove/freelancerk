@@ -1,0 +1,49 @@
+
+/* 공통 레이아웃으로 따로 빼주기 (점선과 하늘색 원이 있는 디자인 - mypage_form_left,mypage_form_center,mypage_form_right - 페이지의 레이아웃 잡을 때 사용 가능) */
+.container_inner {max-width: 1310px; margin: auto; padding: 60px; font-size: 18px; font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-serif'; color: #2a2a2a; font-weight: 400; padding-bottom: 60px;}
+.mypage_form_left {text-align: right; min-width: 300px;}
+.mypage_form_center, .center {display: table-cell; vertical-align: top; width: 63px; padding-top: 7px; text-align: center; flex: none;}
+.mypage_form_center {background: url("/images/c_icon_line_short.png") repeat;}
+.mypage_form_right {color: #CECFCE;}
+.mypage_form_right p {font-size: 12px; color: #999; padding-bottom: 2px;}
+
+.btn {border-radius: 0px;}
+
+#foptpost .title {font-weight: 400; color: #2a2a2a; margin-top: -34px; font-size: 13px;}
+
+.table-responsive {}
+.table {border: 1px solid #DBDBDB; background-color: #FFFFFF;}
+.table td span {border: 1px solid #D6D6D6; padding: 0px 6px 4px 6px; margin-right: 8px; background-color: #FFFFFF;}
+.table span.checkmark {border: 1px solid #0D0D0D;}
+.table th, .table td {color: #0D0D0D; font-weight: 400; border-bottom: 1px solid #dee2e6;}
+.table .disabled th, .table .disabled td {min-width: 210px; color: #919191; border: none;}
+.table .disabled th span {border: 1px solid #919191;}
+.table .disabled td>span {border: 1px solid #E7E7E7;}
+.table .priority {background-color: #F5AA10;}
+.table .easy {background-color: #41AC64;}
+.table .luxury {background-color: #4A9CE8;}
+.table .supureme {background-color: #4A689E;}
+.table .pack th {width: 397px; min-width: 397px; color: #FFFFFF;}
+.table .pack td {min-width: }
+
+.btn_container { text-align: center; }
+.btn_container .btn { width: 220px; }
+.btn_container .btn_pay { background-color: #499AE9; border-color: #499AE9;}
+.btn_container .btn_register { background-color: #7B7B7B; border-color: #7B7B7B;}
+
+.custom-control-label{
+	line-height: 25px;
+}
+
+
+/* 반응형 레이아웃 */
+@media screen and (min-width: 1200px) {
+    #fpjtpost .btn_container .btn { width: 200px; }
+    .mobile { display: none; }
+}
+
+@media screen and (max-width: 1199px) {
+    .desktop { display: none; }
+    .mypage_form_left, .mypage_form_right { text-align: left; }
+    #foptpost .title { margin-top: 0px; }
+}

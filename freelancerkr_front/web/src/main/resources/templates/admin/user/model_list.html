@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+	    
+		/*<![CDATA[*/
+		
+		//var userName = "[[${condition.userName}]]";		
+		//var email = "[[${condition.email}]]";
+		
+		var page = "[[${condition.page}]]";
+		var perPageNum = "[[${condition.perPageNum}]]";
+		
+		/*]]>*/		
+		
+		//$('#userName').val(userName);
+ 		//$('#email').val(email);
+ 		
+		
+		search(page, perPageNum);
+	});    
+	
+	function goDetail(userId){
+		location.href="/w1/user/detail/"+userId;
+	}
+	
+	function search(page, perPageNum){
+		//var userName = $('#userName').val();
+		//var email = $('#email').val();
+		
+		var param = {};
+	    //param.userName = userName;
+	    //param.email = email;
+	    
+	    if(page !=null){
+	    	param.page = page;
+	    }
+	    
+	    if(perPageNum !=null){
+	    	param.perPageNum = perPageNum;
+	    }	    
+	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+		$.ajax({
+	        url : "/w1/user/model_list",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	            $.each(results, function(index, item) {
+	            	
+	            	rows = rows + getRow(item);
+	            	
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+				});	            
+	            	            
+	            $('#listBody').append(rows);
+	            
+	            var paging = getPageDiv(data.paging);	            
+	            $('#pagination').append(paging);
+	            
+	            //console.log(results); 
+	            //console.log(data.paging);
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });
+	}
+	
+	function getRow(user){
+		var row = "\n";
+		row = row + "<tr class='even pointer'>                                     ";   
+        row = row + "  <td class='a-center ' style='vertical-align: middle;'>                                      ";
+        row = row + "    <input type='checkbox' class='flat' name='table_records'> ";
+        row = row + "  </td>                                                       ";
+        row = row + "  <td class='' style='vertical-align: middle;'><a href='#' onClick='goDetail(\"" + user.userId + "\")'>"+ user.seq + "</a></td>         ";
+        
+        row = row + "<td class='' style='vertical-align: middle;'><img src='" + user.imgUrl + "' class='img-responsive img-rounded' style='width:70px;height:75px;'></td>";
+        //row = row + "<td class='' style='vertical-align: middle;'><img src='/images/no_user_img.png' class='img-responsive img-rounded' style='width:70px;height:75px;'></td>";
+        
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ user.userName + "</td>                         ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ user.birthDay + "</td>                                        ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ user.sex + "</td>                                     ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ user.cellphone + "</td>                                     ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ user.email + "</td>                                     ";        
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ user.feedCnt + "</td>                                     ";
+        row = row + "  <td class='' style='vertical-align: middle;'>"+ user.likeCnt + "</td>                                     ";
+        row = row + "  <td class='last' style='vertical-align: middle;'>"+ user.statusName + "</td>";
+        row = row + "  </td>                                                       ";
+        row = row + "</tr>                                                         ";
+		
+		return row;
+	}
+	
+</script>
+
+ <div class="x_content"> 
+  <!-- 
+  <div class="row">
+	<label class="control-label col-md-1 col-sm-1 ">사용자명</label>
+	<div class="col-md-4 col-sm-4 ">
+		<input type="text" id="userName" name="userName" class="form-control ">				
+	</div>
+	<label class="control-label col-md-1 col-sm-1 ">e-mail</label>
+	<div class="col-md-3 col-sm-3 ">		
+		<input type="text" id="email" name="email" class="form-control ">
+	</div>
+	<div class="col-md-1 col-sm-1 center">
+		<button type="button" class="btn btn-round btn-primary" onClick="search()">조회</button>
+	</div>
+  </div>
+   -->
+   
+  <p><h5></h5></p>
+  <span class="section" style="text-align: right;padding-right: 10px;"></span>
+    
+  <div class="table-responsive">
+    <table class="table table-striped jambo_table bulk_action">
+      <thead>
+        <tr class="headings">
+          <th>
+            <input type="checkbox" id="check-all" class="flat">
+          </th>
+          <th class="column-title">순번 </th>
+          <th class="column-title">이미지</th>
+          <th class="column-title">사용자명</th>
+          <th class="column-title">생년월일</th>
+          <th class="column-title">성별</th>
+          <th class="column-title">휴대폰</th>
+          <th class="column-title">email</th>
+          <th class="column-title">Feed</th>
+          <th class="column-title">좋아요</th>
+          <th class="column-title">상태</th>                              
+          <th class="bulk-actions" colspan="10">
+            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+          </th>
+        </tr>
+      </thead>
+
+          <tbody id="listBody">           
+
+<!--
+            <tr class="odd pointer">
+              <td class="a-center ">
+                <input type="checkbox" class="flat" name="table_records">
+              </td>
+              <td class=" "><a href="#">100</a></td>
+              <td class=" ">Feed</td>
+              <td class=" ">홍길동</td>
+              <td class=" ">제목</td>
+              <td class=" ">공개유형</td>
+              <td class="">댓글여부</td>
+              <td class="">활성화</td>
+              <td class="">상태</td>
+              <td class="">10</td>
+              <td class="">1</td>
+              <td class="last">0</td>              
+              </td>
+            </tr>
+-->       
+            
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12 col-sm-12" id="pagination" style="display: flex;justify-content: center;">
+		   <div class="row">
+             <div class="btn-group" role="group">
+               <button type="button" class="btn btn-secondary">이전</button>
+               
+               <button type="button" class="btn btn-secondary">1</button>
+               <button type="button" class="btn btn-secondary">2</button>
+               <button type="button" class="btn btn-secondary">3</button>
+               
+               <button type="button" class="btn btn-secondary">다음</button>
+             </div>
+           </div>
+      </div>           
+    </div>
+  </div>
+</div>
+
+      
+</th:block>
+</html>

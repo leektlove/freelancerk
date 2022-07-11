@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<!-- include libraries(jQuery, bootstrap) -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+	<!-- include summernote css/js -->
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+	<link rel="stylesheet" href="/static/css/notice/form.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/auditionHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 메일 작성</h1>
+					<form name="form" action="/audition/sendMail" th:object="${item}" method="post" enctype="multipart/form-data">
+						<table class="boardform">
+							<input type="hidden" th:field="*{id}"/>
+						<colgroup>
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+								<tr>
+									<th>제목</th>
+									<td><input type="text" name="title" class="ibw"></td>
+								</tr>
+								<tr class="type-lala">
+									<th>부제목</th>
+									<td><input type="text" class="ibw" style="display: none;"></td>
+								</tr>
+								<tr class="type-lala">
+									<th>외부블로그 링크</th>
+									<td><input type="text"  class="ibw" style="display: none;"></td>
+								</tr>
+								<tr class="type-lala">
+									<th>메인 이미지 url</th>
+									<td><input type="text" class="ibw" style="display: none;"></td>
+								</tr>
+								<tr style="display: none;">
+									<th>블로그 타입</th>
+									<td>
+										<select th:field="*{type}">
+											<option value="NOTICE">공지사항</option>
+											<option value="LALA">라라프리랜서</option>
+										</select>
+									</td>
+								</tr>
+								<tr class="type-notice">
+									<th>상세내용</th>
+									<td>
+										<textarea name="ir1" id="ir1" rows="10" cols="100" style="width:766px; height:412px; display:none;"></textarea>
+									</td>
+								</tr>
+								<tr style="display: none;">
+									<th>
+										첨부파일
+									</th>
+									<td>
+										<input type="file" name="file" title="파일첨부">
+									</td>
+								</tr>
+								<tr>
+									<th>발송리스트</th>
+									<td>
+										<style>
+											.boardformsub{width:50%;}
+											.boardformsub th, .boardformsub td{text-align:center;}
+										</style>
+										<table class="boardform boardformsub">
+											<tbody>
+												<tr>
+													<th>이름</th>
+													<th>발송이메일</th>
+												</tr>
+												<tr th:each="email:${array}">
+													<td>이름</td>
+													<td th:text="${email}">ssmilejung0108@gmail.com</td>
+													<input type="hidden" name="array[]" th:value="${email}">
+												</tr>
+												
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="boardbutton">
+							<div class="tc">
+								<button type="button" class="btn-color large" onclick="submitContents(this);" style="float:right; margin-right: 5px; border-radius: 2px;font-size: 10pt" >저장하기</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script th:inline="javascript">
+
+			var modifyMode = [[${item!=null}]];
+			var priorContent = [[${item!=null?item.content:''}]];
+			var priorTitle = [[${item!=null?item.title:''}]];
+		</script>
+		<script type="text/javascript" src="/static/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+		<script type="text/javascript" th:inline="javascript">
+			var oEditors = [];
+
+			var sLang = "ko_KR";	// 언어 (ko_KR/ en_US/ ja_JP/ zh_CN/ zh_TW), default = ko_KR
+
+
+			nhn.husky.EZCreator.createInIFrame({
+				oAppRef: oEditors,
+				elPlaceHolder: "ir1",
+				sSkinURI: "/static/smarteditor2/SmartEditor2Skin.html",
+				htParams : {
+					bUseToolbar : true,				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+					bUseVerticalResizer : true,		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+					bUseModeChanger : true,			// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+					bSkipXssFilter : false,		// client-side xss filter 무시 여부 (true:사용하지 않음 / 그외:사용)
+					//aAdditionalFontList : aAdditionalFontSet,		// 추가 글꼴 목록
+					fOnBeforeUnload : function(){
+						//alert("완료!");
+					},
+					I18N_LOCALE : sLang
+				}, //boolean
+				fOnAppLoad : function(){
+					//예제 코드
+					if(modifyMode && priorContent && priorContent!==undefined ) {
+						oEditors.getById["ir1"].exec("PASTE_HTML", [priorContent]);
+					}
+					if (modifyMode && priorTitle) {
+						$('input[name=title]').val(priorTitle);
+					}
+				},
+				fCreator: "createSEditor2"
+			});
+
+			function pasteHTML() {
+				var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
+				oEditors.getById["ir1"].exec("PASTE_HTML", [sHTML]);
+			}
+
+			function showHTML() {
+				var sHTML = oEditors.getById["ir1"].getIR();
+				alert(sHTML);
+			}
+
+			function submitContents(elClickedObj) {
+				if (lengthInUtf8Bytes(document.getElementById("ir1").value) > 65000) {
+					alert('입력 가능한 글자 수는 65,000 bytes 를 초과할 수 없습니다.');
+					return;
+				}
+
+				var title = $('input[name=title]').val();
+
+				if (title.length > 200) {
+					alert('제목은 200자 이상 등록할 수 없습니다');
+					return;
+				}
+
+				if (!confirm('작성을 완료하시겠습니까?')) {
+					return;
+				}
+
+				if (!title) {
+					alert('제목을 입력해 주세요');
+					return;
+				}
+				oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+
+				// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
+
+				try {
+					elClickedObj.form.submit();
+				} catch(e) {}
+			}
+
+			function setDefaultFont() {
+				var sDefaultFont = '궁서';
+				var nFontSize = 24;
+				oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
+			}
+
+			function lengthInUtf8Bytes(str) {
+				// Matches only the 10.. bytes that are non-initial characters in a multi-byte sequence.
+				var m = encodeURIComponent(str).match(/%[89ABab]/g);
+				return str.length + (m ? m.length : 0);
+			}
+
+			$(document).ready(function() {
+				var type = $('select[name=type] option:selected').val();
+
+				if (type === 'NOTICE') {
+					$('.type-lala').hide();
+					$('.type-notice').show();
+				} else {
+					$('.type-lala').show();
+					$('.type-notice').hide();
+				}
+			})
+
+			$(document).on('change', 'select[name=type]', function() {
+				if ($(this).val() === 'NOTICE') {
+					$('.type-lala').hide();
+					$('.type-notice').show();
+				} else {
+					$('.type-lala').show();
+					$('.type-notice').hide();
+				}
+			});
+		</script>
+<!--		<script src="/static/js/notice/form.js"></script>-->
+
+	</section>
+	
+
+</html>

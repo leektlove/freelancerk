@@ -1,0 +1,20 @@
+.title { padding: 1.3rem; background-color: #222D32; color: white; font-size: 1rem; }
+.bid_cancel {  padding: 2rem; background-color: white; }
+.bid_cancel div {  font-size: 1rem; font-weight: 400; color: #232323; }
+.tbl_title p { font-weight: 400; color: #828282; font-size: .8rem; }
+.tbl_title div { font-weight: 400; color: #141414; }
+.bid_cancel .table { text-align: center; min-width: 866px; }
+.bid_cancel .table td, .bid_cancel .table th { border: 1px solid #dee2e6; }
+.bid_cancel thead th { background-color: #FAFAFA; }
+.bid_cancel .table th { font-weight: 400; }
+.bid_cancel .caution { color: #FE4C61; font-size: .8rem; }
+
+.confirm_info { text-align: -webkit-right; }
+.confirm_info>div{ width: 60%; }
+.confirm_info>div label { width: 30%; text-align: left; }
+.confirm_info>div input { display: inline-block; width: 70%; text-align: right; }
+
+.btn_container { text-align: center; }
+.btn_container button { min-width: 200px; }
+
+@media(max-width: 768px) { .confirm_info div { width: 100%; } }

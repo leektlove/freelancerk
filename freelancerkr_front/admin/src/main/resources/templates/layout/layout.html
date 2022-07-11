@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <!-- 아이콘 css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="/static/images/favi.ico">
+
+    <!-- 전역적용 css -->
+    <link rel="stylesheet" href="/static/css/plugin/jquery/ui/1.12.1/jquery-ui.min.css">
+    
+    <link rel="stylesheet" href="/static/css/common/reset.css">
+    <link rel="stylesheet" href="/static/css/common/common.css">
+    <link rel="stylesheet" href="/static/css/common/main.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+
+    <script src="/static/js/common.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+	 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+	 
+	 
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <title>프리랜서코리아</title>
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header th:replace="fragments/header :: header">
+            <p>This is default header area for default layout</p>
+        </header>
+        <section id="content" layout:fragment="content">
+            <p>This is default main content with default layout</p>
+        </section>
+    </div>
+</body>
+</html>
+
+</html>

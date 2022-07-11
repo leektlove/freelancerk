@@ -1,0 +1,153 @@
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/reset.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/main.css">
+<div id="container">
+	<div id="container_content">
+		<div class="container_inner">
+	        <h1>■ 결제등록</h1>
+	            <form name="fcashed" id="fcashed" action="#" onsubmit="return fcashed_submit(this);" method="post" enctype="multipart/form-data">
+            		<input type="hidden" name="w" value="u">
+            		<input type="hidden" name="fa_no" value="53">
+            		<input type="hidden" name="s_date_1" value="">
+            		<input type="hidden" name="s_date_2" value="">
+            		<input type="hidden" name="s_type" value="">
+            		<input type="hidden" name="s_search" value="">
+            		<table class="boardform">
+			            <colgroup>
+                            <col width="200">
+			                <col width="">
+			            </colgroup>
+                        <tbody>
+                            <tr>
+                				<th>구분</th>
+                				<td>
+                					클라이언트 결제승인				</td>
+                			</tr>
+
+                			<tr>
+                				<th>프로젝트</th>
+                				<td>
+                					성우				</td>
+                			</tr>
+                			<tr>
+                				<th>현재 클라이언트 정보</th>
+                				<td>
+                					아이디 : george@wiznet.io<br>
+                					닉네임 : 위즈네트 마케팅부서<br>
+                					회사명 : 위즈네트<br>
+                					이메일 : george@wiznet.io<br>
+                					휴대폰 : 010-6569-2432<br>
+                					예치금액 : <span style="font-weight:bold; color:red;">0</span> 원
+                				</td>
+                			</tr>
+		                    <tr>
+				                <th>현재 프리랜서 정보</th>
+                				<td>
+                					아이디 : 3pdesigner@naver.com<br>
+                					닉네임 : 이성프로덕션<br>
+                					회사명 : <br>
+                					이메일 : 3pdesigner@naver.com<br>
+                					휴대폰 : 010-4123-0675<br><br>
+
+                					용역대금은행 : <span style="font-weight:bold; color:red;">국민은행</span><br>
+                					계좌번호 : <span style="font-weight:bold; color:red;">08790204095319</span><br>
+                					예금주 : <span style="font-weight:bold; color:red;">이화범</span>
+                				</td>
+                			</tr>
+                			<tr>
+                				<th>요청금액</th>
+                				<td>
+                					<input type="hidden" name="fa_price_check" value="136363">
+                					<input type="hidden" name="cm_escrow_price_check" value="0">
+                					<input type="text" name="fa_price" value="136363" onkeyup="onlyNumber(this);"> 원
+                				</td>
+                			</tr>
+                			<tr>
+                				<th>프리랜서 입금요청내용</th>
+                				<td>
+                									</td>
+                			</tr>
+                			<tr>
+                				<th>프리랜서코리아 지불완료내용</th>
+                				<td>
+                					<textarea name="fa_memo_3" rows="5" cols="100"></textarea>
+                				</td>
+                			</tr>
+					        <tr>
+            				<th>명세서</th>
+            				<td>
+            					<div style="width:60%;">
+            						<div class="title">■ 담당 프리랜서</div>
+            						<table class="boardform">
+            							<colgroup><col width="140">
+            							<col width="">
+            							</colgroup><tbody><tr>
+            								<th>성명</th>
+            								<td>이화범</td>
+            							</tr>
+            							<tr>
+            								<th>섹터</th>
+            								<td>마케팅/저널리즘/미디어, 통/번역</td>
+            							</tr>
+            							<tr>
+            								<th>입금계좌</th>
+            								<td>국민은행 08790204095319 이화범</td>
+            							</tr>
+            						</tbody></table>
+
+            						<div class="Hspace"></div>
+
+            						<div class="title">■ 상세항목</div>
+            						<table class="boardlist">
+            							<colgroup><col width="140">
+            							<col width="140">
+            							<col width="">
+            							</colgroup><tbody><tr>
+            								<th colspan="2">항목</th>
+            								<th>금액</th>
+            							</tr>
+            														<tr>
+            								<th class="tl" colspan="2">지급총액</th>
+            								<td class="tr">136,363원</td>
+            							</tr>
+            							<tr>
+            								<th class="tl" rowspan="3">공제내역</th>
+            								<th class="tl">플랫폼수수료</th>
+            								<td class="tr">4,090원</td>
+            							</tr>
+            							<tr>
+            								<th class="tl">사업소득세</th>
+            								<td class="tr">3,960원</td>
+            							</tr>
+            							<tr>
+            								<th class="tl">지방소득세</th>
+            								<td class="tr">390원</td>
+            							</tr>
+            							<tr>
+            								<th class="tl" colspan="2">공제총액</th>
+            								<td class="tr">8,440원</td>
+            							</tr>
+            							<tr>
+            								<th class="tl" colspan="2">차인지급액</th>
+            								<td class="tr">127,920원</td>
+            							</tr>
+            						</tbody>
+                                </table>
+            					</div>
+            				</td>
+            			</tr>
+                        <tr>
+					    </tr>
+                    </tbody>
+                </table>
+        		<div class="boardbutton">
+        			<div class="tc">
+        				<input type="submit" value="지불완료" class="btn-color large">
+        				<a href="#" class="btn-colorline large">목록</a>
+        			</div>
+        		</div>
+	        </form>
+        </div>
+	</div>
+</div>

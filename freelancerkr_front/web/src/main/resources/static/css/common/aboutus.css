@@ -1,0 +1,231 @@
+body{
+	font-family: 'nanumSquare';
+	color: #3c3c3c;
+}
+.aboutus_content{
+	max-width: 1000px;
+	margin: auto;
+	padding: 1rem 3rem 5rem 3rem;
+}
+.aboutus_content span.br_reverse{
+	display: block;
+}
+.aboutus_content .main_title{
+	text-align: center;
+	font-size: 35px;
+	font-weight: 500;
+	margin-top: 80px;
+	margin-bottom: 50px;
+}
+.aboutus_content .main_title span{
+	color: #0088cc;
+}
+.aboutus_content  .sub_title_01{
+	text-align: center;
+	font-size: 25px;
+	font-weight: 700;
+	margin-bottom: 60px;
+	line-height: 33px;
+}
+.aboutus_content .des_01{
+	text-align: center;
+	font-size: 17px;
+	font-weight: 500;
+	margin-bottom: 60px;
+	line-height: 28px;
+}
+.aboutus_content  .des_01 span{
+	color: #0088cc;
+}
+.aboutus_content .video{
+	padding:56.25% 0 0 0;
+	position:relative;
+	margin-bottom: 90px;
+}
+.aboutus_content  .sub_title_02{
+	text-align: center;
+	font-size: 25px;
+	font-weight: 700;
+	margin-bottom: 90px;
+	line-height: 35px;
+}
+.aboutus_content  .sub_title_02 span{
+	color: #0088cc;
+}
+.aboutus_content .des_02{
+	margin-bottom: 90px;
+	max-width: 700px;
+    margin: auto;
+}
+.aboutus_content .des_02 .list{
+	display: flex;
+	font-size: 17px;
+	font-weight: 500;
+	margin-bottom: 90px;
+	line-height: 28px;
+	margin-bottom: 30px;
+}
+.aboutus_content .des_02 .list img{
+	width: 50px;
+    height: 50px;
+    align-self: center;
+    margin-right: 2rem;
+}
+.aboutus_content .des_02 .list div{
+	align-self: center;
+}
+.aboutus_content .des_03{
+	text-align: center;
+	font-size: 17px;
+	font-weight: 500;
+	margin-bottom: 3rem;
+	line-height: 23px;
+}
+.aboutus_content .line{
+	border-bottom: 1px solid #ddd;
+    max-width: 150px;
+    margin: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+
+
+
+@media (min-width: 1200px) { 
+
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+	
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.aboutus_content  .sub_title_01{
+		font-size: 23px;
+		line-height: 31px;
+	}
+	.aboutus_content .des_01{
+		font-size: 17px;
+		line-height: 25px;
+		font-weight: 500;
+	}
+	.aboutus_content  .sub_title_02{
+		font-size: 25px;
+    	line-height: 33px;
+	}
+	.aboutus_content .video{
+		margin-bottom: 60px;
+	}
+	.aboutus_content .des_02{
+		margin-bottom: 40px;
+	}
+	.aboutus_content .des_02 .list{
+		font-size: 17px;
+		line-height: 25px;
+		font-weight: 500;
+	}
+	.aboutus_content .des_03{
+		font-size: 17px;
+		line-height: 25px;
+		font-weight: 500;
+	}
+	.aboutus_content .line{
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.aboutus_content span.br{
+		display: block;
+	}
+	.aboutus_content span.br_reverse{
+		display: none;
+	}
+	.aboutus_content  .sub_title_01{
+		font-size: 23px;
+		line-height: 31px;
+	}
+	.aboutus_content .des_01{
+		font-size: 17px;
+		line-height: 25px;
+		font-weight: 500;
+	}
+	.aboutus_content .video{
+		margin-bottom: 50px;
+	}
+	.aboutus_content  .sub_title_02{
+		font-size: 25px;
+    	line-height: 33px;
+    	margin-bottom: 50px;
+	}
+	.aboutus_content .des_02 .list{
+		font-size: 17px;
+		line-height: 25px;
+		font-weight: 500;
+	}
+	.aboutus_content .des_03{
+		font-size: 17px;
+		line-height: 25px;
+		font-weight: 500;
+	}
+	.aboutus_content .line{
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+}
+@media (max-width: 575.98px) {
+	.aboutus_content{
+		padding: 1rem 1rem 5rem 1rem;
+	}
+	.aboutus_content span.br{
+		display: block;
+	}
+	.aboutus_content span.br_reverse{
+		display: none;
+	}
+	.aboutus_content .main_title{
+		font-size: 30px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	.aboutus_content  .sub_title_01{
+		font-size: 20px;
+    	line-height: 28px;
+    	margin-bottom: 30px;
+	}
+	.aboutus_content .des_01{
+		font-size: 14px;
+		line-height: 23px;
+		font-weight: 500;
+		margin-bottom: 30px;
+	}
+	.aboutus_content .video{
+		margin-bottom: 50px;
+	}
+	.aboutus_content  .sub_title_02{
+		font-size: 20px;
+    	line-height: 28px;
+    	margin-bottom: 50px;
+    	font-weight: 700;
+	}
+	.aboutus_content .des_02{
+		margin-bottom: 30px;
+	}
+	.aboutus_content .des_02 .list{
+		font-size: 14px;
+		line-height: 23px;
+		font-weight: 500;
+		margin-bottom: 30px;
+	}
+	.aboutus_content .des_03{
+		font-size: 15px;
+		line-height: 23px;
+		font-weight: 500;
+		margin-bottom: 30px;
+	}
+	.aboutus_content .line{
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+ 
+}
+

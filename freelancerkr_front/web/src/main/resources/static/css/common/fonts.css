@@ -1,0 +1,33 @@
+/* charset */
+@charset "utf-8";
+
+@font-face {
+    font-family : 'Spectral';
+    src: url('../fonts/Spectral-Regular.ttf'); 
+}
+@font-face {
+    font-family : 'Spectral_ib';
+    src: url('../fonts/Spectral-BoldItalic.ttf'); 
+}
+
+
+@font-face {
+	font-family : 'raleway_b';
+	src: url('../fonts/raleway_b.eot'); /* ������ �ͽ��÷η� ��Ʈ ����*/
+	src: url('../fonts/raleway_b.eot') format('eot'), /* IE 9 ��Ʈ ���� */
+	url('../fonts/raleway_b.woff') format('woff'); /* IE 9, ���̾�����, ũ�� ��Ʈ ���� */
+}
+
+@font-face {
+	font-family : 'raleway_r';
+	src: url('../fonts/raleway_r.eot'); /* ������ �ͽ��÷η� ��Ʈ ����*/
+	src: url('../fonts/raleway_r.eot') format('eot'), /* IE 9 ��Ʈ ���� */
+	url('../fonts/raleway_r.woff') format('woff'); /* IE 9, ���̾�����, ũ�� ��Ʈ ���� */
+}
+
+@font-face {
+	font-family : 'g_bold';
+	src: url('../fonts/g_bold.eot'); /* ������ �ͽ��÷η� ��Ʈ ����*/
+	src: url('../fonts/g_bold.eot') format('eot'), /* IE 9 ��Ʈ ���� */
+	url('../fonts/notokr-regular.woff') format('woff'); /* IE 9, ���̾�����, ũ�� ��Ʈ ���� */
+}

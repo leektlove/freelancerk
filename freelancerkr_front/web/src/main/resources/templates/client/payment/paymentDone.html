@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/payment/paymentDone.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>완료</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<section>
+			<div class="paymentDone container">
+		        <div class="content-body">
+		        	<img src="/static/images/icon/payment_done.png">
+		        	<div class="text">에스크로 예치금 충전이 완료 되었습니다.</div>
+		        	<button class="done-btn" type="button" onclick="javascript:location.href='/client/payment/escrowList'">예치내역 확인</button>
+		        </div>
+		    </div>
+		</section>
+
+	</section>
+
+</html>

@@ -1,0 +1,88 @@
+.sub_title{border-bottom:2px solid #282828;font-size: 20px; font-weight: bold;margin-bottom:2rem;}
+
+.content-body .info {background-color: #fff;border:1px solid #ddd;padding:2rem;margin-bottom:3rem;}
+.content-body .info h4.title{font-size: 20px;font-weight: bold;text-align: center;margin-bottom:2rem;}
+.content-body .info h4.title em{color:#0088cc;font-weight: bold}
+
+.l-content{position: relative;}
+.l-content .info-img{border:1px solid #ddd;}
+.r-content{padding:2rem 1rem;}
+
+.r-content .des{border-bottom: 1px solid #ddd;padding-bottom: 1rem}
+.r-content .des div span{}
+.r-content .des div span.title{margin-right:1rem;font-weight: bold}
+.r-content .des div{margin-bottom:5px;}
+
+.r-content .des-cnt div div{margin:0.5rem 0;border-right:1px solid #ddd;}
+.r-content .des-cnt div div:last-child{border-right:0;}
+.r-content .des-cnt .title{font-weight: bold;border:0;}
+.r-content .des-cnt .contents{font-size:2rem;font-weight:bold;color: #0088cc;border:0;}
+
+.r-content .btn-group{display: flex;}
+.r-content .btn-group button{font-size:16px;width:50%;padding:0.7rem 1rem;margin:5px;color:#fff;cursor: pointer;text-align: center;}
+.r-content .btn-group button:first-child{background-color: #FD4B61;margin-left:0;}
+.r-content .btn-group button:last-child{background-color: #7B7B7B;margin-right:0;}
+
+.card{margin-bottom:2rem;}
+.card .item .content .des{border-bottom: 1px solid #ddd;padding: 0.5rem 0.8rem;min-height:100px;overflow: hidden;}
+.card .item .content .des div{line-height: 1rem;}
+.card .item .content .des div span{display: table-cell;}
+.card .item .content .des div span:first-child{width:50px;}
+.card .item .content .des div span.title{width:75px;font-weight: bold}
+.card .item .content .des div{margin-bottom:5px;}
+
+.card .item .content .des-cnt .cell-box{height:80px;overflow:hidden;display: flex;padding:0.5rem;}
+.card .item .content .des-cnt .cell-box .cell{width:33%;display:inline-block;padding:0.5rem 0;border-right:1px solid #ddd;}
+.card .item .content .des-cnt .cell-box .cell:last-child{border-right:0;}
+.card .item .content .des-cnt .title{font-weight: bold;border:0;}
+.card .item .content .des-cnt .contents{font-size:1.3rem;font-weight:bold;color: #0088cc;border:0;}
+
+.card .item .content .option{border-bottom: 1px solid #ddd;padding: 0.5rem 0.8rem}
+.card .item .content .option div span{display: table-cell;}
+.card .item .content .option div span:first-child{width:50px;}
+.card .item .content .option div span.title{width:75px;font-weight: bold}
+.card .item .content .option div{margin-bottom:5px;}
+
+.card .item .content .portfolio{padding: 0.5rem 0.8rem;padding-bottom: 0}
+.card .item .content .portfolio div span{display: table-cell;}
+.card .item .content .portfolio div span:first-child{width:50px;}
+.card .item .content .portfolio div span.title{width:75px;font-weight: bold}
+.card .item .content .portfolio .view {display: flex}
+.card .item .content .portfolio .view div{width:50%;margin:5px;}
+.card .item .content .portfolio .view div:first-child{margin-left:0;}
+.card .item .content .portfolio .view div:last-child{margin-right:0;}
+
+.card .item .content .btn-group{display: flex;}
+.card .item .content .btn-group button{font-size:16px;width:50%;padding:0.5rem 1rem;margin:7px;color:#fff;cursor: pointer;text-align: center;}
+.card .item .content .btn-group button:first-child{background-color: #FD4B61;margin-right:4px;}
+.card .item .content .btn-group button:last-child{background-color: #7B7B7B;margin-left:4px;}
+
+.card .item .content .btn-group.one-btn button{width:100%;background-color: #7B7B7B;margin:7px;}
+
+.point .table th{padding:1rem;}
+.point .table td.used{color:red;}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+    .r-content{border:1px solid #ddd;margin-top:-1px;}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .r-content{border:1px solid #ddd;margin-top:-1px;}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}

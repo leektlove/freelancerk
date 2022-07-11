@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	
+	<link rel="stylesheet" href="/static/css/client/posting/contest/option.css">
+</head>
+
+
+<div id="content" layout:fragment="content" >
+
+	<!-- 페이지헤더 -->
+	<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+					<h1 class="text-dark"><strong>컨테스트 포스팅</strong></h1>
+
+				</div>
+				<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 페이지헤더// -->
+
+	<!-- 탭메뉴 -->
+	<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+		<div class="container" style="margin-bottom: -3px;">
+			<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+				<li class="nav-item mb-0 ">
+					<a th:href="@{/client/posting/project}" class="nav-link disabled">
+						<span>프로젝트포스팅</span>
+					</a>
+				</li>
+				<li class="nav-item mb-0 active">
+					<a th:href="@{/client/posting/contest}" class="nav-link active">
+						<span>컨테스트포스팅</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<!-- 탭메뉴// -->
+ 
+	<section>
+		<div class="contest-container">
+			<div class="contest_title">
+				<img class="img" src="/static/images/icon/contest_posting_icon.png">
+				<div class="text"><span>컨테스트</span>를 개최합니다!</div>
+			</div>
+			<div id="w5" class="row">
+				<div class="col-lg-1 col-xl-2">
+				</div>
+				<div class="col-lg-9 col-xl-8">
+					<form name="foption" id="foption" action="" method="post" enctype="multipart/form-data">
+						<section class="card form-wizard" >
+							<header class="card-header">
+								<div class="wizard-progress wizard-progress-lg">
+									<div class="steps-progress">
+										<div class="progress-indicator"></div>
+									</div>
+									<ul class="nav wizard-steps">
+										<li class="nav-item active">
+											<a class="nav-link" href="#w5-one" data-toggle="tab"><span>6</span>상금확정</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#w5-two" data-toggle="tab"><span>7</span>상금배분</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#w5-three" data-toggle="tab" id="w5-3" data-check="true"><span>8</span>수수료조건</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#w5-four" data-toggle="tab"><span>9</span>포스팅옵션선택</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#w5-five" data-toggle="tab"><span>10</span>포스팅완료</a>
+										</li>
+									</ul>
+								</div>
+							</header>
+							<div class="card-body">
+								<div class="tab-content">
+									<div id="w5-one" class="tab-pane active">
+										<ul class="col-lg-9 mx-auto list list-icons">
+											<li>
+												<i class="fas fa-angle-right"></i>
+												<div class="form-row">
+													<div class="form-group col">
+														<div class="">
+															<label class="sub_title mb-0">상금 외 인센티브 계획이 있으신가요?</label>
+															<span class="required"> *</span>
+															<div class="text">
+																</i>인센티브 옵션은 디자이너들이 상당히 선호합니다. 따라서 더 많은 시안을 받아보실 수 있고, 더 높은 퀄리티를 기대하실 수 있습니다.
+															</div>
+															<table class="min_prize table">
+																<tr>
+																	<th class="title">
+																		현재 최소상금
+																	</th>
+																	<th class="content">
+																		<input type="hidden" name="minPrize" th:value="${minPrize}"/>
+																		<div class="count" th:text="|*{#numbers.formatInteger(minPrize, 0, 'COMMA')}원|"></div>
+																	</th>
+																</tr>
+																<tr>
+																	<td>
+																		<div class="custom-control custom-radio">
+																			<input class="custom-control-input" type="radio" id="incentive_Y" name="incentive" value="true" checked="checked">
+																			<label class="custom-control-label" for="incentive_Y">예</label>
+																		</div>
+																	</td>
+																	<td>
+																		<div class="form-group">
+																			<input type="text" maxlength="11" class="form-control prize text-right " name="incentivePrize" placeholder="금액을 입력하세요." onkeyup="numberWithCommas(this);" onchange="numberWithCommas(this);">
+																			<span>원</span>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td colspan="2">
+																		<div class="custom-control custom-radio">
+																			<input class="custom-control-input" type="radio" id="incentive_N" name="incentive" value="false">
+																			<label class="custom-control-label" for="incentive_N">아니오</label>
+																		</div>
+																	</td>
+																</tr>
+															</table>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<div id="w5-two" class="tab-pane">
+										<ul class="col-lg-9 mx-auto list list-icons">
+											<li>
+												<i class="fas fa-angle-right"></i>
+												<div class="form-row">
+													<div class="form-group col">
+														<div class="">
+															<div style="white-space: nowrap;">
+																<label class="sub_title">선정은 어떻게 하실 계획이신가요
+																</label>
+																<span class="required"> *</span>
+															</div>
+															<div class="help-block mb-3">
+																<i class="fas fa-caret-right"></i>
+																1위만 단독으로 선정하실 수도 있고, 2,3위에 대한 상금을 지급하실 수도 있습니다.<br>
+																<i class="fas fa-caret-right"></i>
+																대개 프리랜서는 단독 선정보다는 2,3위에 대한 선정 옵션을 더 선호합니다.
+															</div>
+															<table class="total_prize table">
+																<tr>
+																	<th class="title">
+																		확정상금
+																	</th>
+																	<th class="content">
+																		<div class="count">
+																			<span class="bill totalPrize" th:text="*{#numbers.formatInteger(minPrize, 0, 'COMMA')}"></span>원
+																		</div>
+																	</th>
+																</tr>
+																<tr>
+																	<td>
+																		<div class="custom-control custom-radio">
+																			<input class="custom-control-input" type="radio" id="pickType_1st" name="pickType" value="1">
+																			<label class="custom-control-label" for="pickType_1st">1위만 선정</label>
+																		</div>
+																	</td>
+																	<td>
+																		<div class="form-group prize-input-container">
+																			<input type="text" class="container-1st form-control prize text-right" name="prizeFor1st" maxlength="11" onkeyup="numberWithCommas(this);" placeholder="상금을 입력해주세요">
+																			<span>원</span>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<div class="custom-control custom-radio">
+																			<input class="custom-control-input" type="radio" id="pickType_2nd" name="pickType" value="2">
+																			<label class="custom-control-label" for="pickType_2nd">1위와 2위 선정</label>
+																		</div>
+																	</td>
+																	<td>
+																		<div class="form-group prize-input-container">
+																			<input type="text" class="container-2nd form-control prize text-right" name="prizeFor2nd" maxlength="11" onkeyup="numberWithCommas(this);" placeholder="상금을 입력해주세요">
+																			<span>원</span>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<div class="custom-control custom-radio">
+																			<input class="custom-control-input" type="radio" id="pickType_3rd" name="pickType" value="3">
+																			<label class="custom-control-label" for="pickType_3rd">1위~3위 까지 선정</label>
+																		</div>
+																	</td>
+																	<td>
+																		<div class="form-group prize-input-container">
+																			<input type="text" class="container-3rd form-control prize text-right" name="prizeFor3rd" onkeyup="numberWithCommas(this);" placeholder="상금을 입력해주세요">
+																			<span>원</span>
+																		</div>
+																	</td>
+																</tr>
+															</table>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<div id="w5-three" class="tab-pane">
+										<ul class="col-lg-9 mx-auto list list-icons">
+											<li>
+												<i class="fas fa-angle-right"></i>
+												<div class="form-row">
+													<div class="form-group col">
+														<div class="">
+															<label class="sub_title">수수료 부담 조건</label>
+															<span class="required"> *</span>
+															<div class="help-block mb-3">
+																<i class="fas fa-caret-right"></i>
+																프리랜서가 부담하는 수수료(확정상금의 10%)를 클라이언트가 대신 납부합니다.<br/>
+																<i class="fas fa-caret-right"></i>
+																<span class="font-weight-bold">수수료 부담 조건은 프리랜서들이 선호합니다.</span>
+															</div>
+															<table class="pay_for_fee table">
+																<tr>
+																	<th class="title">
+																		예상수수료
+																	</th>
+																	<th class="content">
+																		<div class="count">
+																			<span id="fee" th:text="|*{#numbers.formatInteger(0.1*minPrize, 0, 'COMMA')}원|"></span>원
+																		</div>
+																	</th>
+																</tr>
+																<tr>
+																	<td scope="row" colspan="2">
+																		<div class="custom-control custom-radio">
+																			<input class="custom-control-input" type="radio" id="payForFeeToFreelancer_Y" name="payForFeeToFreelancer" value="true" checked="checked">
+																			<label class="custom-control-label" for="payForFeeToFreelancer_Y">예</label>
+																		</div>
+																		<div class="custom-control custom-radio">
+																			<input class="custom-control-input" type="radio" id="payForFeeToFreelancer_N" name="payForFeeToFreelancer" value="false">
+																			<label class="custom-control-label" for="payForFeeToFreelancer_N">아니오</label>
+																		</div>
+																	</td>
+																</tr>
+															</table>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<div id="w5-four" class="tab-pane">
+										<div class="tab-content-4">
+											<ul class="list list-icons">
+												<li class="m-0">
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col m-0">
+															<div class="sub-search-date">
+																<label class="sub_title">포스팅 기간을 정해주세요.</label><span class="required"> *</span>
+																<div class="d-flex">
+																	<input type="text" th:value="${item?.postingStartAt}" id="postingStartAt" name="postingStartAt" disabled readonly class="col-5 col-lg-3 form-control search_date" required>
+																	<span class="align-self-center px-2">~</span>
+																	<input type="text" th:value="${item?.postingEndAt}" name="postingEndAt" id="postingEndAt" readonly class="col-5 col-lg-3 form-control search_date postingEndAt" required>
+																</div>
+																<div class="help-block">컨테스트의 포스팅 기간은 <span class="font-weight-bold">최대 2주입니다.</span></div>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="mb-0">
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col mb-0">
+															<div style="white-space: nowrap;">
+																<label class="sub_title">
+																	포스팅 옵션을 확정해주세요.
+																</label>
+																<span class="required"> *</span>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="p-0">
+													<div class="form-row">
+														<div class="form-group col">
+															<form name="foption" action="" method="post" enctype="multipart/form-data">
+																<table class="table posting-option-table">
+																	<thead>
+																		<tr class="text-center">
+				                                                            <th class="product-name" style="width: 50%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">옵션상품</th>
+				                                                            <th class="limit-quantity" style="width: 30%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">
+				                                                                <div class="row">
+				                                                                    <div class="product-limit col-md-5">
+				                                                                        기한
+				                                                                    </div>
+				                                                                    <div class="product-quantity col-md-7">
+				                                                                        기간연장
+				                                                                    </div>
+				                                                                </div>
+				                                                            </th>
+				                                                            <th class="product-subtotal" style="width: 20%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">금액</th>
+				                                                        </tr>
+																	</thead>
+																	<tbody>
+																	<tr th:each="optionItem: ${options}" th:class="${optionItem.category != null?'disabled':''}">
+																		<th:block th:if="${optionItem.category != null}">
+																			<th scope="row" class="product-name text-left" style="vertical-align: middle;">
+																				<div class="custom-control custom-checkbox paid-option-container ml-0 ml-md-4">
+																					<input type="hidden" value="1" name="projectPaymentOptionCount[]" th:data-option-code="${optionItem.code}">
+																					<input type="checkbox" th:value="${optionItem.id}" name="projectPaymentOptionId[]" class="custom-control-input"
+																						   data-checked="false"
+																						   th:attr="data-option-code=${optionItem.code}, data-option-category=${optionItem.category},
+																						   data-unit-price=${optionItem.mountOfMoneyUnit},
+																						   data-price=${optionItem.mountOfMoneyUnit},
+																						   data-previous-checked=${project?.isContainProjectOption(optionItem.id)}, data-name=${optionItem.name}"
+																						   th:checked="${project?.isContainProjectOption(optionItem.id)}"
+																						   th:id="|projectPaymentOptionId-${optionItem.id}|"
+																					>
+																					<label class="custom-control-label" th:for="|projectPaymentOptionId-${optionItem.id}|" style="padding-top: 3px">
+																						<span th:if="${optionItem.category!=null}" class="mr-1">+</span><span th:text="${optionItem.name}" class=""></span>
+																						<span class="question-pop text-secondary">
+									                                                        <i class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="" th:data-original-title="${optionItem.description}"></i>
+									                                                    </span>
+																					</label>
+																				</div>
+																			</th>
+																			<td>
+																				<div class="row text-center">
+																					<div th:if="${mode != null && mode == 'EXTEND'}" class="col-md-5 product-limit" style="vertical-align: middle;">
+																						<span class="option-limit" th:data-option-code="${optionItem.code}" th:text="|${#temporals.format(productTypeIdTicketMap?.get(optionItem.id)?.expiredAt, 'yyyy.MM.dd')}|">~2019.01.02</span>
+																					</div>
+																					<div th:if="${mode == null OR mode != 'EXTEND'}" class="col-md-5 product-limit" style="vertical-align: middle;">
+																						<span class="option-limit" th:data-option-code="${optionItem.code}"></span>
+																					</div>
+																					<div class="col-md-7 product-quantity p-0">
+																						<span class="minus">-</span>
+																						<i data-count="1" class="data-count">1</i>주일
+																						<span class="plus">+</span>
+																					</div>
+																				</div>
+																			</td>
+																			<td class="product-subtotal">
+																				<span class="bill" th:text="${#numbers.formatDecimal(optionItem.mountOfMoneyUnit, 0, 'DEFAULT', 0, 'DEFAULT')}"></span>원
+																			</td>
+																		</th:block>
+																		<th:block th:if="${optionItem.category == null}">
+																			<td class="product-name" style="vertical-align: middle;">
+																				<div class="custom-control custom-checkbox paid-option-container">
+																					<input type="hidden" value="1" name="projectPaymentOptionCount[]" th:data-option-code="${optionItem.code}">
+																					<input type="checkbox" name="projectPaymentOptionId[]" class="custom-control-input checkboxProductItem"
+																						   th:attr="data-option-code=${optionItem.code}, data-option-category=${optionItem.category},
+																						   data-price=${optionItem.mountOfMoneyUnit},
+																						   data-unit-price=${optionItem.mountOfMoneyUnit},
+																						   data-previous-checked=${project?.isContainProjectOption(optionItem.id)}, data-name=${optionItem.name}"
+																						   th:checked="|${optionItem.code.name() == 'INTERNAL' || optionItem.code.name() == 'EXTERNAL'?'checked':'false'}|"
+																						   th:value="${optionItem.id}"
+																						   th:data-checked="|${optionItem.code.name() == 'INTERNAL' || optionItem.code.name() == 'EXTERNAL'?'checked':'false'}|"
+																						   th:onclick="@{|${optionItem.code.name() == 'INTERNAL'?'return false;':''}|}"
+																						   th:id="|projectPaymentOptionId-${optionItem.id}|">
+																					<label class="custom-control-label" th:for="|projectPaymentOptionId-${optionItem.id}|">
+																						<span th:text="${optionItem.name}"></span>
+			                                                                            <span class="question-pop text-secondary">
+									                                                        <i class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="" th:data-original-title="${optionItem.description}"></i>
+									                                                    </span>
+																					</label>
+																					<span th:if="${optionItem.code.name() == 'NDA_IP'}" class="btn btn-primary rounded-0 btn-sm py-1 px-2 text-1 ml-2" data-toggle="modal" data-target="#nda-ip-option-info">내용보기</span>
+																				</div>
+																			</td>
+																			<td>
+																				<div class="row text-center">
+																					<div th:if="${mode != null && mode == 'EXTEND'}" class="col-md-5 product-limit text-center p-0">
+																						<span class="option-limit" th:data-option-code="${optionItem.code}" th:text="|${#temporals.format(productTypeIdTicketMap?.get(optionItem.id)?.expiredAt, 'yyyy.MM.dd')}|"></span>
+																					</div>
+																					<div th:if="${mode == null OR mode != 'EXTEND'}" class="col-md-5 product-limit text-center p-0">
+																						<span class="option-limit" th:data-option-code="${optionItem.code}"></span>
+																					</div>
+																					<div th:if="${optionItem.code.name() != 'INTERNAL' AND optionItem.code.name() != 'EXTERNAL'}" class="col-md-7 product-quantity p-0">
+																						<span class="minus">-</span>
+																						<i data-count="1" class="data-count">1</i>주일
+																						<span class="plus">+</span>
+																					</div>
+																				</div>
+																			</td>
+																			<td th:if="${optionItem.mountOfMoneyUnit == 0}" style="vertical-align: middle;text-align: center">
+																				<span>무료</span>
+																				<span th:if="${optionItem.mountOfMoneyUnit > 0}"><span class="bill" th:text="|${#numbers.formatDecimal(optionItem.mountOfMoneyUnit, 0, 'DEFAULT', 0, 'DEFAULT')}|"></span>원</span>
+																			</td>
+																			<td th:if="${optionItem.mountOfMoneyUnit > 0}" class="product-subtotal">
+																				<span><span class="bill" th:text="|${#numbers.formatDecimal(optionItem.mountOfMoneyUnit, 0, 'DEFAULT', 0, 'DEFAULT')}|"></span>원</span>
+																			</td>
+																		</th:block>
+																	</tr>
+																	<tr style="border-top:4px double #dee2e6">
+																		<td colspan="2"><span class="ml-4">할인금액(옵션</span><span id="selectedOptionCount">0</span><span>개 선택)</span></td>
+																		<td th:if="${mode != null && mode == 'EXTEND'}" colspan="2">
+																			<span class="optionDiscountAmount">0</span>원
+																		</td>
+																		<td th:if="${mode == null OR mode != 'EXTEND'}" colspan="1">
+																			<span class="optionDiscountAmount">0</span>원
+																		</td>
+																	</tr>
+																	</tbody>
+																</table>
+															</form>
+														</div>
+													</div>
+												</li>
+												<li>
+	                                                <i class="fas fa-angle-right"></i>
+	                                                <span>옵션 선택, 구매 수</strong>에 따라 할인율이 적용됩니다.</span>
+	                                                <table class="table text-center table-sm">
+	                                                    <tr>
+	                                                        <th style="font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">옵션 갯수 또는 기간 연장</th>
+	                                                        <th style="font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">할인율</th>
+	                                                    </tr>
+	                                                    <tr>
+	                                                        <td>2개</td>
+	                                                        <td class="text-center">10%</td>
+	                                                    </tr>
+	                                                    <tr>
+	                                                        <td>3개</td>
+	                                                        <td class="text-center">15%</td>
+	                                                    </tr>
+	                                                    <tr>
+	                                                        <td class="border-bottom">4개이상</td>
+	                                                        <td class="text-center border-bottom">20%</td>
+	                                                    </tr>
+	                                                </table>
+	                                                <i class="fas fa-plus"></i>
+	                                                <span><span style="font-weight: bold">결제금액(공급가액)의 5%</span>가 포인트로 적립되며 1년간 유효합니다.(1포인트는 1원)</span>
+	                                            </li>
+											</ul>
+										</div>
+									</div>
+									<div id="w5-five" class="tab-pane">
+										<div class="tab-content-5">
+											<ul class="list list-icons">
+												<li class="m-0">
+													<div class="">
+														<table class="bill_list_prize table">
+															<tbody>
+															<tr>
+																<th scope="row" colspan="2" class="text-5 border-top-0">
+																	확정상금
+																</th>
+																<td class="text-5 border-top-0">
+																	<b class="bill totalPrize" th:text="|*{#numbers.formatInteger(minPrize, 0, 'COMMA')}|"></b>원
+																</td>
+															</tr>
+															<tr>
+																<th scope="row" colspan="2">
+																	최소상금
+																</th>
+																<td>
+																	<b class="bill" th:text="|*{#numbers.formatInteger(minPrize, 0, 'COMMA')}|"></b>원
+																</td>
+															</tr>
+															<tr>
+																<th scope="row" colspan="2">
+																	인센티브
+																</th>
+																<td>
+																	<div class="">
+																		<b class="bill incentivePrice">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr class="container-1st">
+																<th scope="row" style="border-top:3px solid #333">
+																	상금배분
+																</th>
+																<td style="border-top:3px solid #333">
+																	1위
+																</td>
+																<td style="border-top:3px solid #333">
+																	<div class="">
+																		<b class="bill prizeFor1st">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr class="container-2nd">
+																<th scope="row">
+
+																</th>
+																<td>
+																	2위
+																</td>
+																<td>
+																	<div class="">
+																		<b class="bill prizeFor2nd">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr class="container-3rd">
+																<th scope="row">
+
+																</th>
+																<td>
+																	3위
+																</td>
+																<td>
+																	<div class="">
+																		<b class="bill prizeFor3rd">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr style="background-color: #f6f6f6">
+																<th scope="row">
+
+																</th>
+																<th scope="row" class="text-4">
+																	합계
+																</th>
+																<td>
+																	<div class="">
+																		<b class="bill totalPrize" th:text="|*{#numbers.formatInteger(minPrize, 0, 'COMMA')}|"></b>원
+																	</div>
+																</td>
+															</tr>
+															</tbody>
+														</table>
+														<h4 class="mb-1 mt-4">포스팅 옵션 결제내역</h4>
+														<table class="bill_option_table table">
+															<thead>
+				                                                <tr class="table-active" style="border-top:0;border-bottom:1px solid #333">
+				                                                    <th class="text-3 text-center" style="width: 50%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">
+				                                                        옵션이름
+				                                                    </th>
+				                                                    <th class="text-3 text-center" style="width: 25%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">
+				                                                        기한
+				                                                    </th>
+				                                                    <th class="text-3 text-center" style="width: 25%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">
+				                                                        금액
+				                                                    </th>
+				                                                </tr>
+				                                            </thead>
+															<tbody id="selected-option-container">
+															</tbody>
+															<tbody>
+																<tr style="border-top:4px double #dee2e6;">
+																	<th scope="row" colspan="2" >
+																		옵션 할인 금액
+																	</th>
+																	<td>
+																		<div class="">
+																			<b class="bill optionDiscountAmount" >0</b>원
+																		</div>
+																	</td>
+																</tr>
+																<tr style="background-color: #f6f6f6">
+																	<th scope="row" class="text-4">
+																		옵션결제금액
+																	</th>
+																	<td></td>
+																	<td class="text-4" >
+																		<div class="">
+																			<b class="bill totalPostingOptionWhPoints">0</b>원
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+														<h4 class="mb-1 mt-4">포인트 사용</h4>
+														<table class="bill_point_table table" style="border-top:3px solid #333 ;border-bottom:0">
+					                                        <tbody>
+					                                            <tr>
+					                                                <th class="w-25">보유 포인트</th>
+					                                                <td class="text-4 text-primary text-right">
+					                                                	<span class="count-money text-right d-inline-block" id="currentPointsTxt" th:text="|${#numbers.formatInteger(user.points, 0, 'COMMA')} P|"></span>
+					                                                </td>
+					                                            </tr>
+					                                            <tr>
+					                                            	<td colspan="2">
+					                                            		<div class="text-left">사용 할 포인트</div>
+					                                            		<div class="d-flex">
+						                                                    <input id="use-points" name="use-points" th:attr="data-current-points=${user.points}" type="text" maxlength="8"  class="text-right form-control d-inline-block mr-1" onchange="numberWithCommas(this)" onkeyup="numberWithCommas(this);" data-use-points="0" placeholder="포인트(숫자만) 직접 입력" />
+							                                                <button id="btnUsePoint" type="button" class="btn btn-sm btn-primary rounded-0 mr-1">적용
+							                                                </button>
+							                                                <button id="btnCancelUsePoint" type="button" class="btn btn-sm btn-light rounded-0">나중에 적용
+							                                                </button>
+						                                                </div>	
+					                                            	</td>
+					                                            </tr>
+					                                            <tr>
+					                                                <td colspan="2">
+					                                                    <div class="text-2 text-right mt-1">
+					                                                        <i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+					                                                        포인트는 발생 후 1년간 유효합니다.
+					                                                    </div>
+					                                                    <div class="text-2 text-right mt-1">
+					                                                        <i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+					                                                        <span class="font-weight-bold mark">포인트는 [옵션결제금액]에서만 적용(차감)됩니다.</span>
+					                                                    </div>
+					                                                </td>
+					                                            </tr>
+					                                        </tbody>
+					                                    </table>
+														<h4 class="mb-1 mt-4">최종 결제내역</h4>
+														<table class="bill_total_table table">
+															<tr>
+																<th scope="row" colspan="2">
+																	확정상금
+																</th>
+																<td>
+																	<div class="">
+																		<b class="bill totalPrize">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th scope="row" style="white-space: nowrap;">
+																	보증금
+																</th>
+																<td class="text-center">
+																	<div class="deposit_money_btn btn btn-sm btn-primary rounded-0 w-100 ml-2 p-0 p-md-2" data-toggle="modal" data-target="#deposit_money_refund_info" style="max-width:180px">보증금<span class="br"></span> 환불 조건(필독)</div>
+																</td>
+																<td>
+																	<div class="">
+																		<b class="bill depositMoney">100,000</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th scope="row" colspan="2">
+																	옵션결제내역
+																</th>
+																<td>
+																	<div class="">
+																		<b class="bill totalPostingOptionWhPoints">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th scope="row" colspan="2">
+																	수수료부담
+																</th>
+																<td>
+																	<div class="">
+																		<b class="bill fee">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th scope="row" colspan="2" style="border-top:3px solid #333">
+																	공급가액
+																</th>
+																<td style="border-top:3px solid #333">
+																	<div class="">
+																		<b class="bill supplyPrice">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th scope="row" colspan="2">
+																	부가가치세
+																</th>
+																<td>
+																	<div class="">
+																		<b class="bill vat">0</b>원
+																	</div>
+																</td>
+															</tr>
+															<tr style="background-color: #f6f6f6">
+																<th scope="row" colspan="2" class="text-4">
+																	최종결제금액
+																</th>
+																<td class="text-4">
+																	<div class="total_count">
+																		<b class="bill totalChargedPrice">0</b>원
+																	</div>
+																</td>
+															</tr>
+															</tbody>
+														</table>
+													</div>
+													<!-- <div class="totalAmount">최종결제금액<span id="totalChargedPrice" class="totalChargedPrice money pl-2">0</span>원</div> -->
+													<input type="hidden" name="totalDiscountOptionPrice"/>
+													<input type="hidden" name="optionAmountOfMoney"/>
+													<input type="hidden" name="supplyAmountOfMoney"/>
+													<input type="hidden" name="vatAmountOfMoney"/>
+													<input type="hidden" name="totalAmountOfMoney"/>
+													<div class="">
+														<table class="table">
+															<tbody>
+															<tr>
+																<div class="row">
+																	<th scope="row">
+																		<h4 class="m-0">결제방법</h4>
+																	</th>
+																	<td>
+																		<div class="">
+																			<select class="custom-select" id="">
+																				<option selected>신용카드결제만 가능</option>
+																			</select>
+																		</div>
+																	</td>
+																</div>
+															</tr>
+															</tbody>
+														</table>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer" style="height: 60px">
+								<ul class="pager">
+									<li class="previous disabled">
+										<a><i class="fas fa-angle-left"></i> 이전</a>
+									</li><!--
+										<li>
+											<a id="btn-temp-save">임시저장</a>
+										</li> -->
+									<li class="next">
+										<a>다음 <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="finish hidden float-right">
+										<a id="btnCompleted" class="btn_pay">결제 후 컨테스트 포스팅 완료</a>
+									</li>
+								</ul>
+							</div>
+						</section>
+					</form>
+				</div>
+				<div class="col-lg-2 col-xl-2">
+					<aside class="sidebar" id="sidebar" data-plugin-sticky="" data-plugin-options="{'minWidth': 991, 'containerSelector': '.contest-container', 'padding': {'top': 110}}">
+						<div id="sticky_point" class="card">
+                            <img class="round" th:src="@{${(#strings.isEmpty(user?.profileImageUrl)?'/static/images/default_avatar.jpg':user?.profileImageUrl)}}">
+							<div class="user_name" th:text="${user.name}">김예진</div>
+							 <div class="user_nickname">(<span th:text="${user.nickname}">omama</span>)</div>
+							<div class="user_point_label">보유포인트</div>
+							<div class="user_point point" th:text="|${#numbers.formatDecimal(user?.points, 0, 'DEFAULT', 0, 'DEFAULT')}|"></div>
+						</div>
+					</aside>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 보증금환불규정 팝업// -->
+
+	<th:block th:include="modal/common-modals"></th:block>
+
+	<script th:inline="javascript">
+		var minPrize = [[${minPrize}]];
+		var projectId = [[${projectId}]];
+
+	</script>
+	<!-- <script src="/static/js/plugin/jquery/3.3.1/jquery.min.js"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+	<!-- <script src="/static/js/plugin/bootstrap.min.js"></script> -->
+
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script th:inline="javascript">
+
+		var packContainItemsMap = {};
+	</script>
+	<script>
+		$('.seeRefundPopup').click(function () {
+			//check if checkbox is checked
+			if ($(this).is(':checked')) {
+
+				$('.ok_btn').removeAttr('disabled'); //enable input
+
+			} else {
+				$('.ok_btn').attr('disabled', true); //disable input
+			}
+		});
+	</script>
+	<script th:inline="javascript">
+		var serverUrl = [[${serverUrl}]];
+		var userEmail = [[${user.email}]];
+		var userName = [[${user.name}]];
+		var userCellphone = [[${user.cellphone}]];
+		var contestName = [[${contestName}]];
+		var postingPeriodExtend = false;
+
+		var iamportMerchantId = [[${iamportMerchantId}]];
+
+		IMP.init(iamportMerchantId);
+
+		$('#btnCompleted').click(function() {
+			var maxOptionPeriodCount = 0;
+
+			if (!$('input:checkbox[id=seeRefundPopup]').is(':checked')) {
+				alert('보증금 환불조건을 확인후 체크해 주세요.');
+				return false;
+			}
+
+			$('input[name=projectPaymentOptionCount\\[\\]]').each(function(i, item){
+				if (maxOptionPeriodCount < $(item).val()) {
+					maxOptionPeriodCount = $(item).val();
+				}
+			});
+
+			var detailFormData = new FormData();
+			detailFormData.append('minPrize', $('input[name=minPrize]').val());
+			if ($('input:radio[name=incentive]').is(':checked')) {
+				detailFormData.append('incentivePrize', removeComma($('input[name=incentivePrize]').val()));
+			} else {
+				detailFormData.append('incentivePrize', '0');
+			}
+			detailFormData.append('prizeFor1st', removeComma($('input[name=prizeFor1st]').val()));
+			detailFormData.append('prizeFor2nd', removeComma($('input[name=prizeFor2nd]').val()));
+			detailFormData.append('prizeFor3rd', removeComma($('input[name=prizeFor3rd]').val()));
+			detailFormData.append('payForFeeToFreelancer', $('input:radio[name=payForFeeToFreelancer]:checked').val());
+			detailFormData.append('postingStartAt', $('input[name=postingStartAt]').val());
+			detailFormData.append('postingEndAt', $('input[name=postingEndAt]').val());
+
+			$.ajax({
+				type: 'POST',
+				url: '/contests/' + projectId + '/details',
+				data: detailFormData,
+				processData: false,
+				cache: false,
+				contentType: false,
+				success: function(res) {
+
+					var remainDays = res.data;
+
+
+					var formData = new FormData();
+					formData.append("projectId", projectId);
+					formData.append('type', 'CONTEST');
+
+					var totalAmountOfMoney = parseInt($('input[name=totalAmountOfMoney]').val());
+					if (totalAmountOfMoney !== 0 && totalAmountOfMoney <= 100) {
+						alert('100원 이하로는 결제가 불가능합니다.');
+						return;
+					}
+
+					var checkedOption = $('input[name=projectPaymentOptionId\\[\\]]');
+
+					var optionDic = {};
+					for(var i=0; i<checkedOption.length; i++){
+						var option = checkedOption[i];
+						if (option.checked) {
+							var count = $(option).siblings('input[name=projectPaymentOptionCount\\[\\]]').val();
+							optionDic[$(option).val()] = count;
+						}
+					}
+					var totalDiscountOptionPrice = 0;
+					if ($('.optionDiscountAmount').length > 1) {
+						totalDiscountOptionPrice = parseInt(removeComma($($('.optionDiscountAmount')[0]).text()));
+					} else {
+						totalDiscountOptionPrice = parseInt(removeComma($('.optionDiscountAmount').text()));
+					}
+
+					formData.append('optionAmountOfMoney', parseInt($('input[name=optionAmountOfMoney]').val()));
+					formData.append('supplyAmountOfMoney', parseInt($('input[name=supplyAmountOfMoney]').val()));
+					formData.append('totalDiscountOptionPrice', parseInt($('input[name=totalDiscountOptionPrice]').val()));
+					formData.append('vatAmountOfMoney', parseInt($('input[name=vatAmountOfMoney]').val()));
+					formData.append('totalAmountOfMoney', parseInt($('input[name=totalAmountOfMoney]').val()));
+					formData.append('optionIdsCountMap', JSON.stringify(optionDic));
+					formData.append('usePoint', parseInt(usedPoints));
+
+					$.ajax({
+						type: 'POST',
+						url: '/purchases/administration-ids',
+						data: formData,
+						processData: false,
+						cache: false,
+						contentType: false,
+						success: function(res) {
+
+							if (totalAmountOfMoney === 0) {
+								alert('포인트 사용으로 결제하실 금액이 없습니다');
+								$(document).ready(function(){
+									var url = serverUrl + '/confirm/purchases/' + res + '/no-amount';
+									$('<form action="' + url + '" method="GET"></form>').appendTo('body').submit();
+								});
+								return;
+							}
+
+							IMP.request_pay({
+								pg : 'inicis',
+								pay_method : 'card',
+								merchant_uid : 'merchant_' + new Date().getTime(),
+								name : '[프리랜서코리아] 컨테스트(' + contestName + ') 포스팅 유료 옵션 결제',
+								amount :  $('input[name=totalAmountOfMoney]').val()*1,
+								buyer_email : userEmail,
+								buyer_name : userName,
+								buyer_tel : userCellphone,
+								m_redirect_url : serverUrl + '/confirm/purchases/' + res,
+							}, function(rsp) {
+								if ( rsp.success ) {
+
+									var formData = new FormData();
+									formData.append("projectId", projectId);
+									formData.append('imp_uid', rsp.imp_uid);
+									formData.append('merchant_uid', 'merchant_' + new Date().getTime());
+									formData.append('imp_success', true);
+									formData.append("postingPeriodExtend", postingPeriodExtend);
+									formData.append("postingEndAt", $('input[name=postingEndAt]').val());
+
+									$.ajax({
+										type: 'POST',
+										url: '/confirm/purchases/' + res,
+										data: formData,
+										processData: false,
+										cache: false,
+										contentType: false,
+										success: function() {
+											location.href='/client/posting/contestPaymentDone';
+										},
+										error: function(error) {
+											console.error(error);
+											alert('구매결과 검증에 실패했습니다.');
+										}
+
+									});
+								} else {
+									var msg = '결제에 실패하였습니다.';
+									msg += '에러내용 : ' + rsp.error_msg;
+									alert(msg);
+								}
+							});
+						},
+						error: function() {
+							alert('요청에 실패했습니다. 문제가 계속될 경우 고객센터로 문의 주세요.');
+						}
+					});
+
+				},
+				error: function() {
+					alert('요청에 실패했습니다. 문제가 계속될 경우 고객센터로 문의 주세요.');
+				}
+			});
+		});
+	</script>
+	<!-- 로컬 적용 script -->
+	<script src="/static/lib/moment/moment.min.js"></script>
+	<script th:inline="javascript">
+		var mode = [[${mode}]];
+	</script>
+	<script src="/static/js/client/posting/contest/option.js"></script>
+
+	<!-- Specific Page Vendor -->
+	<script src="/static/vendor/jquery-validation/jquery.validate.js"></script>
+	<script src="/static/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+	<script src="/static/vendor/pnotify/pnotify.custom.js"></script>
+
+	<!-- Examples -->
+	<script src="/static/js/client/posting/contest/option-step.js"></script>
+</div>
+
+
+</html>

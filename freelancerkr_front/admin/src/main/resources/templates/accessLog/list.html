@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator=" layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client.css">
+</head>
+
+
+<section id="content" layout:fragment="content">
+    <div id="container">
+        <div id="container_side">
+            <th:block th:include="fragments/accessLogHeader"></th:block>
+        </div>
+        <div id="container_content">
+            <div class="container_inner">
+                <h1>■ 접속기록 검색</h1>
+                <form id="form" method="get" action="/accessLogs">
+                    <table class="boardform">
+                        <colgroup>
+                            <col width="150">
+                            <col width="350">
+                            <col width="150">
+                            <col width="">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td colspan="3">
+                                <input type="text" name="accessAtFrom" th:value="${#request.getParameter('accessAtFrom')}" size="20" readonly="" class="readonly search_date datepicker" id="">
+                                ~
+                                <input type="text" name="accessAtTo" th:value="${#request.getParameter('accessAtTo')}" size="20" readonly="" class="readonly search_date datepicker" id="">
+                                <span class="btn-black medium" onclick="today()">오늘</span>
+                                <span class="btn-black medium" onclick="thisWeek()">이번주</span>
+                                <span class="btn-black medium" onclick="thisMonth()">이번달</span>
+                            </td>
+                        </tr>
+                        </tbody></table>
+                    <div class="boardbutton">
+                        <div class="tc">
+                            <input type="submit" value="검색" class="btn-color large">
+                            <a href="" class="btn-basic large">리셋</a>
+                        </div>
+                    </div>
+                </form>
+                <div class="Hspace"></div>
+                <h1>■ <span th:text="${page.totalElements}">1</span>건의 접속 기록이 검색되었습니다.</h1>
+                <form name="" id="" method="post">
+                    <table class="boardlist">
+                        <tbody>
+                        <tr>
+                            <th>
+                                <input type="checkbox" name="" value="1" id="">
+                            </th>
+                            <th>순서</th>
+                            <th>접속일</th>
+                            <th>접속시각</th>
+                            <th>로그인유저</th>
+                            <th style="max-width: 200px;">링크 웹사이트주소</th>
+                            <th>접속 아이피주소</th>
+                            <th style="max-width: 350px;">유저 에이전트(접속 환경, 브라우저 등)</th>
+                        </tr>
+                        <tr th:each="item: ${page.content}">
+                            <td>
+                                <input type="checkbox" name="" value="1">
+                            </td>
+                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.date}"></td>
+                            <td th:text="${item.accessTime}"></td>
+                            <td>
+                                <span th:text="${item.user?.username}"></span>
+                            </td>
+                            <td th:text="${item.referer}"></td>
+                            <td th:text="${item.remoteAddress}"></td>
+                            <td th:text="${item.userAgent}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+
+                <div class="boardbutton">
+                    <div class="tc">
+                        <div class="boardpage">
+                            <th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+                                <span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/accessLogs?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+        });
+        function today() {
+            $('input[name=accessAtFrom]').val(moment().format('YYYY-MM-DD'));
+            $('input[name=accessAtTo]').val(moment().add(1, 'day').format('YYYY-MM-DD'));
+        }
+
+        function thisWeek() {
+            $('input[name=accessAtFrom]').val(moment().startOf('week').format('YYYY-MM-DD'));
+            $('input[name=accessAtTo]').val(moment().add(1, 'week').startOf('week').format('YYYY-MM-DD'));
+        }
+
+        function thisMonth() {
+            $('input[name=accessAtFrom]').val(moment().startOf('month').format('YYYY-MM-DD'));
+            $('input[name=accessAtTo]').val(moment().add(1, 'month').startOf('month').format('YYYY-MM-DD'));
+        }
+
+        function resetSearch() {
+            location.href = '/accessLogs';
+        }
+
+        function search() {
+            $('#form').submit();
+        }
+    </script>
+</section>
+<!-- conetent//-->
+
+</html>

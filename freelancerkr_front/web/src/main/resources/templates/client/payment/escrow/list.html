@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client/payment/escrow/list.css"> 
+</head>
+
+    
+    <div layout:fragment="content">
+
+        <!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                        <h1 class="text-dark"><strong>나의 에스크로</strong></h1>
+
+                    </div>
+                    <div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 페이지헤더// -->
+        
+        <!-- 탭메뉴 -->
+        <section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+            <div class="container" style="margin-bottom: -3px;">
+                <ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+                    <li class="nav-item mb-0 ">
+                        <a th:href="@{/client/payment/list}" class="nav-link disabled">
+                            <span>결제/포인트관리</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mb-0 active">
+                        <a th:href="@{/client/payment/escrowList}" class="nav-link active">
+                            <span>에스크로</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!-- 탭메뉴// -->
+
+        <section>
+            <div class="container">   
+                <div class="content-body">
+                    <div class="escrow_info">
+                        <ul>
+                            <li>
+                                <i class="icon fas fa-coins"></i>
+                                <div>
+                                    <span class="font_emp">용역대금 + 부가가치세(10%)</span>
+                                    <span class="br"></span>
+                                    를 예치해주세요.
+                                    <span class="br"></span>
+                                    (예, 낙찰된 프로젝트 가격이
+                                    <span class="br"></span> 
+                                    100만원인 경우,
+                                    <span class="br"></span>
+                                    예치해야 할 금액은 110만원)
+                                </div>
+                                <i class="arrow fas fa-chevron-right"></i>
+                            </li>
+                            <li>
+                                <i class="icon fas fa-stamp"></i>
+                                <div>
+                                    예치된 용역대금은 반드시<span class="br"></span> 
+                                    <span class="font_emp">클라이언트의 “승인”이 있어야만</span>
+                                    <span class="br"></span>
+                                    프리랜서에게 전달됩니다.
+                                    <br/>
+                                    (프리랜서의 지급청구 클라이언트의 승인)
+                                </div>
+                                <i class="arrow fas fa-chevron-right"></i>
+                            </li>
+                            <li>
+                                <i class="icon fas fa-clock"></i>
+                                <div>
+                                    <span class="font_emp">평일 17시 00분</span>(한국시각)이후
+                                    <span class="br"></span> 
+                                    또는 공휴일에 예치하시면,
+                                    <span class="br"></span>
+                                    프리랜서코리아의 “나의 에스크로”
+                                    <span class="br"></span>
+                                    에는 익일 반영됩니다.
+                                </div>
+                                <i class="arrow fas fa-chevron-right"></i>
+                            </li>
+                            <li>
+                                <i class="icon fas fa-scroll"></i>
+                                <div>
+                                    프리랜서코리아는 예치결과
+                                    <span class="br"></span> 
+                                    확인 후 <span class="font_emp">세금계산서를 발급</span>
+                                    <span class="br"></span>
+                                    해드리며, “나의 에스크로”에는
+                                    <span class="br"></span>
+                                    <span class="font_emp">공급가액(VAT미포함)</span>만 표시됩니다.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>                
+                    <div class="account">
+                        <div class="escrow_account">
+                            <div class="title">에스크로예치계좌</div>
+                            <div class="content">
+                                <div class="bank">KB 국민은행 400437-01-020230</div>
+                                <div class="name">(주)플랫폼위즈컴퍼니</div>
+                            </div>
+                        </div>
+                        <div class="text">
+                            "프리랜서코리아"는 <span class="in_br"></span>(주)플랫폼위즈컴퍼니의 등록상표입니다.
+                        </div>
+                    </div>
+                    <div class="cash_inner">
+                        <div class="escrow_balance_info">
+                            <div class="form-row">
+                                <div class="text col-md-5">
+                                    <img src="/static/images/icon/lock.png">
+                                    <div class="wrap">
+                                        <div class="s_text">안전하게 거래하세요!</div>
+                                        <div class="b_text">에스크로 예치 잔액</div>
+                                    </div>
+                                </div>
+                                <div class="count col-sm-7 col-md-4">
+                                    <span th:text="|${#numbers.formatInteger(remainEscrow, 0, 'COMMA')}원|"></span>
+                                </div>
+                                <div class="button col-sm-5 col-md-3" onclick="javascript:location.href='/client/payment/paymentChoice'">
+                                    <div class="btn btn-secondary rounded-0">에스크로 예치금 충전하기</div>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="cashlist" class="table table-sm">
+                            <colgroup>
+                                <col style="width: 30%">
+                                <col style="width: 20%">
+                                <col style="width: 25%">
+                                <col style="width: 25%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>일자</th>
+                                    <th>구분</th>
+                                    <th>입금(VAT제외)</th>
+                                    <th>출금</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item, iter: ${page}">
+                                    <td id="display_day">
+                                        <div th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd')}"></div>
+                                        <div th:text="${#temporals.format(item.createdAt, 'HH:mm:ss')}"></div>
+                                    </td>
+                                    <td>
+                                        <span th:text="${item.paymentMethod?.desc}"></span>
+                                    </td>
+                                    <td id="deposit" class="deposit">
+                                        <div th:if="${item.type.name() == 'DEPOSIT'}" th:text="${#numbers.formatDecimal(item.amount, 0, 'DEFAULT', 0, 'DEFAULT') + '원'}"></div>
+                                    </td>
+                                    <td id="payment" class="payment">
+                                        <div class="project_title" th:if="${item.type.name() == 'WITHDRAWAL'}" th:text="${item.project?.title}"></div>
+                                        <div class="withdraw" th:if="${item.type.name() == 'WITHDRAWAL'}" th:text="${#numbers.formatDecimal(item.amount, 0, 'DEFAULT', 0, 'DEFAULT') + '원'}"></div>
+                                    </td>
+                                </tr>
+                                <tr class="total_title">
+                                    <td class="title"></td>
+                                    <td class="title"></td>
+                                    <td class="title">입금액 합계</td>
+                                    <td class="title">출금액 합계</td>
+                                </tr>
+                                <tr class="total">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="deposit">
+                                        <div th:text="${#numbers.formatDecimal(totalDeposits, 0, 'DEFAULT', 0, 'DEFAULT') + '원'}">10,000,000원</div>
+                                    </td>
+                                    <td class="payment">
+                                        <div class="withdraw" th:text="${#numbers.formatDecimal(totalWithdrawal, 0, 'DEFAULT', 0, 'DEFAULT') + '원'}">10,000,000원</div>
+                                    </td>
+                                </tr>
+                                <tr class="balance">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="title">잔액</td>
+                                    <td class="">
+                                        <div th:text="|${#numbers.formatInteger(remainEscrow, 0, 'COMMA')}원|">20,000원</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn_wrap">
+                            <a class="refund_list_btn" th:href="@{/client/payment/escrowRefundList}">
+                                <span>환불신청</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    
+
+</html>

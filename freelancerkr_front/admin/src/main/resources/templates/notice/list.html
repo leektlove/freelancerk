@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/notice/list.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/noticeHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 공지사항 검색</h1>
+					<form id="fsearch" name="" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>키워드</th>
+									<td>
+										<input type="text" name="" value="" size="100" placeholder="제목, 내용">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+					<h1>■ 공지사항 리스트</h1>
+					<table class="boardlist">
+						<colgroup>
+							<col width="80">
+							<col width="">
+							<col width="120">
+							<col width="100">
+							<col width="100">
+							<col width="180">
+						</colgroup>
+						<tbody>
+							<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>등록일</th>
+							<th>조회수</th>
+							<th>순서</th>
+							<th>비고</th>
+						</tr>
+						<tr th:each="item: ${page.content}">
+							<td th:text="*{#numbers.formatInteger(item.id, 0, 'COMMA')}"></td>
+							<td th:text="${item.title}">[카드뉴스] 존경받는 보스의 20가지 덕목</td>
+							<td th:text="|${#temporals.format(item.createdAt, 'yyyy-MM-dd')}|">2018-11-12</td>
+							<td th:text="*{#numbers.formatInteger(item.hits, 0, 'COMMA')}">5</td>
+							<td th:text="*{#numbers.formatInteger(item.id, 0, 'COMMA')}">59</td>
+							<td>
+								<span class="btn-black medium" th:onclick="|modifyItem(${item.id})|">수정</span>
+								<span class="btn-black medium del_btn" th:onclick="|deleteItem(${item.id})|">삭제</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/notice/list?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+						<div class="tr">
+							<a href="/notice/form" class="btn-color large">등록</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			function modifyItem(id) {
+				location.href = '/notice/' + id + '/form';
+			}
+			function deleteItem(id) {
+				if (!confirm('삭제하시겠습니까?')) {
+					return;
+				}
+
+				$.ajax({
+					type: 'DELETE',
+					url: '/notices/' + id,
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							alert('성공적으로 요청되었습니다.');
+							location.reload();
+							return;
+						} else {
+							alert('요청 중 문제가 발생했습니다.');
+						}
+					},
+					error: function(error) {
+						alert('요청 중 문제가 발생했습니다.');
+						console.error(error);
+
+					}
+				})
+			}
+		</script>
+	</section>
+	
+
+</html>

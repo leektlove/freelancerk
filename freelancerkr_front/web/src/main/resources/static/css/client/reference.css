@@ -1,0 +1,25 @@
+.subject{float:left; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; display:inline-block;}
+.subject_new{ float:left; margin-left:10px; }
+.board_inner{ padding: 60px; }
+.form-control { font-size: 13px; display: inline-block; }
+.form-group { display: inline-block }
+
+@media all and (max-width: 991px) {
+    .form-group { width: 35%; }
+    .subject { max-width: 500px; }
+}
+
+@media all and (max-width: 767px) {
+    .sub_search_date, .sub_search_text { float: none!important }
+    .subject { max-width: 320px; }
+}
+
+@media all and (max-width: 538px) {
+    .subject { max-width: 220px; }
+    .form-group { width: 60%; }
+}
+
+@media all and (max-width: 450px) {
+    #sub_title .sub_title_navigation { padding: 0; }
+    .subject { max-width: 145px; }
+}

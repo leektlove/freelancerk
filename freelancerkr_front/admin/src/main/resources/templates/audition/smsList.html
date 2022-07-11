@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/freelancerHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 프리랜서 문자 검색</h1>
+					<form id="" name="" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="350">
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody><tr>
+								<th>발송일</th>
+								<td colspan="3">
+									<input type="text" name="" value="" size="8" readonly="" class="readonly search_date hasDatepicker" id="">
+									 ~ 
+									<input type="text" name="" value="" size="8" readonly="" class="readonly search_date hasDatepicker" id="">
+									<span class="btn-black medium">오늘</span>
+									<span class="btn-black medium">이번주</span>
+									<span class="btn-black medium">이번달</span>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+
+					<div class="Hspace"></div>
+
+					<h1>■ <span>1</span>건이 검색되었습니다.</h1>
+
+					<form name="" id="" method="post">
+
+						<table class="boardlist">
+							<tbody><tr>
+								<th>순서</th>
+								<th>발송일</th>
+								<th>내용</th>
+								<th>발송수</th>
+								<th>상세보기</th>
+							</tr>
+										<tr>
+								<td>
+									164				</td>
+								<td>2018-08-27 17:47:06</td>
+								<td>[프리랜서코리아] 지원하신 프로젝트의 내용이 수정/변경…</td>
+								<td>1</td>
+								<td>
+									<a href="" class="btn-black medium">보기</a>
+								</td>
+							</tr>
+										<tr>
+								<td>
+									163				</td>
+								<td>2018-08-17 14:09:27</td>
+								<td>[hadoop 개발자 모집] 프로젝트 입찰에 참여해보세…</td>
+								<td>9</td>
+								<td>
+									<a href="" class="btn-black medium">보기</a>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+
+					</form>
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+								<span class="current">1</span>
+								<a href="">2</a>
+							</div>
+						</div>
+						<div class="tr"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+</html>

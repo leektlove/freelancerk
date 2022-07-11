@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/project/processing.css">
+
+	<!-- 로컬적용 script -->
+	<script src="/static/js/client/project/processing.js"></script>
+	<script th:inline="javascript">
+	function checkboxlimit(checkgroup, limit){
+		var checkgroup=checkgroup
+		var limit=[[${contest.prizeTargetPersons}]];
+		for (var i=0; i<checkgroup.length; i++){
+			checkgroup[i].onclick=function(){
+			var checkedcount=0
+			for (var i=0; i<checkgroup.length; i++)
+				checkedcount+=(checkgroup[i].checked)? 1 : 0
+			if (checkedcount>limit){
+				alert(limit+"위까지만 선정하기로 정하셨습니다. 변경을 원하시면 순위에 대한 상금을 수정해주세요.");
+				this.checked=false
+				}
+			}
+		}
+	}
+	</script>
+	<script>
+		$(document).ready(function(){
+			var input = document.querySelectorAll(".items input");
+			var orders = [];
+			SelOrder(input, orders);
+			//order of selection
+			function SelOrder(input, orders) {
+				for (var i = 0; i < input.length; i++) {
+					input[i].addEventListener(
+							"change",
+							function(e) {
+								if (e.target.checked) {
+									orders.push(e.target.id);
+								} else {
+									for (var k = 0; k < orders.length; k++) {
+										if (orders[k] == e.target.id) {
+											orders.splice(k, 1);
+										}
+									}
+								}
+								for (var l = 0; l < orders.length; l++) {
+									for (var j = 0; j < input.length; j++) {
+										if (input[j].id == orders[l]) {
+											input[j].className = "order" + (l + 1);
+										}
+									}
+								}
+							},
+							false
+					);
+				}
+			};
+		});
+	</script>
+</head>
+
+	
+	<div layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>컨테스트 순위선정</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+		
+		<section>
+			<div class="container">	
+				<div class="rank content-body">
+					<div class="top_area">
+						<div class="title">컨테스트 상금 및 수정</div>
+						<div class="text">총 <span>1회 수정가능</span> 합니다. 신중하게 수정해주세요.</div>
+						<div class="total_prize">
+							상금 <span class="count" th:text="|*{#numbers.formatInteger(contest.totalPrize, 0, 'COMMA')}원|"></span>
+						</div>
+						<div class="prize_money">
+							<input type="hidden" name="id" th:value="${contest.id}"/>
+							<div class="prizeFor1st cell_box" th:if="${contest.prizeFor1st != null}">
+								<div class="wrap">
+									<div class="cell_title">1위</div>
+									<div class="price">
+										<span th:text="|*{#numbers.formatInteger(contest.prizeFor1st, 0, 'COMMA')}원|"></span>
+									</div>
+								</div>
+							</div>
+							<div class="prizeFor2st cell_box" th:if="${contest.prizeFor2nd != null}">
+								<div class="wrap">
+									<div class="cell_title">2위</div>
+									<div class="price" th:if="${contest.prizeFor2nd > 0}">
+										<span th:text="|*{#numbers.formatInteger(contest.prizeFor2nd, 0, 'COMMA')}원|"></span>
+									</div>
+									<div class="price" th:unless="${contest.prizeFor2nd > 0}">
+										<span>없음</span>
+									</div>
+								</div>
+							</div>
+							<div class="prizeFor3st cell_box" th:if="${contest.prizeFor3rd != null}">
+								<div class="wrap">
+									<div class="cell_title">3위</div>
+									<div class="price" th:if="${contest.prizeFor3rd > 0}">
+										<span th:text="|*{#numbers.formatInteger(contest.prizeFor3rd, 0, 'COMMA')}원|"></span>
+									</div>
+									<div class="price" th:unless="${contest.prizeFor3rd > 0}">
+										<span>없음</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="btn_group">
+							<button class="btn btn-lg" type="button"  data-toggle="modal" data-target="#edit_reward">
+							순위 및 상금 배분 수정하기
+							<div class="info_badge">1회 가능</div>
+						</button>
+						</div>
+					</div>
+
+					<div class="middle_area">
+						<form name="builder" action="/" method="post">
+						<div class="section group">
+							<div class="sub_title">순위를 정해주세요</div>
+							<div class="text"><span>선정후 7일</span>동안 당선자와 커뮤니케이션하시며<span class="br"></span> <span>수정 보완하세요.</span></div>
+							<div class="prize_rank_container row">
+								<div class="col-md-3 col-lg-1-5" th:each="item, iter: ${bids}">
+									<label class="checkbox-img">
+										<span class="thumb-info thumb-info-centered-info thumb-info-no-zoom border-radius-0">
+											<span class="thumb-info-wrapper border-radius-0 items">
+												<div class="center-crop-wrapper">
+													<input type="checkbox" name="color" th:id="@{|chk-np-${iter.index}|}" th:value="${item.id}">
+													<img class="img img-fluid border-radius-0" th:src="${item.PrimaryContestEntryFileUrl}">
+													<div class="rank-label"></div>
+												</div>
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner text-1" th:text="${item.participant.exposeName}"></span>
+												</span>
+											</span>
+										</span>
+									</label>
+									<div class="info_text">이미지를 클릭해 보세요!</div>
+								</div>
+							</div>
+						</div>
+						</form>
+					</div>
+
+					<div class="bottom_area">
+						<div class="sub_title">두 가지만 기억해주세요!</div>
+						<ul class="text">
+							<li>
+								<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+								<span>선정 완료 후에는 컨테스트 정보에 대한 모든 수정(순위, 상금 등) 이 불가능</span>합니다.
+							</li>
+							<li>
+								<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+								선정을 완료하시면 수상자들의 연락처가 노출되며 7일간 수정+보완이 가능합니다.
+							</li>
+						</ul>
+						<div class="btn_group">
+							<a href="javascript:pickEntries()" class="btn btn-lg">선정 완료 후 다음단계로</a>
+						</div>
+					</div>
+
+					<script type="text/javascript">
+					//Syntax: checkboxlimit(checkbox_reference, limit)
+					checkboxlimit(document.forms.builder.color, 3)
+					</script>
+
+				</div>
+				
+
+				<!-- 상금수정 팝업 -->
+				<div class="modal fade modal_wrap" id="edit_reward" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+					 aria-hidden="true">
+					<div class="modal-dialog modal-sm" role="document">
+						<div class="modal-content">
+
+							<!-- 팝업 헤더 -->
+							<div class="head modal-header">
+								<h5 class="modal-title" id="ModalLabel">상금수정</h5>
+								<div class="">
+									<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+								</div>
+							</div>
+							<!-- 팝업 헤더// -->
+
+							<!-- 팝업 컨텐츠 -->
+							<form id="prizeModificationForm" th:action="|/contests/${contest.id}/prize/modifications|" method="post">
+							<div class="prize_modification modal-body">
+								<div class="totalPrize">
+									<div class="wrap">
+										<span class="totalPrize_label">확정상금</span>
+										<div class="bill count" th:text="*{#numbers.formatInteger(contest.totalPrize, 0, 'COMMA')}"></div>
+										<span>원</span>
+									</div>
+								</div>
+								<div class="pick_radio_btn">
+									<span class="custom-control custom-radio">
+		                                <input class="custom-control-input" type="radio" id="pickType1" name="pickType" value="1" checked="checked">
+		                                <label class="custom-control-label" for="pickType1">1위만 선정</label>
+		                            </span>
+									<span class="custom-control custom-radio">
+		                                <input class="custom-control-input" type="radio" id="pickType2" name="pickType" value="2" checked="checked">
+		                                <label class="custom-control-label" for="pickType2">1위와 2위 선정</label>
+		                            </span>
+									<span class="custom-control custom-radio">
+		                                <input class="custom-control-input" id="pcikType3" type="radio" name="pickType" value="3" checked="checked">
+		                                <label class="custom-control-label" for="pcikType3">1위 ~ 3위 선정</label>
+		                            </span>
+		                        </div>
+								<table class="table">
+									<tr class="container-1st">
+										<th class="label">
+											1위
+										</th>
+										<td>
+											<div class="input-group prize-input-container">
+												<input type="text" class="form-control prize" name="prizeFor1st" maxlength="11" th:value="${contest.prizeFor1st}" onkeyup="numberWithCommas(this);" placeholder="상금을 입력해주세요">
+												<span class="">원</span>
+											</div>
+										</td>
+									</tr>
+									<tr class="container-2nd">
+										<th class="label">
+											2위
+										</th>
+										<td>
+											<div class="input-group prize-input-container">
+												<input type="text" class="form-control prize" name="prizeFor2nd" maxlength="11" th:value="${contest.prizeFor2nd}" onkeyup="numberWithCommas(this);" placeholder="상금을 입력해주세요">
+												<span class="">원</span>
+											</div>
+										</td>
+									</tr>
+									<tr class="container-3rd">
+										<th class="label">
+											3위
+										</th>
+										<td>
+											<div class="input-group prize-input-container">
+												<input type="text" class="form-control prize" name="prizeFor3rd" maxlength="11" th:value="${contest.prizeFor3rd}" onkeyup="numberWithCommas(this);" placeholder="상금을 입력해주세요">
+												<span class="">원</span>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<div class="btn-group">
+									<button class="btn btn-lg btn-light" data-dismiss="modal" aria-label="Close">취소</button>
+									<button class="btn btn-lg btn-primary" type="submit">수정완료</button>
+								</div>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- 상금수정 팝업// -->
+
+			</div>
+		</section>
+
+		<script th:inline="javascript">
+			var limit=[[${contest.prizeTargetPersons}]];
+			var totalPrize = [[${contest.totalPrize}]];
+			var prizeModified = [[${contest.prizeLastModifiedAt != null}]];
+		</script>
+		<script src="/static/js/client/bid/common.js"></script>
+		<script src="/static/js/client/contests/pick.js"></script>
+	</div>
+	
+
+</html>

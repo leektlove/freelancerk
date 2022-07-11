@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/project.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/projectHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 프로젝트보기</h1>	
+					<table class="boardform">
+						<tbody>
+							<tr>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/basic|">기본정보</a></td>
+								<th width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/bid|">입찰정보</a></th>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/work|">진행정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/message|">메시지정보</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<h1>■ <span>1</span>명의 입찰자가 검색되었습니다.</h1>
+					<table class="boardlist">
+						<colgroup>
+							<col width="120">
+							<col width="120">
+							<col width="120">
+							<col width="180">
+							<col width="120">
+							<col width="200">
+							<col width="">
+							<col width="">
+							<col width="180">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>
+									입찰일
+									<span class="obtn obtn_now" data-no="1|a">▽</span>
+								</th>
+								<th>
+									입찰액
+									<span class="obtn" data-no="2|d">▽</span>
+								</th>
+								<th>프리랜서명</th>
+								<th>평점</th>
+								<th>연락처</th>
+								<th>이메일</th>
+								<th>상태</th>
+								<th>정보</th>
+								<th>비고</th>
+							</tr>
+							<tr th:Each="bidItem: ${bids}">
+								<td th:text="${#temporals.format(bidItem.applyAt, 'yyyy-MM-dd')}">2018-11-11</td>
+								<td th:text="${#numbers.formatInteger(bidItem.amountOfMoney, 0, 'COMMA')}">3,500,000</td>
+								<td th:text="${bidItem.participant.name}">강상국</td>
+								<td th:text="${bidItem.participant.ratingsAsFreelancer}">
+								</td>
+								<td th:text="${bidItem.participant.cellphone}">010-4100-6115</td>
+								<td th:text="${bidItem.participant.email}">tutest@hanmail.net</td>
+								<td><span style="color:#0f0f0f;">입찰참여</span></td>
+								<td>
+									<a href="" target="_blank" class="btn-black medium">프리랜서 정보</a>
+								</td>
+								<td>
+									<a href="" class="btn-black medium">수정</a>
+									<span class="btn-black medium del_btn">삭제</span>
+									<input type="hidden">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+							<span class="current">1</span>
+							</div>
+						</div>
+						<div class="tr">
+							<a href="" class="btn-color large">입찰등록</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

@@ -1,0 +1,311 @@
+.info_title{
+	padding: 0.3rem 0;
+    border-bottom: 1px solid #0088cc;
+    margin-top: 3rem;
+    font-size: 17px;
+}
+.my_info .wrap_content{
+    border-bottom: 1px solid #d0d0d0;
+    padding: 2rem 1rem;
+}
+.my_info .wrap_content:last-child{
+	border-bottom: 0;
+}
+.my_info .wrap_content ul li:before{
+	content: '-';
+	position: absolute;
+	left: -10px;
+}
+.my_info .wrap_content ul li{
+	padding: 0 0 1rem 0;
+	position: relative;
+}
+.my_info .col-lg-2{
+	font-size: 15px;
+}
+.my_info .guide{
+	font-size: 11px;
+    letter-spacing: -1px;
+}
+.my_project .my_project_list{
+	padding: 2rem 1.5rem;
+}
+.my_message{
+	margin-bottom: 5rem;
+}
+.star-point{width:150px;}
+.star-point .star_point_con{margin-top:-23px; overflow:hidden;}
+.text1{font-size: 1rem;font-weight: 700;color: #a9a9a9;margin-top: 2px;}
+.simple-todo-list{
+	font-size: 15px;
+}
+.simple-todo-list .completed div{
+	font-size: 13px;
+	width: 80px;
+	display: inline-block;
+}
+.modify_btn{
+	position: absolute;
+	bottom: 0;
+}
+.simple-todo-list li.completed:before {
+    top: 1px;
+    font-size: 13px;
+}
+.btn i.fas.fa-home{
+	font-size: 11px;
+}
+.btn-lg, .btn-group-lg > .btn{
+	border-radius: 0.25rem;
+}
+.rating-sm{
+	line-height: 23px;
+}
+.counters.counters-sm [class*="fa-"], .counters.counters-sm .icons{
+	font-size: 20px;
+}
+
+
+
+
+/** 프로젝트가 없을떄 **/
+.no_project .box-content{
+	padding: 2rem 1.5rem;
+}
+.no_project .box-content .text-box{
+	align-self: center;
+}
+.no_project .box-content .text-box div{
+	line-height: 15px;
+	padding: 5px;
+	letter-spacing: -1px;
+}
+.no_project .box-content .text-box .fa-angle-down{
+	padding:0.5em 0;
+}
+.no_project .info_no_project_title{
+	display: block;
+	text-align: center;
+	padding: 3rem 1rem;
+}
+.no_project .info_no_project_title + div{
+	padding: 0rem 2rem;
+}
+.no_project .info_no_project_title i{
+	color: #e36159;
+	margin-bottom: 0.5rem;
+}
+.no_project .title{
+	font-size: 25px;
+	font-weight: bold;
+}
+.no_project .subtitle{
+	line-height: normal;
+	color: #666;
+	font-size: 15.4px;
+}
+.no_project .info_card_title{
+	font-family: nanumSquare;
+	font-weight: 700;
+	font-size: 21px;
+	margin-bottom: 0.5rem;
+	padding-bottom: 1rem;
+	border-bottom:1px solid #ccc;
+	letter-spacing: -1px;
+}
+.no_project .btn{
+	width: 100%;
+	font-size: 15px;
+	color: #fff;
+	border-radius: 0;
+	display: block;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+.no_project .emcontent{
+	font-size: 15px;
+	letter-spacing: -1px;
+	font-weight: 500;
+}
+.no_project .project_card .info_card_title{	
+	color: #0088cc;
+}
+.no_project .project_card img{
+	width: 100%;
+    max-width: 131px;
+}
+.no_project .project_card .text-box .fa-angle-down{
+	color: #0088cc;
+}
+.no_project .project_card .btn{
+	background-color: #0088cc;
+}
+.no_project .project_card .emcontent{
+	 color: #0088cc;
+}
+.no_project .contest_card .info_card_title{
+	color: #e36159;
+}
+.no_project .contest_card img{
+	width: 100%;
+    max-width: 145px;
+}
+.no_project .contest_card .text-box .fa-angle-down{
+	color: #e36159;
+}
+.no_project .contest_card .btn{
+	background-color: #e36159;
+}
+.no_project .contest_card .emcontent{
+	 color: #e36159;
+}
+.no_project .project_contest_card .box-content {
+    border-top-color: #11597d;
+}
+.no_project .project_contest_card img{
+	width: 100%;
+    max-width: 134px;
+}
+.no_project .project_contest_card .info_card_title{
+	color: #11597d;
+}
+.no_project .project_contest_card .text-box .fa-angle-down{
+	color: #11597d;
+}
+.no_project .project_contest_card .btn{	
+	background-color: #11597d;
+}
+.no_project .project_contest_card .emcontent{
+	 color: #11597d;
+}
+
+@media (min-width: 1200px) { 
+	.modify_btn{
+		margin-bottom: 10px;
+	    right: 20px;
+	}
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	.modify_btn{
+		margin-bottom: 10px;
+	    right: 20px;
+	}
+ }
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.no_project .info_no_project_title + div{
+		padding: 0rem;
+	}
+	.featured-box .d-flex{ display: block!important; }
+	.featured-box .d-flex .col-lg-6{ width: 100%!important;}
+	.modify_btn{
+		position: relative;
+		width: 100%;
+	}
+	.my_info .col-lg-2{
+		font-size: 17px;
+    	margin-bottom: 0.5rem;
+	}
+	.my_info .wrap_content{
+		padding: 1.5rem 0rem;
+	}
+	.my_info .wrap_content ul{
+		padding-left: 1rem;
+	}
+	.my_portfolio .row{
+		padding: 1.5rem 1rem;
+	}
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.modify_btn{
+		position: relative;
+		width: 100%;
+	}
+	/** 프로젝트가 없을떄 **/
+	.no_project .title{
+		font-size: 21px;
+	}
+	.no_project .subtitle{
+		font-size: 12px;
+	}
+	.no_project .info_no_project_title + div{
+		padding: 0rem;
+	}
+	.my_info .col-lg-2{
+		font-size: 17px;
+    	margin-bottom: 0.5rem;
+	}
+	.my_info .wrap_content{
+		padding: 1.5rem 0rem;
+	}
+	.my_info .wrap_content ul{
+		padding-left: 1rem;
+	}
+	.my_portfolio .my_project_list{
+		padding: 1.5rem 1rem;
+	}
+
+}
+@media (min-width:467px) and (max-width: 575.98px) { 
+	.modify_btn{
+		position: relative;
+		width: 100%;
+	}
+	.no_project .title{
+		font-size: 21px;
+	}
+	.no_project .subtitle{
+		font-size: 13px;
+	}
+	.no_project .info_no_project_title + div{
+		padding: 0rem;
+	}
+	.my_info .col-lg-2{
+		font-size: 17px;
+    	margin-bottom: 0.5rem;
+	}
+	.my_info .wrap_content{
+		padding: 1.5rem 0rem;
+	}
+	.my_info .wrap_content ul{
+		padding-left: 1rem;
+	}
+	.my_portfolio .my_project_list{
+		padding: 1.5rem 1rem;
+	}
+
+}
+@media(max-width: 466.98px){
+	.modify_btn{
+		position: relative;
+		width: 100%;
+	}
+	.no_project .title{
+		font-size: 21px;
+	}
+	.no_project .subtitle{
+		font-size: 12px;
+	}
+	.no_project .info_no_project_title{
+		padding: 2rem 1rem;
+	}
+	.no_project .info_no_project_title + div{
+		padding: 0rem;
+	}
+	.private_open_info .q_answer li:first-child{
+		white-space: normal;
+	    line-height: 20px;
+	}
+	.my_info .col-lg-2{
+		font-size: 17px;
+    	margin-bottom: 0.5rem;
+	}
+	.my_info .wrap_content{
+		padding: 1.5rem 0rem;
+	}
+	.my_info .wrap_content ul{
+		padding-left: 1rem;
+	}
+	.my_portfolio .row{
+		padding: 1.5rem 1rem;
+	}
+}

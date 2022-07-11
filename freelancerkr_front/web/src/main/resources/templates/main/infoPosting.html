@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layout/layout">
+
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/common/infoPosting.css">
+</head>
+
+    <section id="content" layout:fragment="content">
+    	<div class="info contest">
+    		<div class="cover">
+    		</div>
+    		<div class="container">
+	    		<div class="row">
+	    			<div class="col-lg-7">
+	    				<div class="mb-4">
+		    				<div class="mb-4">
+			    				<img src="/static/images/info/line-red.png">
+			    			</div>
+		    				<img src="/static/images/info/design-contest.png">
+		    				<h4>디자인 전문가들에게 시안을 받아보세요</h4>
+		    			</div>
+		    			<p class="title-des">
+		    				<span class="colorPen"><span></span>로고, 명함, 출판물, 웹/앱, 일러스트, 영상디자인</span> 등의<br class="d-none d-md-block"> 시안을 받아보고 싶으신가요?<br>
+		    				우선 컨테스트를 개최하셔서 [작품]을 받아보세요.
+		    			</p>
+		    			<p>
+		    				회원가입 후 컨테스트를 포스팅하세요.<br class="d-block d-sm-none"> 1회성으로 작품을 받고 끝낼 수도 있고(로고디자인 등),<br>
+		    				<span class="colorPen"><span></span>선정한 전문가와 프로젝트를 진행할 수도 있습니다.</span><br>
+		    				<span class="ex">ex) 북디자인 1page를 컨테스트하여 디자이너를 선별 <i class="fas fa-arrow-right"></i> 전체 가격 조율 후 200p 북디자인 프로젝트 진행</span>
+		    			</p>
+		    			<p>
+		    				프리랜서코리아에는 <span class="colorPen"><span></span>등록비가 없고 보증금</span>이 있습니다.<br class="d-block d-sm-none"> 컨테스트에서 <span class="colorPen"><span></span>선정을 완료하시면 보증금은 전액 환불</span>됩니다.
+                            <a href="#" class="d-block mt-2" data-toggle="modal" data-target="#deposit_money_refund_info"> 컨테스트 환불 및 배당정책 <i class="fas fa-angle-right fa-lg ml-2"></i></a>
+		    			</p>
+		    			<button class="btn" onclick="toContestPosting()">컨테스트 포스팅 바로 가기</button>
+	    			</div>
+	    			<div class="col-lg-5">
+	    				<img src="/static/images/info/artist.png">
+	    			</div>
+	    		</div>
+	    	</div>
+    	</div>
+    	<div class="info project">
+    		<div class="container">
+	    		<div class="row">
+	    			<div class="col-lg-5">
+	    				<img src="/static/images/info/handshake.png">
+	    			</div>
+	    			<div class="col-lg-7 text-right">
+	    				<div class="mb-4">
+		    				<div class="mb-4 text-right">
+			    				<img src="/static/images/info/line-blue.png">
+			    			</div>
+		    				<img src="/static/images/info/project.png">
+		    				<h4>프리랜서 전문가를 채용하세요</h4>
+		    			</div>
+		    			<p class="title-des">
+		    				당신의 그 일, <br class="d-block d-sm-none">프리랜서 전문가로 끝내버리세요.<br><span class="colorPen"><span></span>지원자들의 입찰가, 경력, 포트폴리오 등을 확인하시고</span> <br class="d-none d-md-block">낙찰 한 후, 프로젝트 진행.
+		    			</p>
+		    			<p>
+		    				회원가입 후 [프로젝트 포스팅]하시면 전문가들이 내용을 꼼꼼히 검토한 후 입찰에 참여합니다.
+		    			</p>
+		    			<p>
+		    				프로젝트 포스팅 후 <br class="d-block d-sm-none">전문가들이 포트폴리오를 확인하시고,<br class="d-none d-md-block"><span class="colorPen"><span></span>적극적으로 나의 프로젝트에</span><span class="colorPen"><span></span>[참여제안]해보세요. 더 많은 견적</span>을 받아보실 수 있습니다.
+		    			</p>
+		    			<p>
+		    				충분히 대화하세요<br><span class="colorPen"><span></span>프리랜서코리아에서는 자유롭게 프리랜서와 소통</span>할 수 있습니다.
+		    			</p>
+		    			<button class="btn" onclick="toProjectPosting()">프로젝트 포스팅 바로 가기</button>
+	    			</div>
+	    		</div>
+	    	</div>
+    	</div>
+
+    	
+    	<!-- 보증금환불규정 팝업 -->
+        <div class="modal fade modal_wrap" id="deposit_money_refund_info" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <!-- 팝업 헤더 -->
+                    <div class="head modal-header">
+                        <h5 class="modal-title" id="ModalLabel">보증금환불규정</h5>
+                        <div class="">
+                            <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                    <!-- 팝업 헤더// -->
+
+                    <!-- 팝업 컨텐츠 -->
+                    <div class="content modal-body">
+                        <table class="table table-sm table-bordered text-center">
+                            <thead class="text-center" style="background-color: #c43f40">
+                                <tr>
+                                    <th class="text-light" colspan="5">환불규정</th>
+                                </tr>
+                            </thead>
+                            <tr class="table-active text-center">
+                                <td>구분</td>
+                                <td>상황</td>
+                                <td>보증금</td>
+                                <td>확정상금</td>
+                                <td class="text-center">저작권이전</td>
+                            </tr>
+                            <tr>
+                                <td class="table-active">선정</td>
+                                <td class="table-active">기한 내 선정</td>
+                                <td class="table-active">전액환불</td>
+                                <td class="table-active">수상자에게 상금 지급</td>
+                                <td class="table-active text-center">가능</td>
+                            </tr>
+                            <tr>
+                                <td class="table-active">-</td>
+                                <td class="table-active">무응찰</td>
+                                <td class="table-active">전액환불</td>
+                                <td class="table-active">전액환불</td>
+                                <td class="table-active text-center">N/A</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3" style="vertical-align: middle;">미선정</td>
+                                <td>1~2인 참여</td>
+                                <td><strong>80%환불</strong><br>20%참여자배당</td>
+                                <td><strong>70%환불</strong><br>20%참여자배당<br>10%수수료</td>
+                                <td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+                            </tr>
+                            <tr>
+                                <td>3~5인 참여</td>
+                                <td><strong>50%환불</strong><br>50%참여자배당</td>
+                                <td><strong>50%환불</strong><br>40%참여자배당<br>10%수수료</td>
+                                <td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+                            </tr>
+                            <tr>
+                                <td>6인 이상 참여</td>
+                                <td><strong>20%환불</strong><br>80%참여자배당</td>
+                                <td><strong>20%환불</strong><br>70%참여자배당<br>10%수수료</td>
+                                <td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">** 미선정 : 컨테스트를 취소하거나 포스팅 기한이 만료된 경우를 의미합니다.</td>
+                            </tr>
+                        </table>
+                        <div class="btn-group w-100">
+                            <div class="btn btn-lg btn-primary mx-auto rounded-0" data-dismiss="modal" aria-label="Close" style="min-width: 200px">확인</div>
+                        </div>
+                    </div>
+                    <!-- 팝업 컨텐츠 -->
+                </div>
+            </div>
+        </div>
+        <!-- 보증금환불규정 팝업// -->
+
+        <script th:inline="javascript">
+            var category1stId = '';
+            var category2ndId = '';
+            var loggedIn = [[${loggedIn}]];
+            var isLoggedIn = [[${isLoggedIn}]];
+            var loginAsClient = [[${loginAsClient}]];
+            var userInfoInput = [[${user?.infoInput}]];
+            var userId = [[${user?.id}]];
+
+        </script>
+        <script src="/static/js/main.js"></script>
+        
+    </section>
+
+</html>

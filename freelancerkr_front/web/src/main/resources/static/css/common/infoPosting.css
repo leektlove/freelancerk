@@ -1,0 +1,245 @@
+body{font-family: 'nanumSquare','Nanum Gothic','Apple SD Gothic Neo', 'Arial', 'sans-serif';;}
+.info{
+	position: relative;
+	padding: 5rem;
+	min-height: 800px;
+}
+.ex{
+	color: #fff;
+    background-color: #3c3c3c;
+    font-size: 14px;
+}
+.info.contest{
+	background-size:cover;
+	background: url('/static/images/info/post-bg-top.png')no-repeat;
+	background-position:center;
+}
+.info.contest .cover{
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.8;
+}
+.info.contest h4{
+	color: #fff;
+	margin-bottom:3rem;
+}
+.info.contest p{
+	font-size:17px;
+	line-height: 23px;
+	color:#fff;
+	margin-bottom:2.5rem;
+}
+.info.contest .title-des{
+	font-size: 20px;
+	line-height: 27px;
+}
+.info.contest .colorPen{
+	position: relative;
+	font-weight: 700;
+	z-index: 10;
+}
+.info.contest .colorPen span {
+    display: inline-block;
+    position: absolute;
+    border-bottom: 5px solid #c82233;
+    width: 100%;
+    left: 0;
+    bottom: 3px;
+    z-index: -1;
+    
+}
+.info.contest button{
+	font-size: 21px;
+	padding: 1rem 2rem;
+	color: #fff;
+	background-color: #c82333;
+	border-radius: 0;
+	margin-top:3rem;
+	font-weight: 400;
+}
+.info.project{
+	background: url('/static/images/info/post-bg-bottom.png')no-repeat;
+	background-size:contain;
+	background-position:bottom;
+}
+.info.project h4{
+	margin-bottom:3rem;
+}
+.info.project button{
+	margin-bottom:3rem;
+}
+.info.project .colorPen{
+	position: relative;
+	font-weight: 700;
+	z-index: 10;
+}
+.info.project .colorPen span {
+    display: inline-block;
+    position: absolute;
+    border-bottom: 5px solid #5ccbff;
+    width: 100%;
+    left: 0;
+    bottom: 3px;
+    opacity: 0.6;
+    z-index: -1;
+}
+.info.project p{
+	font-size: 17px;
+	line-height: 23px;
+	color:#232323;
+	margin-bottom:2rem;
+}
+.info.project .title-des{
+	font-size: 20px;
+	line-height: 27px;
+}
+
+.info.project button{
+	font-size: 21px;
+	padding: 1rem 2rem;
+	color: #fff;
+	background-color: #0083c0;
+	border-radius: 0;
+	margin-top:3rem;
+	font-weight: 400;
+}
+.col-lg-5{
+	display: flex;
+	justify-content: center;
+}
+.col-lg-5 img{
+	align-self: center;
+}
+.table td{
+	vertical-align: middle;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+	.info{
+		padding: 3rem 2rem;
+	}
+	.col-lg-5{
+		order:1;
+	}
+	.col-lg-7{
+		order:2;
+	}
+ 	.col-lg-5 img{
+		display: none;
+	}
+	.info.contest .colorPen span{
+		display: none;
+	}
+	.info.contest .colorPen{
+		background-color: rgba(200,35,51,0.61);
+	}
+	.info.project .colorPen span{
+		display: none;
+	}
+	.info.project .colorPen{
+		background-color: rgba(0,131,192,0.3);
+	}
+	.info.contest button,
+	.info.project button{
+		padding: 0.5rem 1.5rem;
+	}
+	.info.contest h4{
+		margin-bottom:2rem;
+	}
+	.info.project h4{
+		margin-bottom:2rem;
+	}
+	.info.contest button{
+		margin-top:2rem;
+	}
+	.info.project button{
+		margin-bottom:2rem;
+	}
+	.info{
+		min-height: auto;
+	}
+	.info.project .title-des{
+		font-size: 17px;
+    	line-height: 24px;
+	}
+	.info.contest .title-des{
+		font-size: 17px;
+    	line-height: 24px;
+	}
+	.info.project p{
+		font-size:15px;
+		line-height: 20px;
+	}
+	.info.contest p{
+		font-size:15px;
+		line-height: 20px;
+	}
+	.col-lg-7{
+		padding:0;
+	}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.info{
+		padding: 3rem 2rem;
+	}
+	.col-lg-5{
+		order:1;
+	}
+	.col-lg-7{
+		order:2;
+	}
+  	.col-lg-5 img{
+		display: none;
+	}
+	.info.contest button,
+	.info.project button{
+		padding: 0.5rem 1.5rem;
+	}
+	.info.contest h4{
+		margin-bottom:2rem;
+	}
+	.info.project h4{
+		margin-bottom:2rem;
+	}
+	.info.contest button{
+		margin-top:2rem;
+	}
+	.info.project button{
+		margin-bottom:2rem;
+	}
+	.info{
+		min-height: auto;
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.col-lg-5{
+		order:1;
+	}
+	.col-lg-7{
+		order:2;
+	}
+	.col-lg-5 img{
+		display: none;
+	}
+	.info{
+		min-height: auto;
+	}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}

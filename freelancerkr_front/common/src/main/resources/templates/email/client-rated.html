@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>프리랜서코리아 이메일</title>
+</head>
+<body>
+<div class="email-container" style="padding: 2rem 1rem;max-width: 700px;margin: auto;">
+
+    <!-- 헤더 -->
+    <div class="header" style="display: block;padding-bottom:10px;border-bottom: 1px solid #ddd;">
+        <img src="https://freelancerk.s3.ap-northeast-2.amazonaws.com/static/logo.png" style="max-width: 150px;">
+        <span class="email-title" style="font-size:20px;font-weight: 600;margin-top: 0.3rem;float: right;">프코 알림</span>
+    </div>
+    <div style="display: block;clear: both;"></div>
+    <div class="title" style="font-size: 25px;padding: 1rem 0;border-bottom: 1px solid #ddd;">
+        담당 프리랜서가 평가를 완료했습니다.
+    </div>
+    <!-- 헤더//-->
+
+    <!-- 본문 -->
+    <div class="discription" style="font-size: 17px;border-bottom: 1px solid #ddd;padding-top: 1rem;padding-bottom: 1rem;margin-bottom: 2.5rem;line-height: 1.5rem;">
+        <div class="content" style="margin-bottom: 2rem;">
+            프리랜서가 [완료 및 클라이언트 평가]를 완료했습니다.
+            <br>
+            [낙찰 후 진행중인 프로젝트]에서 [완료 및 프리랜서 평가]를 진행해주세요.
+            <br>
+            7일 내 평가가 없는 경우 80점(★★★★☆)으로 프리랜서 평가가 완료됩니다.
+            <br/><br/>
+            <strong>[완료 및 평가]를 완료하시면 담당 프리랜서가 클라이언트를 평가한 내역을 확인하실 수 있습니다.</strong>
+        </div>
+    </div>
+    <th:block th:include="email/bottom-button-container"></th:block>
+    <!-- 본문//-->
+
+    <th:block th:include="email/footer"></th:block>
+
+</div>
+
+
+</body>
+</html>

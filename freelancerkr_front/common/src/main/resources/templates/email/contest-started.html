@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>프리랜서코리아 이메일</title>
+</head>
+<body>
+<div class="email-container" style="padding: 2rem 1rem;max-width: 700px;margin: auto;">
+
+    <!-- 헤더 -->
+    <div class="header" style="display: block;padding-bottom:10px;border-bottom: 1px solid #ddd;">
+        <img src="https://freelancerk.s3.ap-northeast-2.amazonaws.com/static/logo.png" style="max-width: 150px;">
+        <span class="email-title" style="font-size:20px;font-weight: 600;margin-top: 0.3rem;float: right;">프코 알림</span>
+    </div>
+    <div style="display: block;clear: both;"></div>
+    <div class="title" style="font-size: 25px;padding: 1rem 0;border-bottom: 1px solid #ddd;">
+        출품작에 대한 선정을 완료하셨습니다.
+    </div>
+    <!-- 헤더//-->
+
+    <!-- 본문 -->
+    <div class="discription" style="font-size: 17px;border-bottom: 1px solid #ddd;padding-top: 1rem;padding-bottom: 1rem;margin-bottom: 2.5rem;line-height: 1.5rem;">
+        <div class="content" style="margin-bottom: 2rem;">
+            <span class="username" th:text="${client.exposeName}" style="font-weight: 700;margin-right: 0.5rem;line-height: 30px;">박은진</span>님께서 포스팅 하신
+            <span class="project_title" th:text="${project.title}" style="font-weight: 700;">캐릭터만들기</span> 컨테스트에 <span class="name" th:text="${freelancerExposeNames}" style="font-weight: 700;">이효정</span>님을 선정하셨습니다.
+            <br/>
+            결제하신 보증금(11만원, vat포함)은 환불(결제 취소)처리되며,
+            <br/>
+            확정상금은 당선자에게 지급됩니다.
+        </div>
+        <div class="list_title">※ 세 가지를 주의하세요.</div>
+        <ol class="list" style="padding: 1rem 1.5rem;margin-top: 0.3rem;border: 1px solid #ddd;">
+            <li style="padding-left: 1rem;font-size: 15px;padding: 0.5rem;"><strong>선정 후 일주일 내</strong> 상금 지급을 완료하셔야 합니다.</li>
+            <li style="padding-left: 1rem;font-size: 15px;padding: 0.5rem;">일주일 간 공개된 연락처로 <strong>자유롭게 소통</strong>하시며 수정/보완을 진행하세요.</li>
+            <li style="padding-left: 1rem;font-size: 15px;padding: 0.5rem;"><strong>당선자와 프로젝트를 진행하고 싶으시다면,</strong> 컨테스트 상금 지급을 완료하시고 [완료된 프로젝트]에서 그(그녀)를 선택하여 프로젝트를 진행하세요.</li>
+        </ol>
+
+    </div>
+    <th:block th:include="email/bottom-button-container"></th:block>
+    <!-- 본문//-->
+
+    <th:block th:include="email/footer"></th:block>
+
+</div>
+
+
+</body>
+</html>

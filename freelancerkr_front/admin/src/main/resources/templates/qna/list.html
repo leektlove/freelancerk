@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/qna.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/qnaHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 문의 검색</h1>
+					<form id="" name="" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="350">
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>클라이언트/프리랜서</th>
+									<td>
+										<label><input type="radio" name="" value="" checked> 전체</label>
+										<label><input type="radio" name="" value="1"> 클라이언트</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="2"> 프리랜서</label>&nbsp;&nbsp;
+									</td>
+									<th>상태</th>
+									<td>
+										<label><input type="radio" name="" value="" checked> 전체</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="1"> 접수</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="2"> 상담중</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="3"> 상담완료</label>
+									</td>
+								</tr>
+								<tr>
+									<th>키워드</th>
+									<td colspan="3">
+										<input type="text" name="" value="" size="100" placeholder="제목, 이름, 회사명, 휴대폰, 이메일">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+					<h1>■ 문의리스트</h1>
+					<table class="boardlist">
+						<colgroup>
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>상태</th>
+								<th>구분</th>
+								<th>제목</th>
+								<th>이름</th>
+								<th>회사명</th>
+								<th>휴대폰</th>
+								<th>이메일</th>
+								<th>답변수</th>
+								<th>비고</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td><span th:text="${item.status.desc}"></span><br>
+									<span th:text="|${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm:ss')}|"></span></td>
+								<td th:text="${item.userRole?.name()=='ROLE_FREELANCER'?'프리랜서':'클라이언트'}">클라이언트</td>
+								<td th:text="${item.title}"></td>
+								<td th:text="${item.user.name}">김재홍</td>
+								<td th:text="${item.user.corporateName}">지피지기소프트</td>
+								<td th:text="${item.user.cellphone}">010-1234-1234</td>
+								<td th:text="${item.user.email}">JHKIM@chaerm505.com</td>
+								<td th:text="*{#numbers.formatInteger(item.numberOfInquiries, 0, 'COMMA')}">1</td>
+								<td>
+									<button type="button" class="btn-black medium" th:onclick="|replyItem(${item.id})|">답변등록</button>
+									<button th:if="${!item.answerAlarm}" type="button" class="btn-black medium" th:onclick="|sendAlarmItem(${item.id})|">답변완료알림톡발송</button>
+									<button th:if="${item.answerAlarm}" type="button" class="btn-black medium">알림톡발송완료</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="boardbutton" th:if="${pageNumber > 0}">
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/qna/list?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			function replyItem(id) {
+				location.href='/qna/' + id + '/form';
+			}
+
+			function sendAlarmItem(id) {
+				$.ajax({
+					type: 'POST',
+					url: '/inquiries/' + id + '/alarms',
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							alert('성공적으로 요청되었습니다.');
+						} else {
+							alert('요청 중 문제가 발생했습니다.');
+						}
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						alert('요청 중 문제가 발생했습니다.' + jqXHR.data);
+					}
+				})
+			}
+		</script>
+	</section>
+	
+
+</html>

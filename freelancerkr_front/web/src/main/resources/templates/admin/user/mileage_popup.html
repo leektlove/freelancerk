@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/popup">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    var PER_PAGE_NUM = 16;
+	document.addEventListener("DOMContentLoaded", function(){
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+	    getListCategoryData();
+	    
+	    
+		/*<![CDATA[*/
+		var bigType = "[[${condition.bigType}]]";
+		var plusMinus = "[[${condition.plusMinus}]]";
+		var userId = "[[${condition.userId}]]";
+		var page = "[[${condition.page}]]";
+		// var perPageNum = "[[${condition.perPageNum}]]";
+		var perPageNum = PER_PAGE_NUM;
+	    //console.log(page + " : " + perPageNum);
+	    
+		/*]]>*/
+		
+		$('#bigType').val(bigType);
+		$('#userId').val(userId);
+		
+		search(page, perPageNum);
+		
+		
+	});    
+	
+	function goDetail(contentId){
+		// location.href="/w1/product/detail/"+contentId;
+	}
+	
+	function search(page, perPageNum){
+		var userId = $('#userId').val();
+		var bigType = $('#bigType').val();
+		var plusMinus = $('#plusMinus').val();
+		var searchStartDate = $('#searchStartDate').val();
+		var searchEndDate = $('#searchEndDate').val();
+		
+		var param = {};
+	    param.userId = userId;
+	    param.bigType = bigType;
+	    param.plusMinus = plusMinus;
+	    param.searchStartDate = searchStartDate;
+	    param.searchEndDate = searchEndDate;
+	    
+	    if(page == null) page = 1; 
+		if(perPageNum == null) perPageNum = PER_PAGE_NUM;
+		
+	    param.page = page;
+	    param.perPageNum = perPageNum;
+	    	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+		$.ajax({
+	        url : "/w1/point/mile_list",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	                 
+	            $.each(results, function(index, item) {
+	            	rows = rows + getRow(item,data.paging);
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+				});	            
+           	             var paging = getPageDiv(data.paging);	      
+	            $('#listBody').append(rows);
+	            
+	            $('#pagination').append(paging);
+	            
+	            //console.log(results); 
+	            //console.log(data.paging);
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });
+		
+	}
+	
+	function deleteSearch(mileId, page, perPageNum){
+		showConfirm("삭제 하시겠습니까?", function(){
+		var userId = $('#userId').val();
+		var bigType = $('#bigType').val();
+		var plusMinus = $('#plusMinus').val();
+		var searchStartDate = $('#searchStartDate').val();
+		var searchEndDate = $('#searchEndDate').val();
+		
+		var param = {};
+		param.deleteId = mileId;
+	    param.userId = userId;
+	    param.bigType = bigType;
+	    param.plusMinus = plusMinus;
+	    param.searchStartDate = searchStartDate;
+	    param.searchEndDate = searchEndDate;
+	    
+	    if(page == null) page = 1; 
+		if(perPageNum == null) perPageNum = PER_PAGE_NUM;
+		
+	    param.page = page;
+	    param.perPageNum = perPageNum;
+	    	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+		$.ajax({
+	        url : "/w1/point/mile_delete",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	            var paging = getPageDiv(data.paging);	            
+	            $.each(results, function(index, item) {
+	            	rows = rows + getRow(item,data.paging);
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+				});	            
+	            	            
+	            $('#listBody').append(rows);
+	            
+	            $('#pagination').append(paging);
+	            
+	            //console.log(results); 
+	            //console.log(data.paging);
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });
+		});	
+	}
+	
+	function getRow(mileage,paging){
+	 var currPage = paging.page;	
+	  var perPage = paging.displayPageNum;
+		var row = "\n";
+		if(mileage.delYn == 'Y'){
+			row = row + "<tr class='even pointer' > <del>         ";
+		 	row = row + "  <td class=''><a><strike>"+ mileage.seq + "</strike></a></td>";
+       	 	row = row + "  <td class=''><strike>"+ mileage.regDate + "</strike></td>";
+       		row = row + "  <td class=''><strike>"+ mileage.regTime + "</strike></td>";
+       		row = row + "  <td class=''><strike>"+ mileage.mileTypeName + "</strike></td>";
+      	  	row = row + "  <td class='' ><del> 획득 </del></td> ";
+	       	row = row + "  <td class='' ><strike>"+ mileage.mile + "</strike></td>";
+	        row = row + "  <td class=''><strike>"+ mileage.newTotal + "</strike></td>";
+	        row = row + "  </td> ";
+	        row = row + "	</del></tr> ";
+		}else{
+		 if(mileage.plusMinus=="P"){
+			row = row + "<tr class='even pointer' style='color:blue'>                                     ";   
+       			 }else if (mileage.plusMinus == 'M'){
+			row = row + "<tr class='even pointer'style='color:red'>                                     ";   
+       			 }
+		 	 row = row + "  <td class=''><a>"+ mileage.seq + "</a></td> ";
+       		 row = row + "  <td class=''>"+ mileage.regDate + "</td>";
+       		 row = row + "  <td class=''>"+ mileage.regTime + "</td>  ";
+       		 row = row + "  <td class=''>"+ mileage.mileTypeName + "</td>";
+       		 	 if(mileage.plusMinus=="P"){
+     	  			 row = row + "  <td class='' > 획득 </td> ";
+       			 }else if (mileage.plusMinus == 'M'){
+    	  			  row = row + "  <td class='' > 소모 </td> ";
+       			 }else{
+		     	     row = row + "  <td class=''> 데이터 에러</td> ";
+      			 }
+       	 			  row = row + "  <td class='' > - "+ mileage.mile + "</td> ";
+      		 row = row + "  <td class=''>"+ mileage.newTotal + "<a href='#' style='  float: right; margint-right:25px;' onClick='deleteSearch(\"" +mileage.mileId + "\"," + currPage + ", " + perPage + ")'>삭제</a></td>                                      ";
+	         row = row + "  </td> ";
+	         row = row + "</tr> ";
+		}
+		
+		return row;
+	}
+	
+	function getPageDiv(paging){
+	
+	  var pageDiv = "";
+	  if(paging == null) return;
+	  
+	  var previosPage = paging.startPage - 1;
+	  var perPage = paging.displayPageNum;
+	  var nextPage = paging.endPage + 1;
+	  var startPage = paging.startPage;
+	  var endPage = paging.endPage;
+	  var currPage = paging.page;	  
+		  
+   	  pageDiv = pageDiv + "<div class='row'>                                                ";
+      pageDiv = pageDiv + "  <div class='btn-group' role='group'>                           ";
+      
+      if(paging.prev){    	  
+      	pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' onClick='search(" + previosPage + ", " + perPage + ")'>이전</button>  ";
+      }else{
+      	pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' disabled>이전</button>  ";
+      }
+      
+      for( i = startPage ; i <= endPage ; i++ ){
+    	  if(currPage == i){
+    		 pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' disabled>" + i + "</button>";    		  
+    	  }else{    		  
+    	  	pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' onClick='search(" + i + ", " + perPage + ")'>" + i + "</button>   ";
+    	  }
+    	  
+      }
+      
+      if(paging.next){    	  
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search(" + nextPage + ", " + perPage + ")'>다음</button>  ";
+       }else{
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>다음</button>  ";
+       }
+      
+      pageDiv = pageDiv + "  </div>                                                         ";
+      pageDiv = pageDiv + "</div>                                                           ";
+      
+      return pageDiv;
+	}
+	
+	function selectData(){
+		var procType = window.opener.document.getElementById("peerProductProcType").value;
+		
+		if(procType == null){
+			return;
+		}
+		
+		var result = new Array();
+		
+		$('input[type="checkbox"][name="table_records"]').each(function() {
+            if ($(this).is(':checked')) {
+                var val = $(this).val();
+                result.push(val);                
+            }
+        });
+
+		if(procType == "M"){ // 수정일 경우는 1건만 선택 가능함. 
+			if(result.length > 1){
+				alert("수정일 경우, 한건만 선택가능합니다.");
+				return;
+			}
+		}
+		
+		
+	 	window.opener.getProductListPoupReturn(JSON.stringify(result));
+ 		window.close();		
+	}
+	
+
+</script>
+
+ <div class="x_content"> 
+   
+   <input type="hidden" id="userId"  />
+   
+     <div class="row">
+	<label class="control-label col-md-1 col-sm-1 ">경로</label>
+	<div class="col-md-4 col-sm-4 " style="width:25%;">
+		<select required class="form-control" name="bigType" id="bigType">
+			<option value="">전체보기</option>    		
+			<option th:each="pointUseGetType : ${T(com.beautyjourney.beautage.entity.enums.PointUseGetType).values()}" 
+			th:value="${pointUseGetType.code}" th:text="${pointUseGetType.val}"></option>
+		</select>	
+	</div>								
+	
+									
+									
+	<label class="control-label col-md-1 col-sm-1 ">획득/소모</label>
+	<div class="col-md-4 col-sm-4 " style="width:25%;">
+	    <select required class="form-control mile-form-control" id="plusMinus">
+	    	<option value="">전체보기</option>
+			<option value="P">획득</option>										
+			<option value="M">소모</option>										
+		</select>									
+	</div>								
+  </div>
+  
+    
+  <div class="row">
+	<label class="control-label col-md-1 col-sm-1 ">조회기간</label>
+	<div class="col-md-4 col-sm-4 ">
+		<input type="date" class="form-control mile-form-control"  id="searchStartDate"  /> 
+	</div>
+	<label class="control-label col-md-1 col-sm-1 ">조회기간 끝</label>
+	<div class="col-md-4 col-sm-4 ">
+		<input type="date" class="form-control mile-form-control" id="searchEndDate"  /> 
+	</div>
+	<div class="col-md-2 col-sm-2 center">
+		<button type="button" class="btn btn-round btn-primary" onClick="search()">조회</button>
+	</div>
+	
+  </div>  
+  
+  
+  <p><h5></h5></p>
+  <span class="section" style="text-align: right;padding-right: 10px;"></span>
+    
+  <div class="table-responsive">
+    <table class="table table-striped jambo_table bulk_action">
+      <thead>
+        <tr class="headings">
+          <th class="column-title">순번 </th>
+          <th class="column-title">날짜</th>
+          <th class="column-title">시간</th>
+          <th class="column-title">경로</th>  
+          <th class="column-title">획득/소모</th>
+          <th class="column-title">마일리지</th>
+          <th class="column-title">이후 총 마일리지</th>
+          <th class="bulk-actions" colspan="11">
+            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+          </th>
+        </tr>
+      </thead>
+
+          <tbody id="listBody" style="line-height: 0.6;">  
+            
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="col-md-2 col-sm-2" style="display: flex;justify-content: center;">
+      
+      </div>
+      <div class="col-md-8 col-sm-8" id="pagination" style="display: flex;justify-content: center;">
+		   <div class="row">
+             <div class="btn-group" role="group">
+               <button type="button" class="btn btn-secondary">이전</button>
+               
+               <button type="button" class="btn btn-secondary">1</button>
+               <button type="button" class="btn btn-secondary">2</button>
+               <button type="button" class="btn btn-secondary">3</button>
+               
+               <button type="button" class="btn btn-secondary">다음</button>
+             </div>
+           </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+
+      
+</th:block>
+</html>

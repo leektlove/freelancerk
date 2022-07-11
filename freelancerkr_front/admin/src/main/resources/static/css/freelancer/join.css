@@ -1,0 +1,14 @@
+#key_add_pop .key_btn{
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    width: 100%;
+    text-align:center;
+}
+#key_add_pop .key_btn .key_add_btn{
+    min-width: 200px;
+    position: relative;
+    bottom: 40px;
+    width: 100%;
+    max-width: 500px;
+}

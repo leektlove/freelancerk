@@ -1,0 +1,53 @@
+.mypage_form_left { text-align: right; }
+.mypage_form_left, .mypage_form_right .mobile { font-size: 20px; font-weight: normal; }
+.mypage_form_center, .center { display: table-cell; vertical-align: top; width: 63px; padding-top: 7px; text-align: center; flex: none; }
+.mypage_form_center { background: url("/images/c_icon_line_short.png") repeat; }
+.mypage_form_right p { font-size: 12px; color: #999; padding-bottom: 2px; }
+.mypage_form_left .required, .mypage_form_left .important, .mypage_form_right .required, .mypage_form_right .important { color: #FE4C6E; }
+/* .mypage_form_left .mobile { padding-left: 0px; } */
+.mypage_form_right .detail_info .float-left { padding: 8px 20px 2px 20px; background-color: #626262; color: #FFFFFF; }
+.mypage_form_right .detail_info label { width: 52px; text-align: center; }
+.mypage_form_right .detail_info input { width: 69.5%; }
+.mypage_form_right .form-control { font-size: .8rem; }
+.mypage_form_right .guide>p { color: #707070; font-weight: 400; }
+.mypage_form_right .title { font-size: 16px; }
+.btn_container_left { width: 63px; max-width: 63px; }
+.btn_container div:first-child { padding-left: 5px; padding-right: 5px; }
+.btn_container div:nth-child(2) { padding-left: 5px; padding-right: 5px; }
+
+/* Mobile Device */
+@media screen and (min-width: 768px) {
+    .mobile { display: none;}
+    .desktop { display: block; }
+}
+
+@media all and (max-width: 767px) {
+    .desktop { display: none; }
+    .mobile { display: block; }
+
+    /* .container_inner {padding: 10px;} */
+    .contest_post { padding:0; }
+    .table th, .table td {min-width: 140px;}
+    .table td
+    .mypage_form_left, .mypage_form_right { text-align: left; }
+    #foptpost .title { margin-top: 0px; }
+    .mypage_form_left, .mypage_form_right { text-align: left; }
+    .container_inner {padding: 0; padding-top: 7px;}
+    .table th, .table td {min-width: 140px;}
+    .table td:first-child {min-width:150px;}
+    .mobile{padding-left: 0; padding-right: 0;}
+    .mypage_form_right{padding-left: 0;}
+    .mypage_form_center{width: 62px;}
+    .pack th, .pack td {display: block; border: none;}
+    .pack td:nth-child(2) { float: left; }
+    .pack td:last-child { float: right; }
+}
+
+@media screen and (max-width: 450px) {
+    .table th, .table td { min-width: auto; }
+}
+
+@media screen and (max-width: 450px) {
+    .contest_post { padding:0; }
+    .mypage_form_center {background: url("/images/c_icon_line_short_2.png") repeat; width: 53px;}
+}

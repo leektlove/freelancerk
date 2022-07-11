@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+ var PER_PAGE_NUM = 14;
+	document.addEventListener("DOMContentLoaded", function(){
+   		$('#listBody').empty();
+	    $('#pagination').empty();
+    	/*<![CDATA[*/
+		var page = "[[${condition.page}]]";
+		var perPageNum = PER_PAGE_NUM;
+		/*]]>*/
+	   search(page, perPageNum);
+	   search2(page, perPageNum);
+	});    
+
+</script>
+
+
+<script th:inline="javascript">
+var resourceList = null;
+var pointType = null;
+var baseProductImgList = null; 
+
+/*<![CDATA[*/
+    pointType = /*[[${pointView.pointType}]]*/ "";
+    //console.log(content);
+/*]]>*/
+
+
+</script>
+
+
+
+<script>
+function savePointType(){
+	//var activeChk = $("#activeChk").attr('checked') ? 'Y' : 'N';
+	
+	setActive('activeChk', 'active');	
+	
+	form1.submit();
+}
+
+function editPointType(){	
+		
+	showModal("수정 하시겠습니까?", true, function(){
+		form1.action = "/w1/point/save_point_type";
+		form1.submit();
+	}); 
+		
+}
+
+function deletePointType(){	
+	showModal("삭제 하시겠습니까?", true, function(){
+		form1.action = "/w1/point/delete_point_type";
+		form1.submit();
+	});
+}
+
+function goList(){
+	location.href="/w1/point/go_list";		
+}
+
+
+	function search(page, perPageNum){
+	   
+		/*<![CDATA[*/
+			var systemType = "[[${pointView.pointType.systemType}]]";
+			var plusMinus =  "[[${pointView.pointType.plusMinus}]]";
+		/*]]>*/	
+		
+		var param = {};
+	    param.systemType = systemType;
+	    param.plusMinus = plusMinus;
+	    
+	    if(page == null) page = 1; 
+		if(perPageNum == null) perPageNum = PER_PAGE_NUM;
+		
+	    param.page = page;
+	    param.perPageNum = perPageNum;
+	    	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+		$.ajax({
+	        url : "/w1/point/mile_list",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	                 
+	            $.each(results, function(index, item) {
+	            	rows = rows + getRow(item,data.paging);
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+				});	            
+         	     var paging = getPageDiv(data.paging);	      
+	            $('#listBody').append(rows);
+	            
+	            $('#pagination').append(paging);
+	            
+	            //console.log(results); 
+	            //console.log(data.paging);
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });
+		
+	}
+	function deleteSearch(mileId, page, perPageNum){
+		showConfirm("삭제 하시겠습니까?", function(){
+		/*<![CDATA[*/
+		var systemType = "[[${pointView.pointType.systemType}]]";
+		var plusMinus =  "[[${pointView.pointType.plusMinus}]]";
+		/*]]>*/
+		
+		var param = {};
+		param.deleteId=mileId;
+	    param.systemType = systemType;
+	    param.plusMinus = plusMinus;
+	    
+	    if(page == null) page = 1; 
+		if(perPageNum == null) perPageNum = PER_PAGE_NUM;
+		
+	    param.page = page;
+	    param.perPageNum = perPageNum;
+	    	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+		$.ajax({
+	        url : "/w1/point/mile_delete",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	            var paging = getPageDiv(data.paging);	            
+	            $.each(results, function(index, item) {
+	            	rows = rows + getRow(item,data.paging);
+				});	            
+	            	            
+	            $('#listBody').append(rows);
+	            
+	            $('#pagination').append(paging);
+	            
+	            //console.log(results); 
+	            //console.log(data.paging);
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });
+		});	
+	}
+	
+	function getRow(mileage,paging){
+	 var currPage = paging.page;	
+	  var perPage = paging.displayPageNum;
+		var row = "\n";
+		if(mileage.delYn == 'Y'){
+			row = row + "<tr class='even pointer' > <del>         ";
+		 	row = row + "  <td class=''><a><strike>"+ mileage.seq + "</strike></a></td>";
+       	 	row = row + "  <td class=''><strike>"+ mileage.regDate + "</strike></td>";
+       		row = row + "  <td class=''><strike>"+ mileage.regTime + "</strike></td>";
+       		row = row + "  <td class=''><strike>"+ mileage.userId + "</strike></td>";
+       		row = row + "  <td class=''><strike>"+ mileage.userName + "</strike></td>";
+       		 if(mileage.plusMinus=="P"){
+      	  		row = row + "  <td class='' ><del> 획득 </del></td> ";
+       		}
+       		else  if(mileage.plusMinus=="M"){
+      	  	row = row + "  <td class='' ><del> 소모 </del></td> ";
+       		}
+	       	row = row + "  <td class='' ><strike>"+ mileage.mile + "</strike></td>";
+	        row = row + "  <td class=''><strike>"+ mileage.newTotal + "</strike></td>";
+	        row = row + "  </td> ";
+	        row = row + "	</del></tr> ";
+		}else{
+ 		if(mileage.plusMinus=="P"){
+			row = row + "<tr class='even pointer' style='color:blue'>                                     ";   
+		 }else if (mileage.plusMinus == 'M'){
+			row = row + "<tr class='even pointer'style='color:red'>                                     ";   
+       			 }
+		 	 row = row + "  <td class=''><a>"+ mileage.seq + "</a></td> ";
+       		 row = row + "  <td class=''>"+ mileage.regDate + "</td>";
+       		 row = row + "  <td class=''>"+ mileage.regTime + "</td>  ";
+       		 row = row + "  <td class=''>"+ mileage.userId + "</td>  ";
+       		 row = row + "  <td class=''>"+ mileage.userName + "</td>  ";
+       		 	 if(mileage.plusMinus=="P"){
+     	  			 row = row + "  <td class='' > 획득 </td> ";
+       			 }else if (mileage.plusMinus == 'M'){
+    	  			  row = row + "  <td class='' > 소모 </td> ";
+       			 }else{
+		     	     row = row + "  <td class=''> 데이터 에러</td> ";
+      			 }
+       	 			  row = row + "  <td class='' >"+ mileage.mile + "</td> ";
+      		 row = row + "  <td class=''>"+ mileage.newTotal + "<a href='#' style='  float: right; margint-right:25px;' onClick='deleteSearch(\"" +mileage.mileId + "\"," + currPage + ", " + perPage + ")'>삭제</a></td>                                      ";
+	         row = row + "  </td> ";
+	         row = row + "</tr> ";
+		}
+		
+		return row;
+	}
+	
+	
+	
+	function search2(page, perPageNum){
+		/*<![CDATA[*/
+		var systemType = "[[${pointView.pointType.systemType}]]";
+		var plusMinus =  "[[${pointView.pointType.plusMinus}]]";
+		/*]]>*/
+		
+		var param = {};
+	    param.systemType = systemType;
+	    param.plusMinus = plusMinus;
+	    
+	    if(page == null) page = 1; 
+		if(perPageNum == null) perPageNum = PER_PAGE_NUM;
+		
+	    param.page = page;
+	    param.perPageNum = perPageNum;
+	    	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody2').empty();
+	    $('#pagination2').empty();
+		$.ajax({
+	        url : "/w1/point/exp_list",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	            $.each(results, function(index, item) {
+	            	rows = rows + getRow2(item,data.paging);
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+				});	            
+	            	            
+	            $('#listBody2').append(rows);
+	            
+	            var paging = getPageDiv2(data.paging);	            
+	            $('#pagination2').append(paging);
+	            
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });
+		
+	}
+	
+	function deleteSearch2(expId,page, perPageNum){
+		showConfirm("삭제 하시겠습니까?", function(){
+		/*<![CDATA[*/
+		var systemType = "[[${pointView.pointType.systemType}]]";
+		var plusMinus =  "[[${pointView.pointType.plusMinus}]]";
+		/*]]>*/
+		
+		var param = {};
+		param.deleteId = expId;
+	    param.systemType = systemType;
+	    param.plusMinus = plusMinus;
+	    
+	    if(page == null) page = 1; 
+		if(perPageNum == null) perPageNum = PER_PAGE_NUM;
+		
+	    param.page = page;
+	    param.perPageNum = perPageNum;
+	    	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody2').empty();
+	    $('#pagination2').empty();
+		$.ajax({
+	        url : "/w1/point/exp_delete",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	            $.each(results, function(index, item) {
+	            	rows = rows + getRow2(item,data.paging);
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+				});	            
+	            	            
+	            $('#listBody2').append(rows);
+	            
+	            var paging = getPageDiv2(data.paging);	            
+	            $('#pagination2').append(paging);
+	            
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });
+	    });
+		
+	}
+	
+	function getRow2(exp,paging){
+	 var currPage = paging.page;	
+	  var perPage = paging.displayPageNum;
+		var row = "\n";
+		if(exp.delYn == 'Y'){
+			row = row + "<tr class='even pointer' >        ";
+		 	row = row + "  <td class=''><a><strike>"+ exp.seq + "</strike></a></td>";
+       	 	row = row + "  <td class=''><strike>"+ exp.regDate + "</strike></td>";
+       		row = row + "  <td class=''><strike>"+ exp.regTime + "</strike></td>";
+       		row = row + "  <td class=''><strike>"+ exp.userId + "</strike></td>";
+       		row = row + "  <td class=''><strike>"+ exp.userName + "</strike></td>";
+       		if(exp.plusMinus=="P"){
+      	  	row = row + "  <td class='' ><strike> 획득 </strike></td> ";
+       		}else if (exp.plusMinus=="M"){
+      	  	row = row + "  <td class='' ><del> 소모</del></td> ";
+			}
+	       	row = row + "  <td class='' ><strike>"+ exp.exp + "</strike></td>";
+	        row = row + "  <td class=''><strike>"+ exp.newTotal + "</strike></td>";
+	        row = row + "  </td> ";
+	        row = row + "</tr> ";
+		}else{
+		 	if(exp.plusMinus=="P"){
+			row = row + "<tr class='even pointer' style='color:blue'>                                     ";   
+       		}else if (exp.plusMinus == 'M'){
+			row = row + "<tr class='even pointer'style='color:red'>                                     ";   
+       		}else{
+			row = row + "<tr class='even pointer'style='color:grey'>                                     ";   
+  			 }    			 
+		 	 row = row + "  <td class=''><a>"+ exp.seq + "</a></td> ";
+       		 row = row + "  <td class=''>"+ exp.regDate + "</td>";
+       		 row = row + "  <td class=''>"+ exp.regTime + "</td>  ";
+       		 row = row + "  <td class=''>"+ exp.userId + "</td>  ";
+       		 row = row + "  <td class=''>"+ exp.userName + "</td>";
+       		 if(exp.plusMinus=="P"){
+     	  			 row = row + "  <td class='' > 획득 </td> ";
+       		}else if (exp.plusMinus == 'M'){
+    	  			  row = row + "  <td class='' > 소모 </td> ";
+       		}else{
+		     	     row = row + "  <td class=''> 데이터 에러</td> ";
+      		}
+       	 	row = row + "  <td class='' > "+ exp.exp + "</td> ";
+      		 row = row + "  <td class=''>"+ exp.newTotal + "<a href='#' style='  float: right; margint-right:25px;' onClick='deleteSearch2(\"" +exp.expId + "\"," + currPage + ", " + perPage + ")'>삭제</a></td>                                      ";
+	         row = row + "  </td> ";
+	         row = row + "</tr> ";
+		}
+		
+		return row;
+	}
+
+		
+	function getPageDiv(paging){
+	
+	  var pageDiv = "";
+	  if(paging == null) return;
+	  
+	  var previosPage = paging.startPage - 1;
+	  var perPage = paging.displayPageNum;
+	  var nextPage = paging.endPage + 1;
+	  var startPage = paging.startPage;
+	  var endPage = paging.endPage;
+	  var currPage = paging.page;	  
+		  
+   	  pageDiv = pageDiv + "<div class='row'>                                                ";
+      pageDiv = pageDiv + "  <div class='btn-group' role='group'>                           ";
+      
+      if(paging.prev){    	  
+      	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search(" + previosPage + ", " + perPage + ")'>이전</button>  ";
+      }else{
+      	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>이전</button>  ";
+      }
+      
+      for( i = startPage ; i <= endPage ; i++ ){
+    	  if(currPage == i){
+    		 pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' disabled>" + i + "</button>";    		  
+    	  }else{    		  
+    	  	pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' onClick='search(" + i + ", " + perPage + ")'>" + i + "</button>   ";
+    	  }
+    	  
+      }
+      
+      if(paging.next){    	  
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search(" + nextPage + ", " + perPage + ")'>다음</button>  ";
+       }else{
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>다음</button>  ";
+       }
+      
+      
+      pageDiv = pageDiv + "  </div>                                                         ";
+      pageDiv = pageDiv + "</div>                                                           ";
+      
+      return pageDiv;
+	}
+	function getPageDiv2(paging){
+	
+	  var pageDiv = "";
+	  if(paging == null) return;
+	  
+	  var previosPage = paging.startPage - 1;
+	  var perPage = paging.displayPageNum;
+	  var nextPage = paging.endPage + 1;
+	  var startPage = paging.startPage;
+	  var endPage = paging.endPage;
+	  var currPage = paging.page;	  
+		  
+   	  pageDiv = pageDiv + "<div class='row'>                                                ";
+      pageDiv = pageDiv + "  <div class='btn-group' role='group'>                           ";
+      
+      if(paging.prev){    	  
+      	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search2(" + previosPage + ", " + perPage + ")'>이전</button>  ";
+      }else{
+      	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>이전</button>  ";
+      }
+      
+      for( i = startPage ; i <= endPage ; i++ ){
+    	  if(currPage == i){
+    		 pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' disabled>" + i + "</button>";    		  
+    	  }else{    		  
+    	  	pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' onClick='search2(" + i + ", " + perPage + ")'>" + i + "</button>   ";
+    	  }
+    	  
+      }
+      
+      if(paging.next){    	  
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search2(" + nextPage + ", " + perPage + ")'>다음</button>  ";
+       }else{
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>다음</button>  ";
+       }
+      
+      
+      pageDiv = pageDiv + "  </div>                                                         ";
+      pageDiv = pageDiv + "</div>                                                           ";
+      
+      return pageDiv;
+	}	
+</script>
+
+	<div class="">
+		<div class="row">		
+		
+			<div class="col-md-12 col-sm-12">
+				<div class="x_panel">
+					
+					<div class="x_title">
+						<h2>
+							PointType 상세
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>				
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="x_content">
+						<form class="form-horizontal form-label-left" th:object=${pointView.pointType} th:action="@{/w1/point/save}" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
+							<input type="hidden" id="seq" 		  name="seq"			 th:field="*{seq}" />
+							<input type="hidden" id="pointTypeId"   name="pointTypeId" 	 th:field="*{pointTypeId}" />																	
+										   
+							<span class="section">포인트 타입 Info : <span th:text="*{seq}"></span></span>														
+							<div class="form-group row ">
+								<label class="control-label col-md-2 col-sm-2 ">타입: </label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text"  class="form-control" placeholder="타입명" id="typeName" name="typeName" th:field="*{typeName}" />
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">획득/소모: </label>
+								<div class="col-md-4 col-sm-4 ">
+									<select required class="form-control" id="plusMinus" th:field="*{plusMinus}" />
+										<option value="P" th:selected="*{plusMinus}=='P'">획득</option>
+										<option value="M" th:selected="*{plusMinus}=='M'">소모</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="form-group row ">
+								<label class="control-label col-md-2 col-sm-2 ">해당 마일리지: </label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="number"   class="form-control" id="mileage" name="mileage" th:field="*{mileage}" />
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">해당 경험치: </label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="number" class="form-control" id="exp" name ="exp" th:field="*{exp}" />
+								</div>
+								
+							</div>
+							<div class="form-group row ">
+								<label class="control-label col-md-2 col-sm-2 ">bigType: </label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" readonly   class="form-control" id="bigType" name="bigType" 		th:field="*{bigType}"/>							
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">systemType: </label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" readonly   class="form-control" id="systemType" name="systemType" 	th:field="*{systemType}" />
+								</div>
+								
+							</div>
+
+							</form>
+		                      
+		                    </div>
+		                    <!-- end of accordion -->
+		                    
+											
+							<div class="control-group row ">								
+								<div class="col-md-12 col-sm-12  justify-content-end" style="display: flex;">
+		                  			
+		                  			<a class="btn btn-app"  onClick="goList()">		                    			
+		                    			<i class="fa fa-list"></i> List
+		                  			</a>	
+		                  			
+		                  			<a class="btn btn-app" onClick="editPointType()">		                    			
+		                    			<i class="fa fa-edit"></i> Edit
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app" onClick="alert('삭제하면 안돼용')">		                    			
+		                    			<i class="fa fa-remove"></i> Delete
+		                  			</a>
+		                  			
+								</div>
+							</div>						
+					</div>
+						<!-- 마일리지 관련 박스 -->
+					<div class="x_panel" style="width:50%; float:left;">
+					<div class="table-responsive" >
+					    <table class="table table-striped jambo_table bulk_action">
+					      <thead>
+					        <tr class="headings">
+					          <th class="column-title">순번 </th>
+					          <th class="column-title">날짜</th>
+					          <th class="column-title">시간</th>
+					          <th class="column-title">유저 고유 ID</th>  
+					          <th class="column-title">유저 이름</th>  
+					          <th class="column-title">획득/소모</th>
+					          <th class="column-title">마일리지</th>
+					          <th class="column-title">총 마일리지</th>
+					          <th class="bulk-actions" colspan="11">
+					            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+					          </th>
+					        </tr>
+					      </thead>
+					      
+					  		<tbody id="listBody" style="line-height: 0.6;">   
+					            
+					         </tbody>
+					        </table>
+					      </div>
+					      
+					       <div class="col-md-2 col-sm-2" style="display: flex;justify-content: center;">
+     
+					      </div>
+					      <div class="col-md-8 col-sm-8" id="pagination" style="display: flex;justify-content: center;">
+							   <div class="row">
+					             <div class="btn-group" role="group">
+					               <button type="button" class="btn btn-secondary">이전</button>
+					               
+					               <button type="button" class="btn btn-secondary">1</button>
+					               <button type="button" class="btn btn-secondary">2</button>
+					               <button type="button" class="btn btn-secondary">3</button>
+					               
+					               <button type="button" class="btn btn-secondary">다음</button>
+					             </div>
+					           </div>
+					      </div>
+      
+					</div>
+<!-- 					마일관련박스 end -->
+					
+					
+					
+					
+					<div class="x_panel" style="width:50%; float:left;">
+					<div class="table-responsive" >
+					    <table class="table table-striped jambo_table bulk_action">
+					      <thead>
+					        <tr class="headings">
+					          <th class="column-title">순번 </th>
+					          <th class="column-title">날짜</th>
+					          <th class="column-title">시간</th>
+					          <th class="column-title">유저 고유 ID</th>  
+					          <th class="column-title">유저 이름</th>
+					          <th class="column-title">획득/소모</th>
+					          <th class="column-title">경험치</th>
+					          <th class="column-title">총 경험치</th>
+					          <th class="bulk-actions" colspan="11">
+					            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+					          </th>
+					        </tr>
+					      </thead>
+					          <tbody id="listBody2" style="line-height: 0.6;">   
+					            
+					          </tbody>
+					        </table>
+					      </div>
+					    	       <div class="col-md-2 col-sm-2" style="display: flex;justify-content: center;">
+     
+					      </div>
+					      <div class="col-md-8 col-sm-8" id="pagination2" style="display: flex;justify-content: center;">
+							   <div class="row">
+					             <div class="btn-group" role="group">
+					               <button type="button" class="btn btn-secondary">이전</button>
+					               
+					               <button type="button" class="btn btn-secondary">1</button>
+					               <button type="button" class="btn btn-secondary">2</button>
+					               <button type="button" class="btn btn-secondary">3</button>
+					               
+					               <button type="button" class="btn btn-secondary">다음</button>
+					             </div>
+					           </div>
+					      </div>
+					</div>
+					
+				</div>
+			</div>
+			
+				<!-- -----------------  -->
+		</div>
+	
+</th:block>
+
+    
+</html>

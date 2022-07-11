@@ -1,0 +1,7 @@
+/.metadata/
+*/out/*
+*/build/*
+*/.idea/*
+*/.gradle/*
+*.iml
+/.recommenders/

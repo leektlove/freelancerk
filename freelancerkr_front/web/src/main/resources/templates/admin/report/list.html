@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+ var PER_PAGE_NUM = 16;
+	document.addEventListener("DOMContentLoaded", function(){
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+		/*<![CDATA[*/
+		var reportType = "[[${condition.reportType}]]";
+		
+		var page = "[[${condition.page}]]";
+		var perPageNum = "[[${condition.perPageNum}]]";
+		
+	    //console.log(page + " : " + perPageNum);
+	    
+		/*]]>*/
+		
+		
+		$('#reportType').val(reportType);
+		
+		search(page, perPageNum);
+		
+	});    
+	
+	function goDetail(reportId){
+		location.href="/w1/report/detail/"+reportId+"?reset=Y";
+	}
+	function goContentDetail(contentId){
+		location.href="/w1/content/detail/"+contentId+"?reset=Y";
+	}
+	function setReportStatus(reportId,status){
+		alert(this);
+		var param = {};
+		param.reportId = reportId;
+		param.status = status;
+		param = JSON.stringify(param);
+		$.ajax({
+	        url : "/w1/report/set_status",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            
+	        },
+	        error : function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			//console.log(e);
+	        }
+	    });
+		
+	}
+	
+	function search(page, perPageNum){
+		
+		var seq = $('#seq').val();
+		var reportType = $('#reportType').val();
+		var status = $('#reportStatus').val();
+		var userId = $('#userId').val();
+		
+		var param = {};
+	    param.userId = userId;
+	    param.reportType = reportType;
+	    param.status = status;
+	    param.seq = seq;
+	    
+	    if(page == null) page = 1; 
+		if(perPageNum == null) perPageNum = 10;
+		
+	    param.page = page;
+	    param.perPageNum = perPageNum;
+	    	    
+	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+		$.ajax({
+	        url : "/w1/report/list",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	            $.each(results, function(index, item) {
+	            	console.log(item);
+	            	rows = rows + getRow(item);
+				});	            
+	            	            
+	            $('#listBody').append(rows);
+	            var paging = getPageDiv(data.paging);	            
+	            $('#pagination').append(paging);
+	            
+	        },
+	        error : function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			//console.log(e);
+	        }
+	    });
+		
+	}
+	
+	function getRow(report){
+		var row = "\n";
+		row = row + "<tr class='even pointer'>                                     ";   
+        row = row + "  <td class='a-center '>                                      ";
+        row = row + "    <input type='checkbox' class='flat' name='table_records' value='" + report.reportId + "'> ";
+        row = row + "  </td>                                                       ";
+        row = row + "  <td class=''><a href='#' onClick='goDetail(\"" + report.reportId + "\")'>"+ report.seq + "</a></td>         ";
+        
+        row = row + "<td class='' style='vertical-align: middle;'></td>";
+        
+        row = row + "  <td class=''>"+ report.reportTypeName + "</td>                                     ";
+        row = row + "  <td class=''>"+ report.statusName + "</td>                         ";
+        row = row + "  <td class=''>"+ report.userName + "</td>                                     ";
+        row = row + "  <td class=''><a href='#' onClick='goContentDetail(\"" + report.contentId  + "\")'>"+  report.contentId  + "</a></td>         ";
+        row = row + "  <td class=''>"+ report.regDate + "</td>                                     ";
+        row = row + "  <td class=''>"+ report.regTime + "</td>                                     ";
+        row = row + "  <td class=''> <a href='#' onClick='setReportStatus(\"" + report.reportId  + "\")'> 철회 </a></td>                                     ";
+        row = row + "  <td class=''> <a href='#' onClick='setReportStatus(\"" + report.reportId  + "\")'> 완료 </a></td>                                     ";
+        
+        row = row + "  </td>                                                       ";
+        row = row + "</tr>                                                         ";
+		
+		return row;
+	}
+	
+	function getPageDiv(paging){
+	
+	  var pageDiv = "";
+	  if(paging == null) return;
+	  
+	  var previosPage = paging.startPage - 1;
+	  var perPage = paging.displayPageNum;
+	  var nextPage = paging.endPage + 1;
+	  var startPage = paging.startPage;
+	  var endPage = paging.endPage;
+	  var currPage = paging.page;	  
+		  
+   	  pageDiv = pageDiv + "<div class='row'>                                                ";
+      pageDiv = pageDiv + "  <div class='btn-group' role='group'>                           ";
+      
+      if(paging.prev){    	  
+      	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search(" + previosPage + ", " + perPage + ")'>이전</button>  ";
+      }else{
+      	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>이전</button>  ";
+      }
+      
+      for( i = startPage ; i <= endPage ; i++ ){
+    	  if(currPage == i){
+    		 pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' disabled>" + i + "</button>";    		  
+    	  }else{    		  
+    	  	pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' onClick='search(" + i + ", " + perPage + ")'>" + i + "</button>   ";
+    	  }
+      }
+      
+      if(paging.next){    	  
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search(" + nextPage + ", " + perPage + ")'>다음</button>  ";
+       }else{
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>다음</button>  ";
+       }
+      
+      pageDiv = pageDiv + "  </div>                                                         ";
+      pageDiv = pageDiv + "</div>                                                           ";
+      
+      return pageDiv;
+	}
+	
+</script>
+
+ <div class="x_content"> 
+   <input type="hidden" id ="pointTypeId">
+   <input type="hidden" id ="searchUserid">
+       
+
+		
+  <div class="row">
+	<label class="control-label col-md-1 col-sm-1 ">신고타입</label>
+	
+	<div class="col-md-4 col-sm-4 ">
+		<select required class="form-control" name="reportType" id="reportType">
+    		<option value="">선택하세요</option>
+    		<option th:each="reportType : ${T(com.beautyjourney.beautage.entity.enums.ReportType).values()}"    		 
+        		th:value="${reportType.code}" th:text="${reportType.val}"></option>
+		</select>
+	</div>
+		<label class="control-label col-md-1 col-sm-1 ">순번:</label> 
+		<input type="number" name="seq" id="seq" style="height: 35px">
+  </div>  
+  <div style="margin-top:5px"></div>
+  <div class="row">
+	<label class="control-label col-md-1 col-sm-1 ">신고 상태</label>
+	<div class="col-md-4 col-sm-4 ">
+		<select required class="form-control" name="reportStatus" id="reportStatus">
+    		<option value="">선택하세요</option>
+    		<option th:each="reportStatus: ${T(com.beautyjourney.beautage.entity.enums.ReportStatus).values()}"    		 
+        		th:value="${reportStatus.code}" th:text="${reportStatus.val}"></option>
+		</select>
+	</div>
+	
+	<div class="col-md-1 col-sm-1 center" style="margin-left:20px">
+		<button type="button" class="btn btn-round btn-primary" onClick="search()">조회</button>
+	</div>
+	
+  </div>  
+  
+  <p><h5></h5></p>
+  <span class="section" style="text-align: right;padding-right: 10px;"></span>
+    
+  <div class="table-responsive">
+    <table class="table table-striped jambo_table bulk_action">
+      <thead>
+        <tr class="headings">
+          <th>
+            <input type="checkbox" id="check-all" class="flat">
+          </th>
+          <th class="column-title">순번 </th>
+          <th class="column-title">  </th>  
+          <th class="column-title">신고타입</th>  
+          <th class="column-title">신고상태</th>
+          <th class="column-title">닉네임</th>
+          <th class="column-title">신고한 컨텐츠</th>
+          <th class="column-title">신고 날짜</th>          
+          <th class="column-title">신고 시간</th>
+          <th class="column-title"></th>
+          <th class="column-title"></th>
+          <th class="column-title"></th> 
+          <th class="bulk-actions" colspan="11">
+            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+          </th>
+        </tr>
+      </thead>
+
+          <tbody id="listBody" style="line-height: 0.6;">           
+
+<!--
+            <tr class="odd pointer">
+              <td class="a-center ">
+                <input type="checkbox" class="flat" name="table_records">
+              </td>
+              <td class=" "><a href="#">100</a></td>
+              <td class=" ">Feed</td>
+              <td class=" ">홍길동</td>
+              <td class=" ">제목</td>
+              <td class=" ">공개유형</td>
+              <td class="">댓글여부</td>
+              <td class="">활성화</td>
+              <td class="">상태</td>
+              <td class="">10</td>
+              <td class="">1</td>
+              <td class="last">0</td>              
+              </td>
+            </tr>
+-->       
+            
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12 col-sm-12" id="pagination" style="display: flex;justify-content: center;">
+		   <div class="row">
+             <div class="btn-group" role="group">
+               <button type="button" class="btn btn-secondary">이전</button>
+               
+               <button type="button" class="btn btn-secondary">1</button>
+               <button type="button" class="btn btn-secondary">2</button>
+               <button type="button" class="btn btn-secondary">3</button>
+               
+               <button type="button" class="btn btn-secondary">다음</button>
+             </div>
+           </div>
+      </div>     
+<!--       
+      	     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+				
+				<ul class="pagination" style="DISPLAY: flex;JUSTIFY-CONTENT: center;">
+					
+					<li th:if="${pageMaker.prev} == true" class="paginate_button page-item previous" id="dataTable_previous">						
+						<a href="#" th:attr="onclick=|javascript:goList(${pageMaker.startPage}-1, ${pageMaker.searchInfo.perPageNum})|" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+					</li>
+					
+					<li th:if="${pageMaker.prev} == false" class="paginate_button page-item previous disabled" id="dataTable_previous">
+						<a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+					</li>
+					
+					<li th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}" class="paginate_button page-item" th:classappend="${pageMaker.searchInfo.page} == ${idx} ? active : null">
+						<a href="#" th:attr="onclick=|javascript:goList(${idx}, ${pageMaker.searchInfo.perPageNum})|" aria-controls="dataTable" tabindex="0" class="page-link" th:text="${idx}"></a>						
+					</li>
+					
+					<li th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}" class="paginate_button page-item next" id="dataTable_next">
+						<a href="#" th:attr="onclick=|javascript:goList(${pageMaker.endPage}+1, ${pageMaker.searchInfo.perPageNum})|" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+					</li>
+					
+					<li th:if="${pageMaker.next} == false or ${pageMaker.endPage <= 0}" class="paginate_button page-item next disabled" id="dataTable_next">
+						<a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+					</li>					
+				</ul>				
+			 </div>
+ -->      
+      
+    </div>
+  </div>
+</div>
+
+      
+</th:block>
+</html>

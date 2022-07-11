@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/cash.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/transactionHeader"></th:block>
+			</div>
+			<div id="container_content">	
+				<div class="container_inner">
+					<h1>■ 에스크로 등록 가능 프로젝트 검색</h1>
+					<form id="form" name="/transaction/depositList" method="get">
+
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody><tr>
+								<th>입금일</th>
+								<td>
+									<input type="text" name="depositAtFrom" th:value="${#request.getParameter('depositAtFrom')}" size="20" readonly="" class="readonly search_date datepicker" >
+									 ~ 
+									<input type="text" name="depositAtTo" th:value="${#request.getParameter('depositAtTo')}" size="20" readonly="" class="readonly search_date datepicker">
+									<span class="btn-black medium" onclick="today()">오늘</span>
+									<span class="btn-black medium" onclick="thisWeek()">이번주</span>
+									<span class="btn-black medium" onclick="thisMonth()">이번달</span>
+								</td>
+							</tr>
+							<tr>
+								<th>키워드</th>
+								<td>
+									<input type="text" name="keyword" th:value="${#request.getParameter('keyword')}" size="50" placeholder="회사명, 닉네임, 계좌명을 입력해주세요.">
+								</td>
+							</tr>
+						</tbody></table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<button type="button" onclick="search()" value="검색" class="btn-color large">검색</button>
+								<a href="javascript:resetSearch()" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+
+					<div class="Hspace"></div>
+
+					<h1>■ <span th:text="${#numbers.formatInteger(page.totalElements, 0, 'COMMA')}"></span>건의 입금이 검색되었습니다.</h1>
+
+					<table class="boardlist">
+						<tbody>
+							<tr>
+								<th rowspan="2">프로젝트번호</th>
+								<th rowspan="2">프로젝트명(번호)</th>
+								<th colspan="3">클라이언트정보</th>
+								<th colspan="3">누적입금</th>
+								<th rowspan="2">진행중인프로젝트<br>총 낙찰금액</th>
+								<th rowspan="2">프로젝트상태</th>
+								<th rowspan="2">입금</th>
+							</tr>
+							<tr>
+								<th>회사명</th>
+								<th>닉네임/이름</th>
+								<th>계좌명</th>
+								<th>총입금액</th>
+								<th>공급가액</th>
+								<th>부가가치세</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td th:text="${#numbers.formatInteger(item.id, '0', 'COMMA')}">
+									53
+								</td>
+								<td>
+									<span th:text="${item.title}"></span>
+								</td>
+								<td th:text="${item.postingClient.name}">
+								</td>
+								<td th:text="${item.postingClient.nickname}">
+									키즈웰 마케팅팀/박지인
+								</td>
+								<td th:text="${item.postingClient.bankForReceivingPayment?.name}">
+									신한은행
+								</td>
+								<td class="tr" th:text="${#numbers.formatInteger(item.totalEscrowAmount, 0, 'COMMA')}">110,000</td>
+								<td class="tr" th:text="${#numbers.formatInteger(item.totalEscrowSupplyAmount, 0, 'COMMA')}">100,000</td>
+								<td class="tr" th:text="${#numbers.formatInteger(item.totalEscrowVatAmount, 0, 'COMMA')}">10,000</td>
+								<td th:text="${#numbers.formatInteger(item.successBidPrice, 0, 'COMMA')}">100,000</td>
+								<td th:text="${item.status.desc}"></td>
+								<td>
+									<button type="button" class="btn-black medium" th:onclick="|javascript:location.href='/transaction/projects/${item.id}/deposit/form'|">입금처리</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tl">
+							<a href="#" class="btn-color large" id="excel_down">엑셀</a>
+						</div>
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/transaction/depositList?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+						<div class="tr">
+							<a href="/transaction/projects/deposit/form" class="btn-color large">등록</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+			});
+			function today() {
+				$('input[name=depositAtFrom]').val(moment().format('YYYY-MM-DD'));
+				$('input[name=depositAtTo]').val(moment().add(1, 'day').format('YYYY-MM-DD'));
+			}
+
+			function thisWeek() {
+				$('input[name=depositAtFrom]').val(moment().startOf('week').format('YYYY-MM-DD'));
+				$('input[name=depositAtTo]').val(moment().add(1, 'week').startOf('week').format('YYYY-MM-DD'));
+			}
+
+			function thisMonth() {
+				$('input[name=depositAtFrom]').val(moment().startOf('month').format('YYYY-MM-DD'));
+				$('input[name=depositAtTo]').val(moment().add(1, 'month').startOf('month').format('YYYY-MM-DD'));
+			}
+
+			function resetSearch() {
+				location.href = '/transaction/depositList';
+			}
+
+			function search() {
+				$('#form').submit();
+			}
+		</script>
+	</section>
+	
+</html>

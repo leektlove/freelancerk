@@ -1,0 +1,475 @@
+.mui-selectable-image {
+  position: absolute;
+  width: 100%;
+}
+.mui-selectable-image img{
+  width: 100%;
+}
+.mui-selectable-image input {
+  display: none;
+}
+.mui-selectable-image input ~ .indicator {
+  display: none;
+  font-family: "Font Awesome 5 Free";
+  position: absolute;
+  top: 0rem;
+  right: 1.7rem;
+  border-radius: 50%;
+  background: #007bff;
+  padding: 0.25rem 0.5rem;
+  color: #ffffff;
+  font-size: 1rem;
+  z-index: 10;
+}
+.mui-selectable-image input ~ .indicator:before {
+  content: "\f00c";
+
+}
+.mui-selectable-image input:checked ~ .indicator {
+  display: block;
+}
+
+.mui-selectable-image .indicator-back {
+  font-family: "Font Awesome 5 Free";
+  position: absolute;
+  top: 0rem;
+  right: 1.7rem;
+  border-radius: 50%;
+  background: #ddd;
+  padding: 0.25rem 0.5rem;
+  color: #ffffff;
+  font-size: 1rem;
+  z-index: 5;
+}
+.mui-selectable-image input ~ .indicator-back:before {
+  content: "\f00c";
+
+}
+
+.mui-selectable-image input:checked ~ .indicator-back {
+  display: block;
+}
+.mui-selectable-image .detail{
+  width: 100%;
+}
+.mui-selectable-image .detail .btn{
+  margin-top:-2px;
+  border: 0;
+}
+.mui-selectable-image .input-group .form-control{
+  resize: none;
+  height: 90%;
+  width: 100%;
+  margin-top: 20%;
+}
+.direct_market .mui-selectable-image .thumb-info-slide-info-hover-1{
+  top: 70%;
+  text-align: left;
+}
+/*#show_pickmeup{
+  padding:1rem 2rem;
+}*/
+.input-group .form-control{
+  line-height: 20px!important;
+  /*height:142px;*/
+}
+
+.pickmeup-profile-image img{
+  left:10px;
+}
+
+
+.guide .content{text-align: center;}
+.guide_title{
+    position:relative;
+    margin-top:30px;
+    font-size: 20px;
+    font-weight:700;
+    text-align: center;
+}
+.guide_title:before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: calc(50% - 20px);
+    height: 4px;
+    width: 40px;
+    background-color: black;
+}
+.pickme_guid_1 img,
+.pickme_guid_2 img,
+.pickme_guid_3 img,
+.pickme_guid_4 img{
+  max-width: 175px;
+  margin-top:1rem;
+  margin-bottom:1rem;
+}
+.pickme_guid_1:after{
+    content: '';
+    background:url('/static/images/use-guide/pickme_guid_arow1.png')no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: -24px;
+    top:calc(50% - 14px);
+    width: 55px;
+    height: 27px;
+}
+.pickmeupDaytimes{
+  min-height: 86px;
+}
+
+.guide .content{
+  align-items: center;
+  margin: auto;
+  max-width: 800px;
+  margin-top:0rem;
+  margin-bottom:80px
+}
+span.sns{
+  padding-right: :0.3rem;
+  font-size: 18px;
+  line-height: 18px;
+  color: #ddd;
+}
+.pickMeUp .warn{
+  position: relative;
+  margin-left: 0px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  border: 1px solid #cc3b3b;
+  padding: 10px;
+  text-align: center;
+  color: #cc3b3b;
+  font-size: 13px;
+  font-weight: 700;
+}
+.pickMeUp .warn img{
+  width: 20px;
+  margin-bottom: 10px;
+}
+.pickMeUp .heading.heading-border{
+  margin-bottom: 5px;
+}
+.blog-posts:not(.blog-posts-no-margins) article{
+  margin-bottom:25px;
+}
+.fix_btn {
+  padding-bottom: 3rem;
+  text-align: right;
+}
+.fix_btn .show_pickmeup{
+  color: #fff;
+  border-radius: 0;
+  cursor: pointer;
+  line-height: 35px;
+  background-color: #ffc107;
+}
+.btn_container .pick_freelancer{
+  display: none;
+}
+.btn_container{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.btn_container .left_btn{
+  position: relative;
+  align-self: center;
+}
+.btn_container .left_btn .btn{
+  border: 1px solid #9e9e9e;
+  border-radius: 0;
+  padding: 0.5rem 1.47rem;
+}
+.btn_container .right_btn{
+  position: relative;
+}
+.btn_container .right_btn .text{
+  position: absolute;
+  left: -150px;
+  top: 10px;
+  text-align: right;
+}
+.btn_container .right_btn .text .t{
+  font-size: 12px;
+  line-height: 15px;
+}
+.btn_container .right_btn .text .strong{
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn_container .right_btn .submit{
+  display: inline-block;
+  border-radius: 0;
+  cursor: pointer;
+  line-height: 35px;
+  background-color: #0088cc;
+  color: #fff;
+  padding: 0.4rem 1rem;
+
+}
+.btn_container .pick_freelancer .text .t{
+  font-size: 12px;
+  line-height: 15px;
+}
+.btn_container .pick_freelancer .text .strong{
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom:5px;
+}
+.btn_container .pick_freelancer .submit{
+  display: block;
+  background-color: #0088cc;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  border-radius: 0;
+  cursor: pointer;
+  line-height: 35px;
+  padding: 0.5rem 1.45rem;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+  .arrow{padding:5px 8px;bottom:-15px;right:50%;-ms-transform: rotate(90deg); /* IE 9 */-webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */transform: rotate(90deg);}
+  /*.post.pickmeup_card .pickmeup-profile-image{
+    display: none;
+  }
+  .post.pickmeup_card .pickmeup-profile-image ~ div{
+    width: 100%!important;
+  }*/
+  .mail{
+    width: 260px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+  }
+  .pickme_guid_1 img,
+  .pickme_guid_2 img,
+  .pickme_guid_3 img,
+  .pickme_guid_4 img{
+    max-width: 100px;
+  }
+  .pickme_guid_1:after{
+    top: calc(50% - 9px);
+      width: 45px;
+      height: 18px;
+  }
+  .pickmeupDaytimes{
+    min-height: auto;
+    max-width: 500px;
+  }
+  .guide .content{
+    max-width: 100%;
+  }
+  .btn_container {
+    display: block;
+    text-align: center;
+  }
+  .btn_container .right_btn{
+    display: none;
+  }
+  .blog-posts:not(.blog-posts-no-margins) article {
+      margin-bottom: 50px;
+  }
+  .pickMeUp .warn img{
+    position: absolute;
+    right: 0;
+    top: -21px;
+  }
+  .fix_btn{
+    text-align: center;
+  }
+  .btn_container .pick_freelancer{
+    display: block;
+    max-width: 250px;
+    margin: auto;
+    text-align: right;
+  }
+  .pick_freelancer .submit{
+    padding: 0.4rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+@media (max-width: 425px) { 
+  /*.post.pickmeup_card .pickmeup-profile-image{
+    display: none;
+  }
+  .post.pickmeup_card .pickmeup-profile-image ~ div{
+    width: 100%!important;
+  }*/
+  .mail{
+    width: 200px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+  }
+  .btn_container {
+    display: block;
+    text-align: center;
+  }
+  .btn_container .right_btn{
+    display: none;
+  }
+  .blog-posts:not(.blog-posts-no-margins) article {
+      margin-bottom: 50px;
+  }
+  .pickMeUp .warn img{
+    position: absolute;
+    right: 0;
+    top: -21px;
+  }
+  .fix_btn{
+    text-align: center;
+  }
+  .btn_container .pick_freelancer{
+    display: block;
+    max-width: 250px;
+    margin: auto;
+    text-align: right;
+  }
+  .pick_freelancer .submit{
+    margin-bottom: 0.5rem;
+  }
+}
+@media (max-width: 375px) { 
+  /*.post.pickmeup_card .pickmeup-profile-image{
+    display: none;
+  }
+  .post.pickmeup_card .pickmeup-profile-image ~ div{
+    width: 100%!important;
+  }*/
+  .mail{
+    width: 160px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+  }
+  .btn_container {
+    display: block;
+    text-align: center;
+  }
+  .btn_container .right_btn{
+    display: none;
+  }
+  .blog-posts:not(.blog-posts-no-margins) article {
+      margin-bottom: 50px;
+  }
+  .pickMeUp .warn img{
+    position: absolute;
+    right: 0;
+    top: -21px;
+  }
+  .fix_btn{
+    text-align: center;
+  }
+  .btn_container .pick_freelancer{
+    display: block;
+    max-width: 250px;
+    margin: auto;
+    text-align: right;
+  }
+  .pick_freelancer .submit{
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+  .arrow{padding:5px 8px;bottom:-15px;right:50%;-ms-transform: rotate(90deg); /* IE 9 */-webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */transform: rotate(90deg);}
+  .pickme_guid_1 img,
+  .pickme_guid_2 img,
+  .pickme_guid_3 img,
+  .pickme_guid_4 img{
+    max-width: 130px;
+  }
+  .pickme_guid_1:after{
+    top: calc(50% - 9px);
+      width: 45px;
+      height: 18px;
+  }
+  .pickmeupDaytimes{
+    min-height: auto;
+  }
+  .guide .content{
+    max-width: 100%;
+  }
+  .pickMeUp .warn img{
+    position: absolute;
+    right: 0;
+    top: -21px;
+  }
+  .btn_container {
+    display: block;
+    text-align: center;
+  }
+  .btn_container .right_btn{
+    display: none;
+  }
+  .blog-posts:not(.blog-posts-no-margins) article {
+      margin-bottom: 50px;
+  }
+  .fix_btn{
+    text-align: center;
+  }
+  .btn_container .pick_freelancer{
+    display: block;
+    max-width: 250px;
+    margin: auto;
+    text-align: right;
+  }
+  .pick_freelancer .submit{
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /*.post.pickmeup_card .pickmeup-profile-image{
+    display: none;
+  }
+  .post.pickmeup_card .pickmeup-profile-image ~ div{
+    width: 100%!important;
+  }*/
+  .pickme_guid_1 img,
+  .pickme_guid_2 img,
+  .pickme_guid_3 img,
+  .pickme_guid_4 img{
+    max-width: 130px;
+  } 
+  .pickme_guid_2:after{
+    right:calc(100% - 27px);
+    top:calc(100% - 26px);
+    transform: rotate(0deg);
+  }
+  .pickmeupDaytimes{
+    min-height: 126px;
+  }
+  .guide .content{
+    max-width: 100%;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+  .pickmeupDaytimes{
+    min-height: 128px;
+  }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+  .col-xl-4{
+    max-width: 33.3333333%;
+  }
+  .col-xl-8{
+    max-width: 66.66666667%
+  }
+}
+

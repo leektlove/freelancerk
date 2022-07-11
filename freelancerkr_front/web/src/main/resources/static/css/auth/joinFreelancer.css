@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:700');
+.custom-control-label::before {
+	top: 0.15rem;
+}
+.custom-control-label::after {
+	top: 0.15rem;
+}
+#f_join.contents{
+	width: 100%;
+	max-width: 450px;
+	min-height: 650px;
+	margin: auto;
+	margin-top: 5rem;
+	margin-bottom: 5rem;
+}
+
+/* 상단 영역 */
+.top_area {
+	text-align: center;
+	margin-bottom: 3rem;
+}
+.top_area img{
+	width: 155px;
+}
+.top_area .title {
+	font-size: 45px;
+	color: #b2b2b2;
+	text-transform: uppercase;
+	font-family:'Raleway', sans-serif;
+}
+.top_area .title span {
+	color: #e36159;
+	font-family:'Raleway', sans-serif;
+}
+
+/* 키워드 영역 */
+.keyword_select .title{
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1rem;
+}
+.keyword_select .title .text{
+	font-family: nanumSquare;
+	font-size: 20px;
+	margin-top: 15px;
+    margin-right: 0.5rem;
+}
+.keyword_select .title img{
+	align-self: center;
+	width: 50px;
+	height: 50px;
+}
+.keyword_select .info{
+	display: flex;
+	margin-bottom: 0.5rem;
+}
+.keyword_select .info .icon{
+	align-self: center;
+	margin-right: 0.5rem;
+	color: #e36159;
+}
+.keyword_select .info .text{
+	font-size: 12px;
+}
+.keyword_select .keyword_btn{
+	display: block;
+	border: 1px solid #e46059;
+    color: #e46059;
+    margin-bottom: 2rem;
+}
+.keyword_select .selected-keywords-container{
+	margin-bottom: 3rem;
+}
+.keyword_select .btn_next .btn{
+	display: block;
+	font-size: 15px;
+	width: 100%;
+	max-width: 200px;
+	margin: auto;
+	margin-top: 4rem;
+	margin-bottom: 4rem;
+}
+
+/* 중간 영역 */
+.middle_area{
+	margin-bottom: 3rem;
+}
+.middle_area .clause_check{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 4rem;
+}
+.middle_area .clause_check .link_text{
+	white-space: nowrap;
+}
+.middle_area .clause_check .link_text a{
+	font-size: 13px;
+	white-space: nowrap;
+	color: #666;
+	margin-right: 0.5rem;
+	text-decoration: underline!important;
+}
+.middle_area .clause_check .link_text a:hover{
+	color: #333;
+}
+.middle_area .clause_check .custom-checkbox{
+	
+}
+.middle_area .input {
+	
+}
+.middle_area .input .box input{
+	width: 100%;
+	font-size: 15px;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 0.5rem;
+	padding: 0.7rem;
+}
+.middle_area .input .box input:focus{
+	box-shadow: transparent;
+	border-bottom: 1px solid #0088cc;
+}
+.middle_area .input .box .b_notice{
+	display: none;
+	padding: 5px 0.7rem;
+    background-color: #f7f7f7;
+}
+
+/* 아래 영역 */
+.bottom_area{
+	margin-bottom: 4rem;
+}
+.bottom_area .btn_sns{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 3rem;
+}
+.bottom_area .btn_sns .text{
+	align-self: center;
+	color: #666;
+}
+.bottom_area .btn_sns .sns_icon{
+	opacity: 0.5;
+}
+.bottom_area .btn_sns .sns_icon a {
+    margin-left: 0.5rem;
+}
+.bottom_area .btn_join .btn{
+	display: block;
+	font-size: 15px;
+	width: 100%;
+	max-width: 200px;
+	margin: auto;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+	#f_join.contents{
+		margin-top: 3rem;
+		margin-bottom: 3rem;
+	}
+	#f_join .title {
+	    line-height: 50px;
+	}
+	.middle_area{
+		margin-bottom: 1rem;
+	}
+	.middle_area .other_action{
+		margin-bottom: 2rem;
+	}
+	.middle_area .noti{
+		max-width: 350px;
+		margin-bottom: 3rem;
+	}
+	.middle_area .noti .text{
+		font-size: 13px;
+	}
+	.bottom_area .btn_join .btn{
+		max-width: none;
+	}
+	.bottom_area .clause_check .link_text a{
+		font-size: 12px;
+	}
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 	
+	
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+	
+}

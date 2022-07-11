@@ -1,0 +1,119 @@
+<div class="ajax-container" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="controller row align-items-center py-4">
+
+        <div class="l-arrow col">
+            <a href="#" data-ajax-portfolio-prev class="text-decoration-none d-block float-left" th:if="${previousItem != null}">
+                <div class="d-flex align-items-center line-height-1">
+                    <i class="fas fa-arrow-left text-dark text-4 mr-3"></i>
+                    <div class="d-none d-sm-block line-height-1">
+                        <span class="text-dark opacity-4 text-1">PREVIOUS PROJECT</span>
+                        <h4 class="font-weight-bold text-3 mb-0" th:text="${previousItem.title}">Porto Label</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="t-wrap col">
+            <h2 class="title text-dark text-center font-weight-bold text-7 mb-0" th:text="${item.title}"></h2>
+            <!-- <div class="row">
+                <div class="col-md-12 align-self-center p-static order-2 text-center">
+                    <div class="overflow-hidden pb-2">
+                        
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="r-arrow col">
+            <a href="#" data-ajax-portfolio-next class="text-decoration-none d-block float-right" th:if="${nextItem != null}">
+                <div class="d-flex align-items-center text-right line-height-1">
+                    <div class="d-none d-sm-block line-height-1">
+                        <span class="text-dark opacity-4 text-1">NEXT PROJECT</span>
+                        <h4 class="font-weight-bold text-3 mb-0" th:text="${nextItem.title}">Porto Watch</h4>
+                    </div>
+                    <i class="fas fa-arrow-right text-dark text-4 ml-3"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-container row pb-4 mb-2">
+        <div class="col-sm-6">
+
+            <div class="owl-carousel owl-theme nav-inside nav-inside-edge nav-squared nav-with-transparency nav-dark mt-3" data-plugin-options="{'items': 1, 'margin': 10, 'loop': true, 'nav': true, 'dots': false}">
+                <div>
+                    <div class="img-thumbnail border-0 border-radius-0 p-0 d-block">
+                        <div class="image-fluid" th:style="|${'background-image: url(' + item.mainImageUrl + ')'};background-repeat:no-repeat; background-position: center;background-size: contain;height: 540px|"></div>
+                    </div>
+                </div>
+                <div th:each="image: ${item.images}">
+                    <div class="img-thumbnail border-0 border-radius-0 p-0 d-block">
+                        <div class="img-thumbnail border-0 border-radius-0 p-0 d-block">
+                            <div class="image-fluid" th:style="|${'background-image: url(' + image.imageUrl + ')'};background-repeat:no-repeat; background-position: center;background-size: contain;height: 540px|"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <h2 class="text-color-dark font-weight-normal text-4 mb-0">Project <strong class="font-weight-bold">Description</strong></h2>
+            <p th:text="${item.description}"></p>
+
+            <h2 class="text-color-dark font-weight-normal text-4 mb-0 mt-4">Project <strong class="font-weight-bold">Details</strong></h2>
+            <ul class="list list-icons list-primary list-borders text-2">
+                <li><i class="fas fa-angle-right left-10"></i> <strong class="text-color-primary">프리랜서</strong> <span th:text="${item.user.exposeName}"></span></li>
+                <!-- <li><i class="fas fa-angle-right left-10"></i> <strong class="text-color-primary">작업기간</strong> <span th:text="${item.workStartAt + ' ~ ' + item.workEndAt}"></span></li> -->
+                <li><i class="fas fa-angle-right left-10"></i> <strong class="text-color-primary">섹터</strong> <span th:text="${item.category1st?.name}"></span> <i class="fas fa-arrow-right"></i> <span th:text="${item.category2nd?.name}"></span></li>
+                <li><a href="#" class="keyword mr-1" th:text="${categoryItem.name}" th:each="categoryItem: ${item.user.categories}"></a>
+                </li>
+                <li th:if="${item.directDealAvailable}">
+                    <i class="fas fa-angle-right left-10"></i>
+                    <strong class="text-color-primary">연락처</strong>
+                    <div>
+                        <img src="/static/images/p_icon_mail.png">
+                        <span th:if="${item.user.exposeEmail}" th:text="| ${item.user.email}|"></span>
+                    </div>
+                    <div>
+                        <img src="/static/images/p_icon_call.png">
+                        <span th:if="${item.user.exposeCellphone}" th:text="|휴대전화번호: ${item.user.cellphone}|"></span>
+                    </div>
+                    <div th:if="${item.directDealAvailable}">
+                        <strong class="">SNS/홈페이지</strong>
+                        <span>
+                            <div class="btn p-0" style="display:inline-flex; align-items: center;">
+                                <span th:if="${!#strings.isEmpty(item.user.facebookLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.facebookLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.facebookLinkUrl)?user.facebookLinkUrl:''}')|}">
+                                    <i class="fab fa-instagram-square"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.instagramLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.instagramLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.instagramLinkUrl)?user.instagramLinkUrl:''}')|}">
+                                    <i class="fab fa-instagram"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.twitterLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.twitterLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.twitterLinkUrl)?user.twitterLinkUrl:''}')|}">
+                                    <i class="fab fa-twitter-square"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.youtubeLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.youtubeLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.youtubeLinkUrl)?user.youtubeLinkUrl:''}')|}">
+                                    <i class="fab fa-youtube-square"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.linkedInLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.linkedInLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.linkedInLinkUrl)?user.linkedInLinkUrl:''}')|}">
+                                    <i class="fab fa-linkedin"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.githubLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.githubLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.githubLinkUrl)?user.githubLinkUrl:''}')|}">
+                                    <i class="fab fa-github-square"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.blogLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.blogLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.blogLinkUrl)?item.user.blogLinkUrl:''}')|}">
+                                    <i class="fas fa-rss-square"></i>
+                                </span>
+                            </div>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+            <div class="row" th:if="${loginAsClient}">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary btn-lg rounded-0 mb-2 btn-block" th:onclick="|openProposeModal(${item.id})|">내 프로젝트에 참여 요청</button>
+                </div>
+                <div class="col-md-6">
+                    <button th:if="${item.directDealAvailable}" type="button" class="btn btn-warning btn-lg rounded-0 mb-2 btn-block"th:onclick="|saveDirectDeal(${item.id})|">내 직거래마켓에 담기</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

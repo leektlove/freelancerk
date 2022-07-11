@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/payment.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		
+		<div id="container_side">
+			<th:block th:include="fragments/projectPaymentHeader"></th:block>
+		</div>
+		<div id="container_content">
+
+			<div class="container_inner">
+
+			<h1>■ 결제 검색</h1>
+
+			<form id="form" name="" method="get">
+
+				<table class="boardform">
+				<colgroup><col width="150">
+				<col width="">
+				</colgroup><tbody><tr>
+					<th>요청일</th>
+					<td>
+						<input type="text" name="createdAtFrom" th:value="${#request.getParameter('createdAtFrom')}" size="20" readonly="" class="readonly search_date datepicker">
+						 ~
+						<input type="text" name="createdAtTo" th:value="${#request.getParameter('createdAtTo')}" size="20" readonly="" class="readonly search_date datepicker">
+						<span class="btn-black medium" onclick="today()">오늘</span>
+						<span class="btn-black medium" onclick="thisWeek()">이번주</span>
+						<span class="btn-black medium" onclick="thisMonth()">이번달</span>
+					</td>
+				</tr>
+				<tr>
+					<th>진행상태</th>
+					<td>
+						<label><input type="radio" name="status" value="" checked> 전체</label>&nbsp;&nbsp;
+						<label th:each="status : ${T(com.freelancerk.domain.PaymentToUser.Status).values()}">
+							<input type="radio" name="status" th:value="${status.name()}" checked th:text="${status.desc}"
+											   th:checked="${#request.getParameter('status') == status.name()}"></label>&nbsp;&nbsp;
+						</label>
+						<!-- <label><input type="radio" name="s_type" value="4"> 클라이언트 결제보류</label> -->
+					</td>
+				</tr>
+				<tr>
+					<th>키워드</th>
+					<td>
+						<input type="text" name="keyword" th:value="${#request.getParameter('keyword')}" size="50" placeholder="프로젝트명, 프리랜서, 클라이언트을 입력해주세요.">
+					</td>
+				</tr>
+				</tbody></table>
+
+				<div class="boardbutton">
+					<div class="tc">
+						<input type="submit" value="검색" class="btn-color large">
+						<a href="javascript:resetSearch()" class="btn-basic large">리셋</a>
+					</div>
+				</div>
+			</form>
+
+			<div class="Hspace"></div>
+
+			<h1>■ <span th:text="*{#numbers.formatInteger(page.totalElements, 0, 'COMMA')}">1</span>건의 결제가 검색되었습니다.</h1>
+
+			<table class="boardlist">
+				<tbody><tr>
+					<th>요청일</th>
+					<th>승인일</th>
+					<th>지금일</th>
+					<th>클라이언트</th>
+					<th>에스크로 잔액</th>
+					<th>프리랜서</th>
+					<th>주민등록번호(사업자등록번호)</th>
+					<th>프로젝트정보</th>
+					<th>진행사항</th>
+					<th>결제금액</th>
+					<th>명세서</th>
+					<th>비고</th>
+				</tr>
+				<tr th:each="item: ${page.content}">
+					<td th:text="|${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm:ss')}|">2018-11-12 10:25:25</td>
+					<td><th:block th:if="${item.acceptedAt != null}" th:text="|${#temporals.format(item.acceptedAt, 'yyyy-MM-dd HH:mm:ss')}|"></th:block></td>
+					<td><th:block th:if="${item.payedAt != null}" th:text="|${#temporals.format(item.payedAt, 'yyyy-MM-dd HH:mm:ss')}|"></th:block></td>
+					<td><span th:text="${item.project.postingClient.corporateName}"></span><br><span th:text="|(${item.project.postingClient.email})|">(yg@ygpartners.co.kr)</span></td>
+					<td><span th:text="${#numbers.formatInteger(item.project.remainEscrowAmount, 0, 'COMMA')}"></span></td>
+					<td><span th:text="${item.user.name}"></span><br><span th:text="|(${item.user.email})|"></span></td>
+					<td><span th:text="${item.user.freelancerBusinessInfo}"></span></td>
+					<td class="tl" th:text="${item.project.title}">SNS 카드뉴스 - 프리랜서코리아</td>
+					<td th:text="${item.status?.desc}"></td>
+					<td class="tr" th:text="|*{#numbers.formatInteger(item.amount, 0, 'COMMA')} 원|">50,000원</td>
+					<td>
+						<a th:if="${item.status.name() == 'ACCEPTED' || item.status.name() == 'PAYED' || item.type.name() == 'CONTEST_REWARD'}" th:href="|javascript:openPaymentSpec(${item.id})|" class="tax_detail btn-black medium">명세서</a>
+					</td>
+					<td>
+						<a th:href="|/view/payment-to-users/${item.id}|" class="btn-black medium">수정</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="total" colspan="5">지불완료합계</td>
+					<td class="total tr amount" colspan="3">
+						<span th:text="*{#numbers.formatInteger(totalPayedAmount, 0, 'COMMA')}">27,379,999</span>원
+					</td>
+				</tr>
+				<tr>
+					<td class="total" colspan="5">합계</td>
+					<td class="total tr amount" colspan="3">
+						<span th:text="*{#numbers.formatInteger(totalPayedAmount, 0, 'COMMA')}">27,836,362</span>원
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+				<div class="boardbutton">
+					<div class="tc">
+						<div class="boardpage">
+							<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+								<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/projectPayment?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+							</th:block>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="specModal" title="프리랜서코리아 명세서">
+			<div style="width:60%;">
+				<div class=" title">■ 담당 프리랜서</div>
+				<table class="popup_boardform">
+					<colgroup>
+						<col width="50%">
+						<col width="">
+					</colgroup>
+					<tbody>
+					<tr>
+						<th>성명</th>
+						<td id="freelancerName"></td>
+					</tr>
+					<tr>
+						<th>입금계좌</th>
+						<td id="freelancerBankAccountInfo"></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="Hspace"></div>
+
+				<div class="title">■ 상세항목</div>
+				<table class="popup_boardlist">
+					<colgroup>
+						<col width="20%">
+						<col width="30%">
+						<col width="">
+					</colgroup>
+					<tbody>
+					<tr>
+						<th colspan="2">항목</th>
+						<th>금액</th>
+					</tr>
+					<tr>
+						<th class="tl" colspan="2">지급총액</th>
+						<td id="totalAmount" class="tr"></td>
+					</tr>
+					<tr>
+						<th class="tl" rowspan="3" id="deduction-area">공제내역</th>
+						<th class="tl">플랫폼수수료</th>
+						<td id="fee" class="tr"></td>
+					</tr>
+					<tr class="tax-type collection-in-advance">
+						<th class="tl">사업소득세</th>
+						<td id="businessIncomeTax" class="tr"></td>
+					</tr>
+					<tr class="tax-type collection-in-advance">
+						<th class="tl">지방소득세</th>
+						<td id="localIncomeTax" class="tr"></td>
+					</tr>
+					<tr class="">
+						<th class="tl" colspan="2">공제총액</th>
+						<td id="totalDeductedAmount" class="tr "></td>
+					</tr>
+					<tr class="tax-type vat">
+						<th class="tl" colspan="2">부가가치세</th>
+						<td id="vat" class="tr"></td>
+					</tr>
+					<tr>
+						<th class="tl" colspan="2">차인지급액</th>
+						<td id="realAmount" class="tr"></td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="popup_boardbutton">
+					<div class="tc">
+						<a href="#" class="btn-color large tax_print" data-no="691">인쇄</a>
+						<a href="javascript:closeModal()" class="btn-basic large pop_close" data-dismiss="modal" aria-label="Close">닫기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+				$( "#dialog" ).dialog();
+			});
+			function today() {
+				$('input[name=createdAtFrom]').val(moment().format('YYYY-MM-DD'));
+				$('input[name=createdAtTo]').val(moment().add(1, 'day').format('YYYY-MM-DD'));
+			}
+
+			function thisWeek() {
+				$('input[name=createdAtFrom]').val(moment().startOf('week').format('YYYY-MM-DD'));
+				$('input[name=createdAtTo]').val(moment().add(1, 'week').startOf('week').format('YYYY-MM-DD'));
+			}
+
+			function thisMonth() {
+				$('input[name=createdAtFrom]').val(moment().startOf('month').format('YYYY-MM-DD'));
+				$('input[name=createdAtTo]').val(moment().add(1, 'month').startOf('month').format('YYYY-MM-DD'));
+			}
+
+			function resetSearch() {
+				location.href = '/project/list';
+			}
+
+			function search() {
+				$('#form').submit();
+			}
+
+			function closeModal() {
+				$('#specModal').dialog("close");
+			}
+
+			function openPaymentSpec(id) {
+				$.ajax({
+					type: 'GET',
+					url: '/payment-to-users/' + id,
+					success: function(response) {
+						if ('SUCCESS' !== response.responseCode) {
+							return;
+						}
+						var paymentData = response.data;
+
+						$('#specModal .tax-type').hide();
+						if ('VAT' === paymentData.taxType) {
+							$('#specModal .tax-type.vat').show();
+							$('#specModal .tax-type.collection-in-advance').hide();
+							$('#specModal #deduction-area').attr('rowspan', 1);
+
+							$('#specModal #vat').text(paymentData.vat.toLocaleString() + '원');
+						} else if ('COLLECTION_IN_ADVANCE' === paymentData.taxType) {
+							$('#specModal .tax-type.vat').hide();
+							$('#specModal .tax-type.collection-in-advance').show();
+							$('#specModal #deduction-area').attr('rowspan', 3);
+
+							$('#specModal #businessIncomeTax').text(paymentData.businessIncomeTax.toLocaleString() + '원');
+							$('#specModal #localIncomeTax').text(paymentData.localIncomeTax.toLocaleString() + '원');
+						} else {
+							$('#specModal #deduction-area').attr('rowspan', 1);
+						}
+						$('#specModal #totalDeductedAmount').text(paymentData.totalDeductedAmount.toLocaleString() + '원');
+						$('#specModal #freelancerName').text(paymentData.freelancerName);
+						$('#specModal #freelancerBankAccountInfo').text(paymentData.user.paymentInfo);
+						$('#specModal #totalAmount').text(paymentData.amount.toLocaleString() + '원');
+						$('#specModal #fee').text(paymentData.fee.toLocaleString() + '원');
+						$('#specModal #realAmount').text(paymentData.realAmount.toLocaleString() + '원');
+
+						$( "#specModal" ).dialog({
+							open: function( event, ui ) {
+
+							},
+							closeOnEscape: false,
+							modal: true,
+							width: 1000,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+								}
+							}
+						});
+					},
+					error: function(e) {
+						console.error(e);
+					}
+				});
+
+			}
+		</script>
+	</section>
+	
+
+</html>

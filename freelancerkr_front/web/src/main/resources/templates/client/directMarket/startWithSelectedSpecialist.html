@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client/directMarket/startWithSelectedSpecialist.css">
+
+</head>
+
+    
+    <section id="content" layout:fragment="content">
+
+        <!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 order-2 order-md-1 align-self-center p-static">
+                        <h1 class="text-dark"><strong>프로젝트 정보입력</strong></h1>
+
+                    </div>
+                    <div class="col-md-6 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 페이지헤더// -->
+
+        <div class="container">
+            <section>
+                <div class="">
+                    <form id="start_pjt" class="" method="post" th:action="|/projects/freelancers/${freelancer.id}|">
+                        <input type="hidden" name="type" th:value="${projectType?.name()}"/>
+                        <input type="hidden" name="projectId" th:value="${projectId}"/>
+                        <div class="row">
+                            <div class="col-lg-9 col-md-8 mb-4 mb-5">
+                                <ul class="list list-icons">
+                                    <li>
+                                        <i class="fas fa-angle-right">
+                                        </i>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="">
+                                                    <label class="font-weight-bold text-dark" style="margin-top:5px;" for="name">프로젝트명을 입력해주세요</label>
+                                                    <span class="required"> *</span>
+                                                    <input type="text" class="form-control" id="name" name="name" placeholder="예)삼성전자 홈페이지 웹디자인 50 페이지">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-angle-right">
+                                        </i>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="">
+                                                    <label class="font-weight-bold text-dark" style="margin-top:5px;" for="description">협의된 프로젝트 내용에 대해 기재해주세요.</label><span class="required"> *</span>
+                                                    <textarea class="form-control" name="description" id="description" rows="5" placeholder="" onkeyup="countChar(this)"></textarea>
+                                                    <div class="text_cnt"><span id="textCnt">0</span>/1,000자</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-angle-right">
+                                        </i>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="">
+                                                    <label class="font-weight-bold text-dark" style="margin-top:5px;" for="price">협의된(계약예정인) 금액을 입력해주세요</label>
+                                                    <span class="required"> *</span>
+                                                    <div class="d-flex col-lg-4 p-0">
+                                                        <input type="text" class="form-control text-right" maxlength="20" name="price" id="price" placeholder="숫자만 입력해주세요" onchange="numberWithCommas(this);" onkeyup="numberWithCommas(this);">
+                                                        <span class="ml-2 align-self-center">원</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-angle-right">
+                                        </i>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="">
+                                                    <label class="font-weight-bold text-dark" style="margin-top:5px;"  for="escrow_needpay">에스크로 예치 필요금액</label>
+                                                    <span class="required"> *</span>
+                                                    <div>예치 후 1일 이내에 세금계산서를 발행 해 드립니다</div>
+                                                    <div><span id="escrow_needpay" class="pay">0</span>원(VAT포함)</div>
+                                                    <div>예치계좌: <span id="bank">KB 국민은행, 400437-01-020230, (주)플랫폼위즈컴퍼니</span></div>
+                                                    <div>("프리랜서코리아"는 (주)플랫폼위즈컴퍼니의 등록상표입니다.)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-angle-right">
+                                        </i>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="">
+                                                    <label class="font-weight-bold text-dark" style="margin-top:5px;" for="select_date">선정일</label>
+                                                    <span class="required"> *</span>
+                                                    <div id="select_date" th:text="${#dates.format(#dates.createNow(), 'yyyy.MM.dd')}"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-angle-right">
+                                        </i>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="">
+                                                    <label class="font-weight-bold text-dark" style="margin-top:5px;" for="">계약서 등 문서첨부</label>
+                                                    <span class="required"> *</span>
+                                                    <div class="">표준계약서가 자료실에 등록되어 있습니다. 자유롭게 사용하세요.</div>
+                                                    <div class="filebox preview-image col-lg-8 p-0">
+                                                        <div><input class="upload-name form-control" value="계약서등을 작성하신경우 이곳에 업로드해주세요." disabled></div>
+                                                        <label for="input_file" class="border-left-0 p-2">파일 첨부</label>
+                                                        <input type="file" id="input_file" class="upload_hidden" name="projectDescriptionFile">
+                                                    </div>
+                                                    <div id="preview_filename"></div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" name="cancelUploadFileBtn"  id="cancelUploadFileBtn" >
+                                                        <label class="custom-control-label" for="cancelUploadFileBtn">다음에 업로드하겠습니다.</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- <div class="btn_container">
+                                    <div class="text-center">
+                                        <input type="button" class="btn btn-light btn-lg d-inline-block rounded-0"  value="직거래마켓으로 돌아가기" onclick="location.href='/client/directMarket/index'">
+                                        <button type="submit" class="btn btn-primary btn-lg d-inline-block rounded-0">프로젝트를 진행합니다</button>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="col-lg-3 col-md-4">
+                                <aside class="sidebar" id="sidebar" data-plugin-sticky data-plugin-options="{'minWidth': 991, 'containerSelector': '.container', 'padding': {'top': 110}}">
+
+                                    <!-- 프리랜서 프로필 카드 -->
+                                    <div class="card p-3 mb-2 rounded-0">
+                                        <div class="form-row" style="margin: 5px">
+                                            <div class="col-4 col-md-12 col-lg-12 col-xl-4">
+                                                <div class="profile_img_crop" style="position: relative;">
+                                                    <div class="center-crop-wrapper rounded">
+                                                        <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(freelancer.profileImageUrl)?'/static/images/c_basic.jpg':freelancer.profileImageUrl)}}">
+                                                    </div>
+                                                </div>
+                                                <span class="badge badge-light px-2 py-1 mt-1 text-primary" style="justify-content: center;align-content: flex-start;display: flex;margin-bottom: 2px;text-align: center;">프리랜서</span>
+                                            </div>
+                                            <div class="col-8 col-md-12 col-lg-12 col-xl-8" style="margin-top:0.55rem">
+                                                <div class="member font-weight-bold" th:text="${freelancer.exposeName}" style="line-height: 20px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                </div>
+                                                <div class="text-1" style="line-height: 17px" th:text="${freelancer.businessType?.name}">개인사업자</div>
+                                                <div id="star">
+                                                    <div class="rating-container theme-krajee-fas rating-xs rating-animate">
+                                                        <div class="rating-stars">
+                                                            <span class="empty-stars">
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="far fa-star"></i>
+                                                                </span>
+                                                            </span>
+                                                            <span class="filled-stars" th:style="|width: ${user.ratingPercentageAsFreelancer}%|">
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                                <span class="star">
+                                                                    <i class="fas fa-star"></i>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                        <div style="font-size: 13px;font-weight: 600;">프로젝트 <span id="allpjt_num" class="text-primary" th:text="${#numbers.formatInteger(freelancer.contractedProjectCount, 0, 'COMMA')}">10</span>건 중
+                                                        <span id="markpjt_num" class="text-primary" th:text="${#numbers.formatInteger(freelancer.ratedProjectCountAsFreelancer, 0, 'COMMA')}">6</span>건 평가</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <hr class="my-1" style="background-color: #c1c1c1;" />
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex" style="margin:4px">
+                                                    <span class="ellipsis" style="font-size: 13px;line-height: 17px; display: inline !important;" th:text="${freelancer.email}"></span>
+                                                </div>
+                                                <div class="d-flex" style="margin:4px">
+                                                    <span class="" style="font-size: 13px;line-height: 17px" th:text="${freelancer.cellphone}"></span>
+                                                </div>
+                                                <div class="d-flex" style="margin:4px;line-height:normal;color: #ddd;">
+                                                    <span th:class="@{|sns ${!#strings.isEmpty(freelancer.facebookLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(freelancer.facebookLinkUrl)?freelancer.facebookLinkUrl:''}')|}">
+                                                        <i class="fab fa-facebook-square"></i>
+                                                    </span>
+                                                    <span th:class="@{|sns ${!#strings.isEmpty(freelancer.instagramLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(freelancer.instagramLinkUrl)?freelancer.instagramLinkUrl:''}')|}">
+                                                        <i class="fab fa-instagram"></i>
+                                                    </span>
+                                                    <span th:class="@{|sns ${!#strings.isEmpty(freelancer.twitterLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(freelancer.twitterLinkUrl)?freelancer.twitterLinkUrl:''}')|}">
+                                                        <i class="fab fa-twitter-square"></i>
+                                                    </span>
+                                                    <span th:class="@{|sns ${!#strings.isEmpty(freelancer.youtubeLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(freelancer.youtubeLinkUrl)?freelancer.youtubeLinkUrl:''}')|}">
+                                                        <i class="fab fa-youtube-square"></i>
+                                                    </span>
+                                                    <span th:class="@{|sns ${!#strings.isEmpty(freelancer.linkedInLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(freelancer.linkedInLinkUrl)?freelancer.linkedInLinkUrl:''}')|}">
+                                                        <i class="fab fa-linkedin"></i>
+                                                    </span>
+                                                    <span th:class="@{|sns ${!#strings.isEmpty(freelancer.githubLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(freelancer.githubLinkUrl)?freelancer.githubLinkUrl:''}')|}">
+                                                        <i class="fab fa-github-square"></i>
+                                                    </span>
+                                                    <span th:class="@{|sns ${!#strings.isEmpty(freelancer.blogLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(freelancer.blogLinkUrl)?freelancer.blogLinkUrl:''}')|}">
+                                                        <i class="fas fa-rss-square"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 프리랜서 프로필 카드//-->
+
+                                    <div class="mb-3">
+                                        <div class="w-100">
+                                            <input type="button" th:if="${referer == 'DIRECT_MARKET'}" class="btn btn-light btn-lg d-block rounded-0 mb-2 w-100"  value="직거래마켓으로 돌아가기" onclick="location.href='/client/directMarket/index'">
+                                            <input type="button" th:if="${referer == 'PROJECT_COMPLETE'}" class="btn btn-light btn-lg d-block rounded-0 mb-2 w-100"  value="완료된 프로젝트로 돌아가기" onclick="location.href='/client/project/doneList'">
+                                            <button type="submit" class="btn btn-primary btn-lg d-block rounded-0 mb-2 w-100">프로젝트를 진행합니다</button>
+                                        </div>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <script src="/static/js/detail-common.js"></script>
+        <script src="/static/js/jquery.uploadPreview.min.js"></script>
+        <script th:inline="javascript">
+            $(document).ready(function(){
+                var freelancerId = [[${freelancer.id}]];
+                var imgTarget = $('.preview-image .upload_hidden');
+
+                imgTarget.on('change', function(){
+                    var parent = $(this).parent();
+                    parent.children('.upload-display').remove();
+
+                    var filename;
+                    if(window.FileReader){
+                        filename = $(this)[0].files[0].name;;
+                        var reader = new FileReader();
+                        reader.onload = function(e){
+                            var src = e.target.result;
+                            var filenameDiv = '<span class="upload-display p-2 mr-2">';
+                            filenameDiv += '<span class="upload-thumb-wrap">'+ filename;
+                            filenameDiv += '<button id="" type="button" class="btn btn-primary remove">X</button>';
+                            filenameDiv += '</span></span>';
+                            $('#preview_filename').append(filenameDiv);
+                        };
+                        reader.readAsDataURL($(this)[0].files[0]);
+                    }
+
+                    else {
+                        filename = $(this).val().split('/').pop().split('\\').pop();
+                        $(this)[0].select();
+                        $(this)[0].blur();
+                        var imgSrc = document.selection.createRange().text;
+                        parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+                        var img = $(this).siblings('.upload-display').find('img');
+                        img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";
+                    }
+                });
+            });
+        </script>
+        <script src="/static/js/client/directMarket/startWithSelectedSpecialist.js"></script>
+    </section>
+    
+    
+</html>

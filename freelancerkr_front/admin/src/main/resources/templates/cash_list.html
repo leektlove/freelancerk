@@ -1,0 +1,114 @@
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/plugin/jquery/ui/1.12.1/jquery-ui.min.css">
+<link rel="stylesheet" href="/static/css/reset.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/main.css">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+ <div id="container_content">
+    <div class="container_inner">
+	<h1>■ 입금 검색</h1>
+	<form id="fsearch" name="fsearch" method="get">
+		<table class="boardform">
+			<colgroup>
+				<col width="150">
+				<col width="">
+			</colgroup>
+			<tbody>
+                <tr>
+				    <th>입금일</th>
+				    <td>
+    					<input type="text" name="s_date_1" value="" size="8" readonly="" class="readonly search_date hasDatepicker" id="datepicker_1">
+    					 ~
+    					<input type="text" name="s_date_2" value="" size="8" readonly="" class="readonly search_date hasDatepicker" id="datepicker_2">
+    					<span class="btn-black mini" onclick="">오늘</span>
+    					<span class="btn-black mini" onclick="">이번주</span>
+    					<span class="btn-black mini" onclick="">이번달</span>
+    				</td>
+			    </tr>
+    			<tr>
+    				<th>키워드</th>
+    				<td>
+    					<input type="text" name="s_search" value="" size="50" placeholder="회사명, 닉네임, 계좌명을 입력해주세요.">
+    				</td>
+    			</tr>
+		    </tbody>
+        </table>
+    	<div class="boardbutton">
+    		<div class="tc">
+    			<input type="submit" value="검색" class="btn-color large">
+    			<a href="#" class="btn-basic large">리셋</a>
+    		</div>
+    	</div>
+    	</form>
+    	<div class="Hspace"></div>
+    	<h1>■ 53건의 입금이 검색되었습니다.</h1>
+    	<table class="boardlist">
+        	<tbody>
+                <tr>
+        			<th rowspan="2">순서</th>
+        			<th rowspan="2">입금일</th>
+        			<th colspan="3">클라이언트정보</th>
+        			<th colspan="3">누적입금</th>
+        			<th rowspan="2">진행중인프로젝트<br>총 낙찰금액</th>
+        			<th rowspan="2">입금</th>
+        		</tr>
+        		<tr>
+        			<th>회사명</th>
+        			<th>닉네임/이름</th>
+        			<th>계좌명</th>
+        			<th>총입금액</th>
+        			<th>공급가액</th>
+        			<th>부가가치세</th>
+        		</tr>
+    			<tr>
+        			<td></td>
+        			<td>2018-10-26 17:00:43</td>
+        			<td>(주)키즈웰</td>
+        			<td>키즈웰 마케팅팀/박지인</td>
+        			<td>신한은행</td>
+        			<td class="tr">110,000</td>
+        			<td class="tr">100,000</td>
+        			<td class="tr">10,000</td>
+        			<td>100,000</td>
+        			<td></td>
+    		    </tr>
+        		<tr>
+        			<td class="total" colspan="5">합계</td>
+        			<td class="total tr amount">
+        				<span>41,573,800</span>원
+        			</td>
+        			<td class="total tr amount">
+        				<span>37,794,360</span>원
+        			</td>
+        			<td class="total tr amount">
+        				<span>3,779,433</span>원
+        			</td>
+        			<td class="total tr amount">
+        				<span>119,800,000</span>원
+        			</td>
+        			<td class="total tr amount"></td>
+        		</tr>
+            	</tbody>
+            </table>
+        	<div class="boardbutton">
+        		<div class="tl">
+        			<a href="#" class="btn-color large" id="excel_down">엑셀</a>
+        		</div>
+        		<div class="tc">
+        			<div class="boardpage">
+        			<span class="current">1</span>
+                </div>
+        	</div>
+		    <div class="tr">
+				<a href="#" class="btn-color large">등록</a>
+			</div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$( function() {
+    $( "#datepicker_1" ).datepicker();
+} );
+</script>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css --> 
+	<link rel="stylesheet" href="/static/css/client/payment/escrow/view.css">
+</head>
+
+	
+	<div layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>나의 환불내역</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+        <!-- 페이지헤더// -->
+
+        <!-- 탭메뉴 -->
+        <section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+            <div class="container" style="margin-bottom: -3px;">
+                <ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+                    <li class="nav-item mb-0 ">
+                        <a th:href="@{/client/payment/list}" class="nav-link d-flex disabled">
+                            <span>결제/포인트관리</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mb-0 active">
+                        <a th:href="@{/client/payment/escrowList}" class="nav-link active">
+                            <span>에스크로</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!-- 탭메뉴// -->
+		
+		<section>
+			<div class="refund_container container">
+				<div class="content-body">
+					<div class="p-2 p-md-3">
+						<div class="text-right" style="max-width: 1000px;margin: auto;">
+							<a th:href="@{/client/payment/escrowRefund}">
+								<div class="btn btn-lg btn-primary mb-3 rounded-0">환불신청하기</div>
+							</a>
+						</div>
+						<div style="position: relative;">
+							<div class="table-responsive">
+								<table class="table text-center">
+									<thead>
+										<tr>
+											<th rowspan="2">회차</th>
+											<th rowspan="2">일자</th>
+											<th rowspan="2">진행사항</th>
+											<th>환불일</th>
+											<th>환불사유</th>
+											<th rowspan="2">금액</th>
+										</tr>
+										<tr>
+											<th>취소일</th>
+											<th>취소사유</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item, iter: ${list}">
+											<td th:text="${iter.index + 1}"></td>
+											<td th:text="${#temporals.format(item.createdAt, 'yyyy년 MM월 dd일 HH:mm')}"></td>
+											<td th:text="${item.type.desc}"></td>
+											<td class="refund_day" th:text="${#temporals.format(item.refundedAt, 'yyyy년 MM월 dd일 HH:mm')}"></td>
+											<td th:text="${item.reason}"></td>
+											<td class="count" th:text="|${#numbers.formatInteger(item.amount, 0, 'COMMA')}원|"></td>
+										</tr>
+										<tr>
+											<td colspan="5">합계</td>
+											<td class="tr" th:text="|${#numbers.formatInteger(totalRefundedPrice, 0, 'COMMA')}원|"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+			</div>
+		</section>
+	</div>
+	
+
+</html>

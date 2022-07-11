@@ -1,0 +1,98 @@
+.content-body{
+	margin-top:3rem;
+	margin-bottom:3rem;
+}
+.reference_container{
+	margin-bottom: 3rem;
+}
+.reference_container .title{
+	font-size: 25px;
+    font-weight: 700;
+    border-bottom: 1px solid #d2d2d2;
+    padding: 0.5rem 1rem;
+}
+.reference_container .wrap{
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 0.5rem 1rem;
+}
+.reference_container .wrap .createdAt{
+	display: flex;
+	font-size: 13px;
+}
+.reference_container .wrap .createdAt div:first-child{
+	color: #969696;
+	margin-right: 1rem;
+}
+.reference_container .wrap .hits{
+	display: flex;
+	font-size: 13px;
+}
+.reference_container .wrap .hits div:first-child{
+	color: #969696;
+	margin-right: 1rem;
+}
+.reference_container .file_wrap{
+	border-bottom: 1px solid #e5e5e5;
+	padding: 0.5rem 1rem;
+}
+.reference_container .file_wrap .file_list{
+	font-size: 13px;
+}
+.reference_container .file_wrap .file_list a{
+	display: inline-block;
+}
+.reference_container .file_wrap .file_list div{
+	display: inline-block;
+}
+.reference_container .file_wrap .file_list div:first-child{
+	color: #969696;
+	margin-right: 1rem;
+}
+.reference_container .file_wrap .file_list .content{
+	margin-right: 1rem;
+}
+.reference_container .des{
+	font-size: 15px;
+	min-height: 250px;
+	padding: 1rem;
+	border-bottom: 1px solid #ddd;
+}
+.container .btn_group{
+	width: 100%;
+	text-align: center;
+}
+.container .btn_group .btn{
+	border: 1px solid #ddd;
+    color: #999;
+}
+
+
+@media (min-width: 1200px) { 
+	
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 	
+	.reference_container .file_wrap .file_list a{
+		display: block;
+	}
+	.reference_container .file_wrap .file_list .content{
+		margin-right: 0;
+		margin-top: 0.5rem;
+	}
+}
+@media (max-width: 575.98px) {
+	.reference_container .file_wrap .file_list a{
+		display: block;
+	}
+	.reference_container .file_wrap .file_list .content{
+		margin-right: 0;
+		margin-top: 0.5rem;
+	}
+}

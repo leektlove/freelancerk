@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/freelancer/pickMeUp/choiceEnrollment.css">
+</head>
+ 
+    <section id="content" layout:fragment="content">
+
+        <div class="container">
+            <div id="choiceEnrollment" class="content-body d-flex justify-content-center">
+                <div class="wrap_c">
+                    <div class="title">
+                        어떤 형태의 등록을 원하시나요?
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="wrap">
+                                <a href="/freelancer/pickMeUp/create?contentType=IMAGE">
+                                    <div class="image_con">
+                                        <img src="/static/images/use-guide/upload_image.png">
+                                    </div>
+                                    <div class="btn">
+                                        이미지 위주로
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="wrap">
+                                <a href="/freelancer/pickMeUp/create?contentType=BLOG">
+                                    <div class="image_con">
+                                        <img src="/static/images/use-guide/upload_blog.png">
+                                    </div>
+                                    <div class="btn">
+                                        블로그 형식으로
+                                    </div>
+                                    <div class="more_info">
+                                        <i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+                                        <div class="text">
+                                            영상 또는 음원의 경우 블로그 형식에서<br>링크를 삽입하시면 됩니다.
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/static/js/portfolio-common-popup.js"></script>
+        <script src="/static/js/popup.js"></script>
+        <script src="/static/js/portfolio-common.js"></script>
+        <script src="/static/js/freelancer/pickMeUp/pickmeup-common.js"></script>
+    </section>
+    
+
+</html>

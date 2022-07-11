@@ -1,0 +1,83 @@
+
+/******************************** 가이드 ********************************/
+.pickme_guid_1 img,
+.pickme_guid_2 img,
+.pickme_guid_3 img,
+.pickme_guid_4 img{
+  max-width: 175px;
+  margin-top:1rem;
+  margin-bottom:1rem;
+}
+.pickme_guid_1:after,
+.pickme_guid_2:after{
+    content: '';
+    background:url('/static/images/use-guide/pickme_guid_arow1.png')no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: -24px;
+    top:calc(50% - 60px);
+    width: 55px;
+    height: 27px;
+}
+
+.info_ment{
+	background-color: #ffecca;
+    display: inline-block;
+    padding: 0 1rem;
+    border-radius: 5px;
+    margin-bottom:0.5rem;
+}
+
+
+
+/******************************** 반응형 ********************************/
+@media (min-width: 1200px) { 
+
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	
+
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 130px;
+	}
+	.pickme_guid_2:after{
+		display: none;
+	}
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 130px;
+	}
+	.pickme_guid_1:after{
+		top: calc(50% - 9px);
+		width: 45px;
+		height: 18px;
+	}
+	.pickme_guid_2:after{
+		display: none;
+	}
+}
+@media (max-width: 575.98px) {
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 130px;
+	}
+	.pickme_guid_1:after{
+		top: calc(50% - 9px);
+		width: 45px;
+		height: 18px;
+	}
+	.pickme_guid_2:after{
+  		display: none;
+  }
+}

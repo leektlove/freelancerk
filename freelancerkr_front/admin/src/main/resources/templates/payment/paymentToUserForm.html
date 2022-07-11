@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<link rel="stylesheet" href="/static/css/payment.css">
+</head>
+<section id="content" layout:fragment="content">
+
+	<div id="container_side">
+		<th:block th:include="fragments/projectPaymentHeader"></th:block>
+	</div>
+	<div id="container_content">
+
+		<div class="container_inner">
+
+			<h1>■ 결제등록</h1>
+
+			<form id="form" method="post" th:action="|/payment-to-users/${id}|" enctype="multipart/form-data">
+
+				<input type="hidden" name="id" th:value="${item?.id}"/>
+
+				<table class="boardform">
+					<colgroup><col width="200">
+						<col width="">
+
+					</colgroup><tbody><tr>
+					<th>구분</th>
+					<td>
+						<span th:text="${item?.status?.desc}"></span>
+					</td>
+				</tr>
+
+				<tr>
+					<th>프로젝트</th>
+					<td> <span th:text="${item?.project?.title}"></span></td>
+				</tr>
+				<tr>
+					<th>현재 클라이언트 정보</th>
+					<td>
+						아이디 : <span th:text="${item?.project?.postingClient?.username}"></span><br>
+						닉네임 : <span th:text="${item?.project?.postingClient?.nickname}"></span><br>
+						회사명 : <span th:text="${item?.project?.postingClient?.corporateName}"></span><br>
+						이메일 : <span th:text="${item?.project?.postingClient?.email}"></span><br>
+						휴대폰 : <span th:text="${item?.project?.postingClient?.cellphone}"></span><br>
+						예치금액 : <span style="font-weight:bold; color:red;" th:text="${#numbers.formatInteger(escrowDepositMoney, 0, 'COMMA')}"></span> 원
+					</td>
+				</tr>
+				<tr>
+					<th>현재 프리랜서 정보</th>
+					<td>
+						아이디 : <span th:text="${item?.user?.username}"></span><br>
+						닉네임 : <span th:text="${item?.user?.nickname}"></span><br>
+						회사명 : <span th:text="${item?.user?.corporateName}"></span><br>
+						이메일 : <span th:text="${item?.user?.email}"></span><br>
+						휴대폰 : <span th:text="${item?.user?.cellphone}"></span><br><br>
+
+						용역대금은행 : <span style="font-weight:bold; color:red;" th:text="${item?.user?.bankForReceivingPayment?.name}"></span><br>
+						계좌번호 : <span style="font-weight:bold; color:red;" th:text="${item?.user?.bankAccountForReceivingPayment}"></span><br>
+						예금주 : <span style="font-weight:bold; color:red;" th:text="${item?.user?.bankAccountName}">최종수</span>
+					</td>
+				</tr>
+
+				<tr>
+					<th>요청금액</th>
+					<td>
+						<input name="amount" th:value="${#numbers.formatInteger(item.amount, 0, 'COMMA')}" onkeyup="numberWithCommas(this);" onchange="numberWithCommas(this);"/> 원	</td>
+				</tr>
+
+				<tr>
+					<th>프리랜서 입금요청내용</th>
+					<td><textarea name="description" rows="5" cols="100" th:text="${item.description}"></textarea></td>
+				</tr>
+
+                <tr th:if="${item.status.name() == 'PAYED' || item.status.name() == 'ACCEPTED'}">
+                    <th>클라이언트 결제승인내용</th>
+                    <td>
+                        <textarea name="acceptDescription" rows="5" cols="100" th:text="${item.acceptDescription}"></textarea>
+                    </td>
+                </tr>
+
+
+                <tr th:if="${item.status.name() == 'DENIED'}">
+                    <th>클라이언트 결제보류내용</th>
+                    <td>
+						<textarea name="denyReason" rows="5" cols="100" th:text="${item.denyReason}"></textarea>
+					</td>
+                </tr>
+
+				<tr>
+					<th>프리랜서코리아 지불완료내용</th>
+					<td>
+						<textarea name="paymentDescription" rows="5" cols="100" th:text="${item.paymentDescription}"></textarea>
+					</td>
+				</tr>
+				<tr th:if="${item.status.name() == 'PAYED' || item.status.name() == 'ACCEPTED'}">
+					<th>명세서</th>
+					<td>
+
+						<div style="width:60%;">
+							<div class="title">■ 담당 프리랜서</div>
+							<table class="boardform">
+								<colgroup><col width="140">
+									<col width="">
+								</colgroup><tbody><tr>
+								<th>성명</th>
+								<td text="${item.user.name}"></td>
+							</tr>
+							<tr>
+								<th>섹터</th>
+								<td><span class="keyword mr-1" th:text="${categoryItem.name}" th:each="categoryItem: ${item.user.categories}"></span></td>
+							</tr>
+							<tr>
+								<th>입금계좌</th>
+								<td text="${item.paymentInfo}"></td>
+							</tr>
+							</tbody></table>
+
+							<div class="Hspace"></div>
+
+							<div class="title">■ 상세항목</div>
+							<table class="boardlist">
+								<colgroup><col width="140">
+									<col width="140">
+									<col width="">
+								</colgroup><tbody><tr>
+								<th colspan="2">항목</th>
+								<th>금액</th>
+							</tr>
+							<tr>
+								<th class="tl" colspan="2">지급총액</th>
+								<td class="tr" th:text="|${#numbers.formatInteger(item.amount, 0, 'COMMA')}원|">50,000원</td>
+							</tr>
+							<tr>
+								<th class="tl" rowspan="3">공제내역</th>
+								<th class="tl">플랫폼수수료</th>
+								<td class="tr" th:text="|${#numbers.formatInteger(item.fee, 0, 'COMMA')}원|">1,500원</td>
+							</tr>
+							<tr>
+								<th class="tl">사업소득세</th>
+								<td class="tr" th:text="|${#numbers.formatInteger(item.businessIncomeTax, 0, 'COMMA')}원|">1,450원</td>
+							</tr>
+							<tr>
+								<th class="tl">지방소득세</th>
+								<td class="tr" th:text="|${#numbers.formatInteger(item.localIncomeTax, 0, 'COMMA')}원|">140원</td>
+							</tr>
+							<tr>
+								<th class="tl" colspan="2">공제총액</th>
+								<td class="tr" th:text="|${#numbers.formatInteger(item.totalDeductedAmount, 0, 'COMMA')}원|">3,090원</td>
+							</tr>
+							<tr>
+								<th class="tl" colspan="2">차인지급액</th>
+								<td class="tr" th:text="|${#numbers.formatInteger(item.realAmount, 0, 'COMMA')}원|">46,910원</td>
+							</tr>
+							</tbody></table>
+						</div>
+					</td>
+				</tr><tr>
+				</tr></tbody></table>
+
+				<div class="boardbutton">
+					<div class="tc">
+						<input type="submit" th:value="${item.status.name() == 'ACCEPTED'?'지불완료':'내용저장'}" class="btn-color large">
+						<a href="/projectPayment" class="btn-colorline large">목록</a>
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$('#form').submit(function(e) {
+				if (!confirm("저장하시겠습니까?")) {
+					e.preventDefault();
+					return false;
+				}
+
+				var amount = $('input[name=amount]').val();
+				$('input[name=amount]').val(removeComma(amount));
+
+				return true;
+			})
+		})
+	</script>
+</section>
+</html>

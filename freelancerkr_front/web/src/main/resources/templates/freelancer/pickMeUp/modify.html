@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- start of summernote -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	<link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+	<!-- end of summernote -->
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/pickMeUp/modify.css">
+	<script src="/static/lib/cropper/cropper.js"></script>
+	<link  href="/static/lib/cropper/cropper.min.css" rel="stylesheet">
+	<script src="/static/lib/jquery-cropper/jquery-cropper.js"></script>
+	<link rel="stylesheet" href="/static/vendor/slim-image-cropper/slim.min.css">
+
+	<link rel="stylesheet" href="https://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/style.css">
+	<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui.css">
+	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-noscript.css"></noscript>
+	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui-noscript.css"></noscript>
+</head>
+	
+
+<section id="content" layout:fragment="content">
+
+	<!-- 페이지헤더 -->
+    <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+					<h1 class="text-dark"><strong>포트폴리오 수정</strong></h1>
+				</div>
+				<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 페이지헤더// -->
+
+	<div class="modify_portfolio container">
+		<div class="col-lg-9 mx-auto p-0">
+			<div class="info_title">
+				<strong class="font-weight-bold">포트폴리오</strong>가 가장 <span style="color: #ed3d3d;font-weight: 700;">중요</span>합니다
+			</div>
+			<div class="info row">
+				<div class="col-md-4 mx-auto">
+					<div class="form-row">
+						<div class="img col-6 col-md-12">
+							<img src="/static/images/use-guide/successful.png" class="img-fluid">
+						</div>
+						<div class="text col-6 col-md-12 ">
+							<span class="font-weight-bold">좋은 포트폴리오는</span><br> 낙찰의 기회를 높입니다.
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 mx-auto">
+					<div class="form-row">
+						<div class="img col-6 col-md-12">
+							<img src="/static/images/use-guide/consideration.png" class="img-fluid">
+						</div>
+						<div class="text col-6 col-md-12 ">
+							<span class="font-weight-bold">클라이언트는</span> 프리랜서의<br> <span class="font-weight-bold">포트폴리오</span>부터 검토 합니다.
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 mx-auto">
+					<div class="form-row">
+						<div class="img col-6 col-md-12">
+							<img src="/static/images/use-guide/pickmeup_open.png" class="img-fluid">
+						</div>
+						<div class="text col-6 col-md-12 ">
+							광고나 직거래를 원하시면<br> <span class="font-weight-bold">[픽미업]에 공개</span>하세요.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="info_line">
+			</div>
+				
+				<div class="">
+					<ul class="list list-icons list-icons-style-1 list-primary list-borders">
+						<form th:action="|/pick-me-ups/${pickMeUp.id}/modifications|" th:object="${pickMeUp}" id="form" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="projectId" th:value="${projectId}"/>
+							<input type="hidden" name="contentType" th:value="${pickMeUp.contentType?.name()}"/>
+							<li class="mb-2 border-bottom-0">
+							<i class="fas fa-check"></i>
+							<div class="text-4 font-weight-bold">
+								본인의 섹터 중 하나를 선택해주세요.
+							</div>
+							<div class="mb-0">
+								등록하실 포트폴리오의 섹터가 됩니다.
+							</div>
+						</li>
+						<div class="p-3 mb-3 border">
+							<div class="text-4 font-weight-bold mb-3">나의 섹터와 키워드</div>
+								<div id="tag_con" style="margin-top:-10px">
+									<div class="my_key tag_list border-bottom-0">
+										<th:block th:each="sector: ${user.sectorsByParent}">
+											<div class="tag_list d-flex">
+												<div class="">
+													<div class="custom-control custom-radio">
+														<input type="radio" name="category2nd" th:checked="${pickMeUp.category2nd?.id == sector.key.id}" class="custom-control-input" th:id="|sectorid-${sector.key.id}|" th:value="${sector.key.id}">
+														<label class="custom-control-label" th:for="|sectorid-${sector.key.id}|"></label>
+													</div>
+												</div>
+												<div class="">
+													<div th:text="${sector.key.name}"></div>
+													<div class="tag_sub_list">
+														<a href="#" th:each="childSector: ${sector.value}" th:text="${childSector.name}" class="keyword mr-1"></a>
+													</div>
+												</div>
+											</div>
+										</th:block>
+										<div class="w-100 text-right m-2">
+											<button class="btn btn-primary rounded-0" type="button" onclick="toProfile()"><img src="/static/images/list_icon.png" class="mr-2" style="width: 25px;"/>나의 섹터와 키워드 수정</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<li class="mb-3">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold mb-1">
+									제목
+								</div>
+								<div class="mb-3">
+									<input th:field="*{title}" class="form-control" type="text">
+								</div>
+							</li>
+							<li class="mb-3" th:if="${pickMeUp.contentType?.name() == 'BLOG'}">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold mb-1">
+									내용
+								</div>
+								<div class="d-flex mb-2">
+									<i class="fas fa-exclamation-circle text-dark align-self-center"></i>
+									<div class="ml-2 font-weight-bold">개인 연락처를 노출하는 경우 삭제됩니다.</div>
+								</div>
+								<div class="mb-3">
+									<!-- 에디터 들어가는부분-->
+									<textarea id="summernote" name="editordata" th:value="${pickMeUp?.description}"></textarea>
+									<textarea class="form-control" th:field="*{description}" title="포트폴리오내용" rows="5" style="width:99%; display: none" maxlength="200" placeholder="포트폴리오에 대해 자세히 소개해주세요"></textarea>
+									<!-- 에디터 들어가는부분//-->
+								</div>
+							</li>
+							<li class="mb-3" th:if="${pickMeUp.contentType?.name() != 'BLOG'}">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold mb-1">
+									소개내용
+								</div>
+								<div class="d-flex mb-2">
+									<i class="fas fa-exclamation-circle text-dark align-self-center"></i>
+									<div class="ml-2 font-weight-bold">개인 연락처를 노출하는 경우 삭제됩니다.</div>
+								</div>
+								<div class="mb-3">
+									<textarea class="form-control" th:field="*{description}" title="포트폴리오내용" rows="5" style="width:99%" maxlength="1000" placeholder="포트폴리오에 대해 자세히 소개해주세요"></textarea>
+								</div>
+							</li>
+							<li class="mb-3">
+								<i class="fas fa-check"></i>
+								<input type="hidden" name="payTypeNeedAgreement"/>
+								<div class="text-4 font-weight-bold">
+									나의 최소 희망 보수
+								</div>
+								<div class="">
+									이와 같은 '일'에 필요한 최소 보수를 입력해주세요.
+								</div>
+								<div class="mb-3">
+									<div class="custom-control custom-radio mt-3">
+										<input type="radio" name="payTypeAgreement" value="false" class="custom-control-input" id="hope_pay" th:checked="${pickMeUp.payType?.name() != 'AGREEMENT'}">
+										<label class="custom-control-label w-100" for="hope_pay">
+											<div class="form-row">
+												<div class="d-flex col-4 col-md-5 mb-2" style="top:-5px;">
+													<select class="custom-select" name="payType">
+														<option value="">선택</option>
+														<option th:if="${payTypeItem.name() != 'AGREEMENT'}"
+																th:value="${payTypeItem.name()}"
+																th:text="${payTypeItem.desc}"
+																th:selected="${payTypeItem.name() == pickMeUp.payType?.name()}"
+																th:each="payTypeItem: ${T(com.freelancerk.domain.PickMeUp.PayType).values()}"> </option>
+													</select>
+												</div>
+												<div class="d-flex col-8 col-md-5 mb-2" style="top:-5px;">
+													<input type="text" name="minimumPay" th:value="${pickMeUp.minimumPay}" class="form-control w-75 text-right font-weight-bold text-secondary" maxlength="15">
+													<span class="w-25 align-self-center ml-2">만원 이상</span>
+												</div>
+											</div>
+										</label>
+									</div>
+									<div class="custom-control custom-radio">
+										<input type="radio" name="payTypeAgreement" value="true" class="custom-control-input" id="hope_pay2" th:checked="${pickMeUp.payType?.name() == 'AGREEMENT'}">
+										<label class="custom-control-label" for="hope_pay2">
+											<span class="mx-2">클라이언트와 협의 후 결정</span>
+										</label>
+									</div>
+								</div>
+							</li>
+							<li class="mb-3">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold mb-1">
+									선호하는 근무형태
+								</div>
+								<div class="form-row">
+									<div class="form-group col">
+										<select th:field="*{workPlace}" class="form-control mb-3" required>
+											<option value="">----선택----</option>
+											<option th:each="item : ${T(com.freelancerk.domain.Project.WorkPlace).values()}"
+													th:value="${item}"
+													th:text="${item.name}"
+													th:selected="${item.name() == pickMe?.workPlace?.name()}"></option>
+										</select>
+									</div>
+								</div>
+								<div class="form-row meet-up-place-container">
+									<div class="form-group col">
+										<div class="">
+											<label class="font-weight-bold text-dark">작업 위치</label>
+											<div class="form-row">
+												<div class="col-6 d-flex">
+													<div class="input-group col mb-3 pl-0">
+														<div class="col p-0">
+															<input type="text" class="form-control" th:value="${pickMeUp?.workPlaceAddress1}" name="workPlaceAddress1"   placeholder="서울"/>
+														</div>
+														<span class="ml-1 align-self-center">(도,시)</span>
+													</div>
+												</div>
+												<div class="col-6 d-flex">
+													<div class="input-group col mb-3 pl-0">
+														<div class="col p-0">
+															<input type="text" class="form-control"th:value="${pickMeUp?.workPlaceAddress2}" name="workPlaceAddress2"   placeholder="전지역"/>
+														</div>
+														<span class="ml-1 align-self-center">(시,구,동)</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+
+							<input name="mainImageUrl" type="hidden"/>
+							<input name="selectProductList" id="inputSelectedProductList" type="hidden" />
+							<input name="contactAvailableDayTime" type="hidden" />
+						</form>
+
+						<li class="mb-3" th:if="${pickMeUp.directDealAvailable}">
+							<div style="margin-top:55px; margin-bottom:55px;" class="contact-available-time-pick-container">
+								<div style="letter-spacing: -.05em;">연락 가능한 요일과 시간을 입력해 주세요.</div>
+								<div class="row contact-available-time-pick-row-container" th:if="${#lists.isEmpty(dayTimes)}">
+									<div class="col-md-6">
+										<div class="d-flex" style="align-items: center;height: 38px">
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[0]" id="mon">
+												<label class="custom-control-label" for="mon" style="line-height: 24px;">월</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[1]" id="tue">
+												<label class="custom-control-label" for="tue" style="line-height: 24px;">화</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[2]" id="wed">
+												<label class="custom-control-label" for="wed" style="line-height: 24px;">수</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[3]" id="thur">
+												<label class="custom-control-label" for="thur" style="line-height: 24px;">목</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[4]" id="fri">
+												<label class="custom-control-label" for="fri" style="line-height: 24px;">금</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[5]" id="sat">
+												<label class="custom-control-label" for="sat" style="line-height: 24px;">토</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[6]" id="sun">
+												<label class="custom-control-label" for="sun" style="line-height: 24px;">일</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="d-flex" style="align-items: center;">
+											<div class="custom-control custom-checkbox mr-2 mr-3">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[7]" id="holiday">
+												<label class="custom-control-label" for="holiday" style="line-height: 24px;white-space: nowrap;">공휴일가능</label>
+											</div>
+											<input type="text" data-plugin-timepicker class="form-control contactAvailableTime[0]" data-plugin-options='{ "showMeridian": false }' style="max-width: 70px;">
+											<div class="px-2">~</div>
+											<input type="text" data-plugin-timepicker class="form-control contactAvailableTime[1]" data-plugin-options='{ "showMeridian": false }' style="max-width: 70px;">
+											<i class="fas fa-plus fa-lg pl-3 text-primary contact-available-time-pick-row-add-btn" style="cursor: pointer;"></i>
+										</div>
+									</div>
+								</div>
+
+								<div class="row mt-2 contact-available-time-pick-row-container" th:if="${not #lists.isEmpty(dayTimes)}" th:each="dayTime, iter: ${dayTimes}">
+									<div class="col-md-6">
+										<div class="d-flex" style="align-items: center;height: 38px">
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[0]" th:checked="${dayTime.isChecked('0')}" th:id="|mon_${iter.index}|">
+												<label class="custom-control-label" th:for="|mon_${iter.index}|" style="line-height: 24px;">월</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[1]" th:checked="${dayTime.isChecked('1')}" th:id="|tue_${iter.index}|">
+												<label class="custom-control-label" th:for="|tue_${iter.index}|" style="line-height: 24px;">화</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[2]" th:checked="${dayTime.isChecked('2')}" th:id="|wed_${iter.index}|">
+												<label class="custom-control-label" th:for="|wed_${iter.index}|" style="line-height: 24px;">수</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[3]" th:checked="${dayTime.isChecked('3')}" th:id="|thur_${iter.index}|">
+												<label class="custom-control-label" th:for="|thur_${iter.index}|" style="line-height: 24px;">목</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[4]" th:checked="${dayTime.isChecked('4')}" th:id="|fri_${iter.index}|">
+												<label class="custom-control-label" th:for="|fri_${iter.index}|" style="line-height: 24px;">금</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[5]" th:checked="${dayTime.isChecked('5')}" th:id="|sat_${iter.index}|">
+												<label class="custom-control-label" th:for="|sat_${iter.index}|" style="line-height: 24px;">토</label>
+											</div>
+											<div class="custom-control custom-checkbox mr-2">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[6]" th:checked="${dayTime.isChecked('6')}" th:id="|sun_${iter.index}|">
+												<label class="custom-control-label" th:for="|sun_${iter.index}|" style="line-height: 24px;">일</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="d-flex" style="align-items: center;">
+											<div class="custom-control custom-checkbox mr-2 mr-3">
+												<input type="checkbox" class="custom-control-input contactAvailableDay[7]" th:checked="${dayTime.isChecked('7')}" th:id="|holiday_${iter.index}|">
+												<label class="custom-control-label" th:for="|holiday_${iter.index}|" style="line-height: 24px;white-space: nowrap;">공휴일가능</label>
+											</div>
+											<input type="text" data-plugin-timepicker class="form-control contactAvailableTime[0]" data-plugin-options='{ "showMeridian": false }' th:value="${dayTime.times[0]}" style="max-width: 70px;">
+											<div class="px-2">~</div>
+											<input type="text" data-plugin-timepicker class="form-control contactAvailableTime[1]" data-plugin-options='{ "showMeridian": false }' th:value="${dayTime.times[1]}" style="max-width: 70px;">
+											<i th:if="${iter.index > 0}" class="fas fa-minus fa-lg pl-3 text-primary contact-available-time-pick-row-delete-btn" style="cursor: pointer;"></i>
+											<i th:if="${iter.index == 0}" class="fas fa-plus fa-lg pl-3 text-primary contact-available-time-pick-row-add-btn" style="cursor: pointer;"></i>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</li>
+						<th:block th:if="${pickMeUp.contentType?.name() != 'BLOG'}">
+						<li class="mb-3">
+							<i class="fas fa-check"></i>
+							<div class="text-4 font-weight-bold">
+								썸네일 수정
+							</div>
+							<div class="">
+								<input type="hidden" name="uploadedMainImageUrl" th:value="${pickMeUp.mainImageUrl}"/>
+								<div class="">변경 할 이미지를 선택해주세요.(10MB 제한)<span class="required"> *</span></div>
+								<div class="d-flex">
+									<i class="fas fa-exclamation-circle text-dark align-self-center"></i>
+									<div class="ml-2 font-weight-bold">정사각형 이미지에 최적화 되어 있습니다.</div>
+								</div>
+								<div class="d-flex mb-2">
+									<i class="fas fa-exclamation-circle text-dark align-self-center"></i>
+									<div class="ml-2 font-weight-bold">개인 연락처를 노출하는 경우 삭제됩니다.</div>
+								</div>
+								<div class="row">
+									<div class="col-6 col-md-4">
+										<div class="mainPictureContainer" style="margin-bottom: 1rem;">
+											<div class="slim align-self-center" data-ratio="1:1" data-push="true" data-service="/files" data-label="CLICK">
+												<img th:src="|data:image/jpeg;charset=utf-8;base64,${mainImageBase64}|"/>
+												<input name="mainImageUrl" type="file" class="form-control-file" >
+											</div>
+										</div>
+										<div class="mainVideoContainer" style="display: none; overflow-x: scroll">
+											<video id="mainVideoCandidate" style="max-width: 90%; display: none" src="" controls></video> <br/>
+											<label>비디오 썸네일</label> <br/>
+											<div id="videoThumbnailContainer" style="display: flex; text-align: center">
+											</div>
+										</div>
+									</div>
+									<div class="col-6 col-md-8">
+										
+									</div>
+								</div>
+							</div>
+						</li>
+						</th:block>
+						<th:block th:if="${pickMeUp.contentType?.name() != 'BLOG'}">
+						<li class="mb-3">
+							<i class="fas fa-check"></i>
+							<div class="text-4 font-weight-bold">
+								추가 이미지/영상 수정 <span style="color:red">(PDF불가)</span>
+							</div>
+								<div class="">
+									<!-- 이미지 + 영상 업로드 라이브러리 -->
+									<form id="fileupload" class="mt-3" action="/files/for-jquery-upload" method="POST" enctype="multipart/form-data">
+										<div class="row fileupload-buttonbar">
+											<div class="col-12">
+												<div class="d-block d-sm-inline-block btn btn-outline-primary mb-2 mb-md-0 rounded-0 fileinput-button" style="min-width: 100px;margin-right: 10px;padding:0.3rem;">
+								                    <i class="glyphicon glyphicon-plus"></i>
+								                    <span>업로드</span>
+								                    <input type="file" name="files[]" multiple>
+								                </div>
+								                <div class="d-block d-sm-inline-block mb-2">
+								                	<span class="mark font-weight-bold">2개 더 첨부하실 수 있어요.(100MB 제한)</span>
+								                </div>
+												<!-- <button type="submit" class="btn btn-primary start">
+													<i class="glyphicon glyphicon-upload"></i>
+													<span>전체업로드</span>
+												</button>
+												<button type="reset" class="btn btn-warning cancel">
+													<i class="glyphicon glyphicon-ban-circle"></i>
+													<span>취소</span>
+												</button>
+												<button type="button" class="btn btn-danger delete">
+													<i class="glyphicon glyphicon-trash"></i>
+													<span>삭제</span>
+												</button>
+												<input type="checkbox" class="toggle"> -->
+												<!-- The global file processing state -->
+												<!-- <span class="fileupload-process"></span> -->
+											</div>
+											<!-- <div class="col-lg-5 fileupload-progress fade">
+												<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+													<div class="progress-bar progress-bar-success" style="width:0%;"></div>
+												</div>
+												<div class="progress-extended">&nbsp;</div>
+											</div> -->
+										</div>
+										<table role="presentation" class="table table-striped">
+											<tbody class="files">
+											<tr class="template-download fade in" th:each="detailFileItem: ${pickMeUp.detailFiles}">
+												<td>
+													<div class="row">
+														<div class="col-4 preview">
+															<a th:if="${detailFileItem.fileType?.name() == 'VIDEO'}" th:href="${detailFileItem.fileUrl}" title="" download="" data-gallery>
+																<video th:src="${detailFileItem.fileUrl}"></video>
+															</a>
+															<a th:if="${detailFileItem.fileType?.name() == 'IMAGE'}" th:href="${detailFileItem.fileUrl}" title="" download="" data-gallery>
+																<img th:src="${detailFileItem.fileUrl}">
+															</a>
+			            								</div>
+			            								<div class="col-8">
+			            									<p class="name">
+																<input type="hidden" name="subPiecesFileUrl[]" th:value="${detailFileItem.fileUrl}" />
+																<a th:href="${detailFileItem.fileUrl}" th:title="${detailFileItem.fileOriginName}" download="" data-gallery th:text="${detailFileItem.fileOriginName}"></a>
+															</p>
+															<div class="size" th:text="${detailFileItem.humanReadableSize}"></div>
+															<div class="cancel">
+																<i class="glyphicon glyphicon-ban-circle"></i>
+																<span>삭제</span>
+															</div>
+														</div>
+													</div>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</form>
+									<!-- 이미지 + 영상 업로드 라이브러리// -->
+									
+								</div>
+						</li>
+						</th:block>
+					</ul>
+					<button type="button" id="modifyBtn" class="btn btn-primary btn-lg btn-block rounded-0 mb-5 mt-3">수정완료</button>
+				</div>
+
+
+			</form>
+		</div>
+		
+	</div>
+	<script th:inline="javascript">
+		var modifyMode = true;
+		var subPicCount = [[${pickMeUp.detailFiles?.size()}]];
+		if (!subPicCount) {
+			subPicCount = 0;
+		}
+		var contentType = [[${pickMeUp.contentType?.name()}]];
+	</script>
+
+	<!-- for file upload start -->
+	<script src="/static/vendor/jquery-file-uploader/js/vendor/jquery.ui.widget.js"></script>
+	<script src="https://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+	<script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+	<script src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+	<script src="https://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+	<script src="/static/vendor/jquery-file-uploader/js/jquery.iframe-transport.js"></script>
+	<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload.js"></script>
+	<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-process.js"></script>
+	<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-image.js"></script>
+	<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-audio.js"></script>
+	<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-video.js"></script>
+	<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-validate.js"></script>
+	<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-ui.js"></script>
+
+	<script>
+	
+		$(function () {
+			'use strict';
+
+			// Initialize the jQuery File Upload widget:
+			$('#fileupload').fileupload({
+				// Uncomment the following to send cross-domain cookies:
+				//xhrFields: {withCredentials: true},
+				// url: '/files/for-jquery-upload'
+				autoUpload: true,
+				maxNumberOfFiles: 2,
+				maxFileSize: 100000000,
+				messages: {
+					maxFileSize: '추가 이미지 혹은 동영상은 100MB 이상 업로드 할 수 없습니다.',
+					maxNumberOfFiles: "추가 이미지 혹은 동영상은 2개 이상 업로드 할 수 없습니다."
+				}
+			}).on('fileuploadadd', function (e, data) {
+				data.context = $('<div class="col-md-3 videopreview" />').appendTo('#files');
+				$.each(data.files, function (index, file) {
+					var node = $('<p/>');
+					if (!index) {
+						node
+								.append('<br>')
+					}
+					node.appendTo(data.context);
+				});
+				// data.submit();
+			});
+			// Load existing files:
+			$('#fileupload').addClass('fileupload-processing');
+			$.ajax({
+				// Uncomment the following to send cross-domain cookies:
+				//xhrFields: {withCredentials: true},
+				url: '/files/for-jquery-upload',
+				dataType: 'json',
+				context: $('#fileupload')[0]
+			}).always(function () {
+				$(this).removeClass('fileupload-processing');
+			}).done(function (result) {
+				$(this).fileupload('option', 'done')
+						.call(this, $.Event('done'), {result: result});
+			});
+
+		});
+	</script>
+
+	<script id="template-upload" type="text/x-tmpl" th:inline="javascript">
+	{% for (var i=0, file; file=o.files[i]; i++) { %}
+	    <tr class="template-upload fade">
+	        <td>
+	        	<div class="row">
+					<div class="col-4 preview"></div>
+			        <div class="col-8">
+			        	{% if (window.innerWidth > 480 || !o.options.loadImageFileTypes.test(file.type)) { %}
+			                <p class="name">{%=file.name%}</p>
+			            {% } %}
+			            <strong class="error text-danger"></strong>
+			            {% if (!i && !o.options.autoUpload) { %}
+			                <button class="btn btn-primary start" disabled>
+			                    <i class="glyphicon glyphicon-upload"></i>
+			                    <span>업로드</span>
+			                </button>
+			            {% } %}
+			            {% if (!i) { %}
+			                <div class="cancel">
+			                    <i class="glyphicon glyphicon-ban-circle"></i>
+			                    <span>삭제</span>
+			                </div>
+			            {% } %}
+			        </div>
+			    </div>
+	        </td>
+	    </tr>
+	{% } %}
+	</script>
+	<script id="template-download" type="text/x-tmpl" th:inline="javascript">
+	{% for (var i=0, file; file=o.files[i]; i++) { %}
+	    <tr class="template-download fade">
+	        <td>
+	        	<div class="row">
+					<div class="col-4 preview">
+		            	{% if (file.videoUrl) { %}
+		                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><video src="{%=file.thumbnailUrl%}"></a>
+		                {% } else if (file.thumbnailUrl) { %}
+		                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+		                {% } %}
+		            </div>
+		            <div class="col-8">
+			            {% if (window.innerWidth > 480 || !file.thumbnailUrl) { %}
+			                <p class="name">
+			                    {% if (file.url) { %}
+			                    	<input type="hidden" name="subPiecesFileUrl[]" value="{%=file.url%}" />
+			                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+			                    {% } else { %}
+			                        <span>{%=file.name%}</span>
+			                    {% } %}
+			                </p>
+			            {% } %}
+			            {% if (file.error) { %}
+			                <div>
+			                	<span class="label label-danger">Error</span> {%=file.error%}
+			                </div>
+			            {% } %}
+			            <div class="size">{%=o.formatFileSize(file.size)%}</div>
+			            <div class="cancel">
+		                    <i class="glyphicon glyphicon-ban-circle"></i>
+		                    <span>삭제</span>
+		                </div>
+		            </div>
+		        </div>
+	        </td>
+	    </tr>
+	{% } %}
+	</script>
+	<script src="/static/vendor/slim-image-cropper/slim.kickstart.min.js"></script>
+	<script src="/static/js/freelancer/pickMeUp/pickmeup-common.js"></script>
+	<script src="/static/js/freelancer/pickMeUp/pickmeup-modify.js"></script>
+
+</section>
+</html>

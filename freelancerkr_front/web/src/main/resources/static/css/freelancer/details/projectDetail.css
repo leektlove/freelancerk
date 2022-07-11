@@ -1,0 +1,134 @@
+input[type="file"] {border: 0!important;padding: 0!important;}
+
+
+/******************************** 레이아웃 ********************************/
+.project .detail_container{
+	margin-bottom: 2.5rem;
+}
+.project .detail_container .main_title{
+	color: #0088cc;
+}
+.project .detail_container .list li{
+	margin-bottom: 1rem;
+	padding-left: 22px;
+}
+.project .detail_container .list .list_title{
+	font-weight: 700;
+	font-size: 17px;
+}
+.project .detail_container .list .list_content{
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+
+
+/******************************** 상세설명 ********************************/
+.project .detail_container .list .description .list_content{
+	white-space: pre-line;
+}
+
+
+
+
+/******************************** 기준금액 ********************************/
+.project .detail_container .list .standard_money .count{
+	font-size: 20px;
+	font-weight: 300;
+	margin-bottom: 0.5rem;
+}
+.project .detail_container .list .standard_money .text{
+	font-size: 12px;
+	color: #df564f;
+}
+
+
+
+/******************************** 남은기간/참여인원 ********************************/
+#count_applicant{
+	margin-top:1rem!important;
+	padding:0;
+}
+#count_applicant .count_card{
+	display: flex;
+	border:1px solid #ddd;
+	justify-content: space-around;
+	align-items: center;
+	height: 150px;
+}
+#count_applicant .remainDays{
+	font-size: 18px;
+	text-align: center;
+}
+#count_applicant .applicant_count{
+	font-size: 18px;
+	text-align: center;
+}
+
+/******************************** 프로필카드 ********************************/
+.sidebar .card .form-row{
+	margin: 5px
+}
+.sidebar .card .form-row .profile_img_crop{
+	position: relative;
+}
+.sidebar .card .form-row .badge{
+	justify-content: center;
+	align-content: flex-start;
+	display: flex;
+	margin-bottom: 2px;
+	text-align: center;
+}
+.sidebar .card .form-row .member{
+	line-height: 20px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.sidebar hr{
+	margin-top: 0.25rem;
+	margin-bottom: 0.25rem;
+	background-color: #c1c1c1;
+}
+.sidebar .card .row .d-flex{
+	margin:4px;
+	letter-spacing: -0.5px;
+}
+.sidebar .card .row .d-flex span{
+	line-height: 20px;
+	font-size: 12.6px;
+	white-space: nowrap;
+}
+.sidebar .card .row .d-flex .balance{
+	color: #df564f;
+	white-space: nowrap;
+}
+.sidebar .card .row .d-flex .balance span{
+	font-weight: 700;	
+}
+.sidebar .card .row .d-flex .exposeSNS{
+	width:100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 20px;
+}
+
+/******************************** 반응형 ********************************/
+@media (min-width: 1200px) { 
+
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	
+}
+@media (max-width: 575.98px) {
+	.project .detail_container{
+		margin-bottom: 1rem; 
+	}
+}

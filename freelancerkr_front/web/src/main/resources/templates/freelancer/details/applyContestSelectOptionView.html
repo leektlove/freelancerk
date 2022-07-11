@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/details/applyContestSelectOptionView.css">
+</head>
+	
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>컨테스트 유료옵션</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더//-->
+
+		<div class="container">
+
+			
+			<form action="#" th:action="@{/freelancer/contestDetail/payConfirm}" method="get">
+				<input type="hidden" name="contestId" th:value="${contestId}"/>
+				<input type="hidden" name="payment"/>
+				<input type="hidden" name="mainPiecesFileUrl" th:value="${mainPiecesFileUrl}" />
+				<input type="hidden" name="croppedMainPiecesFileUrl" th:value="${croppedMainPiecesFileUrl}" />
+				<input type="hidden" name="subPiecesFileUrl[]" th:value="${subPiecesFileUrl}" th:each="subPiecesFileUrl : ${subPiecesFileUrls}" />
+				<input type="hidden" name="croppedSubPiecesFileUrl[]" th:value="${fileUrl}" th:each="fileUrl : ${croppedSubPiecesFileUrls}" />
+				<input type="hidden" name="videoThumbnailImageUrl" th:value="${videoThumbnailImageUrl}" />
+
+				<div class="content-body container">
+
+					<div class="featured-boxes">
+                        <div class="row">
+                            <div class="col-lg-9 mx-auto">
+                                <div class="featured-box featured-box-primary text-left mt-2" style="">
+                                    <div class="box-content">
+                                        <div class="text-4">작품을 돋보이게 하고 싶으시다면 옵션을 선택해보세요</div>
+                                        <div class="text-3 text-secondary">이용중이신 픽미업 옵션과 중복되는 옵션은 무료로 제공됩니다.</div>
+										<div class="mt-3">
+                                            <table class="option_table table table-sm">
+                                                <thead>
+                                                	<tr>
+	                                                    <th>옵션상품</th>
+	                                                    <th>횟수</th>
+	                                                    <th>금액</th>
+	                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="product, iter : ${productList}">
+														<td style="vertical-align: middle;">
+															<input th:value="${product.id}" class="productId" type="text" hidden />
+															<div class="custom-control custom-checkbox">
+																<input type="checkbox" class="checkboxProductItem custom-control-input"
+																	   name="freelancerProductItemTypeId[]"
+																	   th:id="|freelancerProductItemTypeId-${iter.index}|"
+																	   th:attr="data-used-in-pickmeup=${product.usedInPickMeUp}"
+																	   th:checked="${product.usedInPickMeUp || (contestEntry!=null AND contestEntry?.isContainOption(product.id))}"
+																	   th:data-product-id="${product.id}"
+																	   th:data-unit-price="${product.unitPrice}"
+																	   th:data-exists-ticket="${contestEntry?.isContainOption(product.id)}"
+																/>
+								                                <label class="custom-control-label" th:for="|freelancerProductItemTypeId-${iter.index}|" th:utext="${product.subName}"></label>
+	                                                            <span class="question-pop text-secondary">
+			                                                        <i class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="" th:data-original-title="${product.description}"></i>
+			                                                    </span>
+								                            </div>
+														</td>
+														<td class="text-center" style="vertical-align: middle;">
+															1회
+														</td>
+														<td class="d-flex">
+															<input type="text" class="inputProductUnitPrice" name="freelancerProductItemTypeUnitPrice[]" th:value="${product.unitPrice}" hidden />
+															<input class="inputProductMoney count-money text-right pr-2 form-control bg-light border-0" type="text" th:value="${#numbers.formatInteger(product.unitPrice, 0, 'COMMA')}"
+															 readonly /><span class="ml-2 align-self-center">원</span>
+														</td>
+													</tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="select_btn">
+											<div class="row">
+												<div class="col-12">
+													<i class="fas fa-volume-up mr-2"></i>
+													현재 픽미업 유료옵션 서비스 기간중이신 회원님은 해당사항 없는 곳에 체크하세요.
+													<th:block th:if="${usingProductList.size() > 0}">
+													<div>
+														<i class="fas fa-volume-up mr-2"></i>
+														픽미업에서 결제하신 옵션은 무료로 적용됩니다.
+													</div>
+													<div>
+														<i class="fas fa-check mr-2"></i>
+														현재 유효한 픽미업 옵션은 다음과 같습니다.
+													</div>
+													<div class="mt-2">
+													<th:block th:each="item : ${usingProductList}">
+														<button th:text="${item.name}" type="button" class="badge badge-dark badge-sm badge-pill mr-1">독창적</button>
+													</th:block>
+													</div>
+													</th:block>
+													<th:block th:if="${usingProductList.size() == 0}">
+														<div>
+															<i class="fas fa-check mr-2"></i>
+															현재 사용중이신 픽미업 옵션은 없습니다.
+														</div>
+													</th:block>
+												</div>
+											</div>
+										</div>
+										<div>
+											<ul class="col-lg-9 mt-4 mx-auto mb-5">
+	                                            <li>
+	                                                <i class="fas fa-angle-right"></i>
+	                                                <span>옵션 구매 수에 따라 할인율이 차등 적용됩니다.</span>
+	                                                <table class="discount_table table table-sm">
+	                                                	<thead>
+		                                                    <tr>
+		                                                        <th>옵션구매</th>
+		                                                        <th>할인율</th>
+		                                                    </tr>
+		                                                </thead>
+		                                                <tbody>
+		                                                    <tr>
+		                                                        <td>2개</td>
+		                                                        <td>10%</td>
+		                                                    </tr>
+		                                                    <tr>
+		                                                        <td>3개</td>
+		                                                        <td>15%</td>
+		                                                    </tr>
+		                                                    <tr>
+		                                                        <td>4개이상</td>
+		                                                        <td>20%</td>
+		                                                    </tr>
+		                                                </tbody>
+	                                                </table>
+	                                            </li>
+	                                            <li>
+	                                                <i class="fas fa-angle-right"></i>
+	                                                <span class="text-secondary">옵션 결제금액의 10%가 포인트로 적립됩니다.</span>
+	                                            </li>
+	                                        </ul>
+	                                    </div>
+                                        <div class="c-foot">
+											<div class="sum text-center text-4">
+												<span>합계(VAT포함)</span>
+												<input id="sumOfProductMoney" class="count text-right pr-2 border-0 bg-light" type="text" value="0" readonly />
+												<span class="count">원</span>
+											</div>
+											<div class="btn w-100">
+												<button class="col-md-5 btn btn-primary btn-lg rounded-0" id="submit" type="submit">다음단계로</button>
+											</div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+				<input name="selectProductList" id="inputSelectedProductList" type="text" hidden />
+			</form>
+
+			
+		</div>
+
+		<script src="/static/js/freelancer/details/apply-contest-select-option-view.js"></script>
+	</section>
+	
+
+</html>

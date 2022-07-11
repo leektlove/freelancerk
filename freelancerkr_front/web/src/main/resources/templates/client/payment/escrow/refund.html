@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/payment/escrow/refund.css">
+
+	<!-- 로컬적용 script -->
+	<script src="/static/js/client/payment/escrow/refund.js"></script>
+
+</head>
+
+	
+	<div layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>환불신청</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+        <!-- 페이지헤더// -->
+		
+		<!-- 탭메뉴 -->
+        <section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+            <div class="container" style="margin-bottom: -3px;">
+                <ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+                    <li class="nav-item mb-0 ">
+                        <a th:href="@{/client/payment/list}" class="nav-link disabled">
+                            <span>결제/포인트관리</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mb-0 active">
+                        <a th:href="@{/client/payment/escrowList}" class="nav-link active">
+                            <span>에스크로</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!-- 탭메뉴// -->
+
+        <section>
+			<div class="container">
+				<!-- <div class="tabs tabs-bottom tabs-center tabs-simple">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a th:href="@{/client/payment/escrowList}" class="nav-link d-flex">
+								<i class="d-block d-sm-none fas fa-caret-right text-primary mr-3 mt-1"></i>
+	                            <span>예치내역</span>
+	                            <span class="count_alarm" th:text="*{#numbers.formatDecimal(totalCount, 0, 'DEFAULT', 0, 'DEFAULT')}">0</span>
+	                        </a>
+						</li>
+						<li class="nav-item active">
+							<a th:href="@{/client/payment/escrowRefundList}" class="nav-link d-flex">
+								<i class="d-block d-sm-none fas fa-caret-right text-primary mr-3 mt-1"></i>
+	                            <span>환불신청</span>
+	                            <span class="count_alarm" th:text="*{#numbers.formatDecimal(totalRefundRequestCount, 0, 'DEFAULT', 0, 'DEFAULT')}">0</span>
+	                        </a>
+						</li>
+					</ul>
+				</div> -->
+				<div class="content-body mt-5">
+				    <form name="fcash" id="fcash" action="" method="post">
+			        	<input type="hidden" name="type" value="add"/>
+						<div class="input_cp_price">
+							<div class="text">환불금액</div>
+			        		<input type="text" required class="form-control required" title="환불금액" name="price" placeholder="" onkeyup="" id="cp_price"/>
+						  	<div class="text">원</div>
+						</div>
+						<div class="textarea_cp_price">
+							<textarea id="cp_memo" name="reason" required class="form-control required" title="환불사유" rows="10" placeholder="환불사유"></textarea>
+						</div>
+						<div class="btn_area">
+							<a href="/client/payment/escrowRefundList">
+								<button id="gotolist" type="button" class="btn btn-lg btn-light rounded-0">목록으로</button>
+							</a>
+							<button id="register" type="button" class="btn btn-lg btn-primary ml-2 rounded-0">등록하기</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</div>
+</html>

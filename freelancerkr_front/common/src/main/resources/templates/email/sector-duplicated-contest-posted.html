@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <title>프리랜서코리아 이메일</title>
+</head>
+<body>
+<div class="email-container" style="padding: 2rem 1rem;max-width: 700px;margin: auto;">
+
+    <!-- 헤더 -->
+    <div class="header" style="display: block;padding-bottom:10px;border-bottom: 1px solid #ddd;">
+        <img src="https://freelancerk.s3.ap-northeast-2.amazonaws.com/static/logo.png" style="max-width: 150px;">
+        <span class="email-title" style="font-size:20px;font-weight: 600;margin-top: 0.3rem;float: right;">포스팅 알림</span>
+    </div>
+    <div style="display: block;clear: both;"></div>
+    <div class="title" style="font-size: 25px;padding: 1rem 0;border-bottom: 1px solid #ddd;">
+        동일섹터 컨테스트 포스팅 안내
+    </div>
+    <!-- 헤더//-->
+
+    <!-- 본문 -->
+    <table class="table" style="border-collapse: collapse;width: 100%;margin-top: 2rem;">
+        <tr>
+            <td class="title" style="border-bottom: 1px solid #ddd;padding: 0.5rem 0;width: 80px;font-size: 13px">컨테스트명</td>
+            <td class="content" th:text="${item.title}" style="border-bottom: 1px solid #ddd;padding: 0.5rem;font-size: 17px;">캐릭터사업</td>
+        </tr>
+        <tr>
+            <td class="title" style="border-bottom: 1px solid #ddd;padding: 0.5rem 0;width: 80px;font-size: 13px">등록섹터</td>
+            <td class="content" th:text="${item.mainContestMetaType}" style="border-bottom: 1px solid #ddd;padding: 0.5rem;font-size: 17px;">캐릭터>캐릭터</td>
+        </tr>
+        <tr>
+            <td class="title" style="border-bottom: 1px solid #ddd;padding: 0.5rem 0;width: 80px;font-size: 13px">프로젝트 내용</td>
+            <td class="content" th:utext="${item.description}" style="border-bottom: 1px solid #ddd;padding: 0.5rem;font-size: 17px;">
+                신규사업캐릭터작업
+            </td>
+        </tr>
+        <tr>
+            <td class="title" style="border-bottom: 1px solid #ddd;padding: 0.5rem 0;width: 80px;font-size: 13px">확정상금/선정</td>
+            <td class="content" style="border-bottom: 1px solid #ddd;padding: 0.5rem;font-size: 17px;">
+                <span th:text="${item.totalPrize/10000}">2000</span>만원 | <span th:text="${item.prizeTargetPersons}">3</span>위까지 선정
+            </td>
+        </tr>
+    </table>
+    <th:block th:include="email/bottom-button-container"></th:block>
+    <!-- 본문//-->
+
+    <th:block th:include="email/footer"></th:block>
+
+</div>
+</body>
+</html>

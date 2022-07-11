@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/statistics.css">
+</head>
+
+<body>
+<section id="content" layout:fragment="content">
+	<div id="container">
+		<div id="container_side">
+			<div id="cs_list">
+				<ul>
+					<li><a href="">접속통계</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="container_content">
+			<div class="container_inner">
+				<form name="" id="" method="get">
+
+					<h1>■ 접속자통계</h1>
+					<table class="boardform">
+						<colgroup>
+							<col width="120">
+							<col width="">
+						</colgroup>
+						<tbody>
+						<tr>
+							<th>구분</th>
+							<td>
+								<a href="">접속자</a> |
+								<a href="">도메인</a> |
+								<a href="">브라우저</a> |
+								<a href="https://www.freelancerk.com:443/admin/stats/stats_os.php?fr_date=2018-11-13&amp;to_date=2018-11-13">운영체제</a> |
+								<a href="https://www.freelancerk.com:443/admin/stats/stats_hour.php?fr_date=2018-11-13&amp;to_date=2018-11-13">시간</a> |
+								<a href="https://www.freelancerk.com:443/admin/stats/stats_week.php?fr_date=2018-11-13&amp;to_date=2018-11-13">요일</a> |
+								<a href="https://www.freelancerk.com:443/admin/stats/stats_date.php?fr_date=2018-11-13&amp;to_date=2018-11-13">일</a> |
+								<a href="https://www.freelancerk.com:443/admin/stats/stats_month.php?fr_date=2018-11-13&amp;to_date=2018-11-13">월</a> |
+								<a href="https://www.freelancerk.com:443/admin/stats/stats_year.php?fr_date=2018-11-13&amp;to_date=2018-11-13">년</a>
+							</td>
+						</tr>
+						<tr>
+							<th>일자</th>
+							<td>
+								<input type="text" name="fr_date" value="2018-11-13" id="fr_date" size="8" readonly="" class="readonly search_date hasDatepicker">
+								~
+								<input type="text" name="to_date" value="2018-11-13" id="to_date" size="8" readonly="" class="readonly search_date hasDatepicker">
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tc">
+							<input type="submit" value="검색" class="btn-color large">
+						</div>
+					</div>
+				</form>
+				<h1>■ 접속자별 리스트</h1>
+
+				<table class="boardlist">
+					<colgroup>
+						<col width="140">
+						<col width="">
+						<col width="100">
+						<col width="100">
+						<col width="100">
+						<col width="200">
+					</colgroup>
+					<tbody><tr>
+						<th>IP</th>
+						<th>접속경로</th>
+						<th>브라우져</th>
+						<th>운영체제</th>
+						<th>접속기기</th>
+						<th>접속일시</th>
+					</tr>
+					<tr>
+						<td>110.70.59.23</td>
+						<td class="tl">
+							<a href="http://instagram.com/" target="_blank" class="referer_con">http://instagram.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Linux</td>
+						<td>MOBILE</td>
+						<td>2018-11-13 21:53:01</td>
+					</tr>
+					<tr>
+						<td>122.46.135.164</td>
+						<td class="tl">
+						</td>
+						<td>Gecko</td>
+						<td>MAC</td>
+						<td>MOBILE</td>
+						<td>2018-11-13 21:52:02</td>
+					</tr>
+					<tr>
+						<td>106.246.93.153</td>
+						<td class="tl">
+							<a href="https://www.facebook.com/" target="_blank" class="referer_con">https://www.facebook.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:50:34</td>
+					</tr>
+					<tr>
+						<td>118.176.32.100</td>
+						<td class="tl">
+							<a href="https://search.naver.com/search.naver?sm=top_hty&amp;fbm=0&amp;ie=utf8&amp;query=%ED%94%84%EB%A6%AC%EB%9E%9C%EC%84%9C%EC%BD%94%EB%A6%AC%EC%95%84" target="_blank" class="referer_con">https://search.naver.com/search.naver?sm=top_hty&amp;fbm=0&amp;ie=utf8&amp;query=프리랜서코리아</a>			</td>
+						<td>Chrome</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:49:38</td>
+					</tr>
+					<tr>
+						<td>122.43.50.48</td>
+						<td class="tl">
+							<a href="http://m.facebook.com" target="_blank" class="referer_con">http://m.facebook.com</a>			</td>
+						<td>Gecko</td>
+						<td>MAC</td>
+						<td>MOBILE</td>
+						<td>2018-11-13 21:48:36</td>
+					</tr>
+					<tr>
+						<td>125.143.11.39</td>
+						<td class="tl">
+							<a href="http://m.facebook.com" target="_blank" class="referer_con">http://m.facebook.com</a>			</td>
+						<td>Gecko</td>
+						<td>MAC</td>
+						<td>MOBILE</td>
+						<td>2018-11-13 21:48:05</td>
+					</tr>
+					<tr>
+						<td>118.46.61.13</td>
+						<td class="tl">
+							<a href="https://www.facebook.com/" target="_blank" class="referer_con">https://www.facebook.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:43:51</td>
+					</tr>
+					<tr>
+						<td>137.226.113.26</td>
+						<td class="tl">
+						</td>
+						<td>Mozilla</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:42:40</td>
+					</tr>
+					<tr>
+						<td>112.170.225.240</td>
+						<td class="tl">
+							<a href="https://www.facebook.com/" target="_blank" class="referer_con">https://www.facebook.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:41:30</td>
+					</tr>
+					<tr>
+						<td>223.62.203.199</td>
+						<td class="tl">
+							<a href="http://instagram.com/" target="_blank" class="referer_con">http://instagram.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Linux</td>
+						<td>MOBILE</td>
+						<td>2018-11-13 21:38:06</td>
+					</tr>
+					<tr>
+						<td>59.9.206.120</td>
+						<td class="tl">
+							<a href="https://www.facebook.com/" target="_blank" class="referer_con">https://www.facebook.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:36:11</td>
+					</tr>
+					<tr>
+						<td>211.187.172.35</td>
+						<td class="tl">
+							<a href="https://l.facebook.com/" target="_blank" class="referer_con">https://l.facebook.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Linux</td>
+						<td>MOBILE</td>
+						<td>2018-11-13 21:35:09</td>
+					</tr>
+					<tr>
+						<td>203.217.247.129</td>
+						<td class="tl">
+						</td>
+						<td>Chrome</td>
+						<td>MAC</td>
+						<td>PC</td>
+						<td>2018-11-13 21:31:01</td>
+					</tr>
+					<tr>
+						<td>223.38.8.60</td>
+						<td class="tl">
+							<a href="http://m.facebook.com" target="_blank" class="referer_con">http://m.facebook.com</a>			</td>
+						<td>Gecko</td>
+						<td>MAC</td>
+						<td>MOBILE</td>
+						<td>2018-11-13 21:30:31</td>
+					</tr>
+					<tr>
+						<td>203.217.244.129</td>
+						<td class="tl">
+						</td>
+						<td>Chrome</td>
+						<td>MAC</td>
+						<td>PC</td>
+						<td>2018-11-13 21:29:59</td>
+					</tr>
+					<tr>
+						<td>211.234.68.189</td>
+						<td class="tl">
+							<a href="https://www.facebook.com/" target="_blank" class="referer_con">https://www.facebook.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:29:33</td>
+					</tr>
+					<tr>
+						<td>121.151.15.27</td>
+						<td class="tl">
+							<a href="https://www.google.co.kr/" target="_blank" class="referer_con">https://www.google.co.kr/</a>			</td>
+						<td>Chrome</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:18:42</td>
+					</tr>
+					<tr>
+						<td>220.72.127.95</td>
+						<td class="tl">
+							<a href="https://www.facebook.com/" target="_blank" class="referer_con">https://www.facebook.com/</a>			</td>
+						<td>Chrome</td>
+						<td>Mozilla</td>
+						<td>PC</td>
+						<td>2018-11-13 21:12:38</td>
+					</tr>
+					<tr>
+						<td>178.154.200.70</td>
+						<td class="tl">
+						</td>
+						<td>Robot</td>
+						<td>Robot</td>
+						<td>PC</td>
+						<td>2018-11-13 21:09:43</td>
+					</tr>
+					<tr>
+						<td>211.36.157.46</td>
+						<td class="tl">
+							<a href="https://m.facebook.com/" target="_blank" class="referer_con">https://m.facebook.com/</a>			</td>
+						<td>Gecko</td>
+						<td>MAC</td>
+						<td>MOBILE</td>
+						<td>2018-11-13 21:02:17</td>
+					</tr>
+					</tbody></table>
+
+				<div class="boardbutton">
+					<div class="tl"></div>
+					<div class="tc">
+						<div class="boardpage">
+							<span class="current">1</span><a href="https://www.freelancerk.com:443/admin/stats/stats_list.php?page=2&amp;fr_date=2018-11-13&amp;to_date=2018-11-13">2</a></div>
+					</div>
+					<div class="tr"></div>
+				</div>
+
+			</div>
+
+
+		</div>
+	</div><!-- container-->
+</section>
+</body>
+</html>

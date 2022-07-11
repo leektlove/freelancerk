@@ -1,0 +1,70 @@
+
+<!-- 입찰참여 팝업 -->
+<div class="modal fade modal_wrap" id="bid" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+            <!-- 팝업 헤더 -->
+            <div class="head modal-header text-center">
+                <h5 class="modal-title" id="ModalLabel"><span class="popUpProjectTitle"></span></h5>
+                <div class="">
+                    <a class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 팝업 헤더// -->
+
+            <!-- 팝업 컨텐츠 -->
+            <div class="content modal-body">
+                <ul>
+                    <li class="mb-2">
+                        <div class="budget">
+                            <div class="title">입찰기준가격</div>
+                            <div class="contents projectBudget"></div>
+                        </div>
+                    </li>
+                    <li class="applyBid">
+                        <div class="title">나의 입찰금액</div>
+                        <div class="contents">
+                            <div class="wrap">
+                                <img src="/static/images/icon/won.png">
+                                <input id="bidAmount" class="form-control mr-2" type="text" name="fa_price" value="" maxlength="11" onkeyup="numberWithCommas(this);">
+                                <span class="align-self-center">원</span>
+                            </div>
+                            <div id="bidAmountKorean"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="info">
+                            <img src="/static/images/icon/caution.png">
+                            <div>
+                                <div class="">
+                                    입찰금액만큼 입찰순서도 중요합니다.
+                                </div>
+                                <div class="text-secondary">
+                                    프로필과 포트폴리오를 꼭 다시한번 확인해주세요.
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="d-flex justify-content-center mt-4">
+                    <input id="popUpProjectId" type="text" hidden>
+                    <a href="#" class="btn btn-light btn-lg rounded-0 pop_close mr-2" data-dismiss="modal" aria-label="Close">취소</a>
+                    <span class="btnApplyBid btn btn-primary btn-lg rounded-0">제출</span>
+                </div>
+            </div>
+            <!-- 팝업 컨텐츠 //-->
+
+        </div>
+    </div>
+</div>
+<!-- 입찰참여 팝업//-->
+<script>
+    $(document).on('keyup', 'input[name=fa_price]', function() {
+        var price = removeComma($(this).val());
+        $('#bidAmountKorean').text(viewKorean(price + ""));
+    });
+</script>

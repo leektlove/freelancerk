@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/project/pickList.css">
+
+	<!-- 로컬적용 script -->
+	<script src="/static/js/freelancer/project/pick-list.js"></script>
+</head>	
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>찜한 프로젝트</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/findProject/list}" class="nav-link active d-flex">
+							<span>프로젝트 찾기</span>
+							<span class="count_alarm" th:text="${processingCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/bid/suggestedList}" class="nav-link d-flex" href="#">
+							<span>제안받은 프로젝트</span>
+							<span class="count_alarm" th:text="${propositionsCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/freelancer/project/pickList}" class="nav-link disabled d-flex">
+							<span>찜한 프로젝트</span>
+							<span class="count_alarm" th:text="${page.totalElements}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+		
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<div>
+						<!-- 검색 -->
+						<div id="sub_search">
+							<form id="searchForm" action="#" th:action="@{/freelancer/project/pickList}" method="get">
+								<div class="clearfix w-100">
+									<div class="sub_search_text float-left">
+										총 <span class="text-primary" th:text="${page.totalElements}">1</span>건의 프로젝트가 있습니다.
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- 검색 //-->
+						
+						<!-- 찜리스트 -->
+						<article class="pb-2 list_card bg-white post post-medium" th:each="favorite : ${page.content}">
+							<div class="row">
+								<div class="col-12">
+									<div class="card_title_date">
+                                        <th:block th:if="${favorite.project.projectType.name()=='PROJECT'}">
+											<div class="project title" th:text="${favorite.project.title}"></div>
+										</th:block>
+										<th:block th:if="${favorite.project.projectType.name()=='CONTEST'}">
+											<div class="contest title" th:text="${favorite.project.title}"></div>
+										</th:block>
+                                        <div class="date">
+                                            <span th:text="|찜한날짜 : ${#temporals.format(favorite.createdAt, 'yy-MM-dd HH:mm:ss')}|"></span>
+                                        </div>
+                                    </div>
+							    	<div class="action_line">
+								    	<div class="row">
+			                                <div class="col-lg-6 align-self-center">
+			                                	<div class="content_wrap">
+													<i class="icon-calendar icons"></i>
+													<span th:text="|D-${favorite.project.getRemainDays()}|"></span>
+												</div>
+			                                </div>
+			                                <div class="col-lg-6 text-right">
+			                                    <div class="btn-group">
+													<input class="projectId" th:value="${favorite.project.id}" type="text" hidden>
+													<button class="btn btn-light rounded-0 btnDeleteLike delete_dibs" data-no="">삭제하기</button>
+		                                        	<th:block th:if="${favorite.project.projectType.name()=='PROJECT'}">
+			                                            <a th:href="@{|/freelancer/projects/${favorite.project.id}/details|}">
+			                                            	<button class="btn btn-primary rounded-0">
+			                                            		프로젝트 상세보기<i class="fas fa-angle-right"></i>
+			                                            	</button>
+														</a>
+			                                    	</th:block>
+			                                        <th:block th:if="${favorite.project.projectType.name()=='CONTEST'}">
+														<a th:href="@{|/freelancer/contests/${favorite.project.id}/details|}">
+															<button class="btn btn-secondary rounded-0">
+																컨테스트 상세보기<i class="fas fa-angle-right"></i>
+															</button>
+														</a>
+													</th:block>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+								</div>
+							</div>
+						</article>
+						<!-- 찜리스트 -->
+
+						<!-- 가이드 -->
+						<div class="heading heading-border heading-middle-border" style="margin-top:5rem;">
+				            <h4 class="font-weight-normal"><strong class="font-weight-bold">찜한 프로젝트</strong></h4>
+				        </div>
+						<div class="row" style="align-items: center;padding-bottom:5rem;">
+							<!-- <div class="guide_title col-12 mb-5">낙찰 후 진행중인 프로젝트</div> -->
+							<div class="col-md-10 col-lg-8 col-xl-6 mx-auto">
+								<div class="row">
+									<div class="pickme_guid_1 guide col-6">
+										<div class="form-row">
+											<div class="col-lg-12">
+												<img src="/static/images/use-guide/pick_01.png" class="img-fluid">
+											</div>
+											<div class="col-lg-12" style="align-self: center;">
+												프로젝트를 검색해보세요!
+											</div>
+										</div>
+									</div>
+									<div class="pickme_guid_2 guide col-6">
+										<div class="form-row">
+											<div class="col-lg-12">
+												<img src="/static/images/use-guide/pick_02.png" class="img-fluid">
+											</div>
+											<div class="col-lg-12" style="align-self: center;">
+												마음에 드는<br class="d-block d-sm-none"> 프로젝트를 찜!
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 가이드// -->
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</html>

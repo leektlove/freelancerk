@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/details/projectDetail.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>프로젝트 상세보기</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<div class="container">
+			<div class="content-body">
+				<div class="row pt-4 mt-2 mb-5">
+					<div class="col-lg-9 col-md-8 mb-4 mb-md-0">
+						<h2 class="text-primary" th:text="${project.title}"></h2>
+						<ul class="list list-icons list-icons-style-1 list-primary list-borders">
+							<li style="margin-top:1rem!important">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold">
+									프로젝트명
+								</div>
+								<div class="mb-1">
+									카드뉴스 - 프리랜서코리아
+								</div>
+							</li>
+							<li style="margin-top:1rem!important">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold">
+									설명
+								</div>
+								<div class="mb-1">
+									프리랜서코리아와 최종수님의 카드뉴스 프로젝트 두번째 방입니다.
+								</div>
+							</li>
+							<li style="margin-top:1rem!important">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold">
+									낙찰금액
+								</div>
+								<div class="mb-1">
+									0
+								</div>
+							</li>
+							<li style="margin-top:1rem!important">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold">
+									에스크로 예치필요금액
+								</div>
+								<div class="mb-1">
+									<div><span style="color:red">0</span>(VAT포함)</div>
+									<div>예치계좌:KB국민은행, 400437-01-020230,(주)플랫폼위즈컴퍼니</div>
+									<div>("프리랜서코리아"는 (주)플랫폼위즈컴퍼니의 등록상표입니다.)</div>
+								</div>
+							</li>
+							<li style="margin-top:1rem!important">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold">
+									낙찰일
+								</div>
+								<div class="mb-1">
+									2019.03.05 10:56:52
+								</div>
+							</li>
+							<li style="margin-top:1rem!important">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold">
+									 계약서 및 문서
+								</div>
+								<div class="mb-1">
+									계약서등을 작성하신 경우 이곳에 업로드 해주세요.
+									<div id="projectContractFileContainer">
+										<div th:each="fileItem: ${contractFiles}">
+											<a th:href="${fileItem.fileUrl}" th:text="${fileItem.fileName}"></a> <i class="fa fa-window-close cursor projectContractFileDeleteBtn" th:data-id="${fileItem.id}" aria-hidden="true"></i>
+										</div>
+									</div>
+									<div>
+										<input type="file" name="projectContractFile">
+									</div>
+								</div>
+							</li>
+							<li style="margin-top:1rem!important">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold">
+									계약서 및 문서<br/>(프리랜서)
+								</div>
+								<div class="mb-1">
+									
+								</div>
+							</li>
+							<li style="margin-top:1rem!important">
+								<i class="fas fa-check"></i>
+								<div class="text-4 font-weight-bold mb-3">
+									나의 지급 현황
+								</div>
+								<div class="mb-1">
+									<table class="table text-center boardlist">
+										<thead>
+											<tr>
+												<th style="border-bottom: 1px solid #dee2e6;">회차/날짜</th>
+												<th style="border-bottom: 1px solid #dee2e6;">청구금액</th>
+												<th style="border-bottom: 1px solid #dee2e6;">승인금액</th>
+												<th style="border-bottom: 1px solid #dee2e6;">누적지급금액</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="align-middle">
+													<div>1회차</div>
+													<div>2019.03.05</div>
+												</td>
+												<td class="align-middle">
+													50,000원
+												</td>
+												<td class="align-middle">
+													50,000원
+												</td>
+												<td class="align-middle">
+													5,000원
+												</td>
+											</tr>
+											<tr>
+												<td class="align-middle">
+													<div>2회차</div>
+													<div>2019.04.05</div>
+												</td>
+												<td class="align-middle">
+													50,000원
+												</td>
+												<td class="align-middle">
+													50,000원
+												</td>
+												<td class="align-middle">
+													10,000원
+												</td>
+											</tr>
+										</tbody>
+
+									</table>
+								</div>
+							</li>
+						</ul>
+						<div id="comment" th:if="${project.postingClient.id == #authentication.id}">
+							<input id="projectId" th:field="${project.id}" type="text" hidden>
+
+							<!-- 메시지 -->
+							<h4 class="mb-2">메시지 (<span th:text="${commentList.size()}">0</span>)</h4>
+							<div class="comment-view">
+								<ul class="comments" th:if="${commentList.size() > 0}" th:each="comment: ${commentList}">
+									<li class="receive" th:if="${comment.user.id != #authentication.id}">
+										<div class="comment-by">
+											<span class="appointed_freelancer" th:text="${comment.user.exposeName}" th:data-user-id="${comment.user.id}" th:data-user-name="${comment.user.exposeName}"></span>
+											<span class="link_portfolio">포트폴리오</span>
+											<img src="/static/images/icon/d_rightarrow.png">
+										</div>
+										<div class="comment">
+											<div class="comment-block appointed_freelancer" th:data-user-id="${comment.user.id}" th:data-user-name="${comment.user.exposeName}">
+												<div class="expose_name" th:if="${comment.targetUser != null}" th:text="${comment.targetUser.exposeName + ' 에게 전송'}"></div>
+												<div class="comment-arrow"></div>
+												<p th:text="${comment.content}"></p>
+											</div>
+											<div class="date" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></div>
+											<div class="img-thumbnail appointed_freelancer d-none d-sm-block  p-0" th:data-user-id="${comment.user.id}" th:data-user-name="${comment.user.exposeName}">
+												<img th:src="@{${(#strings.isEmpty(comment.user.profileImageUrl)?'/static/images/f_basic.jpg':comment.user.profileImageUrl)}}" class="avatar">
+											</div>
+										</div>
+									</li>
+									<li class="send" th:if="${comment.user.id == #authentication.id}">
+										<div class="comment">
+											<div class="img-thumbnail d-none d-sm-block p-0">
+												<img th:src="@{${(#strings.isEmpty(comment.user.profileImageUrl)?'/static/images/c_basic.jpg':comment.user.profileImageUrl)}}" class="avatar">
+											</div>
+											<span class="comment-by" th:text="${comment.project.postingClient.exposeName}"></span>
+											<div class="comment-block media-body">
+												<div class="target_user" th:if="${comment.targetUser != null}" th:text="${comment.targetUser.exposeName + ' 에게 전송'}"></div>
+												<div class="comment-arrow"></div>
+												<p th:text="${comment.content}"></p>
+											</div>
+											<div class="date" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></div>
+										</div>
+									</li>
+								</ul>
+								<div class="input-group">
+									<div id="freelancerUserArea" style="display: none;">
+										<span class="name"><span id="freelancerUsername" class=""></span> 에게 메시지 전송 </span>
+										<i class="fas fa-close ml-2 cancle" id="toFreelancerMessageBtn" >취소</i>
+									</div>
+									<input type="hidden" name="targetUserId" />
+									<textarea th:if="${project.status.name() == 'POSTED'}" id="inputReply" rows="3" class="form-control" name="contents" maxlength="1000" placeholder="프리랜서들에게 안내 사항(전체 메시지)등을 전달해주세요. 개별 메시지(댓글)는 특정인을 선택 후 전송하시면 됩니다." th:disabled="${(project.status.name() != 'IN_PROGRESS' AND project.status.name() != 'POSTED' )?'disabled':'false'}" style="resize: none;height: 50px;line-height: inherit;"></textarea>
+									<textarea th:if="${project.status.name() == 'IN_PROGRESS'}" id="inputReply" rows="3" class="form-control" name="contents" maxlength="1000" placeholder="낙찰자와 자유롭게 소통하세요." th:disabled="${(project.status.name() != 'IN_PROGRESS' AND project.status.name() != 'POSTED' )?'disabled':'false'}" style="resize: none;height: 50px;line-height: inherit;"></textarea>
+									<div class="input-group-append">
+										<button id="btnReply" class="btn btn-primary" type="button" style="min-width: 100px">전송</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-4">
+						<aside class="sidebar" id="sidebar" data-plugin-sticky data-plugin-options="{'minWidth': 991, 'containerSelector': '.container', 'padding': {'top': 110}}">
+
+							<!-- 프리랜서 프로필 카드 -->
+							<div class="card p-3 mb-2 rounded">
+								<div class="form-row" style="margin: 5px">
+									<div class="col-4 col-md-12 col-lg-4">
+										<!-- <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+											<a th:href="${client.profileImageUrl}"> -->
+				                                <div class="profile_img_crop" style="position: relative;">
+													<div class="center-crop-wrapper rounded">
+														<img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(client.profileImageUrl)?'/static/images/c_basic.jpg':client.profileImageUrl)}}">
+													</div>
+												</div>
+												<span class="badge badge-light px-2 py-1 mt-1 text-primary" style="justify-content: center;align-content: flex-start;display: flex;margin-bottom: 2px;text-align: center;">프리랜서</span>
+											<!-- </a>
+										</div> -->
+									</div>
+									<div class="col-8 col-md-12 col-lg-8 align-self-end">
+										<div class="member font-weight-bold" style="line-height: 20px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+										</div>
+										<div class="text-1" style="line-height: 17px" th:text="${project.postingClient.businessType?.name}"></div>
+										<div id="star">
+											<div class="rating-container theme-krajee-fas rating-xs rating-animate">
+                                                <div class="rating-stars">
+                                                    <span class="empty-stars">
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                    </span>
+                                                    <span class="filled-stars" th:style="|width: ${project.contractedFreelancer.ratingPercentageAsFreelancer}%|">
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div style="font-size: 13px;font-weight: 600;">프로젝트 <span id="allpjt_num" class="text-primary" th:text="${#numbers.formatInteger(project.contractedFreelancer.contractedProjectCount, 0, 'COMMA')}">10</span>건 중
+												<span id="markpjt_num" class="text-primary" th:text="${#numbers.formatInteger(project.contractedFreelancer.ratedProjectCountAsFreelancer, 0, 'COMMA')}">6</span>건 평가</div>
+                                            </div>
+                                            <!-- <div class="star-point" style="line-height: 23px;width: 120px">
+                                                <img src="/static/images/star_grade_area.png">
+                                                <div class="star_point_con" style="width: 30%">
+                                                    <img src="/static/images/star_grade_point.png">
+                                                </div>
+                                            </div>
+                                            <div class="text-1">프로젝트 <span id="allpjt_num" class="text-primary" >10</span>건 중 <span id="markpjt_num" class="text-primary" >6</span>건 평가</div> -->
+                                        </div>
+									</div>
+								</div>
+								<hr class="my-1" style="background-color: #c1c1c1;" />
+								<div class="row">
+									<div class="col-12">
+										<div class="d-flex" style="margin:4px">
+											<i class="icon-envelope-open icons mr-2 align-self-center"></i>
+											<span class="text-2" style="line-height: 20px" th:text="${project.postingClient.exposeEmail} ? ${project.postingClient.email}: '비공개'">
+											</span>
+										</div>
+										<div class="d-flex" style="margin:4px">
+											<i class="icon-screen-smartphone icons mr-2 align-self-center"></i>
+											<span class="text-2" style="line-height: 20px" th:text="${project.postingClient.exposeCellphone} ? ${project.postingClient.cellphone}: '비공개'">
+											</span>
+										</div>
+										<div class="d-flex" style="margin:4px">
+											<i class="icon-home icons mr-2"></i>
+											<a th:href="${project.postingClient.homepageUrl}"  style="width:100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 20px;">
+												<span class="text-2" th:text="${project.postingClient.exposeSns} ? ${project.postingClient.homepageUrl} : 비공개">
+												</span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<hr class="my-1" style="background-color: #c1c1c1;" />
+							</div>
+							<!-- 프리랜서 프로필 카드//-->
+
+							<a href="javascript:history.back()">
+								<button type="button" class="btn btn-light btn-lg btn-block rounded-0 mb-2">이전페이지로 돌아가기</button>
+							</a>
+						</aside>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<script src="/static/js/client/project/detail.js"></script>
+	</section>
+	
+
+</html>

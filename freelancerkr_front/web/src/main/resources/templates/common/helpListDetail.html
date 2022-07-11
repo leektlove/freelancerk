@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/common/helpList/detail.css">
+</head>
+
+    
+    <div id="content" layout:fragment="content">
+
+        <!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                        <h1 class="text-dark"><strong>문의사항</strong></h1>
+
+                    </div>
+                    <div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 페이지헤더// -->
+
+        <!-- 탭메뉴 -->
+        <section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+            <div class="container" style="margin-bottom: -3px;">
+                <ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+                    <li class="nav-item mb-0">
+                        <a th:href="@{/common/askForHelp}" class="nav-link active d-flex">
+                            <span>문의하기</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mb-0 active">
+                        <a th:href="@{/common/helpList}" class="nav-link disabled d-flex">
+                            <span>문의목록</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!-- 탭메뉴// -->
+        
+        <div class="container">
+            <div class="content-body">
+                <div class="q_n_a">
+                    
+                    <!-- 문의 -->
+                    <div class="question_container">
+                        <div class="title" th:text="${inquiry.title}"></div>
+                        <div class="wrap">
+                            <div class="createdAt">
+                                <div>등록일</div>
+                                <div th:text="${#temporals.format(inquiry.createdAt, 'yyyy-MM-dd')}"></div>
+                            </div>
+                            <div class="status">
+                                <div>진행상태</div>
+                                <div th:text="${inquiry.status.name()=='REGISTERED'?'등록':inquiry.status.name()=='IN_PROGRESS'?'처리중':'처리완료'}"></div>
+                            </div>
+                        </div>
+                        <div class="des">
+                            <div th:utext="${#strings.replace(inquiry.content, T(org.apache.commons.lang3.StringUtils).LF, '&lt;br /&gt;')}"></div>
+                        </div>
+                    </div>
+                    <!-- 문의 -->
+
+                    <!-- 답변 -->
+                    <th:block th:if="${inquiry.answers.size() > 0}">
+                    <div class="answer_container" th:each="answerItem: ${inquiry.answers}">
+                        <div class="time">
+                            <div>답변일</div>
+                            <div th:text="${#temporals.format(answerItem.createdAt, 'yyyy-MM-dd HH:mm')}"></div>
+                        </div>
+                        <div class="des">
+                            <div th:utext="${#strings.replace(answerItem.content, T(org.apache.commons.lang3.StringUtils).LF, '&lt;br /&gt;')}"></div>
+                        </div>
+                    </div>
+                    </th:block>
+                    <!-- 답변 -->
+
+                </div>
+
+                <div class="btn_group">
+                    <a th:href="@{/common/helpList}" class="btn btn-lg">목록으로</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+</html>

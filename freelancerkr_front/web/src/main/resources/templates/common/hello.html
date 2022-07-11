@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/common/howitworks.css">
+</head>
+
+
+<section id="content" layout:fragment="content">
+    hello
+    <div class="main_bg">
+        <img src="/static/images/hiw_bg.png" class="img-fluid" alt="">
+        <h1 class="title">How It Works</h1>
+        <p class="description">프코는 어떻게 작동할까요?</p>
+        <div class="btn_container">
+            <a href="" class="btn_large btn_client mr-3 current">클라이언트</a>
+            <a href="/common/howItWorks?role=ROLE_FREELANCER" class="btn_large btn_freelancer">프리랜서</a>
+        </div>
+    </div>
+    <div class="container client">
+        <div id="client_ex" class="nav_container">
+            <div class="main_nav row">
+                <a href="#pickMeUp" class="col-sm-6 col-md-3"><span class="current">포트폴리오</span></a>
+                <a href="#Contest" class="col-sm-6 col-md-3"><span>컨테스트</span></a>
+                <a href="#Project" class="col-sm-6 col-md-3"><span>프로젝트</span></a>
+                <a href="#Ascrow" class="col-sm-6 col-md-3"><span>에스크로서비스</span></a>
+            </div>
+        </div>
+        <div data-spy="scroll" data-target="#client_ex" data-offset="0" class="client_ex">
+            <div id="pickMeUp" class="ad row pt-5">
+                <div class="image_container col-sm-12 col-md-6">
+                    <img src="/static/images/hiw_c_1.png" alt="" class="img-fluid">
+                </div>
+                <div class="contents_container col-sm-12 col-md-6">
+                    <div class="ad_info">
+                        프리랜서 전문가들과 직거래 하세요.
+                        <p class="mt-3">프로젝트를 등록하고, 컨테스트를 개최하고 입찰을 받아볼 시간이 없으신가요?</p>
+                        <p>그렇다면 포트폴리오을 둘러보시고 [직거래]하시면 됩니다.</p>
+                    </div>
+                    <div class="guide mt-3">
+                        <ul>
+                            <li>회원 가입 후 [직거래]로 정렬하시면 곧바로 작업 가능한 전문가들의 연락처가</li>
+                            <li>공개됩니다. <span>전문가들의 포트폴리오를 꼼꼼히 확인해보세요.</span></li>
+                            <li>클릭하신 직거래는 [마이페이지] → [직거래마켓]에 담깁니다. 마지막으로 다시 한번</li>
+                            <li>더 확인해보시고, <span>공개된 연락처로 충분히 소통해보세요.</span></li>
+                            <li>프리랜서코리아의 에스크로(대금보관)서비스 이용 여부를 프리랜서와 논의해보시고,</li>
+                            <li>프로젝트 시작! <span>클라이언트에 부과되는 수수료는 없습니다.</span></li>
+                        </ul>
+                    </div>
+                    <div class="btn_container"><button class="btn_register btn_medium mt-5">PickMeUp Browsing!</button></div>
+                </div>
+            </div>
+            <div id="Contest" class="ad row pt-5">
+                <div class="contents_container col-sm-12 col-md-6">
+                    <div class="ad_info">
+                        전문가들에게 작품을 받아보세요.
+                        <p>로고, 명함, BI, 간판, 출판물, 웹/앱, 일러스트 등의 각종 디자인과 광고, 영상 등 컨텐츠</p>
+                        <p>제작의 전문가를 찾고 계시다면 우선 컨테스트를 개최하셔서 [작품]을 받아보세요.</p>
+                    </div>
+                    <div class="guide">
+                        <ul>
+                            <li>회원가입 후 컨테스트를 포스팅 하세요. 1회성으로 작품을 받고 끝낼 수도</li>
+                            <li>있고(로고디자인 등), <span>선정한 전문가와 프로젝트를 진행할 수도 있습니다.</span>
+                                <p>ex) 북디자인 1page를 컨테스트하여 디자이너를 선별 → 전체 가격 조율 후 200p 북디자인 프로젝트 진행</p>
+                            </li>
+                            <li>프리랜서코리아에는 <span>등록비가 없고 보증금이 있습니다.</span> 기한 내 선정을 완료하시거나,</li>
+                            <li>컨테스트에 참여한 작품이 1개 이하로 종료 되는 경우, <span>보증금은 전액 환불됩니다.</span></li>
+                            <li>작품으로 선별한 그(그녀)와 프로젝트를 진행하고 싶으시다면 <span>전체 프로젝트 가격과</span></li>
+                            <li><span>에스크로(대금보관) 서비스 이용에 대해 논의하시고 프로젝트를 시작하세요.</span></li>
+                        </ul>
+                    </div>
+                    <div class="btn_container"><button class="show_contest btn_medium mt-5">Contest Posting!</button></div>
+                </div>
+                <div class="image_container col-sm-12 col-md-6">
+                    <img src="/static/images/hiw_c_2.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div id="Project" class="ad row pt-5">
+                <div class="image_container col-sm-12 col-md-6">
+                    <img src="/static/images/hiw_c_3.png" alt="" class="img-fluid">
+                </div>
+                <div class="contents_container col-sm-12 col-md-6">
+                    <div class="ad_info">
+                        프리랜서 전문가를 채용하세요.
+                        <p>당신의 그 일, 프리랜서 전문가로 끝내버리세요. 입찰가들의 입찰가, 경력, 포트폴리오 등을 확인하시고 낙찰한 후, 프로젝트 진행</p>
+                    </div>
+                    <div class="guide">
+                        <ul>
+                            <li>회원가입 후 [프로젝트 포스팅]하시면 해당 포스트가 관련 전문가들에게 전달되고,</li>
+                            <li>프리랜서 전문가들이 꼼꼼히 검토한 후 입찰에 참여합니다.</li>
+                            <li><span>프로젝트 포스팅 후 포트폴리오에서 전문가들의 포트폴리오를 확인</span>하시고, <span>적극적으로 나의</span></li>
+                            <li><span>프로젝트에 [참여제안]하세요.</span> 더 많은 입찰을 받아보실 수 있습니다.</li>
+                            <li>프로젝트를 시작하기 전 기간, 작업상세, 가격 등에 대해 입찰자들과 충분히 대화하세요.</li>
+                            <li>프리랜서코리아에서는 자유롭게 클라이언트와 프리랜서가 소통할 수 있습니다.</li>
+                        </ul>
+                    </div>
+                    <div class="btn_container"><button class="show_project btn_medium mt-5">Project Posting!</button></div>
+                </div>
+            </div>
+            <!-- <div> -->
+            <div id="" class="additional_guide row mt-5">
+                <div class="image_container col-sm-12 col-md-6">
+                    <img src="/static/images/hiw_escrow.png" class="img-fluid" alt="">
+                </div>
+                <div class="guide col-sm-12 col-md-6">
+                    <p class="mt-2">* 대금은 안전하게 보관되며, 클라이언트에게 부과되는 수수료는 없습니다.</p>
+                    <div class="mt-3">
+                        예치된 클라이언트의 용역대금은 플랫폼 계정분리와 프리랜서코리아의 시스템으로 안전하게 보관되며, [클라이언트의 승인]이 있기 전 출금은 불가능합니다.
+                    </div>
+                </div>
+            </div>
+            <div id="Ascrow" class="additional_guide last row mt-5">
+                <div class="image_container col-sm-12 col-md-6">
+                    <img src="/static/images/hiw_escrow.png" class="img-fluid" alt="">
+                </div>
+                <div class="guide col-sm-12 col-md-6">
+                    <p class="mt-2">* 프로젝트에 '신뢰'가 부여되어 더 많은 전문가들의 입찰을 받아볼 수 있습니다.</p>
+                    <div class="mt-3">프리랜서 전문가들은 항상 클라이언트의 '지급불능'을 우려합니다.
+                        에스크로계좌에 용역대금을 예치하셔서 그 우려를 불식시켜주세요. 더 많은, 더 좋은 인력들이 입찰에 참여할 것입니다.</div>
+                </div>
+            </div>
+            <div class="process row mt-5">
+                <div class="step col-md-3">
+                    <div class="image_container mr-3">
+                        <img src="/static/images/hiw_c_icon1.png" alt="" class="img-fluid">
+                        <div>충분히 소통 & 서면계약</div>
+                    </div>
+                    <span class="desktop"><i class="fas fa-angle-right blue"></i></span>
+                    <p class="mt-3">자료실에 표준 계약서가</p>
+                    <p>업로드 되어 있습니다.</p>
+                    <span class="mobile"><i class="fas fa-angle-down"></i></span>
+                </div>
+                <div class="step col-md-3">
+                    <div class="image_container mr-3">
+                        <img src="/static/images/hiw_c_icon2.png" alt="" class="img-fluid">
+                        <div>대금예치 & 프로젝트 시작</div>
+                    </div>
+                    <span class="desktop"><i class="fas fa-angle-right"></i></span>
+                    <p class="mt-3">대금을 예치하시고,</p>
+                    <p>프로젝트를 시작하세요.</p>
+                    <span class="mobile"><i class="fas fa-angle-down"></i></span>
+                </div>
+                <div class="step col-md-3">
+                    <div class="image_container mr-3">
+                        <img src="/static/images/hiw_c_icon3.png" alt="" class="img-fluid">
+                        <div>프리랜서의 청구</div>
+                    </div>
+                    <span class="desktop"><i class="fas fa-angle-right"></i></span>
+                    <p class="mt-3">계약서에 의해 지급 시점이 되면,</p>
+                    <p>프리랜서가 [지급청구] 합니다.</p>
+                    <span class="mobile"><i class="fas fa-angle-down"></i></span>
+                </div>
+                <div class="step col-md-3">
+                    <div class="image_container mr-3">
+                        <img src="/static/images/hiw_c_icon4.png" alt="" class="img-fluid">
+                        <div>클라이언트의 승인</div>
+                    </div>
+                    <p class="mt-3">[지급 청구]에 의해 클라이언트가</p>
+                    <p>[승인]하면 플랫폼이 대금을</p>
+                    <p>프리랜서에게 지급합니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</html>

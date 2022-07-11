@@ -1,0 +1,19 @@
+#portfolio_list{width:100%;}
+#portfolio_list li{width:18.2%; margin-right:2%; float:left; border:1px solid #ddd; position:relative; margin-bottom:20px;}
+#portfolio_list li.no_m{margin-right:0px;}
+#portfolio_list li .pl_img_area{position:relative; padding-bottom:70%;}
+#portfolio_list li .pl_img_area .pl_img{position:absolute; top:0px; left:0px; width:100%; height:100%; background-color:#f3f3f3; background-size:cover; background-position:center center; cursor:pointer; border-bottom:1px solid #ddd;}
+#portfolio_list li .pl_img_area .pl_notice{position:absolute; width:96%; color:#fff; text-align:center; padding:5px; background:#4a9ce9; opacity:0.9; z-index:99999; top:0px; left:0px;}
+#portfolio_list li .pl_img_area .pl_notice span{display: inline-block;}
+#portfolio_list li .pl_info_area{padding:10px;}
+#portfolio_list li .pl_info_area .pl_subject{color:#474747; font:700 14px/21px sans-serif; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;}
+#portfolio_list li .pl_info_area .directClientCount{border: 1px solid #ddd;padding: 0.2rem;cursor: pointer;display: block;text-align: center;}
+
+#portfolio_list li .pl_info_area .pl_btn{margin-top:10px; padding-top:10px; border-top:1px solid #ddd;}
+#portfolio_list li .pl_info_area .pl_btn .mini{width:100%; padding:4px 0px; border:0px;}
+
+
+.clearfix{content: '';display: block;clear: both;}
+.clearfix .title{display: inline-block;}
+.clearfix .filter{display: inline-block;float: right;}
+.clearfix .filter div{display: inline-block;margin-right: 10px;cursor: pointer;}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/env.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/envHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+
+					<h1>■ 분류관리</h1>
+					<div style="text-align: right; margin: 12px;">
+						<a href="/env/categoryAdd" class="btn-color large">등록</a>
+					</div>
+					<table class="boardlist">
+						<colgroup>
+							<col width="120">
+							<col width="">
+							<col width="120">
+							<col width="120">
+							<col width="120">
+							<col width="180">
+						</colgroup>
+						<tbody><tr>
+							<th>분류코드</th>
+							<th>분류명</th>
+							<th>노출</th>
+							<th>순서</th>
+							<th>비고</th>
+						</tr>
+						<th:block th:each="topCategory: ${topCategoryList}">
+							<tr>
+								<td th:text="${topCategory.id}"></td>
+								<td class="tl" th:text="${topCategory.name}"></td>
+								<td th:text="${!topCategory.hidden}"></td>
+								<td th:text="*{#numbers.formatInteger(topCategory.seq, 0, 'COMMA')}"></td>
+								<td>
+									<a th:href="|/env/categoryAdd?parentCategoryId=${topCategory.id}|" class="btn-black mini">추가</a>
+									<a th:href="|/env/categoryModify?categoryId=${topCategory.id}|" class="btn-black mini">수정</a>
+									<span class="btn-black mini del_btn" th:data-id="${topCategory.id}">삭제</span>
+								</td>
+							</tr>
+							<tr th:each="childItem: ${topCategory.children}">
+								<td th:text="${childItem.id}"></td>
+								<td class="tl" th:text="|└ &nbsp;${childItem.name}|"></td>
+								<td th:text="${!childItem.hidden}"></td>
+								<td th:text="*{#numbers.formatInteger(childItem.seq, 0, 'COMMA')}"></td>
+								<td>
+									<a th:href="|/env/categoryModify?categoryId=${childItem.id}|" class="btn-black mini">수정</a>
+									<span class="btn-black mini del_btn" th:data-id="${childItem.id}">삭제</span>
+								</td>
+							</tr>
+						</th:block>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(document).on('click', '.del_btn', function(e) {
+				var categoryId = $(e.target).data('id');
+
+				if (!confirm('삭제하시겠습니까?')) {
+					return;
+				}
+
+				$.ajax({
+					type: 'DELETE',
+					url: '/categories/' + categoryId,
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							alert('성공적으로 요청했습니다.');
+							location.reload();
+						} else {
+							alert('요청에 실패했습니다.');
+						}
+					},
+					error: function(error) {
+						console.error(error);
+						alert('요청에 실패했습니다.');
+					}
+				})
+			})
+		</script>
+	</section>
+	
+
+</html>

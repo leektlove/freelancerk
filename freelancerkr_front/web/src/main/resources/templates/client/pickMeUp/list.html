@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <link rel="stylesheet" href="/static/css/client/pickMeUp/list.css">
+</head>
+
+<section id="content" layout:fragment="content">
+    <div class="container pickMeUp">
+        <div>
+            <form action="/view/pick-me-ups" method="get">
+                <div class="col-lg-9 p-0 mb-2 mx-auto mt-5">
+                    <div class="input-group">
+                        <input type="hidden" name="totalPages" th:value="${totalPages}"/>
+                        <input type="hidden" th:name="category1stId" th:value="${category1stId}" />
+                        <input type="hidden" th:name="category2ndId" th:value="${category2ndId}" />
+                        <input type="text" class="form-control form-control-lg" th:name="keyword" th:value="${keyword}" placeholder="어떤 작업을 원하시나요?" style="border: 1px solid #d2d2d2;border-radius: 10px 0 0 10px;border-right: 0;font-size:15px">
+                        <span class="input-group-append">
+                            <button class="btn btn-light" type="submit" style="border: 1px solid #d2d2d2;border-left: 0;border-radius: 0 10px 10px 0">
+                                <img src="/static/images/icon/search.png" style="width:25px;">
+                            </button>
+                        </span>
+                    </div>
+                    <div class="row mt-3 mb-5">
+                        <div class="col-xl-8 col-lg-7">
+                            <div style="width:100%;">
+                                <span style="width: 70px;vertical-align: top; font-weight: 700">인기검색어</span>
+                                <span class="px-2 text-2 text-primary" th:each="keyword: ${topKeywords}">
+                                    <a th:href="|/view/pick-me-ups?keyword=${keyword}|" th:text="${keyword}"></a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-5 mt-2 mt-lg-0 text-left text-lg-right">
+                            <div class="direct_check">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="directMarketSort" th:checked="${directMarketAvailable?'checked':'false'}">
+                                    <label class="custom-control-label" for="directMarketSort">직거래 가능 포트폴리오만으로 정렬</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="position-relative">
+            <h2 class="mb-3 mb-lg-4">
+                <div class="line"></div>
+                <span class="title">픽미업</span>
+                <a class="hiw" href="/common/howItWorks?role=ROLE_CLIENT#pickmeup">
+                    <span class="hiw-go">이용안내<span class="m-none">(How It Works)</span> <i class="fas fa-angle-right ml-2"></i>
+                    </span>
+                </a>
+                <div class="sub-title">매력적인 포트폴리오의 그(그녀)와 (직)거래하세요</div>
+            </h2>
+        </div>
+        <!-- 서브메뉴 -->
+        <div class="category-1st-container">
+            <div class="wrap filterCategory" th:each="item, index: ${category1stList}" th:id="${item.id}" th:onclick="|filterByCategory1st(${item.id})|" th:attr="data-category-1st-id=${item.id}">
+                <div class="category-img" th:style="|background:url('/static/images/sector-icon/${item.id}.svg') no-repeat;background-position:center center;background-size:cover|"></div>
+                <div class="category-name text-center" th:text="${item.name}"></div>
+            </div>
+        </div>
+        <div class="sub_menu d-none d-md-block pt-2">
+            <ul class="category-2nd-container p-0 pt-2" style="font-weight: 400">
+            </ul>
+        </div>
+        <div class="d-flex mb-3">
+            <select name="category1st" class="custom-select mr-1 category-1st-container d-none" th:onchange="|selectCategory1st(this, this.value)|">
+                <option class="current" value="">전체</option>
+                <th:block th:each="item, index: ${category1stList}">
+                    <option th:value="${item.id}" th:text="${item.name}"
+                            th:selected="${item.id == category1stId}"
+                            th:attr="data-category-1st-id=${item.id}"></option>
+                </th:block>
+            </select>
+            <select class="custom-select category-2nd-container d-block d-md-none" th:onchange="|selectCategory2nd(this, this.value)|">
+                <option class="">전체</option>
+            </select>
+        </div>
+        <!-- 서브메뉴//-->
+
+        <div class="row content-body" style="padding: 0 0.7rem!important;margin-top:2rem;">
+            <input type="text" name="currentPageNumber" value="0" style="display: none"/>
+            <th:block th:each="item, iter: ${pickMeUps}" th:if="${not #lists.isEmpty(pickMeUps)}">
+                <div class="col-6 col-sm-6 col-md-3 col-lg-1-5 col-xl-2 mb-3">
+                    <article th:class="${(item.featured?'featured ':' ') + 'post ' + 'pickmeup_card' }">
+                        <span class="badge-g-list">
+                            <span th:if="${item.directDealAvailable}"class="direct" data-toggle="tooltip" data-placement="top" data-original-title="직거래가능"><i class="fas fa-phone"></i></span>
+                            <span th:if="${item.highQuality}"class="master" data-toggle="tooltip" data-placement="top" data-original-title="고급인력"><i class="far fa-thumbs-up"></i></span>
+                            <span th:if="${item.creative}"class="creative" data-toggle="tooltip" data-placement="top" data-original-title="독창적"><i class="far fa-lightbulb"></i></span>
+                        </span>
+                        <a class="image_wrap" th:href="@{/portfolios/__${item.id}__/details(category1stId=${category1stId},category2ndId=${category2ndId},directMarketAvailable=${directMarketAvailable},keyword=${keyword},currentIndex=${iter.index})}">
+                            <div class="post-image" style="position: relative;">
+                                <div class="kind-c">
+                                    <img th:if="${item.contentType == 'VIDEO'}" src="/static/images/card_video.png" class="card_video" style="width: 40px;">
+                                    <img th:if="${item.contentType == 'AUDIO'}" src="/static/images/card_audio.png" class="card_audio" style="width: 40px;">
+                                </div>
+                                <div class="pickmeup_portfolio_card">
+                                    <div class="blog_text" th:if="${item.contentType?.name() == 'BLOG'}">
+                                    <!-- <div class="blog_text"> -->
+                                        <div class="text text-dark" th:text="${item.onlyTextDescription}">
+                                        <!-- <div class="text text-dark">
+                                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). -->
+                                        </div>
+                                    </div>
+                                    <div class="center-crop-wrapper">
+                                        <img th:src="${item.representativeImageUrl}" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+                                    </div>
+                                </div>
+                            </div>
+                        </a> 
+                        <div th:class="|pickmeup-profile-image ${item.project != null?'certification':''}|">
+                            <img th:src="@{${(#strings.isEmpty(item.user.profileImageUrl)?'/static/images/icon/freelancer_noimg.png':item.user.profileImageUrl)}}">
+                        </div>
+                        <div class="pickmeup_card_sector">
+                            <span class="" th:text="${item.category1st?.name}"></span>
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="" th:text="${item.category2nd?.name}"></span>
+                        </div>
+                        <!-- <div class="card-infomation">
+                            <div class="counter">
+                                <div class="counter_c" th:text="${#numbers.formatInteger(item.directDealCount, 0, 'COMMA')}">0</div>
+                                <div class="counter_t">직거래</div>
+                            </div>
+                            <div class="counter">
+                                <div class="counter_c" th:text="${#numbers.formatInteger(item.projectPropositionCount, 0, 'COMMA')}">0</div>
+                                <div class="counter_t">요청</div>
+                            </div>
+                            <div class="counter">
+                                <div class="counter_c" th:text="${#numbers.formatInteger(item.hits, 0, 'COMMA')}">0</div>
+                                <div class="counter_t">조회수</div>
+                            </div>
+                        </div> -->
+                        <a th:href="@{/portfolios/__${item.id}__/details(category1stId=${category1stId},category2ndId=${category2ndId},directMarketAvailable=${directMarketAvailable},keyword=${keyword},currentIndex=${iter.index})}">
+                            <div class="card-title text-dark">
+                                <div th:text="${item.title}"></div>
+                            </div>
+                        </a>
+                        <div class="c_action_btn">
+                            <div th:onclick="|openProposeModal(${item.id})|" class="c_propose_btn">참여요청</div>
+                            <div th:if="${item.directDealAvailable}" class="c_direct_btn" th:onclick="|saveDirectDeal(${item.id})|">직거래 가능</div>
+                        </div>
+                    </article>
+                </div>
+            </th:block>
+
+            <!-- 검색내용 없을때 이미지 -->
+            <div class="w-100 d-flex justify-content-center" th:if="${#lists.isEmpty(pickMeUps)}">
+                <div class="align-self-center">
+                    <img src="/static/images/empty_category.png" style="width:100%;max-width: 400px;padding:2rem 1rem;">
+                    <div class="text-center" style="font-size: 20px;font-weight: 700;">프코에서<br>전문가를 기다립니다</div>
+                </div>
+            </div>
+            <!-- 검색내용 없을때 이미지//-->
+            
+        </div>
+        <div class="moreResultBlock">
+
+        </div>
+        <img class="loading" src="/static/images/icon/loading.gif"/>
+        <div class="detail-view-btn text-center" th:if="${pickMeUps.size() == 24}" style="opacity: 0;">
+            <a class="read-more btn btn-lg rounded-0 font-weight-bold text-4" id="loadMoreBtn" href="javascript:loadMore()" style="width: 100%;max-width: 800px;">
+                <i class="far fa-arrow-alt-circle-down mr-2"></i> 더보기
+            </a>
+        </div>
+
+        <!-- 프로젝트등록 마지막단계 팝업 -->
+        <div id="last_step_project" class="last_step_project" th:if="${afterPosting != null AND afterPosting}">
+            <div class="popup text-center">
+                <div class="last_step_num">
+                    <div class="line"></div>
+                    <div class="number">5</div>
+                </div>
+                <div class="title">
+                    이제 마지막 단계!
+                </div>
+                <div class="content">
+                    전문가들의 포트폴리오들을<br>
+                    꼼꼼히 검토해보시고,<br>
+                    <br>
+                    <div class="text-2">※ 요청횟수 무제한</div>
+                    <div class="text-5 font-weight-bold">[내 프로젝트에 참여요청] 하세요.</div>
+                    <img src="/static/images/use-guide/select_pickmeup.png">
+                    <div class="text-5 font-weight-bold">더 빨리, 더 좋은</div>
+                     인력과 일하실 수 있어요.
+                    <div id="pick_start" class="btn btn-lg btn-outline-light">시작!</div>
+                </div>
+            </div>
+        </div>
+        <!-- 프로젝트등록 마지막단계 팝업//-->
+
+        <!-- 픽미업 이용안내 하단 팝업 -->
+        <div id="choice_pickmeup_infobar" class="choice_pickmeup_infobar">
+            <div class="row" style="max-width: 500px;margin:auto">
+                <div class="d-none d-sm-block col-sm-3">
+                    <img class="img-fluid" src="/static/images/use-guide/select_pickmeup.png">
+                </div>
+                <div class="col-sm-9 text-4 align-self-center">
+                    마음에 드는 포트폴리오를 열람하시고<br> [내 프로젝트에 참여요청] 하세요
+                </div>
+            </div>
+            <i class="fas fa-times fa-lg choice_pickmeup_close"></i>
+        </div>
+        <!-- 픽미업 이용안내 하단 팝업// -->
+
+        <th:block th:include="modal/request-bid-modal" th:with="preventRefresh=true"></th:block>
+
+    </div>
+    <script th:inline="javascript">
+        var category1stId = [[${category1stId}]];
+        var category2ndId = [[${category2ndId}]];
+        var currentPage = 0;
+        var afterPosting = [[${afterPosting}]];
+        var isLoggedIn = [[${isLoggedIn}]];
+        var loginAsClient = [[${loginAsClient}]];
+    </script>
+    <script>
+        function openProposeModal(id) {
+            $('input[name=pickMeUpId]').val(id);
+            $('#suggest_bid').modal();
+        }
+
+        function propose(preventRefresh) {
+            var projectId = $('select[name=proposition-project] option:selected').val();
+            var pickMeUpId = $('input[name=pickMeUpId]').val();
+            $.ajax({
+                url: '/projects/' + projectId + '/propositions?pickMeUpId=' + pickMeUpId,
+                type: 'POST',
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function(response) {
+                    if ('SUCCESS' === response.responseCode) {
+                        alert('성공적으로 요청되었습니다.');
+                        if (preventRefresh) {
+                            return;
+                        }
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(jqXHR) {
+                    if (jqXHR.status === 409) {
+                        alert('이미 제안하신 프리랜서의 포트폴리오입니다.');
+                        return;
+                    }
+                    alert('요청에 실패했습니다. 문제가 계속될 경우 고객센터로 문의 주세요.');
+                }
+            })
+        }
+
+
+    </script>
+    <script src="/static/js/popup.js"></script>
+    <script src="/static/js/portfolio-common.js"></script>
+    <script src="/static/js/client/pickMeUp/list.js"></script>
+    <script>
+        // For Demo purposes only (show hover effect on mobile devices)
+        [].slice.call( document.querySelectorAll('a[href="#"') ).forEach( function(el) {
+            el.addEventListener( 'click', function(ev) { ev.preventDefault(); } );
+        } );
+    </script>
+</section>
+

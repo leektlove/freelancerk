@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/popup.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/popupHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 팝업등록</h1>
+					<form name="" id="" action="">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody><tr>
+								<th>구분</th>
+								<td colspan="3">
+									<label><input type="radio" name="" value="" checked >PC</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="">MOBILE</label>
+								</td>
+							</tr>
+
+							<tr>
+								<th>출력</th>
+								<td colspan="3">
+									<label><input type="radio" name="" value="Y" checked>출력</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="N">미출력</label>
+								</td>
+							</tr>
+
+							<tr>
+								<th>팝업시작일</th>
+								<td>
+									<input type="text" name="" value="" readonly="" required="" class="readonly search_date hasDatepicker" title="시작일" >
+								</td>
+							</tr>
+							<tr>
+								<th>팝업종료일</th>
+								<td>
+									<input type="text" name="" value="" readonly="" required="" class="readonly search_date hasDatepicker" title="종료일" >
+								</td>
+							</tr>
+							<tr>
+								<th>링크주소</th>
+								<td>
+									<input type="text" name="" value="" size="60">
+								</td>
+							</tr>
+							<tr>
+								<th>링크연결</th>
+								<td>
+									<label><input type="radio" name="" value="1" checked> 현재창</label>
+									<label><input type="radio" name="" value="2"> 새창</label>
+								</td>
+							</tr>
+							<tr>
+								<th>위치(상X좌)</th>
+								<td>
+									<input type="text" name="" value=""> px X 
+									<input type="text" name="" value=""> px
+								</td>
+							</tr>
+							<tr>
+								<th>크기(가로X세로)</th>
+								<td>
+									<input type="text" name="" value=""> px X 
+									<input type="text" name="" value=""> px
+								</td>
+							</tr>
+							<tr>
+								<th>이미지</th>
+								<td>
+									<input type="file" name="" id="" class="imgext imgsize">
+								</td>
+							</tr>
+							<tr>
+								<th>메모</th>
+								<td>
+									<input type="text" name="" value="" maxlength="255" size="60" placeholder="메모를 입력해주세요.">
+								</td>
+							</tr>
+						</tbody></table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="저장" class="btn-color large">
+								<a href="" class="btn-colorline large">목록</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

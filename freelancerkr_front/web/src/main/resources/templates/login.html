@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/login">
+
+<th:block layout:fragment="content">	
+<script>
+	function goLogin(){
+		console.log("login");
+		
+		form1.submit();
+	}
+</script>
+
+   <div>
+     <a class="hiddenanchor" id="signup"></a>
+     <a class="hiddenanchor" id="signin"></a>
+
+     <div class="login_wrapper">
+       <div class="animate form login_form">
+         <section class="login_content">
+           
+           <form id="form1" th:object=${user} th:action="@{/w1/login_check}" method="post" >
+             
+             
+             
+             <h1>Login Form</h1>
+             <div>
+               <input type="text" class="form-control" placeholder="Username" required="true" name="email" />
+             </div>
+             <div>
+               <input type="password" class="form-control" placeholder="Password" required="true" name="password" />
+             </div>
+             <div>
+               <a class="btn btn-default submit" href="#" onClick="goLogin()">Log in</a>
+               <a class="reset_pass" href="/w1/signin">
+               <img src="/images/kakao_login.png">
+               </a>
+             </div>
+
+             <div class="clearfix"></div>
+
+             <div class="separator">
+               <p class="change_link">New to site?
+                 <a href="#signup" class="to_register"> Create Account </a>
+               </p>
+
+               <div class="clearfix"></div>
+               <br />
+
+               <div>
+                 <h1><i class="fa fa-paw"></i> La BelleLab</h1>
+                 <p>©2020 All Rights Reserved. La BelleLab is a Bootstrap 3 template. Privacy and Terms</p>
+               </div>
+             </div>
+           </form>
+         </section>
+       </div>
+
+       <div id="register" class="animate form registration_form">
+         <section class="login_content">
+           <form>
+             <h1>Create Account</h1>
+             <div>
+               <input type="text" class="form-control" placeholder="Username" required="" />
+             </div>
+             <div>
+               <input type="email" class="form-control" placeholder="Email" required="" />
+             </div>
+             <div>
+               <input type="password" class="form-control" placeholder="Password" required="" />
+             </div>
+             <div>
+               <a class="btn btn-default submit" href="index.html">Submit</a>
+             </div>
+
+             <div class="clearfix"></div>
+
+             <div class="separator">
+               <p class="change_link">Already a member ?
+                 <a href="#signin" class="to_register"> Log in </a>
+               </p>
+
+               <div class="clearfix"></div>
+               <br />
+
+               <div>
+                 <h1><i class="fa fa-paw"></i> La BelleLab</h1>
+                 <p>©2020 All Rights Reserved. La BelleLab is a Bootstrap 3 template. Privacy and Terms</p>
+               </div>
+               
+               
+             </div>
+           </form>
+         </section>
+       </div>
+     </div>
+   </div>
+      
+</th:block>
+</html>

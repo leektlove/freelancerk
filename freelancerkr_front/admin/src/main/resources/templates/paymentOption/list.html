@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/paymentOption.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/paymentOptionHeader"></th:block>
+			</div>
+			<div id="container_content">
+
+				<div class="container_inner">
+
+					<h1>■ 옵션 결제 현황 조회</h1>
+					
+					<table class="boardform">
+						<colgroup>
+							<col width="100">
+							<col width="100">
+							<col width="100">
+							<col width="900">
+						</colgroup>
+						<tr>
+							<td>
+								<select>
+									<option>기간선택</option>
+									<option>최근1개월</option>
+									<option>최근3개월</option>
+									<option>최근6개월</option>
+									<option>최근12개월</option>
+								</select>
+							</td>
+							<td>
+								<select>
+									<option>옵션선택</option>
+									<option>전체</option>
+									<option>포트폴리오</option>
+									<option>프로젝트</option>
+									<option>컨테스트(클라이언트)</option>
+									<option>컨테스트(프리랜서)</option>
+								</select>
+							</td>
+							<td><button class="btn-black medium">조회</button></td>
+							<td></td>
+						</tr>
+					</table>
+					
+					<div class="Hspace"></div>
+					<h1>■ 결과</h1>
+
+					<table class="boardlist">
+						<colgroup>
+
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>순서</th>
+								<th>구분</th>
+								<th>구매자(유저번호)</th>
+								<th>픽미업(픽미업번호)</th>
+								<th>옵션명</th>
+								<th>옵션가격</th>
+								<th>일시</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td th:text="${item.id}">1</td>
+								<td th:text="${item.type?.desc}">포트폴리오</td>
+								<td th:text="|${item.user.exposeName} (${item.user.id})|">포트폴리오</td>
+								<td><th:block th:if="${item.pickMeUp != null}" th:text="|${item.pickMeUp?.title} (${item.pickMeUp?.id})|"></th:block></td>
+								<td th:text="${item.chargedOptionsName}">Featured(강조)</td>
+								<td th:text="${#numbers.formatInteger(item.chargedOptionsAmountOfMoney, 0, 'COMMA')}">2,500,000</td>
+								<td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd')}">2,500,000</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/paymentOption/list?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+	
+	
+</html>

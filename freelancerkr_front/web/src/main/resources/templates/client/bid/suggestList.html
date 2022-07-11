@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/bid/suggestList.css">
+</head>
+
+	
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row mb-3">
+					<div class="col-md-6 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>참여요청</strong></h1>
+
+					</div>
+					<div class="col-md-6 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+        <section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+            <div class="container" style="margin-bottom: -3px;">
+                <ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+                    <li class="nav-item mb-0 active">
+						<a th:href="@{/client/bid/suggestList}" class="nav-link d-flex">
+							<span>참여요청</span>
+							<span class="count_alarm" th:text="${propositionsCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/client/bid/processingList}" class="nav-link d-flex">
+							<span>진행중인 입찰</span>
+							<span class="count_alarm" th:text="${processingCount}">2</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/client/bid/cancelList}" class="nav-link d-flex">
+							<span>취소(종료)된 입찰</span>
+							<span class="count_alarm" th:text="${cancelledCount}">1</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/client/bid/autoSave}" class="nav-link d-flex">
+							<span>임시저장한 입찰</span>
+							<span class="count_alarm" th:text="${tempSavedCount}">0</span>
+						</a>
+					</li>
+                </ul>
+            </div>
+        </section>
+        <!-- 탭메뉴// -->
+		
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<div class="">
+                        총 <span id="total_count" class="text-primary" th:text="${items.getTotalElements()}">0</span>건의 제안내역이 있습니다.                        
+                    </div>
+					<div class="info">
+	                	<div class="row p-4">
+		                    <div class="col-md-4 cell">
+		                    	<i class="far fa-file-alt fa-lg text-primary mb-2"></i>
+			                    <div class="text">프로젝트나 컨테스트를 포스팅합니다.</div>
+			                    <i class="fas fa-chevron-right"></i>
+		                    </div>
+		                    <div class="col-md-4 cell">
+		                    	<i class="fas fa-search fa-lg text-primary mb-2"></i>
+		                        <div class="text">'픽미업'에서 프리랜서의 포트폴리오를 확인합니다.</div>
+								<button type="button" class="btn btn-primary btn-sm btn-modern mt-2 ml-2 ml-sm-0" onclick="javascript:location.href='/view/pick-me-ups'">픽미업 바로가기</button>
+			                    <i class="fas fa-chevron-right"></i>
+		                    </div>
+		                    <div class="col-md-4 cell">
+		                    	<i class="fas fa-check fa-lg text-primary mb-2"></i>
+			                    <div class="text">마음에 드는 작품의 그(그녀)에게<br>내 프로젝트(컨테스트)에 대한 참여를 제안합니다.</div>
+		                    </div>
+		                    
+	                    </div>
+		            </div>
+					<div class="mb-5">
+						<div class="">
+                        	<i class="fas fa-exclamation-triangle" style="font-size: 10px;color : #f93e3e;margin-right:5px "></i>
+                            <span>프로젝트가 낙찰 또는 취소되는 경우 해당 제안내역은 삭제됩니다.
+                        </div>
+					</div>
+					<div class="row">
+						<th:block th:each="item, iter: ${items}">
+							<div class="col-lg-3 col-md-4 mb-4">
+								<div class="border project_card text-center mb-1">
+									<a th:href="@{/portfolios/__${item.pickMeUp.id}__/details}" class="">
+										<div class="post-image_2">
+											<div class="status" style="position: absolute;top:-1px;right:0;z-index: 1;">
+												<!-- 거절 -->
+												<span th:if="${item.status.name() == 'REJECT'}" class="badge badge-dark badge-md rounded-0 px-2 py-1">
+													거절했습니다
+												</span>
+												<!-- 거절//-->
+												<!-- 수락 -->
+												<span th:if="${item.status.name() == 'ACCEPT'}" class="badge badge-secondary badge-md rounded-0 px-2 py-1">
+													참여했습니다
+												</span>
+												<!-- 수락//-->
+												<!-- 검토중 -->
+												<span th:if="${item.status.name() == 'PROPOSE'}" class="badge badge-primary badge-md rounded-0 px-2 py-1">
+													검토중입니다
+												</span>
+												<!-- 검토중//-->
+											</div>
+											<div class="blog_text_2" th:if="${item.pickMeUp.contentType?.name() == 'BLOG'}">
+		                                        <div class="text text-dark" th:text="${item.pickMeUp.onlyTextDescription}">
+		                                        </div>
+		                                    </div>
+											<img th:if="${item.pickMeUp.contentType?.name() != 'BLOG'}"th:src="${item.pickMeUp.mainImageUrl}" class="img-fluid border" alt="" style="width: 180px;height: 180px;margin:0 auto">
+
+										</div>
+									</a>
+									<div>
+										<div class="text-center">
+											<div class="testimonial-author">
+												<div class="client-basic-info" th:text="${item.freelancer?.exposeName}"></div>
+												<div class="suggested_title" th:text="${item.project.title}"></div>
+											</div>
+										</div>
+										<div class="card-text px-3" th:text="${item.freelancer?.aboutMe}">
+										</div>
+										<div class="freelancer_detail btn btn-lg btn-block">
+											<a th:href="|/freelancer/profile/${item.freelancer.id}#edit|">포트폴리오 및 프로필 확인 ></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="/static/js/portfolio-common-popup.js"></script>
+		<script src="/static/js/popup.js"></script>
+		<script src="/static/js/client/bid/suggestList.js"></script>
+		<script>
+			// For Demo purposes only (show hover effect on mobile devices)
+			[].slice.call( document.querySelectorAll('a[href="#"') ).forEach( function(el) {
+				el.addEventListener( 'click', function(ev) { ev.preventDefault(); } );
+			} );
+		</script>
+	</div>
+	
+
+</html>

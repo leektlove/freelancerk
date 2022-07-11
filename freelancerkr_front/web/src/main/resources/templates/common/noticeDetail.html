@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client/noticeDetail.css">
+</head>
+
+    
+    <section layout:fragment="content">
+        
+        <!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                        <h1 class="text-dark"><strong>Freelancer Korea Blog</strong></h1>
+
+                    </div>
+                    <div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 페이지헤더// -->
+
+        <div class="container">
+            <div class="container_inner">
+                <div class="title text-7 font-weight-bold" th:text="${notice.title}"></div>
+                <div class="update mt-3 mb-2" th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd')}"></div>
+                <div class="border-top border-bottom py-4" th:utext="${notice.content}" id="view_content">
+                </div>
+                <div class="text-center mt-3 mb-5" tyle="margin-bottom:50px;">
+                    <a href="javascript:history.back()" class="btn btn-light btn-lg rounded-0 mr-3">이전 페이지로</a>
+                    <a th:href="@{/common/notice}" class="btn btn-primary btn-lg rounded-0">더 많은 글 보기</a>
+                </div>
+            </div>
+            <!-- <div id="tabmenu">
+        		<ul class="row ml-0 mr-0">
+        			<li onclick="" class="col-6 col-sm-6 current">
+                        Blog
+                        <img src="/static/images/icon_new.gif" align="absmiddle">
+                    </li>
+        			<li onclick="" class="col-6 col-sm-6">자료실</li>
+        		</ul>
+        	</div> -->
+            <!-- <div class="container_inner">
+        	    <div class="board_inner">
+            		<table class="boardform mt-5">
+            			<tbody>
+                            <tr>
+            				    <th>제목</th>
+            				    <td th:text="${notice.title}">[카드뉴스] 업무생산성이 높은 사람의 특징 14</td>
+            			    </tr>
+            			    <tr>
+            				    <th>등록일</th>
+            				    <td th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd')}">2018.09.12</td>
+                            </tr>
+            			    <tr>
+            				    <th>조회수</th>
+            				    <td th:text="${notice.hits}">57</td>
+            			    </tr>
+            			</tbody>
+                    </table>
+            		<div class="boardform_content">
+            			<div th:utext="${notice.content}" id="view_content">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam explicabo minus consequatur, quasi non, assumenda quod mollitia architecto eaque, repellat dicta accusantium inventore aliquid et distinctio facilis numquam quos neque laborum possimus provident excepturi nostrum quisquam aut. Tempore, deserunt alias quia est laudantium harum inventore odit blanditiis excepturi illum, ullam ex error ad sint et amet delectus officia consequuntur soluta cum libero quisquam. Accusantium eaque nihil dolorem similique blanditiis saepe nisi cupiditate odit inventore est, voluptatem ducimus, laboriosam praesentium officia? Labore architecto a voluptas aut consequuntur. Obcaecati perspiciatis, similique excepturi voluptates dignissimos. Quaerat magni quo perspiciatis ut praesentium, laborum obcaecati.
+            			</div>
+            		</div>
+            		<div class="boardbutton">
+            			<div class="tc">
+            				<a th:href="@{/common/notice}" class="btn-basic biglarge">목록으로</a>
+            			</div>
+            		</div>
+        	    </div>
+            </div> -->
+
+        </div>
+    </section>
+    
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/freelancer/loginGuide.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div class="container">
+			<div id="guide">
+				<div class="container">
+					<div class="contents">
+						<div class="img">
+							<img src="/static/images/icon_free.gif">
+						</div>
+						<!--<div class="title">
+							Find Your <span>Client</span>
+						</div>-->
+						<div class="sub_title">
+							<p>취업하지 마세요! <span>당신의 능력</span>으로 더 많은 돈을 버세요!</p>
+							만약 당신이 직장인 이라면, 프리랜서코리아를 통해 부수적인 수입을 올릴 수 있습니다.
+						</div>
+
+
+						<div class="btn_project" onclick="javascript:location.href='/freelancer/profile/modify'">
+							나의 프로필 업로드
+						</div>
+						<div class="step_info">
+							<div class="round">
+								<img src="/static/images/step_free_icon_01.png">
+								<p>프로필 작성</p>
+								<img class="arrow" src="/static/images/step_free_arrow.png">
+							</div>
+							<div class="round">
+								<img src="/static/images/step_free_icon_02.png">
+								<p>프로젝트 지원</p>
+								<img class="arrow" src="/static/images/step_free_arrow.png">
+							</div>
+							<div class="talk">
+								<img src="/static/images/step_free_talk_icon.png">
+								<p>충분한 소통과 대화</p>
+								<img class="arrow" src="/static/images/step_free_arrow.png">
+							</div>
+							<div class="round">
+								<img src="/static/images/step_free_icon_03.png">
+								<p>고용</p>
+							</div>
+						</div>
+
+						<div class="text clearfix">
+							<div>
+								<img src="/static/images/c_com_icon_a.png">
+								<p>프리랜서코리아의<br>기본서비스에는 수수료가<br>없습니다.</p>
+							</div>
+							<div>
+								<img src="/static/images/c_com_icon_b.png">
+								<p>클라이언트는 무차별적으로<br>
+								프리랜서를 검색할 수 없으며,<br>
+								당신이 입찰에 참여했을 경우에만<br>
+								제한적으로 가능합니다.</p>
+							</div>
+							<div>
+								<img src="/static/images/c_com_icon_c.png">
+								<p>프리랜서코리아는<br>
+								프리랜서의 [실력과 경력]으로만<br>
+								평가 받을 수 있는 플랫폼을<br>
+								지향합니다.</p>
+							</div>
+							<div>
+								<img src="/static/images/c_com_icon_d.png">
+								<p>프리랜서의<br>
+								외모/학력/성별/지역/나이 등의<br>
+								노출이 있을 경우 웹사이트 이용에<br>
+								불이익이 있을 수 있습니다.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+</html>

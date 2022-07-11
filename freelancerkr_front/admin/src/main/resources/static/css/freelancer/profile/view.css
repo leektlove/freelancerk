@@ -1,0 +1,270 @@
+.info_title{
+	padding: 0.3rem 0;
+    border-bottom: 1px solid #0088cc;
+    margin-top: 3rem;
+    font-size: 17px;
+}
+.my_info .wrap_content{
+    border-bottom: 1px solid #d0d0d0;
+    padding: 2rem 1rem;
+}
+.my_info .wrap_content:last-child{
+	border-bottom: 0;
+}
+.my_info .wrap_content ul li:before{
+	content: '-';
+	position: absolute;
+	left: -10px;
+}
+.my_info .wrap_content ul li{
+	font-size: 13px;
+	padding: 0 0 1rem 0;
+	position: relative;
+}
+.my_info .col-lg-2{
+	font-size: 15px;
+}
+.my_info .guide{
+	font-size: 13px;
+    letter-spacing: -1px;
+}
+.my_portfolio .row{
+	padding: 2rem 1.5rem;
+}
+.my_message{
+	margin-bottom: 5rem;
+}
+.star-point{
+	width:150px;
+	line-height: 23px
+}
+.star-point .star_point_con{
+	margin-top:-23px;
+	overflow:hidden;
+}
+.text1{
+	font-size: 1rem;
+	font-weight: 700;
+	color: #a9a9a9;
+	margin-top: 2px;
+}
+.simple-todo-list{
+	font-size: 15px
+}
+.simple-todo-list .completed div{
+	font-size: 13px;
+	width: 80px;
+	display: inline-block;
+}
+.simple-todo-list li.completed:before {
+    top: 1px;
+    font-size: 13px;
+}
+.simple-todo-list span.sns{
+	line-height: normal;
+}
+.tab-content .text-5.font-weight-bold{
+	line-height: 32px
+}
+.private_open_info{
+	margin-top: 2rem;
+}
+.private_open_info .q_title {
+	display: flex;
+	margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.private_open_info .q_title .t{
+	font-size: 20px;
+    margin-right: 0.3rem;
+    align-self: center;
+}
+.private_open_info .q_title .q{
+	font-size: 15px;
+	color:#000;
+	padding:5px;
+	border-bottom: 2px solid #ffc802;
+}
+.private_open_info .q_title .q span{
+	font-weight: 700;
+}
+.private_open_info .q_answer{
+	margin-top: 5px;
+}
+.private_open_info .q_answer li{
+	font-size: 13px;
+}
+.private_open_info .q_answer .strong{
+	background-color: #ffeeb5;
+	font-weight: 900;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+.directContactBtn .btn{
+	background-color: #ff8400;
+    color: #fff;
+    margin-top: 1rem;
+    font-size: 17px;
+}
+
+.modify_btn,
+.portfolio_upload_btn{
+	display: block;
+	width: 100%;
+	background-color:#ffc802;
+	color: #333;
+	margin-top: 1.5rem;
+	margin-bottom: 2rem;
+}
+.rating-sm{
+	line-height: 23px;
+}
+.counters.counters-sm [class*="fa-"], .counters.counters-sm .icons{
+	font-size: 20px;
+}
+/* Extra small devices (portrait phones, less than 467px) */
+@media(max-width: 466.98px){
+	.tab-content .text-5.font-weight-bold{
+		line-height: 25px
+	}
+	.private_open_info {
+	    margin-top: 1rem;
+	}
+	.private_open_info .q_answer li{
+		font-size: 11px;
+	}
+	.private_open_info .q_title .q{
+		font-size: 13px;
+	}
+	.private_open_info .q_icons{
+		display: none;
+	}
+	.modify_btn,
+	.portfolio_upload_btn{
+		position: relative;
+		width: 100%;
+	}
+	.private_open_info .q_answer li:first-child{
+		white-space: normal;
+	    line-height: 20px;
+	}
+	.my_info .col-lg-2{
+		font-size: 17px;
+    	margin-bottom: 0.5rem;
+	}
+	.my_info .wrap_content{
+		padding: 1.5rem 0rem;
+	}
+	.my_info .wrap_content ul{
+		padding-left: 1rem;
+	}
+	.my_portfolio .row{
+		padding: 1.5rem 1rem;
+	}
+}	
+
+@media (min-width:467px) and (max-width: 575.98px) { 
+	.tab-content .text-5.font-weight-bold{
+		line-height: 25px
+	}
+	.private_open_info {
+	    margin-top: 1rem;
+	}
+	.private_open_info .q_answer li{
+		font-size: 11px;
+	}
+	.private_open_info .q_icons{
+		display: none;
+	}
+	.modify_btn,
+	.portfolio_upload_btn{
+		position: relative;
+		width: 100%;
+	}
+	.private_open_info .q_answer li:first-child{
+		white-space: normal;
+	    line-height: 20px;
+	}
+	.my_info .col-lg-2{
+		font-size: 17px;
+    	margin-bottom: 0.5rem;
+	}
+	.my_info .wrap_content{
+		padding: 1.5rem 0rem;
+	}
+	.my_info .wrap_content ul{
+		padding-left: 1rem;
+	}
+	.my_portfolio .my_project_list{
+		padding: 1.5rem 1rem;
+	}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.tab-content .text-5.font-weight-bold{
+		line-height: 25px
+	}
+	.private_open_info {
+	    margin-top: 1rem;
+	}
+	.private_open_info .q_icons{
+		display: none;
+	}
+	.modify_btn,
+	.portfolio_upload_btn{
+		position: relative;
+		width: 100%;
+	}
+	.my_info .col-lg-2{
+		font-size: 17px;
+    	margin-bottom: 0.5rem;
+	}
+	.my_info .wrap_content{
+		padding: 1.5rem 0rem;
+	}
+	.my_info .wrap_content ul{
+		padding-left: 1rem;
+	}
+	.my_portfolio .my_project_list{
+		padding: 1.5rem 1rem;
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+  	.modify_btn,
+  	.portfolio_upload_btn{
+		position: relative;
+		width: 100%;
+	}
+	.private_open_info .q_icons{
+		display: none;
+	}
+	.my_info .col-lg-2{
+		font-size: 17px;
+    	margin-bottom: 0.5rem;
+	}
+	.my_info .wrap_content{
+		padding: 1.5rem 0rem;
+	}
+	.my_info .wrap_content ul{
+		padding-left: 1rem;
+	}
+	.my_portfolio .row{
+		padding: 1.5rem 1rem;
+	}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+	.modify_btn,
+	.portfolio_upload_btn{
+		max-width: 360px;
+	}
+  
+}

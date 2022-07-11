@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css-->
+    <link rel="stylesheet" href="/static/css/auth/joinClient.css">
+    <link rel="stylesheet" href="/static/css/auth/privacy.css">
+    <link rel="stylesheet" href="/static/css/client/join.css"/>
+
+    <!-- 로컬적용 script -->
+</head>
+
+    <section layout:fragment="content" class="container">
+            <div id="c_join" class="contents">
+                <div class="top_area">
+                    <div class="img">
+                        <img src="/static/images/icon_client.gif">
+                    </div>
+                    <div class="title">
+                        <span>Client</span> Join
+                    </div>
+                </div>
+                <form id="signUpform" action="/users" method="post">
+                    <div class="middle_area">
+                        <input type="hidden" name="" value="client">
+                        <div class="clause_check">
+                            <div class="link_text">
+                                <a target="_blank" href="/common/usagePolicy">이용약관</a>
+                                <a target="_blank" href="/common/privateInfoPolicy">개인정보 취급방침</a>
+                                <a target="_blank" href="/common/escrowPolicy">에스크로서비스</a>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="agree" value="1" id="agree">
+                                <label class="custom-control-label" for="agree">전체동의</label>
+                            </div>
+                        </div>
+                        <div class="input">
+                            <div class="box">
+                                <input id="email" type="text" name="email" placeholder="이메일" title="이메일" >
+                                <input type="hidden" name="thirdPartyUserId">
+                                <input type="hidden" name="thirdPartyAccessToken">
+                            </div>
+                            <div class="box">
+                                <input id="password" type="password" name="password" class="i_pass" placeholder="패스워드(4자 이상)" title="패스워드" maxlength="16">
+                                <div id="password-txt" class="b_notice"></div>
+                            </div>
+                            <div class="box">
+                                <input type="password" name="password_confirm" class="i_pass" placeholder="패스워드(확인)" title="패스워드(확인)" maxlength="16">
+                                <div id="password-confirm-txt" class="b_notice"></div>
+                            </div>
+                            <div class="box">
+                                <input type="text" name="name" placeholder="이름" title="이름" maxlength="15">
+                            </div>
+                            <div class="box">
+                                <input type="number" onkeypress="return onlyNumInput(event);" name="cellphone" placeholder="휴대번호" title="휴대번호" maxlength="13">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom_area">
+                        <div id="naverIdLogin"></div>
+                        <div class="btn_sns">
+                            <div class="text">간편하게 소셜로 가입하기</div>
+                            <div class="sns_icon">
+                                <a href="javascript:signUpWithKakao()">
+                                    <img class="auth_sns_kakao" src="/static/images/icon/auth_sns_kakao.png">
+                                </a>
+                                <a href="javascript:signUpWithFb()">
+                                    <img class="auth_sns_facebook" src="/static/images/icon/auth_sns_facebook.png">
+                                </a>
+                                <a href="javascript:signUpWithNaver()">
+                                    <img class="auth_sns_naver" src="/static/images/icon/auth_sns_naver.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="btn_join">
+                            <input type="hidden" name="fpUser" value="N">
+                            <input type="hidden" name="role" value="ROLE_CLIENT" />
+                            <input type="hidden" name="authType" value="EMAIL" />
+                            <input class="btn btn-lg btn-primary ok_btn" type="button" value="회원가입" disabled onclick="join()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            var kakaoAppId = [[${kakaoAppId}]];
+            var facebookAppId = [[${facebookAppId}]];
+            var naverClientId = [[${naverClientId}]];
+            var naverCallbackUrl = serverUrl + '/callback/oauth2/naver?role=ROLE_CLIENT&type=SIGN_UP';
+
+        </script>
+        <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+        <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+        <script src="/static/js/thirdparty-common.js"></script>
+        <script type='text/javascript'>
+
+            function signUpWithFb() {
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                FB.login(function(response) {
+                    if (response.authResponse) {
+                        var accessToken = response.authResponse.accessToken;
+                        FB.api('/me', function(response) {
+                            console.log(response);
+                            var userId = response.id;
+                            var name = response.name;
+                            $('input[name=name]').val(name);
+                            $('input[name=email]').val('');
+                            $('input[name=thirdPartyUserId]').val(userId);
+                            $('input[name=thirdPartyAccessToken]').val(accessToken);
+                            $('input[name=authType]').val('FACEBOOK');
+                            $.ajax({
+                                type: "POST",
+                                url: $('#signUpform').attr('action'),
+                                data: new FormData($('#signUpform')[0]),
+                                processData: false,
+                                contentType: false,
+                                success: function(data)
+                                {
+                                    try {
+                                        window.dataLayer = window.dataLayer || [];
+                                        window.dataLayer.push({'pageCategory': 'client'});
+                                    } catch (e) {
+                                        console.error(e);
+                                    }
+                                    location.href = '/client/profile/index';
+                                },
+                                error: function(jqXHR, textStatus) {
+                                    if (jqXHR.status === 409) {
+                                        alert("이미 가입한 계정입니다.");
+                                    } else {
+                                        alert("가입 시도에 실패했습니다.");
+                                    }
+                                    close();
+                                }
+                            });
+                        });
+                    } else {
+                        console.log('User cancelled login or did not fully authorize.');
+                    }
+                });
+            }
+
+            function signUpWithKakao() {
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                // 로그인 창을 띄웁니다.
+                Kakao.Auth.login({
+                    success: function(authObj) {
+                        Kakao.API.request({
+                            url: '/v2/user/me',
+                            success: function(res) {
+                                console.log(JSON.stringify(res));
+                                console.log(JSON.stringify(authObj));
+                                var userId = res.id;
+                                $('input[name=name]').val(res.properties['nickname']);
+                                $('input[name=email]').val(res.kaccount_email);
+                                $('input[name=thirdPartyUserId]').val(res.id);
+                                $('input[name=thirdPartyAccessToken]').val(authObj.access_token);
+                                $('input[name=authType]').val('KAKAO');
+                                $.ajax({
+                                    type: "POST",
+                                    url: $('#signUpform').attr('action'),
+                                    data: new FormData($('#signUpform')[0]),
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(data)
+                                    {
+                                        try {
+                                            window.dataLayer = window.dataLayer || [];
+                                            window.dataLayer.push({'pageCategory': 'client'});
+                                        } catch (e) {
+                                            console.error(e);
+                                        }
+                                        location.href = '/client/profile/index';
+                                    },
+                                    error: function(jqXHR, textStatus) {
+                                        if (jqXHR.status === 409) {
+                                            alert("이미 가입한 계정입니다.");
+                                        } else {
+                                            alert("가입 시도에 실패했습니다.");
+                                        }
+                                        close();
+                                    }
+                                });
+                                console.log(res.id);
+                                console.log(res.kaccount_email);
+                                console.log(authObj.access_token);
+                            }
+                        })
+                    },
+                    fail: function(err) {
+                        console.log(JSON.stringify(err));
+                    }
+                });
+            };
+
+            function signUpWithNaver() {
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                var authorizeUrl = naverLogin.generateAuthorizeUrl();
+                var popup = window.open(authorizeUrl, "", "width=400,height=500");
+                popup.onbeforeunload = function(){
+
+                    try {
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({'pageCategory': 'client'});
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    location.href = '/client/profile/index';
+                    return null;
+                }
+            }
+
+            function reload() {
+                location.href = '/client/profile/index';
+            }
+        </script>
+        <script>
+            $('#agree').click(function () {
+                //check if checkbox is checked
+                if ($(this).is(':checked')) {
+                    $('.bottom_area .ok_btn').removeAttr('disabled'); //enable input
+                    $('.bottom_area .sns_icon').css('opacity','1');
+
+                } else {
+                    $('.bottom_area .ok_btn').attr('disabled', true); //disable input
+                    $('.bottom_area .sns_icon').css('opacity','0.5');
+                }
+            });
+        </script>
+        <script src="/static/lib/zxcvbn/zxcvbn.js"></script>
+        <script src="/static/js/client/join.js"></script>
+    </section>
+    
+
+
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/freelancerHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+				<h1>■ 프리랜서 등록</h1>
+
+				<form name="" id="" action="" method="post">
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>아이디(이메일)</th>
+								<td>
+									<input type="text" name="" value="" id="" required="" class="required" maxlength="100" title="아이디(이메일)">
+								</td>
+								<th>비밀번호</th>
+								<td>
+									<input type="password" name="" id="" required="" class="required" maxlength="16" title="비밀번호">
+								</td>
+							</tr>
+							<tr>
+								<th>이름</th>
+								<td>
+									<input type="text" name="" value="" id="" title="담당자명" maxlength="20">
+								</td>
+								<th>닉네임</th>
+								<td>
+									<input type="text" name="" value="" id="" title="닉네임" maxlength="20">
+								</td>
+							</tr>
+							<tr>
+								<th>이메일</th>
+								<td>
+									<input type="text" name="" value="" id="" maxlength="100" title="이메일">
+								</td>
+								<th>휴대폰</th>
+								<td>
+									<input type="text" name="" value="" id="" title="담당자연락처">
+								</td>
+							</tr>
+							<tr>
+								<th>사용</th>
+								<td colspan="3">
+									<label><input type="radio" name="" value="1" checked> 이름</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="2"> 닉네임</label>
+								</td>
+							</tr>
+							<tr>
+								<th>이메일수신</th>
+								<td colspan="3">
+									<label><input type="radio" name="" value="Y" checked>수신</label>&nbsp;&nbsp;
+									<label><input type="radio" name="" value="N">거부</label>
+								</td>
+							</tr>
+						<tr>
+							<th>사진</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="" checked> 이미지등록</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="Y">샘플사진</label>
+								<div style="margin-top:10px;">
+									<input type="file" name="" id="" class="imgext imgsize">
+								</div>
+								<div style="margin-top:20px;">
+									<input type="radio" name="" value=""><img src="/static/images/sample_01.png" class="pms_c">
+									<input type="radio" name="" value=""><img src="/static/images/sample_02.png" class="pms_c">
+									<input type="radio" name="" value=""><img src="/static/images/sample_03.png" class="pms_c">
+									<input type="radio" name="" value=""><img src="/static/images/sample_04.png" class="pms_c">
+									<input type="radio" name="" value=""><img src="/static/images/sample_05.png" class="pms_c"><br/>
+									<input type="radio" name="" value=""><img src="/static/images/sample_06.png" class="pms_c">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>입찰시 노출</th>
+							<td colspan="3">
+								<label><input type="checkbox" name="" value="Y"> 이메일</label>&nbsp;&nbsp;
+								<label><input type="checkbox" name="" value="Y"> 휴대폰</label>&nbsp;&nbsp;
+								<label><input type="checkbox" name="" value="Y"> SNS</label>
+							</td>
+						</tr>
+
+						<tr>
+							<th>SNS 아이디</th>
+							<td colspan="3">
+								<div>카카오톡 아이디 : <input type="text" name="" value="" id="" title="카카오톡 아이디"></div>
+								<div>페이스북 아이디 : <input type="text" name="" value="" id="" title="페이스북 아이디"></div>
+								<div>네이트온 아이디 : <input type="text" name="" value="" id="" title="네이트온 아이디"></div>
+								<div>네이버 아이디 : <input type="text" name="" value="" id="" title="네이버 아이디"></div>
+							</td>
+						</tr>
+						<tr>
+							<th>사업자종류</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="개인" checked>개인</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="개인사업자">개인사업자</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="법인사업자">법인사업자</label>
+							</td>
+						</tr>
+						<tr>
+							<th>회사명</th>
+							<td>
+								<input type="text" name="" value="" id="" title="회사명">
+							</td>
+							<th>에스크로</th>
+							<td>
+								<label><input type="radio" name="" value="Y">사용</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="N" checked>미사용</label>
+							</td>
+						</tr>
+						<tr>
+							<th>사업자등록번호</th>
+							<td>
+								<input type="text" name="" value="" id="" title="사업자등록번호">
+							</td>
+							<th>용역대금은행</th>
+							<td>
+								<select name="" title="용역대금은행">
+									<option value="">--선택--</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>계좌번호</th>
+							<td>
+								<input type="text" name="" value="" id="" title="계좌번호">
+							</td>
+							<th>예금주</th>
+							<td>
+								<input type="text" name="" value="" id="" title="예금주">
+							</td>
+						</tr>
+						<tr>
+							<th>사업자등록증</th>
+							<td colspan="3">
+								<input type="file" name="" id="">
+							</td>
+						</tr>
+						<tr>
+							<th>용역대금 세금납부</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="Y" id="" checked> 사업소득세와 지방소득세(3.3%) 원천징수 - 대부분의 개인과 개인사업자</label>&nbsp;<br>
+
+								<div class="fm_service_price_con">
+									<input type="text" name="" value="" id="" title="주민등록번호" placeholder="주민등록번호" maxlength="14">
+									<input type="text" name="" value="" id="" title="실명" placeholder="실명" maxlength="5">
+								</div>
+
+								<label><input type="radio" name="" value="N" id=""> 세금계산서 발행 후 부가가치세 납부 - 일부 개인사업자와 모든 법인</label>&nbsp;
+							</td>
+						</tr>
+
+						<tr>
+							<th>키워드</th>
+							<td colspan="3">
+								<div>
+									<a href="#" class="btn-black medium add_keyword">키워드 추가</a>
+								</div>
+
+								<div id="tag_con">
+														</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>프리랜서 소개말</th>
+							<td colspan="3">
+								<textarea name="" rows="5" cols="100"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<th>프리랜서 업무경력</th>
+							<td colspan="3">
+								<select name="fm_introduce_career">
+									<option value="">관련 업무 경력</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>프리랜서 소개파일</th>
+							<td colspan="3">
+								<input type="file" name="" id="">
+							</td>
+						</tr>
+						
+						<tr>
+							<th>선호도</th>
+							<td colspan="3">
+								<select name="">
+									<option value="">프로젝트 기간</option>
+								</select>
+								<select name="">
+									<option value="">프로젝트 규모</option>
+								</select>
+								<select name="">
+									<option value="">급여수령기준</option>
+								</select>
+								<select name="">
+									<option value="">작업장소</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>보유기술</th>
+							<td colspan="3">
+								<table class="boardform_sub">
+									<tbody>
+									<tr>
+										<th>기술명</th><th>등급</th><th></th>
+									</tr>
+									<tr>
+										<td>
+											<input type="text" value="" id="fm_text_1_1" maxlength="40" class="ts_remove">
+										</td>
+										<td>
+											<select id="">
+												<option value="">--&nbsp;&nbsp;등급&nbsp;&nbsp;--</option>
+												<option value="고급">&nbsp;&nbsp;고급&nbsp;&nbsp;</option>
+												<option value="중급">&nbsp;&nbsp;중급&nbsp;&nbsp;</option>
+												<option value="초급">&nbsp;&nbsp;초급&nbsp;&nbsp;</option>
+											</select>
+										</td>
+										<td>
+											<span class="btn-black medium" id="">추가</span>
+										</td>
+									</tr>
+								</tbody></table>
+
+								<div id="">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>자격증</th>
+							<td colspan="3">
+								<table class="boardform_sub">
+									<tbody>
+										<tr>
+											<th>취득일</th><th>자격증명</th><th>발행처</th><th></th>
+										</tr>
+										<tr>
+											<td>
+												<input type="text" value="" id="" maxlength="40" readonly="" class="readonly search_date hasDatepicker">
+											</td>
+											<td>
+												<input type="text" value="" id="" maxlength="40" class="ts_remove">
+											</td>
+											<td>
+												<input type="text" value="" id="" maxlength="40" class="ts_remove">
+											</td>
+											<td>
+												<span class="btn-black medium" id="">추가</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<div id="">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>경력</th>
+							<td colspan="3">
+								<table class="boardform_sub">
+									<tbody><tr>
+										<th>시작일</th><th>종료일</th><th>프로젝트</th><th>직책</th><th></th>
+									</tr>
+									<tr>
+										<td>
+											<input type="text" value="" id="" maxlength="40" readonly="" class="readonly search_date hasDatepicker">
+										</td>
+										<td>
+											<input type="text" value="" id="" maxlength="40" readonly="" class="readonly search_date hasDatepicker">
+										</td>
+										<td>
+											<input type="text" value="" id="" maxlength="40" class="ts_remove">
+										</td>
+										<td>
+											<input type="text" value="" id="" maxlength="40" class="ts_remove">
+										</td>
+										<td rowspan="2">
+											<span class="btn-black medium" id="">추가</span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4">
+											<input type="text" value="" id="" maxlength="100" class="ts_remove" style="width:96%;">
+										</td>
+									</tr>
+									</tbody>
+								</table>
+
+								<div id="">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>휴대폰인증</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="Y" checked> 인증</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value=""> 미인증</label>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tc">
+							<input type="submit" value="저장" class="btn-color large">
+							<a href="" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+				</form>
+
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

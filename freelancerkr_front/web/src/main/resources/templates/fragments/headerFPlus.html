@@ -1,0 +1,131 @@
+<header layout:fragment="header"
+        xmlns:th="http://www.w3.org/1999/xhtml"
+        xmlns:layout="http://www.springframework.org/schema/security"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        id="header" 
+        style="position:fixed;width:100%;top:0;height: 58px; ">
+    <div class="header-body bg-gray box-shadow-none border-bottom" style="top: 0px;height:58px;">
+        <div class="header-container h-100 container-fluid px-lg-5">
+            <div class="header-row h-100">
+                <div class="header-column justify-content-end">
+                    <div class="header-row justify-content-between">
+                        <div class="d-flex">
+                            <div class="header-logo">
+                             	<a href="/fplus">
+                                    <img alt="프리랜서코리아" class="header_main_logo" width="120" src="/static/img/fplus_logo.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="header-nav header-nav-links order-2 order-lg-1 p-0">
+                                <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-2 header-nav-main-sub-effect-1">
+                                 <nav class="">
+                                        <ul class="nav nav-pills" id="mainNav">
+                                            <li class="dropdown">
+                                                <a class="dropdown-item" href="/noticef/list">
+                                                    공지사항
+                                                </a>
+                                            </li>
+                                        </ul>
+                                 </nav>
+                                </div>
+                                <button class="hamburguer-btn hamburguer-btn-dark hamburguer-btn-sticky-dark" data-set-active="false">
+                                    <span th:if="${existAlarm != null AND existAlarm}" class="new_noti_point">●</span>
+                                    <span class="hamburguer">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="header-nav-features order-1 order-lg-2">
+                                <div class="header-nav-feature mr-3 d-none d-lg-inline-flex">
+                                    <a href="#" class="text-dark">
+                                        <i class="fas fa-user text-4 text-lg-3"></i>
+                                        <span class="d-none d-lg-inline-block" th:text="${user.name}" style="max-width: 100px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;vertical-align: bottom;"></span>
+                                        <span class="cart-info" th:if="${user != null && user.alarm}">
+                                            <span class="cart-qty">1</span>
+                                        </span>
+                                    </a>
+                                    <div th:if="${user != null}" class="my_menu">
+                                        <div class="list-group list-group-flush">
+                                            <div class="my_menu_list">
+                                                <a href="/logout" class="out list-group-item list-group-item-action">
+                                                    <span style="font-weight:600;">로그아웃</span>
+                                                    <span><img src="/static/images/icon/logout_icon.png"/></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header-nav-feature d-none d-lg-inline-flex">
+                                    <a href="/freelancer/profile/index#overview" class="text-dark">
+                                        <i class="fas fa-envelope text-4 text-lg-3" style="display:none;"></i>
+                                        <span class="cart-info" th:if="${user != null && user.alarm}">
+                                            <span class="cart-qty">1</span>
+                                        </span>
+                                    </a>
+                                    <div class="my_message p-0" th:if="${user != null && user.message}">
+                                        <div class="list-group">
+                                            <a href="#" class="list-group-item list-group-item-action py-2">
+                                                <div class="media">
+                                                    <img class="mr-3" src="http://placehold.it/50x50" alt="Generic placeholder image">
+                                                    <div class="media-body">
+                                                        <div class="mb-1 title" style="line-height: 17px">프로젝트가 성공적으로 포스팅 되었습니다.
+                                                        </div>
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <span class="text-muted text-1" style="line-height: 15px">프리랜서코리아</span>
+                                                            <span class="text-muted text-1" style="line-height: 15px">3 days ago</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="list-group-item list-group-item-action py-2">
+                                                <div class="media">
+                                                    <img class="mr-3" src="http://placehold.it/50x50" alt="Generic placeholder image">
+                                                    <div class="media-body">
+                                                        <div class="mb-1 title" style="line-height: 17px">프로젝트가 성공적으로 포스팅 되었습니다.
+                                                        </div>
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <span class="text-muted text-1" style="line-height: 15px">프리랜서코리아</span>
+                                                            <span class="text-muted text-1" style="line-height: 15px">3 days ago</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="list-group-item text-center">
+                                                더보기
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/users/menu-hits',
+                success: function(data) {
+                    let menuHits = data.data;
+
+                    for (var i = 0; i < menuHits.length; i++) {
+                        if (menuHits[i].on) {
+                            $('span[data-parent-menu-code="' + menuHits[i].parentMenuCode +'"]').show();
+                            $('span[data-menu-code="' + menuHits[i].menuCode +'"]').show();
+                        }
+                    }
+                },
+                error: function() {
+                    console.error('failed to get menu hits');
+                }
+
+            })
+        })
+    </script>
+</header>

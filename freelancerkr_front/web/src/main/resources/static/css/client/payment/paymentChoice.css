@@ -1,0 +1,208 @@
+.paymentChoice .content-body{
+	text-align: center;
+}
+.paymentChoice .title{
+	font-family: nanumSquare;
+	font-size: 25px;
+	margin-bottom: 2rem;
+}
+
+.choice_payment{
+	margin-bottom: 8rem;
+}
+.choice_payment .cc-selector input {
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.choice_payment .cc-selector input:active +.drinkcard-cc {
+  background-color: #e36159;
+	color: #fff;
+}
+
+.choice_payment .cc-selector input:checked +.drinkcard-cc {
+  background-color: #e36159;
+	color: #fff;
+}
+.choice_payment .cc-selector .account img{
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+.choice_payment .cc-selector .account .sub_text{
+	font-family: nanumgothic;
+	position: absolute;
+	color: #333;
+	bottom: -3rem;
+	left: 0;
+	font-size: 13px;
+	letter-spacing: -0.5px;
+	padding: 0 13px;
+}
+.choice_payment .cc-selector .drinkcard-cc {
+	position: relative;
+	font-family: nanumSquare;
+	background-color: #fff;
+	box-shadow: 0 5px 20px -5px rgba(50, 50, 93, 0.12), 0 3px 4px -2px rgba(0, 0, 0, 0.08);
+	cursor: pointer;
+	padding: 2.5rem 3rem;
+	margin: 0.5rem 1rem;
+	text-align: center;
+	color: #b7b7b7;
+	border-radius: 6px;
+	-webkit-transition: all 200ms ease-in;
+	-moz-transition: all 200ms ease-in;
+	transition: all 200ms ease-in;
+}
+
+.choice_payment .cc-selector .drinkcard-cc:hover {
+	background-color: #e36159;
+	color: #fff;
+}
+.choice_payment .cc-selector .drinkcard-cc .text{
+	font-size: 25px;
+	margin-bottom: 1.5rem;
+}
+.input_charge_money{
+	max-width: 500px;
+    margin: auto;
+    margin-bottom: 3rem;
+}
+.input_charge_money .title{
+	position: relative;
+	display: inline-block;
+	font-family: nanumSquare;
+	font-size: 25px
+}
+.input_charge_money .box{
+	text-align: left;
+    padding: 0 4.5rem;
+}
+.input_charge_money .box .input_wrap{
+	font-size: 15px;
+}
+.input_charge_money .box .input_wrap label{
+	width: 80px;
+}
+.input_charge_money .box .input_wrap input{
+	text-align: right;
+	border: 0;
+	border-bottom: 1px solid #d0d0d0;
+	font-size: 20px;
+	padding: 0.5rem;
+	margin: 0 0.5rem;
+	max-width: 250px;
+}
+
+input:disabled, input[readonly] {
+	background: white;
+}
+
+.input_charge_money .title .underline{
+	position: absolute;
+    width: 110%;
+    height: 10px;
+    background-color: #ffeb3b;
+    opacity: 0.3;
+    left: -14px;
+    bottom: 0;
+}
+.policy_n_button{
+	max-width: 500px;
+    margin: auto;
+    margin-bottom: 5rem;
+}
+.policy_n_button .btn_showterms{
+	font-size: 12px;
+}
+.policy_n_button .check_policy{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+
+}
+.policy_n_button .charge-btn{
+	background-color: #0088cc;
+    color: #fff;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    font-size: 17px;
+    padding: 0.7rem;
+}
+@media (min-width: 1200px) { 
+
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.paymentChoice .title{
+		font-size: 23px;
+	}
+	.choice_payment {
+	    margin-bottom: 2rem;
+	}
+	.choice_payment .cc-selector .drinkcard-cc .text{
+		font-size: 20px;
+		margin-bottom: 1.5rem;
+	}
+	.choice_payment .cc-selector .drinkcard-cc{
+		padding: 1rem;
+		margin: 0.5rem;
+	}
+	.choice_payment .cc-selector .drinkcard-cc img{
+		max-width: 70px;
+	}
+	.choice_payment .cc-selector .account .sub_text{
+		display: none;
+	}
+	.input_charge_money .box .input_wrap input{
+		padding: 0.5rem;
+		margin: 0 0.5rem;
+		max-width: 200px;
+	}
+	.input_charge_money .box{
+	    padding: 0;
+	    display: inline-block;
+	    margin:auto;
+	}
+}
+@media (max-width: 575.98px) {
+	.paymentChoice .title{
+		font-size: 23px;
+	}
+	.choice_payment {
+	    margin-bottom: 2rem;
+	}
+	.choice_payment .cc-selector .drinkcard-cc .text{
+		font-size: 20px;
+		margin-bottom: 1.5rem;
+	}
+	.choice_payment .cc-selector .drinkcard-cc{
+		padding: 1rem;
+		margin: 0.5rem;
+	}
+	.choice_payment .cc-selector .drinkcard-cc img{
+		max-width: 70px;
+	}
+	.choice_payment .cc-selector .account .sub_text{
+		display: none;
+	}
+	.input_charge_money .box .input_wrap input{
+		padding: 0.5rem;
+		margin: 0 0.5rem;
+		max-width: 200px;
+	}
+	.input_charge_money .box{
+	    padding: 0;
+	    display: inline-block;
+	    margin:auto;
+	}
+	
+}

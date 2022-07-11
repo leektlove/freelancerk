@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/payment/list.css">
+</head>
+
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row mb-2">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>결제/포인트관리</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+				<div class="text-4">유료옵션의 효율을 검토해보세요!</div>
+			</div>
+		</section>
+        <!-- 페이지헤더// -->
+
+        <!-- 탭메뉴 -->
+        <section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+            <div class="container" style="margin-bottom: -3px;">
+                <ul class="nav nav-tabs justify-content-start mb-0 ">
+                    <li class="nav-item mb-0 active">
+                        <a th:href="@{/client/payment/list}" class="nav-link active">
+                            <span>결제/포인트관리</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mb-0">
+                        <a th:href="@{/client/payment/escrowList}" class="nav-link disabled">
+                            <span>에스크로</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!-- 탭메뉴// -->
+		
+		<section>
+			<div class="container">
+		        <div class="content-body">
+					
+					<!-- 나의 포스팅 내역 -->
+					<div class="pickme">
+						<div class="heading heading-border heading-middle-border">
+		                    <h4 class=""><strong class="">나의 포스팅 내역</strong></h4>
+		                </div>
+		                <div class="row">
+							<div class="owl-carousel owl-theme stage-margin nav-style-1 owl-loaded owl-drag owl-carousel-init" data-plugin-options="{'items': 3, 'margin': 25, 'loop': false, 'nav': true, 'dots': false, 'stagePadding': 40}">	
+								<div class="owl-stage-outer">
+									<div class="owl-stage">
+										<div class="owl-item active" th:each="item: ${page.content}">
+											<div class="card-list" th:if="${item.project.projectType.name() == 'PROJECT'}">
+												<div class="project payment_card px-3 pb-3" >
+													<div class="item">
+														<div class="pickmeup_item">
+															<div class="img_title_box">
+																<div class="title_box">
+																	<div class="title">
+																		<span class=" text-primary" th:text="${item.project.title}">
+																		</span>
+																	</div>
+																	<div class="contents text-2" style="line-height:21px">
+																		<span style="font-size: 11px;">
+																			총 노출기간 : 
+																		</span>
+																		<span style="font-size: 17px;color:#0088cc;" th:text="${item.project.postingPastDayTimes}"></span>
+																	</div>
+																	<div class="contents text-2" style="line-height:21px">
+																		<span th:text="${#temporals.format(item.project.postingStartAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+																		<th:block th:if="${item.project.status.name() == 'IN_PROGRESS' OR item.project.status.name() == 'COMPLETED' OR item.project.status.name() == 'CANCELLED'}">
+																			<span th:if="${item.project.status.name() == 'COMPLETED' || item.project.status.name() == 'IN_PROGRESS'}" th:text="${#temporals.format(item.project.startAt, '~ yyyy.MM.dd HH:mm:ss')}"></span>
+																			<span th:if="${item.project.status.name() == 'CANCELLED'}" th:text="${#temporals.format(item.project.postingEndOrCancelAt, '~ yyyy.MM.dd HH:mm:ss')}"></span>
+																		</th:block>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="project mb-0">
+															<table class="table mb-0">
+																<thead class="text-center">
+																	<tr>
+																		<th style="width:48%">옵션종류</th>
+																		<th style="width:26%">결제금액</th>
+																		<th style="width:26%">기한</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr th:each="optionItem: ${projectOptions}" th:class="${optionItem.category != null?'disabled':''}">
+																		<th:block th:if="${optionItem.category != null}">
+																			<th scope="row">
+																				<div class="custom-control custom-checkbox ml-1 ml-md-3" th:style="${optionItem.category!=null?'margin-left: 1rem;':''}">
+													                                <input type="checkbox" th:value="${optionItem.id}"
+													                                		name="projectPaymentOptionId[]"
+													                                		th:id="|projectPaymentOptionId-${optionItem.id}|"
+													                                		th:attr="data-option-code=${optionItem.code}"
+													                                		th:checked="${item.project.isContainProjectOption(optionItem.id)}"
+													                                		readonly="readonly"
+																						   	onclick="return false"
+													                                		class="custom-control-input">
+													                                <input type="hidden" value="1" name="projectPaymentOptionCount[]">
+													                                <label class="custom-control-label">
+													                                	<span th:if="${optionItem.category!=null}">+</span><span class="ml-1" th:text="${optionItem.name}"></span>
+													                                </label>
+													                            </div>
+																			</th>
+																			<td class="text-right" th:text="|*{#numbers.formatInteger(item.project.getOptionPurchasePrice(optionItem.id), 0, 'COMMA')}원|">
+																			</td>
+																			<td class="text-center" th:text="${item.project.getProjectOptionValidationSpan(optionItem.id)}">
+																			</td>
+																		</th:block>
+																		<th:block th:if="${optionItem.category == null && optionItem.code.name() != 'ESCROW'}">
+																			<th>
+																				<div class="custom-control custom-checkbox ml-1 ml-md-2">
+													                                <input name="projectPaymentOptionId[]"
+													                                		th:checked="${item.project.isContainProjectOption(optionItem.id)}" 
+													                                		readonly="readonly"
+													                                		onclick="return false"
+													                                		type="checkbox"
+													                                		class="custom-control-input"
+													                                		th:id="|projectPaymentOptionId-${optionItem.id}|"
+													                                		th:value="${optionItem.id}" >
+													                                <input type="hidden" value="1" name="projectPaymentOptionCount[]">
+													                                <label class="custom-control-label" th:text="${optionItem.name}">
+													                                </label>
+													                            </div>
+																			</th>
+																			<th class="text-right"><span th:if="${item.project.isContainProjectOption(optionItem.id)}" th:text="|*{#numbers.formatInteger(item.project.getOptionPurchasePrice(optionItem.id), 0, 'COMMA')}원|">0</span></th>
+																			<th class="text-center"><span th:if="${item.project.isContainProjectOption(optionItem.id)}" th:text="${item.project.getProjectOptionValidationSpan(optionItem.id)}"></span></th>
+																		</th:block>
+																	</tr>
+																	<tr class="text-2">
+																		<td class="text-center">(할인 및 포인트 적용)</td>
+																		<td class="text-right" th:text="|*{#numbers.formatInteger(item.project.totalDiscountAmount + item.project.totalUsePoint, 0, 'COMMA')}원|"></td>
+																		<td class=""></td>
+																	</tr>
+																	<tr>
+																		<td class="text-center ">총 옵션결제 금액</td>
+																		<td class=" text-right " th:text="|*{#numbers.formatInteger((item.project.totalChangedOptionMoney - item.project.totalDiscountAmount - item.project.totalUsePoint), 0, 'COMMA')}원|"></td>
+																		<td class="text-center" style="font-size: 11px;color:#999;line-height: 19px;">VAT미포함</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<div class="content">
+															<button class="d-btn">
+															</button>
+															<div class="des-cnt text-center">
+																<div class="dash_line"></div>
+																<div class="cell-box">
+																	<div class="cell" data-toggle="tooltip" data-placement="top" title="" data-original-title="나의 포스트가 조회된 횟수입니다.">
+																		<div class="title">조회수</div>
+																		<div class="contents" th:text="${item.project.hits}"></div>
+																	</div>
+																	<div class="cell" data-toggle="tooltip" data-placement="top" title="" data-original-title="나의 포스트에 프리랜서가 지원한 횟수입니다.">
+																		<div class="title">입찰건수</div>
+																		<div class="contents" th:text="${item.project.numberOfApplyCount}">0건</div>
+																	</div>
+																	<div class="cell" data-toggle="tooltip" data-placement="top" title="" data-original-title="나의 포스트를 프리랜서가 찜한 횟수입니다.">
+																		<div class="title">담긴횟수</div>
+																		<div class="contents" th:text="${item.project.favoriteCount}">0건</div>
+																	</div>
+																</div>
+															</div>
+															
+															<!-- 옵션 추가 연장 버튼 -->
+															<div class="btn-group w-100" th:if="${item.project.status.name() == 'POSTED'}">
+																<button type="button" class="btn btn-primary rounded-0 btn w-100 mt-0" th:onclick="|toExtendView(${item.project.id})|">옵션추가/연장하기</button>
+															</div>
+															<!-- 옵션 추가 연장 버튼//-->
+
+															<!-- 노출이 종료된 경우 버튼 -->
+															<div class="btn-group d-flex">
+																<button type="button" class="btn btn-quaternary rounded-0 mt-0 w-100" th:if="${item.project.status.name() != 'POSTED'}">노출이 종료되었습니다</button>
+																<button type="button" th:onclick="|deletePurchaseRecord(${item.project.id})|" class="btn btn-delete d-block rounded-0 mt-0 ml-1 w-100" th:if="${item.project.status.name() != 'POSTED'}">삭제</button>
+															</div>
+															<!-- 노출이 종료된 경우 버튼// -->
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="card-list" th:if="${item.project.projectType.name() == 'CONTEST'}">
+												<div class="contest payment_card px-3 pb-3">
+													<div class="item">
+														<div class="pickmeup_item">
+															<div class="img_title_box">
+																<div class="title_box">
+																	<div class="title">
+																		<span class=" text-secondary" th:text="${item.project.title}">
+																		</span>
+																	</div>
+																	<div class="contents text-2" style="line-height:21px">
+																		<span style="font-size: 11px;">
+																			총 노출기간 : 
+																		</span>
+																		<span style="font-size: 17px;color:#e36159;" th:text="${item.project.postingPastDayTimes}"></span>
+																	</div>
+																	<div class="contents text-2" style="line-height:21px">
+																		<span th:text="${#temporals.format(item.project.postingStartAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+																		~
+																		<th:block th:if="${item.project.status.name() == 'COMPLETED' OR item.project.status.name() == 'IN_PROGRESS' OR item.project.status.name() == 'CANCELLED'}">
+																			<span th:if="${item.project.status.name() == 'COMPLETED' || item.project.status.name() == 'IN_PROGRESS'}" th:text="${#temporals.format(item.project.startAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+																			<span th:if="${item.project.status.name() == 'CANCELLED'}" th:text="${#temporals.format(item.project.postingEndOrCancelAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+																		</th:block>
+																	</div>
+																</div>
+															</div> 
+														</div>
+														<div class="contest mb-0">
+															<table class="table mb-0">
+																<thead class="text-center">
+																	<tr>
+																		<th style="width:48%">옵션종류</th>
+																		<th style="width:26%">결제금액</th>
+																		<th style="width:26%">기한</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr th:each="optionItem: ${contestOptions}" th:class="${optionItem.category != null?'disabled':''}">
+																		<th:block th:if="${optionItem.category != null}">
+																			<th scope="row">
+																				<div class="custom-control custom-checkbox ml-1 ml-md-3" th:style="${optionItem.category!=null?'margin-left: 1rem;':''}">
+													                                <input type="checkbox" th:value="${optionItem.id}"
+													                                		name="projectPaymentOptionId[]"
+													                                		th:attr="data-option-code=${optionItem.code}"
+													                                		th:checked="${item.project.isContainProjectOption(optionItem.id)}"
+													                                		readonly="readonly"
+																						   	onclick="return false"
+													                                		class="custom-control-input">
+													                                <input type="hidden" value="1" name="projectPaymentOptionCount[]">
+													                                <label class="custom-control-label">
+													                                	<span th:if="${optionItem.category!=null}">+</span><span class="ml-1" th:text="${optionItem.name}"></span>
+													                                </label>
+													                            </div>
+																			</th>
+																			<td class="text-right" th:text="|*{#numbers.formatInteger(item.project.getOptionPurchasePrice(optionItem.id), 0, 'COMMA')}원|"></td>
+																			<td class="text-center" th:text="${item.project.getProjectOptionValidationSpan(optionItem.id)}"></td>
+																		</th:block>
+																		<th:block th:if="${optionItem.category == null}">
+																			<th>
+																				<div class="custom-control custom-checkbox ml-1 ml-md-2">
+													                                <input name="projectPaymentOptionId[]"
+													                                		th:checked="${item.project.isContainProjectOption(optionItem.id)}" 
+													                                		readonly="readonly"
+													                                		onclick="return false"
+													                                		type="checkbox"
+													                                		class="custom-control-input"
+													                                		th:value="${optionItem.id}" >
+													                                <input type="hidden" value="1" name="projectPaymentOptionCount[]">
+													                                <label class="custom-control-label" th:text="${optionItem.name}">
+													                                </label>
+													                            </div>
+																			</th>
+																			<th class="text-right"><span th:if="${item.project.isContainProjectOption(optionItem.id)}" th:text="|*{#numbers.formatInteger(item.project.getOptionPurchasePrice(optionItem.id), 0, 'COMMA')}원|">0</span></th>
+																			<th class="text-center"><span th:if="${item.project.isContainProjectOption(optionItem.id)}" th:text="${item.project.getProjectOptionValidationSpan(optionItem.id)}"></span></th>
+																		</th:block>
+																	</tr>
+																	<tr class="text-2">
+																		<td class="text-center">(할인 및 포인트 적용)</td>
+																		<td class="text-right" th:text="|*{#numbers.formatInteger(item.project.totalDiscountAmount + item.project.totalUsePoint, 0, 'COMMA')}원|"></td>
+																		<td class=""></td>
+																	</tr>
+																	<tr>
+																		<td class="text-center ">총 옵션결제 금액</td>
+																		<td class="text-right " th:text="|*{#numbers.formatInteger((item.project.totalChangedOptionMoney - item.project.totalDiscountAmount - item.project.totalUsePoint), 0, 'COMMA')}원|"></td>
+																		<td class="text-center" style="font-size: 11px;color:#999;line-height: 19px">VAT미포함</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<div class="content">
+															<button class="d-btn" data-toggle="modal" data-target="#contestSpecModal" th:data-project-id="${item.project.id}">
+                                            					<img src="/static/images/icon/receipt.png">명세서 확인하기
+                                            				</button>
+															<div class="des-cnt text-center">
+																<div class="dash_line"></div>
+																<div class="cell-box">
+																	<div class="cell" data-toggle="tooltip" data-placement="top" title="" data-original-title="나의 포스트가 조회된 횟수입니다.">
+																		<div class="title">조회수</div>
+																		<div class="contents text-secondary" th:text="${item.project.hits}"></div>
+																	</div>
+																	<div class="cell" data-toggle="tooltip" data-placement="top" title="" data-original-title="나의 포스트에 프리랜서가 지원한 횟수입니다.">
+																		<div class="title">입찰건수</div>
+																		<div class="contents text-secondary" th:text="${item.project.numberOfApplyCount}">0건</div>
+																	</div>
+																	<div class="cell" data-toggle="tooltip" data-placement="top" title="" data-original-title="나의 포스트를 프리랜서가 찜한 횟수입니다.">
+																		<div class="title">담긴횟수</div>
+																		<div class="contents text-secondary" th:text="${item.project.favoriteCount}">0건</div>
+																	</div>
+																</div>
+															</div>
+															<!-- 옵션 추가 연장 버튼 -->
+															<div class="btn-group w-100" th:if="${item.project.status.name() == 'POSTED'}">
+																<button type="button" class="btn btn-secondary rounded-0 w-100 mt-0" th:onclick="|toExtendContestView(${item.project.id})|">
+																	옵션추가/연장하기
+																</button>
+															</div>
+															<!-- 옵션 추가 연장 버튼// -->
+															<!-- 노출이 종료된 경우 버튼 -->
+															<div class="btn-group d-flex">
+																<button type="button" class="btn btn-quaternary rounded-0 mt-0 w-100" th:if="${item.project.status.name() != 'POSTED'}">노출이 종료되었습니다</button>
+																<button type="button" th:onclick="|deletePurchaseRecord(${item.project.id})|" class="btn btn-delete d-block rounded-0 mt-0 ml-1 w-100" th:if="${item.project.status.name() != 'POSTED'}">삭제</button>
+															</div>
+															<!-- 노출이 종료된 경우 버튼// -->
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="owl-nav">
+									<button type="button" role="presentation" class="owl-prev disabled"></button>
+									<button type="button" role="presentation" class="owl-next"></button>
+								</div>
+								<div class="owl-dots disabled">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 나의 포스팅 내역//-->
+
+					<!-- 가이드 -->
+					<div class="heading heading-border heading-middle-border">
+	                    <h4 class=""><strong class="">결제관리 이용방법</strong></h4>
+	                </div>
+					<div class="row" style="align-items: center;max-width:800px;margin:auto;margin-top:0rem;margin-bottom:80px">
+						<div class="pickme_guid_1 guide col-6 p-0">
+							<div class="form-row">
+								<div class="col-lg-12">
+									<img src="/static/images/use-guide/client_pay_1.png" class="img-fluid">
+								</div>
+								<div class="col-lg-12" style="align-self: center;">
+									프로젝트 또는 컨테스트를<br class="d-block d-md-none"/> 포스팅 하세요!<br>
+									더 빨리 더 좋은 인력을<br class="d-block d-md-none"/> 구하고 싶으시다면<br>
+									포스팅 옵션을 사용해보세요
+								</div>
+							</div>
+						</div>
+						<div class="pickme_guid_2 guide col-6 p-0">
+							<div class="form-row">
+								<div class="col-lg-12">
+									<img src="/static/images/use-guide/client_pay_2.png" class="img-fluid">
+								</div>
+								<div class="col-lg-12" style="align-self: center;">
+									등록한 포스트의<br/> 효율을<br class="d-block d-md-none"/>점검 해보세요.<br>
+									(조회수,지원자수,담긴횟수)
+								</div>
+							</div>
+						</div>	
+					</div>
+					<!-- 가이드// -->
+
+					<!-- 포인트 -->
+					<div class="point" id="point-container">
+						<div class="heading heading-border heading-middle-border">
+		                    <h4 class="font-weight-normal"><strong class="">옵션 결제내역과 포인트</strong></h4>
+		                </div>
+		                <div style="position: relative;margin-bottom:80px;">
+			                <div class="table-responsive">
+								<table class="table table-bordered text-center">
+									<thead>
+										<tr>
+											<th>순서</th>
+											<th>일자</th>
+											<th>프로젝트명</th>
+											<th>발생포인트</th>
+											<th>유효기한</th>
+											<th>사용포인트</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item, iter: ${pointLogs}">
+											<td th:text="${pointLogs.size() - iter.index}"></td>
+											<td th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd')}"></td>
+											<td th:if="${item.project != null}" th:text="${item.project?.title}"></td>
+											<td th:if="${item.project == null}" th:text="${item.reason}"></td>
+											<td class="count" th:text="${#numbers.formatDecimal(item.addedPoint, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
+											<td th:text="${#temporals.format(item.addedPointExpiredAt, 'yyyy.MM.dd')}"></td>
+											<td class="count" th:text="${#numbers.formatDecimal(item.usePoint, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
+										</tr>
+										<tr>
+											<td colspan="4"></td>
+											<td>사용가능포인트</td>
+											<td th:text="|${#numbers.formatInteger(user.points, 0, 'COMMA')}P|"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- 포인트//-->
+				</div>
+			</div>
+		</section>
+		<th:block th:include="modal/contest-spec-modals"></th:block>
+		<th:block th:include="modal/common-modals"></th:block>
+		<script src="/static/js/client/payment/list.js"></script>
+	</div>
+	
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <title>프리랜서코리아 이메일</title>
+</head>
+<body>
+<div class="email-container" style="padding: 2rem 1rem;max-width: 700px;margin: auto;">
+
+    <!-- 헤더 -->
+    <div class="header" style="display: block;padding-bottom:10px;border-bottom: 1px solid #ddd;">
+        <img src="https://freelancerk.s3.ap-northeast-2.amazonaws.com/static/logo.png" style="max-width: 150px;">
+        <span class="email-title" style="font-size:20px;font-weight: 600;margin-top: 0.3rem;float: right;">프코 알림</span>
+    </div>
+    <div style="display: block;clear: both;"></div>
+    <div class="title" style="font-size: 25px;padding: 1rem 0;border-bottom: 1px solid #ddd;">
+        2일 후 프로젝트 포스트가 마감될 예정입니다.
+    </div>
+    <!-- 헤더//-->
+
+    <!-- 본문 -->
+    <div class="discription" style="font-size: 17px;border-bottom: 1px solid #ddd;padding-top: 1rem;padding-bottom: 1rem;margin-bottom: 2.5rem;line-height: 1.5rem;">
+        <div class="content" style="margin-bottom: 2rem;">
+            <!-- <span th:text="${#temporals.format(project.postingStartAt, 'yyyy.MM.dd HH:mm:ss')}"></span>  -->
+            <span class="username" th:text="${client.exposeName}" style="font-weight: 700;margin-right: 0.5rem;line-height: 30px;">박은진</span>님께서 포스팅 하신
+            <span class="project_title" th:text="${project.title}" style="font-weight: 700;margin-right: 0.5rem;">캐릭터만들기</span>프로젝트가
+            <span class="date" th:text="${#temporals.format(project.postingEndAtPlus7, 'yyyy.MM.dd HH:mm:ss')}" style="line-height: 30px;margin-right: 0.5rem;font-weight: 700;"></span>에 자동 마감될 예정입니다. <br/><br/>
+            <div class="bidder_count" style="font-size: 20px;color: #0088cc;font-weight: 700;margin-bottom: 1rem;">
+                입찰자 <span th:text="*{#numbers.formatInteger(project.numberOfApplyCount, 0, 'COMMA')}"></span>명이 있습니다.
+            </div>
+            마감일(D-0)이 지났으므로 더 이상의 지원자 모집은 불가능합니다.<br/>또한 마감 후 현재 <strong>지원자는 비공개 되므로 자동 마감일(D+7일)까지 선정</strong>을 부탁드리며,<br/> 자동 마감일 연장을 원하시는 경우 [결제관리]에서 옵션을 추가해주시기 바랍니다.
+        </div>
+    </div>
+    <th:block th:include="email/bottom-button-container"></th:block>
+    <!-- 본문//-->
+
+    <th:block th:include="email/footer"></th:block>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client.css">
+</head>
+
+
+<section id="content" layout:fragment="content">
+	<div id="container">
+		<div id="container_side">
+			<th:block th:include="fragments/clientHeader"></th:block>
+		</div>
+		<div id="container_content">
+			<div class="container_inner">
+				<h1>■ 클라이언트 등록</h1>
+
+				<form name="" action="" method="post">
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+						<tr>
+							<th>아이디(이메일)</th>
+							<td>
+								<input type="text" name="" value="" id="" required="" class="required" maxlength="100" title="아이디(이메일)">
+							</td>
+							<th>비밀번호</th>
+							<td>
+								<input type="password" name="" id="cm_password" required="" class="required" maxlength="16" title="비밀번호">
+							</td>
+						</tr>
+						<tr>
+							<th>이름</th>
+							<td>
+								<input type="text" name="" value="" id="" class="required" required="" title="이름" maxlength="20">
+							</td>
+							<th>닉네임</th>
+							<td>
+								<input type="text" name="" value="" id="" class="required" required="" title="닉네임" maxlength="20">
+							</td>
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td>
+								<input type="text" name="" value="" id="" class="required" required="" maxlength="100" title="이메일">
+							</td>
+							<th>휴대폰</th>
+							<td>
+								<input type="text" name="" value="" id="" class="required" required="" title="휴대폰">
+							</td>
+						</tr>
+						<tr>
+							<th>사용</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="1" checked> 담당자명</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="2"> 닉네임</label>
+							</td>
+						</tr>
+						<tr>
+							<th>이메일수신</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="Y" checked> 수신</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="N"> 거부</label>
+							</td>
+						</tr>
+						<tr>
+							<th>사진</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="" checked> 이미지등록</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="Y"> 샘플사진</label>
+
+								<div style="margin-top:10px;">
+									<input type="file" name="" id="" class="imgext imgsize">
+								</div>
+
+								<div style="margin-top:20px;">
+									<input type="radio" name="" value=""><img src="/static/images/sample_01.png" class="pms_c">
+									<input type="radio" name="" value=""><img src="/static/images/sample_02.png" class="pms_c">
+									<input type="radio" name="" value=""><img src="/static/images/sample_03.png" class="pms_c">
+									<input type="radio" name="" value=""><img src="/static/images/sample_04.png" class="pms_c">
+									<input type="radio" name="" value=""><img src="/static/images/sample_05.png" class="pms_c"><br/>
+									<input type="radio" name="" value=""><img src="/static/images/sample_06.png" class="pms_c">
+									<br/>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>노출</th>
+							<td colspan="3">
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" name="" value="Y">
+									<label class="custom-control-label">이메일</label>
+								</div>
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" name="" value="Y">
+									<label class="custom-control-label">휴대폰</label>
+								</div>
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" name="" value="Y">
+									<label class="custom-control-label">SNS</label>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>SNS 아이디</th>
+							<td colspan="3">
+								<div>카카오톡 아이디 : <input type="text" name="" value="" id="cm_sns_1" title="카카오톡 아이디"></div><br>
+								<div>페이스북 아이디 : <input type="text" name="" value="" id="cm_sns_2" title="페이스북 아이디"></div><br>
+								<div>네이트온 아이디 : <input type="text" name="" value="" id="cm_sns_3" title="네이트온 아이디"></div><br>
+								<div>네이버 아이디 : <input type="text" name="" value="" id="cm_sns_4" title="네이버 아이디"></div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>사업자종류</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="개인" checked>개인</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="개인사업자">개인사업자</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="법인사업자">법인사업자</label>
+							</td>
+						</tr>
+						<tr>
+							<th>회사명</th>
+							<td>
+								<input type="text" name="" value="" id="cm_company" title="회사명">
+							</td>
+							<th>에스크로</th>
+							<td>
+								<label><input type="radio" name="" value="Y">사용</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value="N" checked>미사용</label>
+							</td>
+						</tr>
+						<tr>
+							<th>사업자등록번호</th>
+							<td>
+								<input type="text" name="" value="" id="cm_license_number" title="사업자등록번호">
+							</td>
+							<th>환불은행</th>
+							<td>
+								<select name="" title="환불은행">
+									<option value="">--선택--</option>
+									<option value="SC제일은행">SC제일은행</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>계좌번호</th>
+							<td>
+								<input type="text" name="" value="" id="cm_license_number" title="계좌번호">
+							</td>
+							<th>예금주</th>
+							<td>
+								<input type="text" name="" value="" id="cm_license_number" title="예금주">
+							</td>
+						</tr>
+						<tr>
+							<th>사업자등록증</th>
+							<td colspan="3">
+								<input type="file" name="" id="cm_license_file">
+							</td>
+						</tr>
+						<tr>
+							<th>휴대폰인증</th>
+							<td colspan="3">
+								<label><input type="radio" name="" value="Y" checked> 인증</label>&nbsp;&nbsp;
+								<label><input type="radio" name="" value=""> 미인증</label>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tc">
+							<input type="submit" value="저장" class="btn-color large">
+							<a href="" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+</html>

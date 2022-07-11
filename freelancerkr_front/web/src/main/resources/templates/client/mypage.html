@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client/mypage.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div class="container">
+			<div id="main">
+				<div class="maintitle">
+					<span><span th:text="${user.name}"></span>님 방문을 환영합니다.</span><br>
+					<div>
+						프로젝트나 컨테스트를 포스팅 해보세요! 전문가들과 직거래할 수도 있습니다.
+					</div>
+				</div>
+				<div class="mainbox">
+					<table>
+						<tbody>
+							<tr>
+								<td class="mainbox3" onclick="toProjectPosting()">
+									<h1>Project posting</h1>
+									<p style="color:#fff;">프로젝트 포스팅</p>
+						
+									<img src="/static/images/main_icon_3_1.png" class="icon_s">
+									<img src="/static/images/main_icon_3.png" class="icon_m">
+								</td>
+								<td style="width:20px"></td>
+								<td class="mainbox4" onclick="toContestPosting()">
+									<h1>Contest posting</h1>
+									<p style="color:#fff;">컨테스트 포스팅</p>
+						
+									<img src="/static/images/main_icon_3_1.png" class="icon_s">
+									<img src="/static/images/main_icon_3.png" class="icon_m">
+								</td>
+								<td style="width:20px"></td>
+								<td class="mainbox5" onclick="toProjectAndContestPosting()">
+									<h1>Browsing</h1>
+									<p style="color:#fff;">전문가 둘러보기</p>
+						
+									<img src="/static/images/main_icon_3_1.png" class="icon_s">
+									<img src="/static/images/main_icon_3.png" class="icon_m">
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5" style="height:20px;"></td>
+							</tr>
+							<tr>
+								<td class="mainbox2" onclick="javascript:location.href='/client/profile/modify'">
+									<h1>My Profile</h1>
+									<p>나의 프로필 업로드</p>
+									<img src="/static/images/main_icon_2_1.jpg" class="icon_s">
+									<img src="/static/images/main_icon_2.png" class="icon_m">
+								</td>
+								<td style="width:20px"></td>
+								<td class="mainbox1 my_load" colspan="3">
+									<div class="text1">0</div>
+									<div class="text2">
+										<img src="/static/images/main_star_bg.png">
+										<div class="star_point_con" style="width:0%;">
+											<img src="/static/images/main_star.png">
+										</div>
+									</div>
+									<div class="text3">
+										전체 프로젝트 <span>0</span>건 중 <span>0</span>건 평가
+									</div>
+
+									<img src="/static/images/main_icon_1.png" class="icon_m">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script th:inline="javascript">
+            var userProfile = [[${user.nickname != null}]];
+            function toProjectPosting() {
+                // if (!userProfile) {
+				alert('인력파견을 업으로 하는 용역업체 등은 프로젝트 포스팅이 불가하며, 해당 포스트는 예고없이 삭제될 수 있습니다.');
+				location.href='/client/profile/modify?after-redirect=%2Fclient%2Fposting%2Fproject&type=PROJECT';
+                    // return;
+                // }
+                // location.href='/client/posting/project';
+            }
+            function toContestPosting() {
+                // if (!userProfile) {
+				location.href='/client/profile/modify?after-redirect=%2Fclient%2Fposting%2Fcontest&type=CONTEST';
+                    // return;
+                // }
+                // location.href='/client/posting/contest';
+            }
+            function toProjectAndContestPosting() {
+                // if (!userProfile) {
+				location.href='/client/profile/modify?after-redirect=%2Fclient%2Fposting%2Fcontest%3FwithProject%3Dtrue&type=CONTEST';
+                    // return;
+                // }
+                // location.href='/client/posting/contest?withProject=true';
+            }
+            function toProfileModifyView() {
+                location.href='/client/profile/modify';
+            }
+
+		</script>
+	</section>
+	
+</html>

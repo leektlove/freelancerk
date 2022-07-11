@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/cash.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/transactionHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<div class="Hspace"></div>
+					<h1>■ <span th:text="${#numbers.formatInteger(page.totalElements, 0, 'COMMA')}"></span>건의 입금이 검색되었습니다.</h1>
+					<table class="boardlist">
+						<tbody>
+							<tr>
+								<th>날짜</th>
+								<th>시간</th>
+								<th>No</th>
+								<th>클라이언트정보</th>
+								<th>공급가액</th>
+								<th>총 결제금액(VAT 포함)</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd')}">20171018</td>
+								<td th:text="${#temporals.format(item.createdAt, 'HH:mm:ss')}">09:30</td>
+								<td th:text="${#numbers.formatInteger(item.id, '0', 'COMMA')}">1</td>
+								<td>
+									<span th:text="${item.depositUser.corporateName}"></span><br><span th:text="|(${item.depositUser.email})|">(yg@ygpartners.co.kr)</span>
+								</td>
+								<td class="tr" th:text="${#numbers.formatInteger(item.amount, '0', 'COMMA')}">909,090</td>
+								<td class="tr" th:text="${#numbers.formatInteger(item.amountWhVat, '0', 'COMMA')}">90,909</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tl">
+						</div>
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/transaction/escrow-logs?type=DEPOSIT&pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+						<div class="tr">
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

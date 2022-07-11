@@ -1,0 +1,203 @@
+#sub_sort{margin-bottom:1rem;}
+#sub_sort:after{content:'';display: block;clear:both;}
+#sub_sort div{display: inline-block;}
+#sub_sort div:nth-child(2){float: right;}
+.tender_item {
+    position: relative;
+    border-top: 1px solid #0088cc;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+    margin-bottom: 20px;
+}
+/*{
+    position: relatIve;
+    float: left;
+    width: 400px;
+    text-align: center;
+    padding: 50px 0 0 50px;
+}*/
+.tender_member_mini {
+    text-align: left;
+    cursor: pointer;
+    padding-left: 50px;
+    display: flex;
+}
+.tender_member_mini img.profile_img{
+	max-width: 100px;
+	padding:0 15px;
+	align-self: baseline;
+}
+.tender_transaction_amount{}
+
+.tender_member_mini p.name {
+    color: #000;
+    font-size: 16px;
+    padding-top: 12px;
+    margin:0;
+}
+.tender_member_mini div.star {
+    padding-top: 6px;
+}
+.tender_member_mini div.star .star_con {
+    position: relative;
+    display: inline-block;
+}
+.tender_member_mini div.star .star_con .star_point_con {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 0px;
+    overflow-x: hidden;
+}
+.tender_member_mini div.number {
+    font-size: 13px;
+    color: #999;
+    padding-top: 3px;
+}
+.tender_member_mini div.number span {
+    color: #ff0000;
+}
+.tender_item_subject {
+    color: #000;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: left;
+}
+.tender_item_content {
+    color: #999;
+    font-size: 13px;
+    text-align: left;
+}
+.tender_item_tags {
+    padding: 17px 0 24px 21px;
+}
+.tender_item_tags span {
+    float: left;
+    color: #999;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    margin-top: -2px;
+    margin-bottom: 20px;
+    margin-left: -1px;
+}
+.tender_item_tags {
+    padding: 17px 0 24px 21px;
+}
+.tender_item_price1{
+	display: flex;
+}
+.tender_item_price1_img {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+.tender_item_price1_text {
+    float: left;
+    width: 114px;
+    color: #0088cc;
+    font-size: 13px;
+    margin-top: 3px;
+    margin-bottom: 0px;
+}
+.tender_item_price1_price {
+    color: #0088cc;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+.same_keyword{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.same_keyword span {
+    font-size: 12px;
+    margin-right: 8px;
+    color:#0088cc;
+}
+.card-des{margin-bottom:0;}
+table td {
+    border-top: 1px dashed #ddd;
+}
+.tender_item_date {
+    font-size: 13px;
+}
+table.list_info tr td:nth-child(2) {
+    width: 280px;
+}
+table.list_info tr th:nth-child(2) {
+    width: 280px;
+}
+.tender_item_btns {
+    text-align: right;
+}
+.tender_item_btns a{
+	display: block;
+	margin-bottom:5px;
+}
+.client-logo-img {
+    height: 100%;
+    width: 100%;
+    margin:0!important;
+}
+.ques{
+    position: relative;
+    font-size: 15px;
+    color: #bc3f3f;
+    margin-bottom:0.5rem;
+}
+.ques .line{
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    background-color: #ffc800;
+    opacity: 0.2;
+    bottom: 0;
+    left: 0;
+}
+.successful_bid_modify_btn{
+    border:1px solid #ddd;
+    font-size: 11px;
+    padding:3px 7px;
+}
+.successful_bid_modify_btn i{
+    color: #0088cc;
+}
+.modify_bid_money{
+    width: 150px;
+    display: inline-block;
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
+    text-align: right;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+	
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}
+
+@media only screen and (max-width: 1500px){
+	
+}

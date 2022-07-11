@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="layout/layout">
+<head>
+	<!-- start of summernote -->
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	<link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+	<!-- end of summernote -->
+
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/posting/contest/view.css">
+	<!-- <script type="text/javascript">
+		$('.chk_container input[type=checkbox]').on('change',function(e) {
+		    if ($(this).parents('checked')) {
+		        $('.back_opacity').css('opacity', '0.2');
+		    } else {
+		        $('.back_opacity').css('opacity', '0.7');
+		    };
+		});
+	</script> -->
+	
+
+</head>
+
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>컨테스트 포스팅</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0">
+					<li class="nav-item mb-0 ">
+						<a th:href="@{/client/posting/project}" class="nav-link disabled">
+							<span>프로젝트포스팅</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/client/posting/contest}" class="nav-link active">
+							<span>컨테스트포스팅</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+
+		<section>
+			<div class="contest-container">
+				<div class="contest_title">
+					<img class="img" src="/static/images/icon/contest_posting_icon.png">
+					<div class="text"><span>컨테스트</span>를 개최합니다!</div>
+				</div>
+				<div id="w5" class="row">
+					<div class="col-lg-1 col-xl-2">
+					</div>
+					<div class="col-lg-10 col-xl-8">
+						<section class="card form-wizard">
+							<form name="" id="contestForm" action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+								<header class="card-header">
+									<div class="wizard-progress wizard-progress-lg">
+										<div class="steps-progress">
+											<div class="progress-indicator"></div>
+										</div>
+										<ul class="nav wizard-steps">
+											<li class="nav-item active">
+												<a class="nav-link" href="#w5-one" data-toggle="tab"><span>1</span>섹터선택</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="#w5-two" data-toggle="tab"><span>2</span>컨테스트 개요</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="#w5-three" data-toggle="tab"><span>3</span>분량</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="#w5-four" data-toggle="tab"><span>4</span>필수입력사항</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="#w5-five" data-toggle="tab"><span>5</span>선택입력사항</a>
+											</li>
+										</ul>
+									</div>
+								</header>
+								<div class="card-body">
+									<input type="hidden" th:if="${item != null}" name="projectId" th:value="${item?.id}"/>
+									<div class="tab-content">
+										<div id="w5-one" class="tab-pane active">
+											<ul class="col-sm-9 mx-auto list list-icons">
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="contestName">컨테스트명을 입력해주세요</label>
+																<span class="required"> *</span>
+																<input type="text" class="form-control" id="contestName" name="title" th:value="${item?.title}" placeholder="삼성전자 로고/명함디자인 리뉴얼" required>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="contestName">컨테스트 섹터를 선택해주세요</label>
+																<span class="required"> *</span>
+																<th:block th:each="meta: ${metas}">
+																	<div class="mb-3 sector-type-container" th:attr="data-sector-id=${meta.id}">
+																		<div class="collapse-card">
+																			<div class="box l-box">
+																				<!-- <div class="btn_container">
+																					<input th:id="${meta.id}" aria-controls="cd-card-01"
+																						   aria-expanded="false" name="contestSectorMetaTypeId[]"
+																						   th:checked="${item!=null? (item?.isContainContestMetaOption(meta.id)):'false'}"
+																						   th:value="${meta.id}" th:attr="data-target='#d-card-'+${meta.id}, data-id=${meta.id}, aria-controls='d-card-'+ ${meta.id }"
+																						   data-toggle="collapse" type="checkbox">
+																					<label class="btn dropdown-toggle checkmark_rounded" th:for="${meta.id}">
+																						<div class="checkmark_after"></div>
+																					</label>
+																				</div> -->
+																				<label class="mui-selectable-image">
+																					<input type="checkbox" th:id="${meta.id}" aria-controls="cd-card-01"
+																						   aria-expanded="false" name="contestSectorMetaTypeId[]"
+																						   th:checked="${item!=null? (item?.isContainContestMetaOption(meta.id)):'false'}"
+																						   th:value="${meta.id}" th:attr="data-target='#d-card-'+${meta.id}, data-id=${meta.id}, aria-controls='d-card-'+ ${meta.id }"
+																						   data-toggle="collapse" th:onclick="@{|${modifyMode?'return false;':''}|}">
+																					<b class="indicator"  th:for="${meta.id}"></b>
+																					<b class="indicator-back"></b>
+																				</label>
+																				<label class="ml-0 ml-md-2 mb-0" th:text="${meta.name}">Identity Design</label>
+																			</div>
+																			<div class="box r-box ">
+																				<span th:text="${meta.description}">로고, 명함 ,CI, BI, 간판 각종 브랜딩</span>
+																				<div class="img" th:style="|background:url(${meta.imageUrl})no-repeat;background-position:center center;background-size:cover|"></div>
+																			</div>
+																		</div>
+																		<div th:id="|d-card-${meta.id}|"
+																			 th:class="${item!=null? ((item?.isContainContestMetaOption(meta.id))?' show collapse ':' collapse '):' collapse '}"
+																			 aria-expanded="true" style="">
+																			<!-- <div class="item_detail pb-2">중복 선택이 <i th:text="${meta.duplicateSelectable?'가능':'불가능'}"></i>합니다.</div> -->
+																			<th:block th:each="typeItem: ${meta.contestSectorTypeSet}">
+																				<div class="clearfix item_detail">
+																					<div th:if="${meta.duplicateSelectable}" class="custom-control custom-checkbox float-left">
+														                                <input type="checkbox"
+																							   th:class="|sector-${meta.id} custom-control-input|" name="contestSectorTypeId[]"
+																							   th:value="${typeItem.id}" th:id="|contestSectorTypeId-${typeItem.id}|"
+																							   th:checked="${item?.isContainContestOption(typeItem.id)}"
+																							   th:onclick="@{|${modifyMode?'return false;':''}|}">
+																						<label class="custom-control-label" th:for="|contestSectorTypeId-${typeItem.id}|" th:text="${typeItem.name}" style="vertical-align: middle;line-height: 26px;"></label>
+																					</div>
+																					<div th:if="${!meta.duplicateSelectable}" class="custom-control custom-radio float-left">
+														                                <input type="radio"
+																							   th:class="|sector-${meta.id} custom-control-input|" name="contestSectorTypeId[]"
+																							   th:value="${typeItem.id}" th:id="|contestSectorTypeId-${typeItem.id}|"
+																							   th:checked="${item?.isContainContestOption(typeItem.id)}"
+																							   th:onclick="@{|${modifyMode?'return false;':''}|}">
+														                                <label class="custom-control-label" th:for="|contestSectorTypeId-${typeItem.id}|" th:text="${typeItem.name}" style="vertical-align: middle;line-height: 26px;"></label>
+														                            </div>
+																					<!-- <label class="chk_container float-left item_detail">
+																						<input th:if=${meta.duplicateSelectable} type="checkbox"
+																							   th:class="|sector-${meta.id}|" name="contestSectorTypeId[]"
+																							   th:value="${typeItem.id}"
+																							   th:checked="${item?.isContainProjectOption(typeItem.id)}">
+
+																						<input th:if=${!meta.duplicateSelectable} type="radio"
+																							   th:class="|sector-${meta.id}|" name="contestSectorTypeId[]"
+																							   th:value="${typeItem.id}"
+																							   th:checked="${item?.isContainContestOption(typeItem.id)}">
+																						<span class="checkmark item_detail"></span>
+																						<span th:text="${typeItem.name}"></span>
+
+																					</label> -->
+																					 <div class="float-right "><span class="text-4 font-weight-bold" th:text="|*{#numbers.formatInteger(typeItem.minAmountOfPrice, 0, 'COMMA')}|"></span>원 부터</div>
+																				</div>
+																			</th:block>
+																			<div class="item_detail" th:if="${meta.shortDescription != null}" th:text="${meta.shortDescription}">
+																			</div>
+																		</div>
+																	</div>
+																</th:block>
+															</div>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<div id="w5-two" class="tab-pane">
+											<ul class="col-sm-9 mx-auto list list-icons">
+												<li>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="sub_title">
+																<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+																의뢰자의 취지를 정확히 설명하시면 더 좋은 퀄리티의 시안을 받아 보실 수 있습니다.
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="categoryOfBusiness">업종</label>
+																<span class="required"> *</span>
+																<input type="text" name="categoryOfBusiness" id="categoryOfBusiness" th:value="${item?.categoryOfBusiness}" class="form-control col"/>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="majorProduct">주요제품</label>
+																<span class="required"> *</span>
+																<input type="text" name="majorProduct" id="majorProduct" th:value="${item?.majorProduct}" class="form-control col"/>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="description">컨테스트에 대해 자세히 설명해주세요</label>
+																<span class="required"> *</span>
+																<textarea class="form-control" name="description" placeholder="국/영문 명함등의 경우 모든 정보 기재" rows="10" id="description" th:text="${item?.description}"></textarea>
+																<div class="text_cnt"><span class="textCnt">0</span>/1000자</div>
+																<div class="help-block">
+																	<p class="">
+																		(예시)
+																		<br/>
+																		업종: 금융 | 주요제품 : M&A자문 및 주관용역
+																		</br>
+																		회사명은 (주)와이지파트너스입니다. 금융회사의 CI이므로 신뢰도가 매우 중요합니다. 저희 서비스는 주로 고액 자산가 또는 기업의 CEO들에게 제공되고 주연령층은 50대 전후입니다.
+																		</br>
+																		로고는 영향 외에 출판물의 경우에도 쓰이며 전문적인 투자설명서 형식으로 제공합니다. 다소 보수적이고 약간은 권위적이며, 고급스러운 느낌이 강조되었으면 합니다. 회사명인 와이지파트너스의 약자인 "YGP"로 디자인이 되었으면 하며, 스타벅스와 같은 엠블럼이나 캐릭터가 들어가는 것도 좋습니다. 캘리그래피는 생각해보지 않았지만 매우 독창적이라면 좋을 것 같습니다.
+																	</p>
+																</div>
+															</div>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<div id="w5-three" class="tab-pane">
+											<ul class="col-sm-9 mx-auto list list-icons">
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="quantityPage">컨테스트 분량을 정해주세요.</label>
+																<span class="required"> *</span>
+																<select class="custom-select" name="quantityPage" id="quantityPage" required>
+																	<option value="1" th:selected="${item?.quantityPage == 1}">1건(로고, 제품, 동영상, 성우, 작곡 등)</option>
+																	<option value="2" th:selected="${item?.quantityPage == 2}">2건</option>
+																	<option value="3" th:selected="${item?.quantityPage == 3}">3건</option>
+																</select>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title">각 분량에 대해 설명해주세요.</label>
+																<span class="required"> *</span>
+																<textarea class="form-control" name="descriptionPerPage" placeholder="국/영문 명함등의 경우 모든 정보 기재" onkeyup="countChar2(this)" rows="5" th:text="${item?.descriptionPerPage}"></textarea>
+																<div class="text_cnt"><span class="textCnt2">0</span>/1,000자</div>
+																<div class="help-block">
+																	<div class="mb-2"><i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i> 프리랜서는 통상 3건(시안) 이내의 컨테스트를 선호합니다.</div>
+																	<div class="mb-2"><i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i> 다량의 결과물이 필요하시면 컨테스트로 평가하신 후 당선자와 프로젝트를 진행하세요.(컨테스트X프로젝트)</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<div id="w5-four" class="tab-pane">
+											<ul class="col-sm-9 mx-auto list list-icons">
+												<li>
+													<div class="form-row">
+														<div class="form-group col">
+															<label>
+																<span class="sub_title">
+																	<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+																	의뢰자의 선호스타일을 프리랜서들에게 알려주세요.
+																</span>
+																<span>(가장 중요한 입력사항 입니다)</span>
+															</label>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<label class="sub_title" fot="priorityTone">전체적인 톤 또는 분위기</label>
+															<span class="required"> *</span>
+															<div style="margin-top:-4px;margin-bottom:5px">
+																<a href="https://blog.naver.com/freelancerkorea/221335409919" target="_blank"> 로고 등의 브랜딩을 하신다면 참고하세요(클릭!)</a>
+															</div>
+															<input name="priorityTone" type="text" class="form-control medium" th:value="${item?.priorityTone}" onkeyup="countCharPriorityTone(this)" placeholder="">
+															<div class="text_cnt priorityTone"><span class="priorityToneTextCnt">0</span>/100자</div>
+															<div class="help-block">(예시) 블랙과 가까운 블루 계열을 선호합니다. 즉 안정적이지만, 너무 보수적으로 보이지는 않았으면 좋겠습니다.</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<label class="sub_title" fot="priorityTone">느낌</label>
+													<span class="required"> *</span>
+												</li>
+												<div class="form-row">
+													<div class="form-group col">
+														<div class="style_detail mb-3">
+															<div class="row ml-0">
+																<div class="form-check col-md-2 col-4" th:each="feeling : ${T(com.freelancerk.domain.Project.Feeling).values()}">
+																	<div class="custom-control custom-checkbox">
+										                                <input type="checkbox" class="custom-control-input" th:value="${feeling.name()}" th:id="${feeling.name()}" name="feeling" th:checked="${(item!=null && item?.isContainFeeling(feeling.name()))?'true':'false'}">
+										                                <label class="custom-control-label" th:for="${feeling.name()}" th:text="${feeling.desc}">예 (시안을 본 후 다량의 작업을 진행하겠습니다.)</label>
+										                            </div>
+																	<!-- <input class="form-check-input" type="checkbox" th:value="${feeling.name()}" th:id="${feeling.name()}" name="feeling" th:checked="${(item!=null && item?.isContainFeeling(feeling.name()))?'true':'false'}">
+																	<label class="form-check-label" th:for="${feeling.name()}" th:text="${feeling.desc}"></label> -->
+																</div>
+															</div>
+															<div style="padding:1rem; padding-left:20px">총 3가지 중복선택이 가능합니다.</div>
+														</div>
+													</div>
+												</div>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="plan">
+																<label class="sub_title" for="proceedProjectAfterContest">컨테스트 완료 후 당선자와 프로젝트를 진행 할 계획이 있으시다면 선택해주세요.
+																	<span class="required"> *</span>
+																</label>
+																<div class="text-2">컨테스트 X 프로젝트는 프리랜서들의 선호도가 높습니다.</div>
+																<div class="row py-3">
+																	<div class="col-md-6">
+																		<div class="custom-control custom-radio">
+											                                <input type="radio" class="custom-control-input" value="true" id="proceedProjectAfterContest_Y" name="proceedProjectAfterContest" th:checked="${item == null || item?.proceedProjectAfterContest}">
+											                                <label class="custom-control-label" for="proceedProjectAfterContest_Y">예 (시안을 본 후 다량의 작업을 진행하겠습니다.)</label>
+											                            </div>
+																	</div>
+																	<div class="col-md-6">
+																		<div class="custom-control custom-radio">
+											                                <input type="radio" class="custom-control-input" value="false" id="proceedProjectAfterContest_N" name="proceedProjectAfterContest" th:checked="${item != null && !item?.proceedProjectAfterContest}">
+											                                <label class="custom-control-label" for="proceedProjectAfterContest_N">아니오</label>
+											                            </div>
+																	</div>
+																</div>
+																<div class="help-block">
+																	※ 북 디자인 표지 시안으로 디자이너를 선별 <i class="fas fa-arrow-right my-2"></i> 전체가격 조율 후 200페이지 디자인 프로젝트 진행<br>
+																	※ 3분 광고 동영상 시안으로 평가 <i class="fas fa-arrow-right my-2"></i> 15분 동영상 편집 프로젝트와 배너디자인 작업 프로젝트 진행
+																</div>
+															</div>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<div id="w5-five" class="tab-pane">
+											<ul class="col-sm-9 mx-auto list list-icons">
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="">참고할만한 웹사이트 주소가 있으면 알려주세요<strong>(선택)</strong></label>
+															</div>
+															<div class="mb-3">
+																<th:block th:if="${item == null OR item.referenceWebUrlList.size() == 0}">
+																	<input name="referenceWebUrl" type="text" class="form-control mb-2" placeholder="https://도메인입력">
+																	<input name="referenceWebUrl" type="text" class="form-control mb-2" placeholder="https://도메인입력">
+																	<input name="referenceWebUrl" type="text" class="form-control mb-2" placeholder="https://도메인입력">
+																	<input name="referenceWebUrl" type="text" class="form-control mb-2" placeholder="https://도메인입력">
+																</th:block>
+																<th:block th:if="${item != null AND item?.referenceWebUrlList.size() > 0}">
+																	<input name="referenceWebUrl" type="text" class="form-control" th:value="${referenceWebUrl}" placeholder="https://도메인입력" th:each="referenceWebUrl: ${item.referenceWebUrlList}">
+																	<input name="referenceWebUrl" type="text" class="form-control" placeholder="https://도메인입력" th:each="i: ${#numbers.sequence(0, 3 - item.referenceWebUrlList.size())}">
+																</th:block>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="attachedFile">자세히 설명할 수 있는 파일을 첨부해 주십시오.<sprong>(선택, 파일크기 5M제한)</sprong></label>
+																<div id="descriptionFileUploadedContainer" th:if="${!#strings.isEmpty(item?.projectDescriptionFileUrl)}">
+																	<span class="file_con">
+																		<span class="form-control-file w-50 d-inline-block" th:text="${item?.projectDescriptionFileName}"></span>
+																	</span>
+																	<span class="btn btn-info rounded-0" id="uploadedFileCancelUpload">파일취소
+																	</span>
+																</div>
+																<div id="descriptionFileUploadContainer" th:style="|display: ${(item == null OR #strings.isEmpty(item?.projectDescriptionFileUrl))?'block':'none'}|">
+																	<span class="file_con">
+																		<input type="file" class="form-control-file w-50 d-inline-block" name="referenceFile" id="attachedFile" th:value="${item?.projectDescriptionFileName}">
+																	</span>
+																	<span class="btn btn-info rounded-0" id="attachedFileCancelUpload" style="display: none;">파일취소
+																	</span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title">현재 웹사이트를 운영중이신가요?(선택)</label>
+															</div>
+															<div class="input-group mb-3">
+																<input name="workingWebUrl" type="text" class="form-control" th:value="${item?.workingWebUrl}" placeholder="https://도메인입력">
+															</div>
+														</div>
+													</div>
+												</li>
+												<li>
+													<i class="fas fa-angle-right"></i>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="">
+																<label class="sub_title" for="corporateNameOrCatchPhrase">상호명 또는 캐치프레이즈가 포함되어야 한다면 반드시 입력해주세요(선택)</label>
+																<textarea style="height: 130px;" class="form-control" th:text="${item?.corporateNameOrCatchPhrase}" id="corporateNameOrCatchPhrase" name="corporateNameOrCatchPhrase" placeholder="국/영문 명함등의 경우 모든 정보 기재" onkeyup="countCorporateNameOrCatchPhrase(this)" rows="5"></textarea>
+																<div class="text_cnt"><span class="corporateNameOrCatchPhraseTextCnt">0</span>/1,000자</div>
+																<div class="help-block">
+																	(상호예시)</br>
+																	한글: (주)플랫폼위즈컴퍼니<br><br>
+																	(캐치프레이즈예시)</br>
+																	"대한민국 크라우드 소싱 플랫폼"/"Leading M&A Advisory Firm"
+																</div>
+															</div>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="card-footer" style="height: 60px">
+									<ul class="pager">
+										<li class="previous disabled">
+											<a><i class="fas fa-angle-left"></i> 이전</a>
+										</li>
+										<!-- <li>
+		                                    <a id="btn-temp-save">임시저장</a>
+		                                </li> -->
+										<li class="next">
+											<a>다음 <i class="fas fa-angle-right"></i></a>
+										</li>
+										<li class="finish hidden float-right">
+											<a id="saveTemporarily" th:text="${!modifyMode?'저장후 다음단계로':'수정완료'}"></a>
+										</li>
+									</ul>
+								</div>
+							</form>
+						</section>
+					</div>
+					<div class="col-lg-1 col-xl-2">
+					</div>
+				</div>
+				
+			</div>
+
+			<script th:inline="javascript">
+				var modifyMode = [[${modifyMode}]];
+			</script>
+			<script src="/static/lib/moment/moment.min.js"></script>
+			<script src="/static/js/client/posting/contest/view.js"></script>
+
+			<script src="/static/vendor/jquery-validation/jquery.validate.js"></script>
+			<script src="/static/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+			<script src="/static/vendor/pnotify/pnotify.custom.js"></script>
+
+			<script src="/static/js/client/posting/contest/view-steps.js"></script>
+		</section>
+	</div>
+
+</html>

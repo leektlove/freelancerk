@@ -1,0 +1,181 @@
+/* info */
+.content-body .des{
+  font-size:16px;
+  font-weight: 400;
+}
+.content-body .info{
+  background-color: #fff;
+  font-size: 13px;
+  line-height: 1rem;
+  margin-bottom:1rem;
+}
+.info .cell_box{
+  width:100%;
+  text-align: center;
+}
+.info .cell{
+  display: inline-block;
+}
+.info .cell.benefit{
+  min-width: 30%;
+  padding:1rem 0;
+}
+.info .cell.benefit span{
+  display: block;
+  padding:5px 7px;
+}
+.info .cell.benefit .yes span {
+  color:#549fdf;
+  font-size:16px;
+  font-weight: bold;
+}
+.info .cell.benefit .no span {
+  font-size:16px;
+  font-weight: bold;
+}
+.cell{
+    text-align: center;
+    padding: 0.5rem;
+}
+.info .fa-chevron-right{
+    font-size: 22px;
+    position:absolute;
+    color: #ddd;
+  }
+.card-text{
+    position: relative;
+    font-size: 14px;
+    color: black;
+    width:100%; /* Could be anything you like. */
+  }
+.suggested_link{
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: #f3f3f3;
+}
+.testimonial-author .client-basic-info{
+  font-size: 13px;
+  font-weight: 700;
+  /*margin-top:0.5rem;*/
+}
+.testimonial-author .status{
+  font-size: 12px;
+}
+.suggested_title{
+  font-size: 15px;
+  margin-top: 5px;
+  padding: 0 15px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-text {
+  height: 46px;
+  overflow: hidden;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  line-height: 16px;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  color: #999;
+}
+.freelancer_detail a{
+  font-size: 13px;
+  font-weight: 700;
+}
+.post-image_2{
+    width: 180px;
+    height: 180px;
+    margin: auto;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    position: relative;
+}
+.blog_text_2{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    background-color: #f5f5f5;
+    padding: 25px 17px;
+}
+.blog_text_2:before{
+    content: '';
+    background: url(/static/images/icon/logo_icon.png)no-repeat;
+    background-size: contain;
+    height: 17px;
+    position: absolute;
+    width: 17px;
+    top: 30px;
+    left: calc(50% - 8px);
+    background-position: center;
+}
+.blog_text_2 .text{
+    height: 57px;
+    margin-top: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+  .cell{
+    margin-bottom:4rem;
+  }
+  .info .fa-chevron-right{
+    bottom: -40px;
+    left: 48.5%;
+    transform: rotate(90deg);
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+  .info .fa-chevron-right{
+    bottom: -40px;
+    left: 48.5%;
+    transform: rotate(90deg);
+  }
+  .cell{
+    margin-bottom:4rem;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+  .info .fa-chevron-right{
+    top: 35px;
+    right: -7px;
+    font-size: 20px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+  .info .fa-chevron-right{
+    top: 35px;
+    right: -3px;
+    font-size: 20px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+  .info .fa-chevron-right{
+    top: 35px;
+    right: 0;
+    font-size: 20px;
+  }
+}
+

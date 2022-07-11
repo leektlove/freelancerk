@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/ref.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/referenceHeader"></th:block>
+			</div>
+			<div id="container_content">		
+				<div class="container_inner" id="tab_con_editor">
+					<h1>■ 자료실</h1>
+
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="">
+						</colgroup>
+
+						<tbody>
+							<tr>
+								<th>등록일</th>
+								<td colspan="3" th:text="${reference.createdAt}">
+									2017-10-17
+								</td>
+							</tr>
+							<tr>
+								<th>구분</th>
+								<td th:text="${reference.type}">
+									클라이언트
+								</td>
+							</tr>
+							<tr>
+								<th>제목</th>
+								<td th:text="${reference.title}">회원간 계약서 - 양식	</td>
+							</tr>
+							<tr>
+								<th>상세내용</th>
+								<td th:text="${reference.content}">
+									안녕하세요.<br>
+									대한민국 대표 프리랜서 플랫폼 프리랜서코리아입니다.<br>
+									<br>
+									저희 플랫폼은 프로젝트에 대한 개입을 최소화하고 있습니다. 이는 프로젝트와 프리랜서의 개인정보를 침해하지 않기 위한 저희의 정책입니다.<br>
+									<br>
+									다만 저희의 에스크로서비스를 이용하시는 고객분들을 위하여 꼼꼼히 변호인의 검토를 받은 계약서 샘플을 준비해놓았습니다.<br>
+									필요하신 경우 자유롭게 이용하세요.<br>
+									<br>
+									성공적인 프로젝트로 끝맺음되길 기원합니다.<br>
+									<br>
+									@프리랜서코리아 팀 올림.			
+								</td>
+							</tr>
+							
+							<tr th:each="file : ${fileList}">
+								<th>첨부파일</th>
+								<td>
+									<a href="" th:text="${file.fileName}" class="btn-black mini">회원간_서비스_계약서양식-프리랜서코리아20171017.hwp 다운로드</a>
+								</td>
+							</tr>
+							
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tc">
+							<a th:href="@{/reference/modify/{id}(id = ${reference.id})}" class="btn-color large">수정</a>
+							<a href="/reference/list" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

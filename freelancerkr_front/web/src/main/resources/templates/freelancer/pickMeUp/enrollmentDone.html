@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/freelancer/pickMeUp/enrollmentDone.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+	<!-- 페이지헤더 -->
+    <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+					<h1 class="text-dark"><strong>포트폴리오 관리</strong></h1>
+				</div>
+				<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 페이지헤더//-->
+
+	<section>
+		<!-- 완료 -->
+		<div class="container" th:if="${mode == null OR mode != 'EXTEND'}">
+            <div class="content-body">
+        		<div class="after_pjt_posting col-md-9 mx-auto p-3 p-lg-5">
+        			<span class="text-5 text-md-8">결제가 <span class="highlight">완료</span>되었습니다!</span>
+        			<hr class="mt-2 mb-3 mb-md-4">
+        			<ul class="mb-3 mb-md-4">
+        				<li class="text-3 text-md-4 mb-3">
+                            <i class="fas fa-cube mr-2"></i>
+                            결제 현황은 <span class="mark">[나의 결제관리]</span>에서 확인하실 수 있습니다.</li>
+						<li>
+                            <i class="fas fa-cube mr-2"></i>
+                            "실시간 확인"이 필요하신 분께서는 꼭! 등록하신 이메일<span class="mark">(등록한 이메일주소)</span>을 휴대폰과 동기화 해주세요!</li>
+        			</ul>
+        			<hr class="mt-2 mb-3 mb-md-4">
+        			<div class="btn_container pt-2 text-center">
+        				<a th:href="@{/freelancer/pickMeUp/list}">
+        					<button id="confirm" type="button" class="btn btn-lg btn-primary rounded-0 col-lg-3">확인</button>
+        				</a>
+        			</div>
+        		</div>
+            </div>
+    	</div>
+		<!-- 완료//-->
+		
+		<!-- 수정 -->
+		<div class="container" th:if="${mode != null AND mode == 'EXTEND'}">
+            <div class="content-body">
+        		<div class="after_pjt_posting col-md-9 mx-auto p-3 p-lg-5">
+        			<span class="text-5 text-md-8">픽미업 옵션이 <span class="">수정</span>되었습니다!</span>
+        			<hr class="mt-2 mb-3 mb-md-4">
+        			<ul class="mb-3 mb-md-4">
+        				<li class="text-3 text-md-4 mb-3">
+                            <i class="fas fa-cube mr-2"></i>
+							포트폴리오에 대한 옵션 결제/연장은 언제든 <span class="mark">[나의 결제관리]</span>에서 가능합니다.
+                        </li>
+						<li><i class="fas fa-cube mr-2"></i>
+                            "실시간 확인"이 필요하신 분께서는 꼭! 등록하신 이메일<span class="mark">(등록한 이메일주소)</span>을 휴대폰과 동기화 해주세요!
+                        </li>
+						<li><i class="fas fa-cube mr-2"></i>
+							옵션에 대한 KPI는 ①조회수, ②참여제안 받은수, ③클라이언트가 직거래를 검토한 횟수 로 구성됩니다. 옵션 효율을 항상 점검해보세요.
+
+						</li>
+        			</ul>
+        			<hr class="mt-2 mb-3 mb-md-4">
+					<div class="btn_container pt-2 text-center">
+						<a th:href="@{/freelancer/payment/index}">
+							<button type="button" class="btn btn-lg btn-primary rounded-0 col-lg-3">결제관리로 이동</button>
+						</a>
+					</div>
+        		</div>
+            </div>
+    	</div>
+		<!-- 수정//-->
+
+	</section>
+	
+
+</html>

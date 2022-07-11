@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/style.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload.css">
+	<link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui.css">
+	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-noscript.css"></noscript>
+	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui-noscript.css"></noscript>
+	
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/auditionHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+				<h1>■ 오디션 등록</h1>
+
+				<form name="" id="" action="/audition/save" method="post"  enctype="multipart/form-data">
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>이름</th>
+								<td>
+									<input type="text" name="name" value="" id="" title="타이틀" maxlength="20">			
+								</td>
+							</tr>
+							<tr>
+								<th>설명</th>
+								<td>
+									<input type="text" name="text" value="" id="" maxlength="100" title="설명">
+								</td>
+							</tr>
+								<tr>
+								<th>상태</th>
+								<td>
+									<select name="status">
+									    <option value="2000">정상</option>
+									    <option value="0000">종료</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th onclick="alert($('#dateTime').val());">일시</th>
+								<td>
+									<input type="datetime-local" id="dateTime" name="auditionAt">
+								</td>
+							</tr>
+							<tr>
+								<th>사진</th>
+								<td colspan="3">
+									<div style="margin-top:10px;">
+										<input type="file" name="file" id="fileVal" class="imgext imgsize">
+									</div>
+									<div style="width:300px; margin-top:20px;">
+										<img src="" style="margin-bottom: 10px; width:100%;">
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tc">
+							<input type="submit" value="저장" class="btn-color large">
+							<a href="/audition/list" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+				</form>
+
+				</div>
+			</div>
+		</div>
+			<!-- for file upload start -->
+		<script src="/static/vendor/jquery-file-uploader/js/vendor/jquery.ui.widget.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+		<script src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+		<script src="https://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.iframe-transport.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-process.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-image.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-audio.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-video.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-validate.js"></script>
+		<script src="/static/vendor/jquery-file-uploader/js/jquery.fileupload-ui.js"></script>
+		<!-- for file upload end -->
+		<script>
+			$(function () {
+				'use strict';
+
+				// Initialize the jQuery File Upload widget:
+				$('#fileupload').fileupload({
+					// Uncomment the following to send cross-domain cookies:
+					//xhrFields: {withCredentials: true},
+					// url: '/files/for-jquery-upload'
+					maxNumberOfFiles: 2,
+					maxFileSize: 100000000,
+					messages: {
+						maxFileSize: '추가 이미지 혹은 동영상은 100MB 이상 업로드 할 수 없습니다.',
+						maxNumberOfFiles: "추가 이미지 혹은 동영상은 2개 이상 업로드 할 수 없습니다."
+					}
+				}).on('fileuploadadd', function (e, data) {
+					alert('dddd');
+					data.context = $('<div class="col-md-3 videopreview" />').appendTo('#files');
+					$.each(data.files, function (index, file) {
+						var node = $('<p/>');
+						if (!index) {
+							node
+									.append('<br>')
+						}
+						node.appendTo(data.context);
+					});
+				});
+				// Load existing files:
+				$('#fileupload').addClass('fileupload-processing');
+				$.ajax({
+					// Uncomment the following to send cross-domain cookies:
+					//xhrFields: {withCredentials: true},
+					url: '/audition/files/for-jquery-upload',
+					dataType: 'json',
+					context: $('#fileupload')[0]
+				}).always(function () {
+					$(this).removeClass('fileupload-processing');
+				}).done(function (result) {
+					$(this).fileupload('option', 'done')
+							.call(this, $.Event('done'), {result: result});
+				});
+
+			});
+		</script>
+
+		<script id="template-upload" type="text/x-tmpl" th:inline="javascript">
+		{% for (var i=0, file; file=o.files[i]; i++) { %}
+		    <tr class="template-upload fade">
+		        <td>
+		        	<div class="row">
+			            <div class="col-4 preview"></div>
+			            <div class="col-8">
+				            {% if (window.innerWidth > 480 || !o.options.loadImageFileTypes.test(file.type)) { %}
+				                <p class="name">{%=file.name%}</p>
+				            {% } %}
+				            <strong class="error text-danger"></strong>
+				            {% if (!i && !o.options.autoUpload) { %}
+				                <button class="btn btn-primary start" disabled>
+				                    <i class="glyphicon glyphicon-upload"></i>
+				                    <span>업로드</span>
+				                </button>
+				            {% } %}
+				            {% if (!i) { %}
+				                <button class="cancel">
+				                    <i class="glyphicon glyphicon-ban-circle"></i>
+				                    <span>삭제</span>
+				                </button>
+				            {% } %}
+				        </div>
+					</div>
+		        </td>
+		    </tr>
+		{% } %}
+		</script>
+		<script id="template-download" type="text/x-tmpl" th:inline="javascript">
+		{% for (var i=0, file; file=o.files[i]; i++) { %}
+		    <tr class="template-download fade">
+		        <td>
+		        	<div class="row">
+			            <div class="col-4 preview">
+			            	{% if (file.videoUrl) { %}
+			                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><video src="{%=file.thumbnailUrl%}"></a>
+			                {% } else if (file.thumbnailUrl) { %}
+			                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+			                {% } %}
+			            </div>
+			            <div class="col-8">
+				            {% if (window.innerWidth > 480 || !file.thumbnailUrl) { %}
+				                <p class="name">
+				                    {% if (file.url) { %}
+				                    	<input type="hidden" name="subPiecesFileUrl[]" value="{%=file.url%}" />
+				                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+				                    {% } else { %}
+				                        <span>{%=file.name%}</span>
+				                    {% } %}
+				                </p>
+				            {% } %}
+				            {% if (file.error) { %}
+				                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+				            {% } %}
+				            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+				            <button class="cancel">
+			                    <i class="glyphicon glyphicon-ban-circle"></i>
+			                    <span>삭제</span>
+			                </button>
+			            </div>
+			        </div>
+		        </td>
+		    </tr>
+		{% } %}
+		</script>
+		
+	</section>
+	
+
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+	    getListCategoryData();
+	    
+		/*<![CDATA[*/
+		var weatherId = "[[${condition.weatherId}]]";
+		var weatherType = "[[${condition.weatherType}]]";
+		var weatherCode = "[[${condition.weatherCode}]]";
+		var weatherName = "[[${condition.weatherName}]]";
+		var searchUserid = "[[${condition.searchUserid}]]";
+		var productName = "[[${condition.productName}]]";
+		
+		var page = "[[${condition.page}]]";
+		var perPageNum = "[[${condition.perPageNum}]]";
+		
+	    //console.log(page + " : " + perPageNum);
+	    
+		/*]]>*/
+		
+		
+		$('#weatherId').val(weatherId);
+		$('#weatherType').val(weatherType);
+		$('#weatherCode').val(weatherCode);
+		
+		$('#weatherName').val(weatherName);
+		$('#searchUserid').val(searchUserid);
+		$('#productName').val(productName);
+		
+		search(page, perPageNum);
+		
+		
+	});    
+	
+	function goDetail(weatherId){
+		location.href="/w1/weather/detail/"+weatherId;
+	}
+	
+	function search(page, perPageNum){
+		
+		
+		var seq = $('#seq').val();
+		var weatherId = $('#weatherId').val();
+		var weatherType = $('#weatherType').val();
+		var weatherCode = $('#weatherCode').val();
+		var weatherName = $('#weatherName').val();
+		var productName = $('#productName').val();
+		
+		
+		var param = {};
+	    param.weatherId = weatherId;
+	    param.weatherType = weatherType;
+	    param.weatherCode = weatherCode;
+	    param.weatherName = weatherName;
+	    param.productName = productName;
+	    param.seq = seq;
+	    
+	    if(page == null) page = 1; 
+		if(perPageNum == null) perPageNum = 10;
+		
+	    param.page = page;
+	    param.perPageNum = perPageNum;
+	    	    
+	    
+	    param = JSON.stringify(param);
+		
+	    $('#listBody').empty();
+	    $('#pagination').empty();
+	    
+		$.ajax({
+	        url : "/w1/weather/list",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(data){
+	            var results = data.list;
+	            var rows = "";
+	            $.each(results, function(index, item) {
+	            	console.log(item);
+	            	rows = rows + getRow(item);
+	            	
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+				});	            
+	            	            
+	            $('#listBody').append(rows);
+	            
+	            var paging = getPageDiv(data.paging);	            
+	            $('#pagination').append(paging);
+	            
+	            //console.log(results); 
+	            //console.log(data.paging);
+	        },
+	        error : function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			//console.log(e);
+	        }
+	    });
+		
+	}
+	
+	function getRow(weather){
+		var row = "\n";
+		row = row + "<tr class='even pointer'>                                     ";   
+        row = row + "  <td class='a-center '>                                      ";
+        row = row + "    <input type='checkbox' class='flat' name='table_records' value='" + weather.weatherId + "'> ";
+        row = row + "  </td>                                                       ";
+        row = row + "  <td class=''><a href='#' onClick='goDetail(\"" + weather.weatherId + "\")'>"+ weather.seq + "</a></td>         ";
+        
+        row = row + "<td class='' style='vertical-align: middle;'></td>";
+        
+        row = row + "  <td class=''>"+ weather.weatherCode + "</td>                         ";
+        row = row + "  <td class=''>"+ weather.typeName + "</td>                                     ";
+        row = row + "  <td class=''>"+ weather.weatherName + "</td>                                        ";
+        row = row + "  <td class=''>"+ weather.weatherMsg + "</td>                                        ";
+        row = row + "  </td>                                                       ";
+        row = row + "</tr>                                                         ";
+		
+		return row;
+	}
+	
+	function getPageDiv(paging){
+	
+	  var pageDiv = "";
+	  if(paging == null) return;
+	  
+	  var previosPage = paging.startPage - 1;
+	  var perPage = paging.displayPageNum;
+	  var nextPage = paging.endPage + 1;
+	  var startPage = paging.startPage;
+	  var endPage = paging.endPage;
+	  var currPage = paging.page;	  
+		  
+   	  pageDiv = pageDiv + "<div class='row'>                                                ";
+      pageDiv = pageDiv + "  <div class='btn-group' role='group'>                           ";
+      
+      if(paging.prev){    	  
+      	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search(" + previosPage + ", " + perPage + ")'>이전</button>  ";
+      }else{
+      	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>이전</button>  ";
+      }
+      
+      for( i = startPage ; i <= endPage ; i++ ){
+    	  if(currPage == i){
+    		 pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' disabled>" + i + "</button>";    		  
+    	  }else{    		  
+    	  	pageDiv = pageDiv + "<button type='button' class='btn btn-secondary' onClick='search(" + i + ", " + perPage + ")'>" + i + "</button>   ";
+    	  }
+    	  
+      }
+      
+      if(paging.next){    	  
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' onClick='search(" + nextPage + ", " + perPage + ")'>다음</button>  ";
+       }else{
+       	pageDiv = pageDiv + "    <button type='button' class='btn btn-secondary' disabled>다음</button>  ";
+       }
+      
+      
+      pageDiv = pageDiv + "  </div>                                                         ";
+      pageDiv = pageDiv + "</div>                                                           ";
+      
+      return pageDiv;
+	}
+	
+
+</script>
+
+ <div class="x_content"> 
+   <input type="hidden" id ="weatherId">
+   <input type="hidden" id ="searchUserid">
+       
+       <div class="row">
+	<label class="control-label col-md-1 col-sm-1 ">순번</label>
+	<div class="col-md-4 col-sm-4 ">
+		<input type="text" class="form-control" placeholder="순번" id="seq"  /> 
+	</div>
+	<label class="control-label col-md-1 col-sm-1 ">날씨이름</label>
+	<div class="col-md-4 col-sm-4 ">
+		<input type="text" class="form-control" placeholder="날씨이름" id="weatherName"  /> 
+	</div>
+	</div>
+	   
+	<div class="row">
+		<label class="control-label col-md-1 col-sm-1 ">상품이름</label>
+			<div class="col-md-4 col-sm-4 ">
+				<input type="text" class="form-control" placeholder="상품명" id="productName"  /> 
+			</div>
+	<label class="control-label col-md-1 col-sm-1 ">날씨타입</label>
+	<div class="col-md-4 col-sm-4 ">
+		<select required class="form-control" name="weatherType" id="weatherType">
+    		<option value="">선택하세요</option>
+    		<option th:each="weatherType : ${T(com.beautyjourney.beautage.entity.enums.WeatherType).values()}"    		 
+        		th:value="${weatherType.code}" th:text="${weatherType.val}"></option>
+		</select>
+	</div>
+	
+	<div class="col-md-2 col-sm-2 center">
+		<button type="button" class="btn btn-round btn-primary" onClick="search()">조회</button>
+	</div>
+	
+  </div>  
+  
+  
+  <p><h5></h5></p>
+  <span class="section" style="text-align: right;padding-right: 10px;"></span>
+    
+  <div class="table-responsive">
+    <table class="table table-striped jambo_table bulk_action">
+      <thead>
+        <tr class="headings">
+          <th>
+            <input type="checkbox" id="check-all" class="flat">
+          </th>
+          <th class="column-title">순번 </th>
+          <th class="column-title">  </th>  
+          <th class="column-title">코드</th>  
+          <th class="column-title">타입</th>
+          <th class="column-title">이름</th>
+          <th class="column-title">메시지</th>
+          <th class="column-title"></th>          
+          <th class="column-title">   </th>
+          <th class="column-title"></th>
+          <th class="column-title"></th>
+          <th class="column-title"></th> 
+          <th class="bulk-actions" colspan="11">
+            <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+          </th>
+        </tr>
+      </thead>
+
+          <tbody id="listBody">           
+
+<!--
+            <tr class="odd pointer">
+              <td class="a-center ">
+                <input type="checkbox" class="flat" name="table_records">
+              </td>
+              <td class=" "><a href="#">100</a></td>
+              <td class=" ">Feed</td>
+              <td class=" ">홍길동</td>
+              <td class=" ">제목</td>
+              <td class=" ">공개유형</td>
+              <td class="">댓글여부</td>
+              <td class="">활성화</td>
+              <td class="">상태</td>
+              <td class="">10</td>
+              <td class="">1</td>
+              <td class="last">0</td>              
+              </td>
+            </tr>
+-->       
+            
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12 col-sm-12" id="pagination" style="display: flex;justify-content: center;">
+		   <div class="row">
+             <div class="btn-group" role="group">
+               <button type="button" class="btn btn-secondary">이전</button>
+               
+               <button type="button" class="btn btn-secondary">1</button>
+               <button type="button" class="btn btn-secondary">2</button>
+               <button type="button" class="btn btn-secondary">3</button>
+               
+               <button type="button" class="btn btn-secondary">다음</button>
+             </div>
+           </div>
+      </div>     
+<!--       
+      	     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+				
+				<ul class="pagination" style="DISPLAY: flex;JUSTIFY-CONTENT: center;">
+					
+					<li th:if="${pageMaker.prev} == true" class="paginate_button page-item previous" id="dataTable_previous">						
+						<a href="#" th:attr="onclick=|javascript:goList(${pageMaker.startPage}-1, ${pageMaker.searchInfo.perPageNum})|" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+					</li>
+					
+					<li th:if="${pageMaker.prev} == false" class="paginate_button page-item previous disabled" id="dataTable_previous">
+						<a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+					</li>
+					
+					<li th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}" class="paginate_button page-item" th:classappend="${pageMaker.searchInfo.page} == ${idx} ? active : null">
+						<a href="#" th:attr="onclick=|javascript:goList(${idx}, ${pageMaker.searchInfo.perPageNum})|" aria-controls="dataTable" tabindex="0" class="page-link" th:text="${idx}"></a>						
+					</li>
+					
+					<li th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}" class="paginate_button page-item next" id="dataTable_next">
+						<a href="#" th:attr="onclick=|javascript:goList(${pageMaker.endPage}+1, ${pageMaker.searchInfo.perPageNum})|" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+					</li>
+					
+					<li th:if="${pageMaker.next} == false or ${pageMaker.endPage <= 0}" class="paginate_button page-item next disabled" id="dataTable_next">
+						<a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+					</li>					
+				</ul>				
+			  </div>
+ -->      
+      
+    </div>
+  </div>
+</div>
+
+      
+</th:block>
+</html>

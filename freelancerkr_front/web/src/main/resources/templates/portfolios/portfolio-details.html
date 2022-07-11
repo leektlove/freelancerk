@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" th:content="${item.title}" />
+    <meta property="og:url" th:content="|https://www.freelancerk.com/portfolios/${item.id}/details|" />
+    <meta property="og:description" th:content="${item.onlyTextDescription}" />
+    <meta property="og:image" th:content="${item.representativeImageUrl}" />
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/common/portfolio-details.css">
+    <style type="text/css">
+        .tele_time table td{
+            font-size: 12px;
+            padding: 1px;
+        }
+        .tele_time table td.time{
+            font-size: 11px;
+            text-align: left;
+        }
+        .tele_time .fa-stop{
+            font-size: 10px;
+            color:#ddd;
+        }
+        .tele_time .fa-stop.active{
+            color:#0088cc;
+        }
+    </style>
+
+    <title>프리랜서코리아</title>
+</head>
+
+
+<section id="content" layout:fragment="content">
+    <div id="portfolio-details-body" class="wrapper">
+        <div id="container" class="" th:style="|${item.expose?'':'margin:auto;'}|">
+            <div class="content_wrap" th:style="|${item.expose?'':'padding-left:0'}|">
+                <div th:if="${item.directDealAvailable}" class="direct_label" th:onclick="|saveDirectDeal(${item.id})|">
+                    직거래가 가능한 포트폴리오 입니다
+                </div>
+                <div class="p-relative">
+                    <h1 class="portfolio-title text-dark font-weight-bold text-6 text-md-7 text-lg-9 mt-2 mt-lg-3" th:text="${item.title}"></h1>
+                    <div id="ex_portfolio" class="sns" th:if="${item.expose}">
+                        <div class="sns_wrap">
+                            <div class="sns_title">Share</div>
+                            <a target="_blank" th:href="|https://www.facebook.com/sharer/sharer.php?u=https://www.freelancerk.com/portfolios/${item.id}/details|">
+                                <i class="social fab fa-facebook-f" style="font-size:17px;color: #0063b0"></i>
+                            </a>
+                            <a target="_blank" th:href="|https://twitter.com/intent/tweet?text=[프리랜서코리아] ${item.title} by ${item.user?.exposeName}&url=https://www.freelancerk.com/portfolios/${item.id}/details|">
+                                <i class="social fab fa-twitter" style="font-size:17px;color: #0095db"></i>
+                            </a>
+                            <a th:data-clipboard-text="|https://www.freelancerk.com/portfolios/${item.id}/details|" class="btnShare" style="cursor: pointer">
+                                <i class="social fas fa-share-alt" style="font-size:17px;color: #8d8d8d"></i>
+                            </a>
+                        </div>
+                        <div class="view_title">
+                            <span class="t" th:text="|view ${#numbers.formatInteger(item.hits, 0, 'COMMA')}|"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 블로그 형식으로 올렸을때 view -->
+                <div class="mb-2" th:if="${item.contentType?.name() == 'BLOG'}">
+                    <div class="content mb-4 mb-md-0">
+
+                        <!-- 에디터에 입력한 내용 들어가는부분-->
+                        <div th:utext="${item.description}" style="min-height: 600px;background: url(/static/images/back_logo.png)no-repeat;background-position: center;background-size: 400px;">
+                        </div>
+                        <!-- 에디터 입력한 내용 들어가는부분//-->
+
+                    </div>
+                </div>
+                <!-- 블로그 형식으로 올렸을때 view// -->
+
+                <!-- 이미지, 영상, 음원위주로 올렸을때 view -->
+                <div class="mb-2" th:if="${item.contentType?.name() != 'BLOG'}">
+                    <div class="content mb-4 mb-md-0">
+                        <p class="" th:text="${item.description}"></p>
+                        <div class="owl-carousel owl-theme dots-morphing nav-inside nav-inside-edge nav-squared nav-with-transparency nav-dark owl-loaded owl-drag owl-carousel-init" data-plugin-options="{'items': 1, 'margin': 10, 'loop': true, 'nav': true, 'dots': false,'autoHeight':true}">
+                            <div>
+                                <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                                    <a th:href="${item.mainImageUrl}">
+                                        <img th:src="${item.mainImageUrl}"/>
+                                    </a>
+                                </div>
+                            </div>
+                            <div th:each="detailFile: ${item.detailFiles}">
+                                <div th:if="${detailFile.fileType.name() == 'IMAGE'}" >
+                                    <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                                        <a th:href="${detailFile.fileUrl}">
+                                            <img th:src="${detailFile.fileUrl}" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div th:if="${detailFile.fileType?.name() == 'VIDEO'}">
+                                    <div class="img-thumbnail border-0 border-radius-0 p-0 d-block" style="text-align: center;">
+                                        <video class="image-fluid" th:src="${detailFile.fileUrl}" controls="controls" style="width: 80%"></video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 이미지, 영상, 음원위주로 올렸을때 view// -->
+
+                <div class="row">
+                    <div class="col-6">
+                        <a th:href="@{/portfolios/__${previousItem.id}__/details(portfolioIds=${portfolioIds},category1stId=${category1stId},category2ndId=${category2ndId},directMarketAvailable=${directMarketAvailable},keyword=${keyword})}" class="w-100 portfolio-prev text-decoration-none d-block" th:if="${previousItem != null}">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-chevron-left text-dark text-4"></i>
+                                <div class="w-100 d-sm-block pl-3" style="width: calc(100% - 10px)">
+                                    <span class="d-none d-md-block opacity-4 text-1">이전 포트폴리오</span>
+                                    <div class="" th:text="${previousItem.title}" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: 300;font-size: 13px; color: #333;"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a th:href="@{/portfolios/__${nextItem.id}__/details(portfolioIds=${portfolioIds},category1stId=${category1stId},category2ndId=${category2ndId},directMarketAvailable=${directMarketAvailable},keyword=${keyword})}" class="w-100 portfolio-next text-decoration-none d-block float-right"  th:if="${nextItem != null}">
+                            <div class="d-flex align-items-center text-right">
+                                <div class="d-sm-block pr-3" style="width: calc(100% - 10px)">
+                                    <span class="d-none d-md-block opacity-4 text-1">다음 포트폴리오</span>
+                                    <div class="" th:text="${nextItem.title}" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-weight: 300;font-size: 13px; color: #333;"></div>
+                                </div>
+                                <i class="fas fa-chevron-right text-dark text-4"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="prevPage d-none d-xl-block" th:style="|${item.expose?'':'padding-left:0'}|">
+                <button type="button" class="btn btn-light btn-lg" onclick="history.back()">이전 페이지로</button>
+            </div>
+        </div>
+        <div class="side-bar scroll-bar-wrap" th:if="${item.expose}">
+            <a href="#" class="push_menu">
+                <div id="arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+            <div class="sticky_wrap scroll-box" >
+                <ul class="list mt-3">
+                    <li class="border-0">
+                        <div class="d-flex">
+                            <a th:href="|/freelancer/profile/${item.user.id}?portfolioId=${item.id}|">
+                                <div style="width: 50px; height: 50px; position: relative;margin-right:0.5rem;">
+                                    <span class="center-crop-wrapper rounded">
+                                        <img class="card-img-top mr-2 rounded-circle d-block"  th:src="@{${(#strings.isEmpty(item.user.profileImageUrl)?'/static/images/icon/freelancer_noimg.png':item.user.profileImageUrl)}}">
+                                    </span>
+                                </div>
+                            </a>
+                            <div th:onclick="|javascript:location.href='/freelancer/profile/${item.user.id}?portfolioId=${item.id}'|">
+                                <div class="user_name text-4 font-weight-bold text-dark" th:text="${item.user.exposeName}" style="margin-top:7px;"></div>
+                                <div class="" style="font-size: 11px; color:#747474;cursor: pointer;line-height: 15px;white-space: nowrap;">
+                                    <span class="mr-1" style="vertical-align: middle;">프로필을 확인하세요</span>
+                                    <img src="/static/images/icon/d_rightarrow.png">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <strong class="text-primary mr-2">
+                            희망 최소 보수
+                            <span class="question-pop text-secondary">
+                                <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="해당 포트폴리오와 같은'일'에 필요한 최소 보수 입니다."></i>
+                            </span>
+                        </strong>
+                        <div th:text="${item.payDescription}">건당 10만원 이상</div>
+                    </li>
+                    <li th:if="${item.workPlaceDescription != null}">
+                        <strong class="text-primary mr-2">
+                            선호 근무 형태
+                        </strong>
+                        <div th:text="${item.workPlaceDescription}">
+                            
+                        </div>
+                    </li>
+                    <li th:if="${not #lists.isEmpty(dayTimes) AND item.directDealAvailable}">
+                        <strong class="text-primary mr-2">연락 가능 시간</strong>
+                        <div class="tele_time">
+                            <table class="w-100 text-center">
+                                <tr>
+                                    <td>
+                                        <div class="">월</div>
+                                    </td>
+                                    <td>
+                                        <div class="">화</div>
+                                    </td>
+                                    <td>
+                                        <div class="">수</div>
+                                    </td>
+                                    <td>
+                                        <div class="">목</div>
+                                    </td>
+                                    <td>
+                                        <div class="">금</div>
+                                    </td>
+                                    <td>
+                                        <div class="">토</div>
+                                    </td>
+                                    <td>
+                                        <div class="">일</div>
+                                    </td>
+                                    <td>
+                                        <div class="">공휴일</div>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr th:each="dayTime: ${dayTimes}">
+                                    <td th:each="dayTimeIndex : ${#numbers.sequence(0, 7)}">
+                                        <i th:class="|fas fa-stop ${dayTime.isChecked(dayTimeIndex)?'active':''}|"></i>
+                                    </td>
+                                    <td class="time" th:text="|${dayTime.times[0]} ~ ${dayTime.times[1]}|"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="border-0">
+                        <strong class="text-primary mr-2">섹터</strong>
+                        <div>
+                            <span class="" th:text="${item.category1st?.name}"></span>
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="" th:text="${item.category2nd?.name}"></span>
+                        </div>
+                    </li>
+                    <li class="">
+                        <a th:href="|/view/pick-me-ups?keyword=${categoryItem.name}|" class="keyword mr-1" th:text="${categoryItem.name}" th:each="categoryItem: ${item.user.categories}"></a>
+                    </li>
+                    <li th:if="${item.directDealAvailable}" style="display: none">
+                        <i class="fas fa-angle-right "></i>
+                        <span class="">
+                            <strong class="text-primary mr-2">E-mail</strong>
+                            <span class="mr-2" th:if="${item.user.exposeEmail}" th:text="| ${item.user.email}|"></span>
+                        </span>
+                    </li>
+                    <li th:if="${item.directDealAvailable}" style="display: none">
+                        <i class="fas fa-angle-right"></i>
+                        <span class="">
+                            <strong class="text-primary mr-2">Mobile</strong>
+                            <span class="ml-2" th:if="${item.user.exposeCellphone}" th:text="| ${item.user.cellphone}|"></span>
+                        </span>
+                    </li>
+                    <li class="mt-2 border-0" th:if="${item.directDealAvailable}" style="display: none">
+                        <i class="fas fa-angle-right mt-1"></i>
+                        <strong class="text-primary mr-2" style="vertical-align: middle;">SNS/홈페이지</strong>
+                        <span class="ml-2">
+                            <div class="btn p-0" style="display:inline-flex; align-items: center;height: 35px;">
+                                <span th:if="${!#strings.isEmpty(item.user.facebookLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.facebookLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.facebookLinkUrl)?item.user.facebookLinkUrl:''}')|}">
+                                    <i class="fab fa-instagram-square"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.instagramLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.instagramLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.instagramLinkUrl)?item.user.instagramLinkUrl:''}')|}">
+                                    <i class="fab fa-instagram"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.twitterLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.twitterLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.twitterLinkUrl)?item.user.twitterLinkUrl:''}')|}">
+                                    <i class="fab fa-twitter-square"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.youtubeLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.youtubeLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.youtubeLinkUrl)?item.user.youtubeLinkUrl:''}')|}">
+                                    <i class="fab fa-youtube-square"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.linkedInLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.linkedInLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.linkedInLinkUrl)?item.user.linkedInLinkUrl:''}')|}">
+                                    <i class="fab fa-linkedin"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.githubLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.githubLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.githubLinkUrl)?item.user.githubLinkUrl:''}')|}">
+                                    <i class="fab fa-github-square"></i>
+                                </span>
+                                <span th:if="${!#strings.isEmpty(item.user.blogLinkUrl)}" th:class="@{|sns ${!#strings.isEmpty(item.user.blogLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.user.blogLinkUrl)?item.user.blogLinkUrl:''}')|}">
+                                    <i class="fas fa-rss-square"></i>
+                                </span>
+                            </div>
+                        </span>
+                    </li>
+                    <li id="action_button" class="p-0">
+                        <button th:if="${item.directDealAvailable}" type="button" class="btn rounded-0 mt-2 mb-2 btn-block p-0 d-flex" style="background-color:#ff8400;color:#fff;" th:onclick="|saveDirectDeal(${item.id})|">
+                            <div class="counter">
+                                <span class="counter_c" th:text="${#numbers.formatInteger(item.directDealCount, 0, 'COMMA')}">0</span>
+                                <span class="counter_t">직거래</span>
+                            </div>
+                            <div class="btn-body">직거래 가능<span class="text-2">(담아두세요)</span></div>
+                        </button>
+                        <button type="button" class="btn btn-primary rounded-0 mt-2 mb-2 btn-block p-0 d-flex" th:onclick="|openProposeModal(${item.id})|">
+                            <div class="counter">
+                                <span class="counter_c" th:text="${#numbers.formatInteger(item.projectPropositionCount, 0, 'COMMA')}">0</span>
+                                <span class="counter_t">요청</span>
+                            </div>
+                            <div class="btn-body">내 프로젝트에 참여 요청</div>
+                        </button>
+                        <!-- <a href="javascript:history.back()">
+                            <button class="btn btn-light btn-lg rounded-0 mt-2 mb-2 btn-block">이전 페이지로 이동</button>
+                        </a> -->
+                    </li>
+                    <li>
+                    </li>
+                </ul>
+                <div id="comment">
+                    <input name="pickMeUpId" th:value="${item.id}" type="text" hidden>
+
+                    <!-- 메시지 -->
+                    <div class="comment-view">
+                        <div class="text-color-dark font-weight-normal text-4 mb-2">Feedback (<span th:text="${comments.size()}">0</span>)</div>
+                        <div class="input-group">
+                            <textarea id="inputReply" rows="3" class="form-control" maxlength="100" name="content" placeholder="피드백을 입력해 주세요" style="resize: none;" onkeyup="countChar(this)"></textarea>
+                            <div class="input-group-append">
+                                <button id="btnReply" class="btn btn-outline-secondary" type="button">등록</button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="text_cnt"><span id="textCnt">0</span>/100자</div>
+                        </div>
+                        <ul class="comments" th:if="${comments.size() > 0}">
+                            <th:block th:each="comment: ${comments}">
+                            <li class="c_send pl-1 border-bottom mb-2" th:if="${comment.user.id == user?.id}">
+                                <div class="comment">
+                                    <span style="display: flex;align-items: center;">
+                                        <span class="comment-by font-weight-bold" th:text="${comment.user.exposeName}"></span>
+                                        <span class="badge badge-xs" th:text="${comment.userRole.desc}" th:style="|background-color: ${comment.userRole.color}; color:#fff; margin-left:6px|"></span>
+                                    </span>
+                                    <div class="comment-block" style="line-height: normal;">
+                                        <div class="">
+                                            <div th:text="${comment.content}"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="date" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></span>
+                                        <span th:onclick="|deleteComment(${comment.id})|" style="cursor: pointer;color: red">삭제</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="c_receive pl-1 border-bottom mb-2" th:if="${!isLoggedIn or comment.user.id != user?.id}">
+                                <div class="comment">
+                                    <span style="display: flex;align-items: center;">
+                                        <span class="comment-by font-weight-bold" th:text="${comment.user.exposeName}"></span>
+                                        <span class="badge badge-xs" th:text="${comment.userRole.desc}" th:style="|background-color: ${comment.userRole.color}; color:#fff; margin-left:6px|"></span>
+                                    </span>
+                                    <div class="comment-block" style="line-height: normal;">
+                                        <div th:text="${comment.content}"></div>
+                                    </div>
+                                    <div class="date" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></div>
+                                </div>
+                            </li>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+                <div class="prevPage d-block d-xl-none p-0" th:style="|${item.expose?'':'padding-left:0'}|">
+                    <button type="button" class="btn btn-light btn-lg" onclick="history.back()">이전 페이지로</button>
+                </div>
+            </div>
+            <div class="cover-bar"></div>
+        </div>
+    </div>
+
+    <th:block th:include="modal/request-bid-modal" th:with="preventRefresh=false"></th:block>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <script th:inline="javascript">
+        var isLoggedIn = [[${isLoggedIn}]];
+        var loginAsClient = [[${loginAsClient}]];
+
+        $(".scroller").getNiceScroll().resize();
+        $(".scroller").niceScroll();
+    </script>
+    <script src="/static/js/portfolio-common.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"></script>
+</section>

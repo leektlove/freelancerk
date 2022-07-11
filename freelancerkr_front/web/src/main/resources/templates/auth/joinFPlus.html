@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html class="side-header-hamburguer-sidebar side-header-hamburguer-sidebar-right side-header-above side-header-right-no-reverse" lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="프리랜서코리아">
+    <meta property="og:description" content="대한민국 크라우드소싱 플랫폼">
+    <meta property="og:image" content="http://www.freelancerk.com/static/images/banner_new.png">
+    <meta property="fb:app_id" content="690678911131522">
+    <meta property="og:url" content="https://www.freelancerk.com" />
+
+
+    <title>F+PLUS</title>  
+
+    <meta name="keywords" content="프리랜서코리아, 크라우드소싱플랫폼" />
+    <meta name="description" content="대한민국 크라우드소싱 플랫폼">
+    <meta name="author" content="프리랜서코리아">
+    <meta name="naver-site-verification" content="e43e72eaa788db600d47a9f3da8f7e8f265f2cac"/>
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css"rel="stylesheet" type="text/css">
+    <link href="//db.onlinewebfonts.com/c/67680f2eb947c5cbd58b40961b4a61e9?family=Apple+SD+Gothic+Neo" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spectral:600,600i,700,700i&display=swap&subset=latin-ext" rel="stylesheet">
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+    <link rel="stylesheet" href="/static/vendor/simple-line-icons/css/simple-line-icons.min.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/images/favi.ico" type="image/x-icon" />
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+
+
+    <!-- 전역적용 css -->
+    <link rel="stylesheet" href="/static/css/plugin/jquery/ui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="/static/css/common/reset.css">
+    <link rel="stylesheet" href="/static/css/common/common.css">
+    <link rel="stylesheet" href="/static/css/common/header.css">
+    <link rel="stylesheet" href="/static/css/common/navigation.css">
+    <link rel="stylesheet" href="/static/css/common/custom_component.css">
+    <link rel="stylesheet" href="/static/css/common/style.css">
+    <link rel="stylesheet" href="/static/css/common/animate.css">
+    <link rel="stylesheet" href="/static/css/common/card.css">
+    <link rel="stylesheet" href="/static/css/common/message.css">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="/static/vendor/owl.carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/vendor/owl.carousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/static/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="/static/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="/static/vendor/bootstrap-star-rating/css/star-rating.min.css">
+    <link rel="stylesheet" href="/static/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.css">
+
+    <!-- Specific Page Vendor CSS -->
+    <link rel="stylesheet" href="/static/vendor/pnotify/pnotify.custom.css" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/theme.css" />
+    <link rel="stylesheet" href="/static/css/tmp/theme-elements.css">
+    <link rel="stylesheet" href="/static/css/tmp/theme-blog.css">
+    <link rel="stylesheet" href="/static/css/tmp/theme-shop.css">
+
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/skins/default.css" />
+    <link rel="stylesheet" href="/static/vendor/rs-plugin/css/settings.css">
+    <link rel="stylesheet" href="/static/vendor/rs-plugin/css/layers.css">
+    <link rel="stylesheet" href="/static/vendor/rs-plugin/css/navigation.css">
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/custom.css">
+    <link rel="stylesheet" href="/static/css/auth/main.css">
+    <link rel="stylesheet" href="/static/css/common/card.css">
+    <link rel="stylesheet" href="/static/css/common/category.css">
+    
+     <link rel="stylesheet" href="/static/css/auth/joinFreelancer.css">
+    <link rel="stylesheet" href="/static/css/auth/privacy.css">
+    <link rel="stylesheet" href="/static/css/freelancer/join.css"/>
+    
+    
+    <link rel="stylesheet" href="/static/css/freelancer/profile/modify.css">
+	<link rel="stylesheet" href="/static/vendor/slim-image-cropper/slim.min.css">
+    
+
+    <!-- Head Libs -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.appear/0.4.1/jquery.appear.min.js"></script>
+
+    <!-- 전역적용 Js -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
+    <script src="/static/js/plugin/jquery/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/detail-common.js"></script>
+    <script src="/static/js/plugin/bootstrap/4.0.0/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery.uploadPreview.min.js"></script>
+    <script src="/static/js/datePicker.js"></script>
+
+    <title>F+PLUS</title>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-52R8MD5');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (noscript) -->
+<!--    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52R8MD5"-->
+<!--                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
+    <!-- End Google Tag Manager (noscript) -->
+</head>
+<body style="padding-top:58px;">
+
+   <!-- FPlus 로그인 헤더 -->
+	<th:block th:if="${loggedIn != null && loggedIn}">
+        <header th:replace="fragments/headerFPlus :: header">
+            <p>This is default header area for default layout</p>
+        </header>
+        <header id="header" class="side-header side-header-lg side-header-hide">
+            <div class="header-body">
+                <div class="header-container container d-flex h-100 p-0">
+                    <div class="header-column flex-lg-column justify-content-center h-100" style="overflow-y: scroll;">
+                        <div class="header-row header-row-side-header flex-row h-100 pb-3">
+                            <button class="hamburguer-btn hamburguer-btn-side-header active" data-set-active="false" style="z-index: 100">
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                            <div class="side-header-scrollable scrollable colored-slider h-100" data-plugin-scrollable>
+                                <div class="scrollable-content p-0 h-100">
+                                    <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-expand header-nav-click-to-open align-self-start h-100">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1 h-100" style="padding:5px;">
+                                            <nav class="d-none d-md-block h-100" style="padding:1rem;">
+                                                <div class="my_menu" style="width: 100%;">
+                                                    <div class="card">
+                                                        <div class="card_top">
+                                                            <div class="profile_img">
+                                                                <div class="profile_img_crop">
+                                                                    <div class="center-crop-wrapper rounded">
+                                                                        <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(user?.profileImageUrl)?'/static/images/default_avatar.jpg':user?.profileImageUrl)}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="info">
+                                                                <div class="username member" th:text="${user.name}"></div>
+                                                                <span class="badge" style="color:#303038">가입일시</span>
+                                                                <div class="par"> 
+                                                                    <span id="allpjt_num" class="count" th:text="${user.createdAt}" style="color:#303038;"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card_middle">
+                                                        </div>
+                                                        <div class="card_bottom">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="nav nav-pills" id="mainNav">
+                                                    <li class="dropdown">
+                                                        <a href="/noticef/list" class="dropdown-item">
+                                                            <span>공지사항</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/logout" class="dropdown-item" style="color:  #1f87cc;">
+                                                            <span>로그아웃</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- FPlus 로그인 헤더//-->
+    <!-- 비로그인 헤더 -->
+    <th:block th:if="${loggedIn == null || !loggedIn}" >
+        <div style="position:fixed;width:100%;top:0;height: 58px; z-index: 1000!important;">
+            <div class="bg-gray container-fluid border-bottom p-0" style="height:58px;">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-2">
+                            <div class="">
+                                <a href="/fplus">
+                                    <img alt="프리랜서코리아" class="header_main_logo" width="120" src="/static/img/fplus_logo.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-10 header-column p-0">
+                            <nav class="d-none d-lg-flex justify-content-between">
+                                <ul class="nav nav-pills">
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/noticef/list"  style="padding:0.5rem 1rem;">
+                                            공지사항
+                                        </a>	
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-pills" id="mainNav">
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/login/fplus" style="padding:0.5rem 1rem;">
+                                            로그인
+                                        </a>
+                                    </li>
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/join/fplus" style="padding:0.5rem 1rem;">
+                                            회원가입
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <div class="d-flex justify-content-end">
+                                <button class="d-block d-lg-none hamburguer-btn hamburguer-btn-dark hamburguer-btn-sticky-dark" data-set-active="false">
+                                    <!-- <span class="new_noti_point">●</span> -->
+                                    <span class="hamburguer">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header id="header" class="side-header side-header-lg side-header-hide d-flex d-lg-none">
+            <div class="header-body">
+                <div class="header-container container d-flex h-100 p-0">
+                    <div class="header-column flex-lg-column justify-content-center h-100">
+                        <div class="header-row header-row-side-header flex-row h-100 pb-5 mt-5">
+                            <button class="hamburguer-btn hamburguer-btn-side-header active" data-set-active="false">
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                            <div class="side-header-scrollable scrollable colored-slider" data-plugin-scrollable>
+                                <div class="scrollable-content p-0">
+                                    <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-expand header-nav-click-to-open align-self-start">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1">
+                                            <nav class="d-none d-md-block" style="padding: 1rem;">
+                                                <ul class="nav nav-pills p-0" id="mainNav">
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item"  href="/noticef/list">
+                                                            공지사항
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/login/fplus">
+                                                            로그인
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/join/fplus">
+                                                            회원가입
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- 비로그인 헤더// -->
+    
+ 	<form action="/users_fp" method="post" id="form" enctype = "multipart/form-data">
+            <div id="f_join" class="contents">
+                <div class="top_area">
+                    <!--<div class="img">
+                        <img src="/static/images/icon_free.gif">
+                    </div>-->
+                    <div class="title">
+                        <span>F+PLUS</span> Join
+                         <!--<span> 회원가입 </span>-->
+                    </div>
+                </div>
+                
+                <div class="wrap_more_write">
+                    <div class="middle_area">
+					 	<input type="hidden" name="redirectUrl" value="/fplus" />
+                        <input type="hidden" name="role" value="ROLE_FREELANCER">
+                        <input type="hidden" name="fpUser" value="Y">
+                        <input type="hidden" name="authType" value="EMAIL">
+                        <input type="hidden" name="thirdPartyUserId">
+                        <input type="hidden" name="thirdPartyAccessToken">
+                       <!-- <div class="clause_check" style="margin-bottom:15px;">
+                            <div class="link_text">
+                                <a target="_blank" href="/common/usagePolicy">이용약관</a>
+                                <a target="_blank" href="/common/privateInfoPolicy">개인정보 취급방침</a>
+                                <a target="_blank" href="/common/escrowPolicy">에스크로서비스</a>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="agree" value="1" id="agree">
+                                <label class="custom-control-label" for="agree">전체동의</label>
+                            </div>
+                        </div>-->
+                        <div class="input">
+                       		<div class="box">
+	                         	<div style="padding: 0.7rem; font-size: 15px; color:#666; font-weight:600;">
+	                         		기본정보
+	                         	</div>
+	                         </div>
+                            <div class="box">
+                                <input type="text" name="email" placeholder="이메일" title="이메일"
+                                       style="ime-mode:inactive;">
+                            </div>
+                            <div class="box">
+                                <input type="password" name="password" class="i_pass" placeholder="패스워드(4자 이상)"
+                                       title="패스워드" maxlength="16" style="ime-mode:inactive;">
+                                <div class="b_notice" id="password-txt"></div>
+                            </div>
+                            <div class="box">
+                                <input type="password" name="password_confirm" value="" class="i_pass"
+                                       placeholder="패스워드(확인)" title="패스워드(확인)" maxlength="16"
+                                       style="ime-mode:inactive;">
+                                <div class="b_notice" id="password-confirm-txt"></div>
+                            </div>
+                            <div class="box">
+                                <input type="text" name="name" placeholder="이름" title="이름" maxlength="15"
+                                       style="ime-mode:inactive;">
+                            </div>
+                            <div class="box">
+                                <input type="number" onkeypress="return onlyNumInput(event);" name="cellphone"
+                                       placeholder="휴대번호" title="휴대번호" maxlength="13"
+                                       style="ime-mode:inactive;">
+                            </div>
+                            <div class="box">
+                                <input type="text" name="instagramLinkUrl" 
+                                placeholder="인스타그램 아이디" maxlength="30"
+                                 style="ime-mode:inactive;">
+                            </div>
+	                         <div class="box" style="margin-top: 10px; margin-bottom: 10px;">
+	                         	<div style="padding: 0.7rem 0.7rem 0 0.7rem; font-size: 15px; color:#666; font-weight:600;">
+	                         		대표이미지
+	                         	</div>
+	                         	<div style="padding: 0.7rem; font-size: 12px; color:#DA6058; font-weight:600; opacity: 0.8;">
+	                         	 	본인을 표현할수 있는 이미지를 첨부해주세요. 오디션 지원시 관리자에게 보여질 수 있습니다. ex) 얼굴사진, 전신사진 
+	                         	</div>
+	                         </div>
+                            <div class="form-row">
+								<!--<div class="file_container p-0 col-lg-7" style="margin-bottom:12px;">
+									<input type="hidden" name="uploadedProfileImageUrl"/>
+									<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="나의 이미지 업로드(클릭)" id="my-cropper" style="max-width: 70%;">
+										<input name="profileImageUrl" type="file" class="form-control-file" style="height:25px; margin-bottom:5px;">
+									</div>
+								</div>-->
+								<div class="file_container p-0 " style="margin-top:5px; margin-bottom:5px; width:48%; float:left;">
+									<input type="hidden" name="uploadedProfileImageUrl1"/>
+									<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="대표 이미지 선택 (클릭)" id="my-cropper" style="max-width: 70%;">
+										<input name="profileImageUrl1" type="file" class="form-control-file" style="height:25px; margin-bottom:5px;">
+									</div>
+								</div>
+								<div class="file_container p-0 " style="margin-top:5px; margin-bottom:5px; width:48%; float:left;">
+									<input type="hidden" name="uploadedProfileImageUrl2"/>
+									<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="대표 이미지 선택 (클릭)" id="my-cropper" style="max-width: 70%;">
+										<input name="profileImageUrl2" type="file" class="form-control-file" style="height:25px; margin-bottom:5px;">
+									</div>
+								</div>
+								<div class="file_container p-0 " style="margin-top:5px; margin-bottom:5px; width:48%; float:left;">
+									<input type="hidden" name="uploadedProfileImageUrl"/>
+									<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="대표 이미지 선택 (클릭)" id="my-cropper" style="max-width: 70%;">
+										<input name="profileImageUrl3" type="file" class="form-control-file" style="height:25px; margin-bottom:5px;">
+									</div>
+								</div>
+								<div class="file_container p-0 " style="margin-top:5px; margin-bottom:5px; width:48%; float:left;">
+									<input type="hidden" name="uploadedProfileImageUrl"/>
+									<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="대표 이미지 선택 (클릭)" id="my-cropper" style="max-width: 70%;">
+										<input name="profileImageUrl4" type="file" class="form-control-file" style="height:25px; margin-bottom:5px;">
+									</div>
+								</div>
+								<div class="file_container p-0 " style="margin-top:5px; margin-bottom:5px; width:48%; float:left;">
+									<input type="hidden" name="uploadedProfileImageUrl"/>
+									<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="대표 이미지 선택 (클릭)" id="my-cropper" style="max-width: 70%;">
+										<input name="profileImageUrl5" type="file" class="form-control-file" style="height:25px; margin-bottom:5px;">
+									</div>
+								</div>
+								<div class="file_container p-0 " style="margin-top:5px; margin-bottom:5px; width:48%; float:left;">
+									<input type="hidden" name="uploadedProfileImageUrl"/>
+									<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="대표 이미지 선택 (클릭)" id="my-cropper" style="max-width: 70%;">
+										<input name="profileImageUrl6" type="file" class="form-control-file" style="height:25px; margin-bottom:5px;">
+									</div>
+								</div>
+							</div>
+							 <div class="box" style="margin-top: 10px; margin-bottom: 10px;">
+	                         	<div style="padding: 0.7rem 0.7rem 0 0.7rem; font-size: 15px; color:#666; font-weight:600;">
+	                         		개인정보 동의서
+	                         	</div>
+	                         	<div style="padding: 0.7rem; font-size: 12px; color:#DA6058; font-weight:600; opacity: 0.8;">
+	                         		<a href="https://s3.ap-northeast-2.amazonaws.com/freelancerk/32a875ef-f867-4367-ae98-f2e0ce74af9e.hwp">동의서 다운후 작성후 첨부해주세요.</a>
+	                         	</div>
+	                         </div>
+	                         <div class="box">
+                                <input type="file" name="fpUserAgreeFile">
+                             </div>
+                        </div>
+                        <div class="clause_check" style="margin-top:30px; margin-bottom:15px;">
+                            <div class="link_text">
+                                <a target="_blank" href="/common/usagePolicy">이용약관</a>
+                                <a target="_blank" href="/common/privateInfoPolicy">개인정보 취급방침</a>
+                                <a target="_blank" href="/common/escrowPolicy">에스크로서비스</a>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="agree" value="1" id="agree">
+                                <label class="custom-control-label" for="agree">전체동의</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom_area">
+                        <div id="naverIdLogin"></div>
+                        
+                        <div class="btn_join">
+                            <input class="btn btn_lg btn-secondary ok_btn" type="button" value="회원가입" disabled onclick="joinFPlus()">	
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>      
+
+
+
+        <!-- 키워드등록팝업 -->
+        <div class="modal fade modal_wrap" id="key_add_pop" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+             aria-hidden="true">
+
+            <!-- 등록버튼 -->
+            <div class="key_btn">
+                <span class="btn btn-primary btn-lg w-100 key_add_btn" id="key_add_btn">키워드등록완료</span>
+            </div>
+            <!-- 등록버튼// -->
+
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <!-- 팝업헤더 -->
+                    <div class="head modal-header">
+                        <h5 class="modal-title" id="ModalLabel">키워드 등록</h5>
+                        <div class="">
+                            <a class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 팝업헤더// -->
+
+                    <!-- 팝업컨텐츠 -->
+                    <div class="content bg-white">
+
+                        <!-- 공지 -->
+                        <ul class="pt-3 pt-md-0 px-3">
+                            <li>
+                                <i class="fas text-primary fa-exclamation-circle mr-1"></i>
+                                원하는 섹터를 제안해주세요. 적극적으로 피드백 해드리겠습니다.
+                                <a href="/common/askForHelp">
+                                    <button class="btn btn-primary rounded-0 btn-sm ml-2">제안하기</button>
+                                </a>
+                            <li>
+                                <i class="fas text-primary fa-exclamation-circle mr-1"></i>
+                                인기키워드와 참고키워드를 먼저 검토하신 후, 본인의 키워드가 없는 경우 직접 입력해주세요.
+                            </li>
+                        </ul>
+                        <!-- 공지// -->
+
+                        <!-- 키워드 테이블 -->
+                        <div class="px-3">
+                            <div class="sectorTable row" style="margin-bottom:80px;">
+                            </div>
+                        </div>
+                        <!-- 키워드 테이블// -->
+
+                    </div>
+                    <!-- 팝업컨텐츠// -->
+
+                </div>
+            </div>
+        </div>
+        <!-- 키워드등록팝업// -->
+
+        <script th:inline="javascript">
+            var kakaoAppId = [[${kakaoAppId}]];
+            var facebookAppId = [[${facebookAppId}]];
+            var naverClientId = [[${naverClientId}]];
+            var naverCallbackUrl = serverUrl + '/callback/oauth2/naver?role=ROLE_FREELANCER&type=SIGN_UP';
+
+        </script>
+        <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+        <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+        <script src="/static/js/thirdparty-common.js"></script>
+        <script type='text/javascript'>
+
+            var selectedKeywords = [];
+            function signUpWithFb() {
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                FB.login(function(response) {
+                    if (response.authResponse) {
+                        var accessToken = response.authResponse.accessToken;
+                        FB.api('/me', function(response) {
+                            console.log(response);
+                            var userId = response.id;
+                            var name = response.name;
+                            $('input[name=name]').val(name);
+                            $('input[name=email]').val('');
+                            $('input[name=thirdPartyUserId]').val(userId);
+                            $('input[name=thirdPartyAccessToken]').val(accessToken);
+                            $('input[name=authType]').val('FACEBOOK');
+                            $.ajax({
+                                type: "POST",
+                                url: $('#form').attr('action'),
+                                data: new FormData($('#form')[0]),
+                                processData: false,
+                                contentType: false,
+                                success: function(data)
+                                {
+                                    try {
+                                        window.dataLayer = window.dataLayer || [];
+                                        window.dataLayer.push({'pageCategory': 'freelancer'});
+                                    } catch (e) {
+                                        console.error(e);
+                                    }
+                                    location.href = '/freelancer/profile/index';
+                                },
+                                error: function(jqXHR, textStatus) {
+                                    if (jqXHR.status === 409) {
+                                        alert("이미 가입한 계정입니다.");
+                                    } else {
+                                        alert("가입 시도에 실패했습니다.");
+                                    }
+                                }
+                            });
+                        });
+                    } else {
+                        console.log('User cancelled login or did not fully authorize.');
+                    }
+                });
+            }
+
+            function signUpWithKakao() {
+                // 로그인 창을 띄웁니다.
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                Kakao.Auth.login({
+                    success: function(authObj) {
+                        Kakao.API.request({
+                            url: '/v2/user/me',
+                            success: function(res) {
+                                console.log(JSON.stringify(res));
+                                console.log(JSON.stringify(authObj));
+                                var userId = res.id;
+                                $('input[name=name]').val(res.properties['nickname']);
+                                $('input[name=email]').val(res.kaccount_email);
+                                $('input[name=thirdPartyUserId]').val(res.id);
+                                $('input[name=thirdPartyAccessToken]').val(authObj.access_token);
+                                $('input[name=authType]').val('KAKAO');
+                                $.ajax({
+                                    type: "POST",
+                                    url: $('#form').attr('action'),
+                                    data: new FormData($('#form')[0]),
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(data)
+                                    {
+                                        try {
+                                            window.dataLayer = window.dataLayer || [];
+                                            window.dataLayer.push({'pageCategory': 'freelancer'});
+                                        } catch (e) {
+                                            console.error(e);
+                                        }
+                                        location.href = '/freelancer/profile/index';
+                                    },
+                                    error: function(jqXHR, textStatus) {
+                                        if (jqXHR.status === 409) {
+                                            alert("이미 가입한 계정입니다.");
+                                        } else {
+                                            alert("가입 시도에 실패했습니다.");
+                                        }
+                                    }
+                                });
+                                console.log(res.id);
+                                console.log(res.kaccount_email);
+                                console.log(res.properties['nickname']);
+                                console.log(authObj.access_token);
+                            }
+                        })
+                    },
+                    fail: function(err) {
+                        console.log(JSON.stringify(err));
+                    }
+                });
+
+            };
+
+            function signUpWithNaver() {
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                var authorizeUrl = naverLogin.generateAuthorizeUrl();
+                var popup = window.open(authorizeUrl, "", "width=400,height=500");
+                popup.onbeforeunload = function(){
+                    try {
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({'pageCategory': 'freelancer'});
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    location.href = '/freelancer/profile/index';
+                    return null;
+                }
+            }
+
+            function reload() {
+                location.href = '/freelancer/profile/index';
+            }
+        </script>
+        <script>
+            $(".btn_next .ok_btn").click(function(){
+                if (selectedKeywords.length === 0 && $('input[name=selectedKeywordJson\\[\\]]').length === 0) {
+                    alert('나의 섹터와 관련 키워드를 등록해주세요(필수)');
+                    return;
+                }
+
+                if (selectedKeywords.length < 3) {
+                    alert('키워드를 3개 이상 선택 또는 입력해주세요. 많은 키워드를 선택할 수록 매칭 확률이 높아집니다. :)');
+                    return;
+                }
+
+                $(".wrap_more_write").show();
+                $(".btn_next").hide();
+              });
+        </script>
+        <script>
+            $('#agree').click(function () {
+                //check if checkbox is checked
+                if ($(this).is(':checked')) {
+                    $('.bottom_area .ok_btn').removeAttr('disabled'); //enable input
+                    $('.bottom_area .sns_icon').css('opacity','1');
+
+                } else {
+                    $('.bottom_area .ok_btn').attr('disabled', true); //disable input
+                    $('.bottom_area .sns_icon').css('opacity','0.5');
+                }
+            });
+        </script>
+        <script src="/static/lib/zxcvbn/zxcvbn.js"></script>
+        <script src="/static/js/freelancer/join.js"></script>
+ 
+    
+
+    <!-- 푸터 -->
+    <footer th:replace="fragments/footer :: footer">
+        <p>This is default footer area for default layout</p>
+    </footer>
+    <!-- 푸터//-->
+
+
+    <!-- 이벤트 팝업-->
+    <div class="modal fade modal_wrap" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header p-2">
+                    <button type="button" class="close mr-0" data-dismiss="modal">&times;</button>
+                </div>
+                <div>
+                    <img src="/static/images/initial.png" style="width: 100%"/>
+                </div>
+                <div style="padding: 5px;">
+                    <div class="form-check">
+                        <input type="checkbox" name="notshowpopup" class="form-check-input" id="notshowpopup">
+                        <label class="form-check-label" for="notshowpopup">24시간 동안 이 팝업을 보지 않음</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 이벤트 팝업//-->
+
+    <th:block th:include="modal/request-bid-modal" th:with="preventRefresh=true"></th:block>
+
+
+    <!-- 회원탈퇴 팝업 -->
+    <div class="modal fade modal_wrap" id="leaveModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+
+                <!-- 팝업 헤더 -->
+                <div class="head modal-header">
+                    <h5 class="modal-title" id="ModalLabel">회원을 탈퇴합니다.</h5>
+                    <div class="">
+                        <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                    </div>
+                </div>
+                <!-- 팝업 헤더// -->
+
+                <!-- 팝업 컨텐츠 -->
+                <div class="content modal-body">
+                    <h4>탈퇴하고자 하는 이유를 선택해주세요.</h4>
+                    <select class="w-100 form-control" name="leaveReason" onchange="showDiv('hidden_div', this)">
+                        <option value="1">더 이상 이용 할 필요가 없습니다.</option>
+                        <option value="2">이용하기 매우 어렵습니다.</option>
+                        <option value="3">기타사유.</option>
+                    </select>
+                    <textarea type="text" class="form-control mt-3" placeholder="탈퇴하고 싶은 이유를 적어주세요." rows="3" id="hidden_div" style="display: none"></textarea>
+                    <div class="btn-group d-block mb-3 mt-3">
+                        <button class="btn btn-primary rounded-0" id="leaveBtn">회원 탈퇴하기</button>
+                        <button class="btn btn-light rounded-0" data-dismiss="modal" aria-label="Close">닫기</button>
+                    </div>
+                </div>
+                <!-- 팝업 컨텐츠//-->
+
+            </div>
+        </div>
+    </div>
+    <!-- 회원탈퇴 팝업// -->
+
+    <script th:inline="javascript">
+        var category1stId = [[${category1stId}]];
+        var category2ndId = [[${category2ndId}]];
+        var loggedIn = [[${loggedIn}]];
+        var isLoggedIn = [[${loggedIn}]];
+        var loginAsClient = [[${loginAsClient}]];
+        var userInfoInput = [[${user?.infoInput}]];
+        var userId = [[${user?.id}]];
+
+        var message = [[${message}]];
+        if (message && message === 'DIRECT_DEAL_NEED_LOGIN') {
+            // alert('직거래 포트폴리오는 로그인 후 열람하실 수 있습니다. 1분이면 회원가입이 가능합니다. :)');
+        }
+    </script>
+    <script>
+        function showDiv(divId, element)
+        {
+            document.getElementById(divId).style.display = element.value == 3 ? 'block' : 'none';
+        }
+    </script>
+
+    <!-- <script src="/static/js/jquery.js"></script> -->
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/portfolio-common.js"></script>
+
+    <!-- Vendor -->
+    <script src="/static/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="/static/vendor/common/common.js"></script>
+    <script src="/static/vendor/nanoscroller/jquery.nanoscroller.js"></script>
+    <script src="/static/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="/static/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+    <script src="/static/vendor/jquery.appear/jquery.appear.min.js"></script>
+    <script src="/static/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="/static/vendor/jquery.cookie/jquery.cookie.min.js"></script>
+    
+    <script src="/static/vendor/jquery.validation/jquery.validate.min.js"></script>
+    <script src="/static/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="/static/vendor/jquery.gmap/jquery.gmap.min.js"></script>
+    <script src="/static/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
+    <script src="/static/vendor/isotope/jquery.isotope.min.js"></script>
+    <script src="/static/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <!-- <script src="/static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script> -->
+    <script src="/static/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/static/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/static/vendor/bootstrap-star-rating/js/star-rating.min.js"></script>
+    <script src="/static/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.js"></script>
+    <script src="/static/vendor/slim-image-cropper/slim.kickstart.min.js"></script>
+	<script src="/static/js/tagsinput.js"></script>
+	<script src="/static/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="/static/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+    <script src="/static/vendor/pnotify/pnotify.custom.js"></script>
+
+	<script src="/static/js/freelancer/profile/modify.js"></script>
+	<script src="/static/js/freelancer/profile/modify-step.js"></script>
+    <!-- Theme Base, Components and Settings -->
+    <script src="/static/js/tmp/theme.js"></script>
+    
+    <!-- Theme Custom -->
+    <script src="/static/js/tmp/custom.js"></script>
+    
+    <!-- Theme Initialization Files -->
+    <script src="/static/js/tmp/theme.init.js"></script> 
+
+</body>
+</html>

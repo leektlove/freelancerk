@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script th:inline="javascript">
+    var serverUrl = [[${serverUrl}]];
+    var iamportMerchantId = [[${iamportMerchantId}]];
+    var merchantUid = 'merchant_' + new Date().getTime();
+    var price = [[${#httpServletRequest.getParameter('price')}]];
+    IMP.init(iamportMerchantId);
+
+    IMP.request_pay({
+        pg : 'inicis',
+        pay_method : 'card',
+        merchant_uid : 'merchant_' + new Date().getTime(),
+        name : '유료결제',
+        amount :  price,
+        buyer_email : '',
+        buyer_name : '',
+        buyer_tel : '',
+        m_redirect_url : serverUrl + '/confirm/temp-purchases',
+    }, function(rsp) {
+        if ( rsp.success ) {
+            var msg = '결제가 완료되었습니다.';
+
+            var formData = new FormData();
+            formData.append('imp_uid', rsp.imp_uid);
+            formData.append('merchant_uid', merchantUid);
+            formData.append('price', price);
+            formData.append('imp_success', true);
+
+            $.ajax({
+                type: 'POST',
+                url: '/confirm/temp-purchases',
+                data: formData,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function() {
+                    alert('결제가 완료되었습니다.')
+                },
+                error: function(error) {
+                    console.error(error);
+                    alert('구매결과 검증에 실패했습니다.');
+                }
+
+            });
+        } else {
+            var msg = '결제에 실패하였습니다.';
+            msg += '에러내용 : ' + rsp.error_msg;
+            alert(msg);
+        }
+    });
+</script>
+</html>

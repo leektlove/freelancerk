@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<link rel="stylesheet" href="/static/css/freelancer/pickMeUp/option.css">
+</head>
+	
+	<section id="content" layout:fragment="content">
+
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md ">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-12 align-self-center p-static order-2 text-center">
+                                <div class="overflow-hidden pb-2">
+                                    <h1 class="text-dark font-weight-bold text-9 appear-animation animated maskUp appear-animation-visible" data-appear-animation="maskUp" data-appear-animation-delay="100" style="animation-delay: 100ms;" th:text="|포트폴리오 ${mode=='OPEN'?'공개':'옵션추가/연장'}|"></h1>
+                                </div>
+                            </div>
+                            <div class="col-md-12 align-self-center order-1">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+		<div class="content-body container shop">
+            <div class="row">
+                <div class="col">
+                    <div class="featured-boxes">
+                        <div class="row">
+                        	<div class="col-lg-1 col-xl-2">
+                        	</div>
+                            <div class="col-lg-9 col-xl-8">
+                                <div class="featured-box featured-box-primary text-left mt-2" style="">
+									<form th:action="@{/freelancer/pickMeUp/options}" method="post">
+										<div class="box-content p-3 p-lg-5">
+											<h5>포트폴리오 결제를 원하시면 옵션을 선택해주세요</h5>
+											<input type="hidden" name="pickMeUpId" th:value="${pickMeUp.id}"/>
+											<div class="option_table">
+												<table class="table cart">
+													<thead>
+													<tr>
+														<th style="width: 35%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">옵션상품</th>
+														<th style="width: 38%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">
+															<div class="form-row">
+																<div class="col-md-6">
+																	기한
+																</div>
+																<div class="col-md-6" th:if="${mode != null && mode == 'EXTEND'}">
+																	기한연장
+																</div>
+															</div>
+														</th>
+														<th style="width: 28%;font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;vertical-align: middle;">금액</th>
+													</tr>
+													</thead>
+													<tbody>
+													<tr th:each="product, iter : ${productList}" th:if="${product.type.name()} == 'STANDARD'" class="standardProduct" th:data-unit-price="${product.unitPrice}">
+														<td class="text-left">
+															<input th:value="${product.id}" class="productId" type="text" hidden />
+															<!-- <input th:id=${iter.index} type="checkbox" name="productItem" class="checkboxProductItem" th:data-product-code="${product.code.name()}" data-type="STANDARD" th:data-product-id="${product.id}"/> -->
+															<div class="custom-control custom-checkbox">
+																<input type="checkbox" class="checkboxProductItem custom-control-input" name="productItem"
+																	   th:id="${iter.index}"
+																	   th:data-product-code="${product.code.name()}"
+																	   th:data-product-id="${product.id}"
+																	   th:data-valid-ticket="${pickMeUp?.isContainOption(product.id)}"
+																	   th:data-previous-end-at="${pickMeUp?.getPreviousEndAt(product.id)}"
+																	   data-type="STANDARD"
+																	   th:checked="${pickMeUp?.isContainOption(product.id)}"
+																>
+																<label class="custom-control-label lblProductName" th:for="${iter.index}" th:text="${product.subName}" style="line-height: 25px;"></label>
+																<span class="question-pop text-secondary">
+				                                                    <i class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="" th:data-original-title="${product.description}"></i>
+			                                                    </span>
+															</div>
+														</td>
+														<td>
+															<div class="form-row">
+																<div class="col-md-6 product-limit" th:if="${mode != null && mode == 'EXTEND'}">
+																	<span th:if="${product.code.name() != 'PICK_ME_UP' OR !pickMeUp.freeCharge}" class="option-limit" th:data-option-code="${product.code}" th:text="|${#temporals.format(productTypeIdTicketMap?.get(product.id)?.endAt, 'yyyy.MM.dd')}|">~2019.01.02</span>
+																	<span th:if="${product.code.name() == 'PICK_ME_UP' AND pickMeUp.freeCharge}" class="option-limit" th:data-option-code="${product.code}" style="vertical-align: middle;">무제한</span>
+																</div>
+																<div class="col-md-6">
+																	<img class="btnDecreaseMonth" src="/static/images/d.png" alt="down" th:style="|${product.code.name() == 'PICK_ME_UP' AND pickMeUp.freeCharge?'display:none;':''}|"/>
+																	<input type="hidden" name="count" value="0"/>
+																	<input class="inputProductMonth count" name="inputProductMonth" type="text" value="1" readonly th:style="|${product.code.name() == 'PICK_ME_UP' AND pickMeUp.freeCharge?'display:none;':'width: 25px'}|" th:data-product-code="${product.code.name()}">
+																	<span class="mr-1" style="vertical-align: middle;" th:style="|${product.code.name() == 'PICK_ME_UP' AND pickMeUp.freeCharge?'display:none;':'width:40px'}|">개월</span>
+																	<img class="btnIncreaseMonth" src="/static/images/u.png" alt="up" th:style="|${product.code.name() == 'PICK_ME_UP' AND pickMeUp.freeCharge?'display:none;':''}|"/>
+																</div>
+															</div>
+														</td>
+														<td class="text-right">
+															<input type="text" class="inputProductUnitPrice" name="inputProductUnitPrice" th:value="${product.unitPrice}" hidden />
+															<div th:style="|text-decoration: line-through; ${remainFreeChargeProductCount > 0?'':'display:none;'}|" class="remainFreeChargeProductCount on" th:text="${#numbers.formatInteger(product.unitPrice, 0, 'COMMA')}">10,000원</div>
+															<div th:style="|${remainFreeChargeProductCount > 0?'':'display:none;'}|" class="text-secondary mr-1 remainFreeChargeProductCount on">무료적용 <span id="remainFreeChargeProductCount" th:text="${remainFreeChargeProductCount}"></span>회 남음</div>
+															<div th:style="|${remainFreeChargeProductCount > 0?'display:none;':''}|" class="remainFreeChargeProductCount off"><input class="inputProductMoney count-money" name="inputProductMoney" type="text" th:value="${#numbers.formatInteger(product.unitPrice, 0, 'COMMA')}" readonly/><span>원</span></div>
+														</td>
+													</tr>
+													<tr th:each="product, iter : ${productList}" th:if="${product.type.name()} == 'BASIC'" class="basicProduct" th:data-unit-price="${product.unitPrice}">
+														<td class="text-left">
+															<input th:value="${product.id}" class="productId" type="text" hidden />
+															<div class="custom-control custom-checkbox">
+																<input type="checkbox" class="checkboxProductItem custom-control-input"
+																	   name="productItem"
+																	   th:id="${iter.index}"
+																	   th:data-product-code="${product.code.name()}"
+																	   th:data-product-id="${product.id}"
+																	   th:data-valid-ticket="${pickMeUp?.isContainOption(product.id)}"
+																	   th:data-previous-end-at="${pickMeUp?.getPreviousEndAt(product.id)}"
+																	   th:checked="${pickMeUp?.isContainOption(product.id)}"
+																	   data-type="BASIC"
+																	   disabled="disabled" style="display: none;">
+																<label class="custom-control-label lblProductName" th:for="${iter.index}" th:utext="${product.subName}" style="line-height: 25px;"></label>
+																<span class="question-pop text-secondary">
+				                                                    <i class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="" th:data-original-title="${product.description}"></i>
+			                                                    </span>
+															</div>
+														</td>
+														<td>
+															<div class="form-row">
+																<div class="col-md-6 product-limit" th:if="${mode != null && mode == 'EXTEND'}">
+																	<span th:if="${product.code.name() != 'PICK_ME_UP' OR !pickMeUp.freeCharge}" class="option-limit" th:data-option-code="${product.code}" th:text="|${#temporals.format(productTypeIdTicketMap?.get(product.id)?.endAt, 'yyyy.MM.dd')}|">~2019.01.02</span>
+																	<span th:if="${product.code.name() == 'PICK_ME_UP' AND pickMeUp.freeCharge}" class="option-limit" th:data-option-code="${product.code}">무제한</span>
+																</div>
+																<div class="col-md-6">
+																	<img class="btnDecreaseMonth" src="/static/images/d.png" alt="down" />
+																	<input type="hidden" name="count" value="0"/>
+																	<input class="inputProductMonth count" name="inputProductMonth" type="text" value="1" readonly style="width:25px" th:data-product-code="${product.code.name()}">
+																	<span class="mr-1" style="vertical-align: middle;">개월</span>
+																	<img class="btnIncreaseMonth" src="/static/images/u.png" alt="up" />
+																</div>
+															</div>
+														</td>
+														<td class="text-right">
+															<input type="text" class="inputProductUnitPrice" name="inputProductUnitPrice" th:value="${product.unitPrice}" hidden />
+															<input class="inputProductMoney count-money" name="inputProductMoney" type="text" th:value="${#numbers.formatInteger(product.unitPrice, 0, 'COMMA')}" readonly /><span>원</span>
+														</td>
+													</tr>
+													<tr style="border-top:4px double #dee2e6">
+														<td colspan="2">할인금액(옵션<span id="selectedOptionCount">0</span>개 선택)</td>
+														<td><span id="optionDiscountAmount">0</span>원</td>
+													</tr>
+													</tbody>
+												</table>
+											</div>
+											<div style="margin-top:55px; margin-bottom:55px;" class="contact-available-time-pick-container">
+												<div style="letter-spacing: -.05em;">연락 가능한 요일과 시간을 입력해 주세요.</div>
+												<div class="row contact-available-time-pick-row-container" th:if="${#lists.isEmpty(dayTimes)}">
+													<div class="col-md-6">
+														<div class="d-flex" style="align-items: center;height: 38px">
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[0]" id="mon">
+																<label class="custom-control-label" for="mon" style="line-height: 24px;">월</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[1]" id="tue">
+																<label class="custom-control-label" for="tue" style="line-height: 24px;">화</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[2]" id="wed">
+																<label class="custom-control-label" for="wed" style="line-height: 24px;">수</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[3]" id="thur">
+																<label class="custom-control-label" for="thur" style="line-height: 24px;">목</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[4]" id="fri">
+																<label class="custom-control-label" for="fri" style="line-height: 24px;">금</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[5]" id="sat">
+																<label class="custom-control-label" for="sat" style="line-height: 24px;">토</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[6]" id="sun">
+																<label class="custom-control-label" for="sun" style="line-height: 24px;">일</label>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="d-flex" style="align-items: center;">
+															<div class="custom-control custom-checkbox mr-2 mr-3">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[7]" id="holiday">
+																<label class="custom-control-label" for="holiday" style="line-height: 24px;white-space: nowrap;">공휴일가능</label>
+															</div>
+															<input type="text" data-plugin-timepicker class="form-control contactAvailableTime[0]" data-plugin-options='{ "showMeridian": false }' style="max-width: 70px;">
+															<div class="px-2">~</div>
+															<input type="text" data-plugin-timepicker class="form-control contactAvailableTime[1]" data-plugin-options='{ "showMeridian": false }' style="max-width: 70px;">
+															<i class="fas fa-plus fa-lg pl-3 text-primary contact-available-time-pick-row-add-btn" style="cursor: pointer;"></i>
+														</div>
+													</div>
+												</div>
+
+												<div class="row mt-2 contact-available-time-pick-row-container" th:if="${not #lists.isEmpty(dayTimes)}" th:each="dayTime, iter: ${dayTimes}">
+													<div class="col-md-6">
+														<div class="d-flex" style="align-items: center;height: 38px">
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[0]" th:checked="${dayTime.isChecked('0')}" th:id="|mon_${iter.index}|">
+																<label class="custom-control-label" th:for="|mon_${iter.index}|" style="line-height: 24px;">월</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[1]" th:checked="${dayTime.isChecked('1')}" th:id="|tue_${iter.index}|">
+																<label class="custom-control-label" th:for="|tue_${iter.index}|" style="line-height: 24px;">화</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[2]" th:checked="${dayTime.isChecked('2')}" th:id="|wed_${iter.index}|">
+																<label class="custom-control-label" th:for="|wed_${iter.index}|" style="line-height: 24px;">수</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[3]" th:checked="${dayTime.isChecked('3')}" th:id="|thur_${iter.index}|">
+																<label class="custom-control-label" th:for="|thur_${iter.index}|" style="line-height: 24px;">목</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[4]" th:checked="${dayTime.isChecked('4')}" th:id="|fri_${iter.index}|">
+																<label class="custom-control-label" th:for="|fri_${iter.index}|" style="line-height: 24px;">금</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[5]" th:checked="${dayTime.isChecked('5')}" th:id="|sat_${iter.index}|">
+																<label class="custom-control-label" th:for="|sat_${iter.index}|" style="line-height: 24px;">토</label>
+															</div>
+															<div class="custom-control custom-checkbox mr-2">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[6]" th:checked="${dayTime.isChecked('6')}" th:id="|sun_${iter.index}|">
+																<label class="custom-control-label" th:for="|sun_${iter.index}|" style="line-height: 24px;">일</label>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="d-flex" style="align-items: center;">
+															<div class="custom-control custom-checkbox mr-2 mr-3">
+																<input type="checkbox" class="custom-control-input contactAvailableDay[7]" th:checked="${dayTime.isChecked('7')}" th:id="|holiday_${iter.index}|">
+																<label class="custom-control-label" th:for="|holiday_${iter.index}|" style="line-height: 24px;white-space: nowrap;">공휴일가능</label>
+															</div>
+															<input type="text" data-plugin-timepicker class="form-control contactAvailableTime[0]" data-plugin-options='{ "showMeridian": false }' th:value="${dayTime.times[0]}" style="max-width: 70px;">
+															<div class="px-2">~</div>
+															<input type="text" data-plugin-timepicker class="form-control contactAvailableTime[1]" data-plugin-options='{ "showMeridian": false }' th:value="${dayTime.times[1]}" style="max-width: 70px;">
+															<i th:if="${iter.index > 0}" class="fas fa-minus fa-lg pl-3 text-primary contact-available-time-pick-row-delete-btn" style="cursor: pointer;"></i>
+															<i th:if="${iter.index == 0}" class="fas fa-plus fa-lg pl-3 text-primary contact-available-time-pick-row-add-btn" style="cursor: pointer;"></i>
+														</div>
+													</div>
+												</div>
+
+											</div>
+
+											<ul class="col-md-9 mt-4 mx-auto p-0">
+                                                <li>
+                                                    <i class="fas fa-angle-right"></i>
+                                                    <span><strong>옵션 선택, 구매 수</strong>에 따라 할인율이 적용됩니다.</span>
+                                                    <table class="table text-center table-sm">
+                                                        <tr>
+                                                            <th style="font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">옵션 갯수 또는 기간 연장</th>
+                                                            <th style="font-size:14px;font-weight: 700;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">할인율</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2개</td>
+                                                            <td class="text-center">10%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3개</td>
+                                                            <td class="text-center">15%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="border-bottom">4개이상</td>
+                                                            <td class="text-center border-bottom">20%</td>
+                                                        </tr>
+                                                    </table>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-plus"></i>
+                                                    <span><span style="font-weight: bold">옵션 결제금액의 10%</span>가 포인트로 적립되며 1년간 유효합니다.(1포인트는 1원)</span>
+                                                </li>
+                                            </ul>
+											<div class="c-foot">
+												<div class="sum">
+													<span>합계(VAT포함)</span>
+													<input id="sumOfProductMoney" type="text" class="count" value="0" readonly />
+													<span class="count">원</span>
+												</div>
+												<div class="">
+													<input name="selectProductList" id="inputSelectedProductList" type="hidden" />
+													<button  class="btn btn-primary btn-lg btn-block rounded-0 mb-2" id="submit" type="submit" th:text="|포트폴리오 ${mode=='OPEN'?'등록':'옵션추가/연장'} 하기|"></button>
+												</div>
+											</div>
+										</div>
+
+										<input name="contactAvailableDayTime" type="hidden" />
+									</form>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+								<aside class="sidebar" id="sidebar" data-plugin-sticky="" data-plugin-options="{'minWidth': 991, 'containerSelector': '.container', 'padding': {'top': 110}}">
+									<div id="sticky_point" class="card">
+                                        <img class="round" th:src="@{${(#strings.isEmpty(user?.profileImageUrl)?'/static/images/default_avatar.jpg':user?.profileImageUrl)}}">
+										<div class="user_name" th:text="${user.name}">김예진</div>
+										 <div class="user_nickname">(<span th:text="${user.nickname}">omama</span>)</div>
+										<div class="user_point_label">보유포인트</div>
+										<div class="user_point point" th:text="|${#numbers.formatDecimal(user?.points, 0, 'DEFAULT', 0, 'DEFAULT')}|"></div>
+									</div>
+								</aside>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 직거래 클릭시 팝업 -->
+        <div class="modal fade modal_wrap" id="directMarket" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+
+                    <!-- 팝업 헤더 -->
+                    <div class="head modal-header">
+                        <h5 class="modal-title" id="ModalLabel">주의</h5>
+                        <div class="">
+                            <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                    <!-- 팝업 헤더// -->
+
+                    <!-- 팝업 컨텐츠 -->
+                    <div class="content modal-body">
+                        <span id="exposedContactsContainer" class="text-secondary font-weight-bold"></span> 이 노출됩니다.<br/>
+						프로필의 컨택포인트 노출 설정과 연동되기 때문에 변경을 원하시면 프로필을 수정하셔야 합니다. <br/>
+						지금 수정하시겠습니까? 등록 후 수정하셔도 됩니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="toFreelancerProfileBtn">지금 수정</button>
+                        <button class="btn btn-light" data-dismiss="modal">나중에 수정</button>                        
+                    </div>
+                    <!-- 팝업 컨텐츠 //-->
+                    
+                </div>
+            </div>
+        </div>
+		<script th:inline="javascript">
+			var contentType = [[${pickMeUp.contentType?.name()}]];
+			var remainFreeChargeProductCount = [[${remainFreeChargeProductCount}]];
+			var exposeSns = [[${user.exposeSns}]];
+			var exposeCellphone = [[${user.exposeCellphone}]];
+			var exposeEmail = [[${user.exposeEmail}]];
+			var freeCharge = [[${pickMeUp.freeCharge}]];
+		</script>
+
+		<script src="/static/lib/moment/moment.min.js"></script>
+		<script src="/static/js/freelancer/pickMeUp/pickmeup-common.js"></script>
+		<script src="/static/js/freelancer/pickMeUp/pickmeup-extend.js"></script>
+	</section>
+
+</html>

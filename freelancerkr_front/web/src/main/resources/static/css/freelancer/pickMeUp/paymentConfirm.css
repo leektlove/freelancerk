@@ -1,0 +1,55 @@
+body{font-size: 14px;}
+.wrap {background-color: #fff;padding:2rem 0;}
+.wrap input{border:0;background-color: transparent;}
+#inputTotalAmountOfMoney{font-size: 25px;text-align: right;vertical-align: baseline;color: #0088cc;font-weight: bold;}
+.content-body .sub-title{font-size:16px; font-weight: 400;margin-bottom:1rem;}
+select{width: 100%;height: 30px;vertical-align: middle;}
+.sum {padding: 1rem 0;}
+.c-foot{text-align: center}
+.c-foot .sum{margin:1rem 0;}
+.c-foot .sum .count{font-size: 25px;font-weight: bold;border: 0;background-color: transparent;text-align: right;vertical-align: middle;}
+.c-foot .btn button{width:250px;padding:0.7rem 3rem;color:#fff;font-weight:bold;margin-bottom:0.6rem;}
+.c-foot .btn button:first-child{background-color: #4f99df;}
+.c-foot .btn button:nth-child(2){background-color: #7b7b7b;}
+.c-foot .btn p{font-size:12px;color:#333; text-align: left;margin-bottom:0;}
+
+/* Added by PSJ */
+.count-money {
+	width: 65px;
+	background-color: transparent;
+	border: none;
+	text-align: right;
+	vertical-align: top;
+}
+.table th, .table td{
+	padding: 0.3rem 0rem;
+    vertical-align: middle;
+}
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+	.wrap{padding:0rem;background-color: transparent;}
+	.payment_table_1{background-color: #fff}
+	.payment_table_2 .border{background-color: #fff}
+
+}
+	
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.wrap {padding:1rem;}
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/details/projectDetail.css">
+</head>
+
+
+<section id="content" layout:fragment="content">
+
+	<!-- 페이지헤더 -->
+	<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+					<h1 class="text-dark"><strong>프로젝트 상세보기</strong></h1>
+				</div>
+				<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- 페이지헤더// -->
+
+	<div class="container">
+		<div class="project content-body">
+			<div class="row">
+				<div class="detail_container col-lg-9 col-md-8">
+					<h2 class="main_title" th:text="${project.title}" id="project-title"></h2>
+					<ul class="list list-icons list-icons-style-1 list-primary list-borders">
+						<li>
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								에스크로서비스(대금보관) <span th:text="${project.useEscrow?'사용':'미사용'}"></span>
+							</div>
+							<div class="list_content" th:if="${project.useEscrow}">
+								플랫폼이 용역대금을 안전하게 보관합니다.
+							</div>
+						</li>
+						<li th:if="${project.status.name() != 'IN_PROGRESS'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								예상기간
+							</div>
+							<div class="list_content">
+								<span th:text="${project.expectedPeriodTxt}"></span>
+							</div>
+						</li>
+						<li th:if="${project.status.name() != 'IN_PROGRESS'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								급여방식
+							</div>
+							<div class="list_content">
+								<span th:text="${project.payMean?.name}"></span>
+							</div>
+						</li>
+						<li th:if="${project.status.name() != 'IN_PROGRESS'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								지급기준
+							</div>
+							<div class="list_content">
+								<span th:if="${project.payMean?.name() == 'PER_UNIT'}" th:text="${project.payCriteria}"></span>
+								<span th:if="${project.payMean?.name() != 'PER_UNIT'}" th:text="${project.payMean?.shortName}"></span>
+							</div>
+						</li>
+						<li class="standard_money" th:if="${project.status.name() != 'IN_PROGRESS'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								입찰기준금액
+							</div>
+							<div class="list_content">
+								<div class="count" th:text="${project.budget}"></div>
+								<span class="text">
+									<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i> 가급적 이 기준금액 내에서 입찰가를 제시 해주세요.
+								</span>
+							</div>
+						</li>
+						<li th:if="${project.status.name() != 'IN_PROGRESS'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								작업장소
+							</div>
+							<div class="list_content">
+								<span th:text="${project.workPlace}"></span>
+								<span th:if="${!#strings.isEmpty(project.workPlaceDescription)}" th:text="${project.workPlaceDescription}"></span>
+							</div>
+						</li>
+						<li class="description" th:if="${project.status.name() != 'IN_PROGRESS'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								상세설명
+							</div>
+							<div class="list_content">
+								<div th:utext="${project.description}"></div>
+							</div>
+						</li>
+						<li th:if="${project.status.name() == 'IN_PROGRESS'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								낙찰금액
+							</div>
+							<div class="list_content">
+								<div th:text="|*{#numbers.formatDecimal(project.successBidPrice, 0, 'DEFAULT', 0, 'DEFAULT')}원|"></div>
+							</div>
+						</li>
+						<li th:if="${project.status.name() == 'IN_PROGRESS'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								낙찰일
+							</div>
+							<div class="list_content">
+								<div th:text="${#temporals.format(project.successBidAt, 'yyyy-MM-dd HH:mm:ss')}"></div>
+							</div>
+						</li>
+						<li th:if="${project.status.name() == 'IN_PROGRESS' AND referer != 'successList'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								 계약서 및 문서
+							</div>
+							<div class="list_content">
+								계약서등을 작성하신 경우 이곳에 업로드 해주세요.
+								<div id="projectContractFileContainer">
+									<div th:each="fileItem: ${clientContractFiles}">
+										<a th:href="${fileItem.fileUrl}" th:text="${fileItem.fileName}"></a>
+									</div>
+									<div th:each="contract : ${freeContractFiles}">
+										<a th:href="@{${contract.fileUrl}}" th:text="${contract.fileName}"></a> <i class="fa fa-window-close cursor projectContractFileDeleteBtn" th:data-id="${contract.id}" aria-hidden="true"></i>
+									</div>
+								</div>
+								<div>
+									<input type="file" name="projectContractFile" aria-describedby="fileHelp">
+								</div>
+							</div>
+						</li>
+						<li th:if="${(project.status.name() == 'IN_PROGRESS' || project.status.name() == 'COMPLETED') AND referer != 'successList' AND projectBid?.bidStatus?.name() != 'FAILED'}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								누적수입금액
+							</div>
+							<div class="list_content">
+								<div class="table-responsive">
+									<table class="table table-sm pay" style="min-width:800px">
+										<thead class="text-center">
+										<tr>
+											<th style="border-bottom: 1px solid #dee2e6;">회차</th>
+											<th style="border-bottom: 1px solid #dee2e6;">수령일</th>
+											<th style="border-bottom: 1px solid #dee2e6;">지급청구 금액</th>
+											<th style="border-bottom: 1px solid #dee2e6;">승인 금액</th>
+											<th style="border-bottom: 1px solid #dee2e6;">누적수입금액</th>
+											<th style="border-bottom: 1px solid #dee2e6;">명세서</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr th:each="paymentItem, iter : ${paymentToUsers}">
+											<td class="text-center">
+												<th:block th:text="${paymentToUsers.size() - iter.index}">1</th:block>
+											</td>
+											<td class="text-center">
+												<th:block th:if="${paymentItem.status.name() == 'PAYED'}" th:text="${#temporals.format(paymentItem.payedAt, 'yy-MM-dd HH:mm:ss')}">2018.07. 05 14:17:34</th:block>
+											</td>
+											<td class="text-center">
+												<th:block th:text="*{#numbers.formatDecimal(paymentItem.amount, 0, 'DEFAULT', 0, 'DEFAULT')}">50,000</th:block>원
+											</td>
+											<td class="text-center">
+												<th:block th:if="${paymentItem.status.name() == 'DENIED'}">
+													<span class="btn btn-sm btn-primary" data-toggle="modal" data-target="#decline_approval" th:data-deny-reason="${paymentItem.denyReason}">승인거절</span>
+												</th:block>
+												<span th:if="${paymentItem.status.name() == 'ACCEPTED' || paymentItem.status.name() == 'PAYED'}" th:text="|*{#numbers.formatDecimal(paymentItem.amount, 0, 'DEFAULT', 0, 'DEFAULT')}원|"></span>
+											</td>
+											<td class="text-center">
+												<span th:if="${paymentItem.status.name() == 'PAYED'}" th:text="*{#numbers.formatDecimal(paymentItem.accumulatedIncomeAmount, 0, 'DEFAULT', 0, 'DEFAULT')}">50,000</span>원
+											</td>
+											<td class="text-center">
+												<th:block th:if="${paymentItem.status.name() == 'PAYED'}">
+													<span th:id="${paymentItem.id}" class="btnShowTaxDetailPopup btn btn-sm btn-outline-primary tax_detail" data-toggle="modal" data-target="#specModal" th:data-amount="${paymentItem.amount}" th:data-id="${paymentItem.id}">명세서</span>
+												</th:block>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="6">
+												<span class="btnShowTaxDetailPopup btn btn-primary w-100 tax_detail" data-toggle="modal" data-target="#specModal" th:data-project-id="${project.id}" th:data-amount="${accumulatedIncomeAmountTotal}">누적명세서</span>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</li>
+						<li>
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								관련키워드
+							</div>
+							<div class="list_content">
+								<span th:each="projectCategory : ${project.projectCategories}" class="k-list">
+									<span class="ml-1 text-primary">#<span th:text="${projectCategory.category.name}"></span></span>
+								</span>
+							</div>
+						</li>
+						<li th:if="${!(project.status.name() == 'CANCELLED' OR projectBid?.bidStatus?.name() == 'FAILED')}">
+							<i class="fas fa-check"></i>
+							<div class="list_title">
+								관련문서
+							</div>
+							<div class="list_content">
+								<th:block th:if="${#strings.isEmpty(project.projectDescriptionFileName)}">
+									관련문서가 없습니다
+								</th:block>
+								<th:block th:if="${!#strings.isEmpty(project.projectDescriptionFileName)}">
+									<a th:href="@{${project.projectDescriptionFileUrl}}" th:text="${project.projectDescriptionFileName}"></a>
+								</th:block>
+							</div>
+						</li>
+						<li id="count_applicant" th:if="${project.status.name() == 'POSTED'}">
+						    <div class="row">
+                                <div class="col-lg-6 mt-3">
+                                	<div class="dday_count count_card">
+	                                    <div class="circular-bar circular-bar-sm single-line mb-0">
+											<div class="circular-bar-chart" th:attr="data-percent=|${project.remainRate}|" data-plugin-options="{'size': 110, 'lineWidth': 10, 'barColor': '#0088CC'}" style="margin-top:10px;width: 110px;height: 110px;">
+												<strong th:if="${!project.postingEnd}" style="font-style: italic;white-space: nowrap;">D-<span th:text="${project.remainDays}"></span></strong>
+												<strong th:if="${project.postingEnd}" style="white-space: nowrap;"><span>선정중...</span></strong>
+											</div>
+										</div>
+										<div class="">
+											<div class="remainDays mb-2">남은기간 <span th:text="${project.remainDays}"></span>일</div>
+											<div>(<span th:text="${#temporals.format(project.postingEndAt, 'yyyy.MM.dd HH:mm')}"></span>까지)</div>
+										</div>
+									</div>
+                                </div>
+                                 <div class="col-lg-6 mt-3">
+                                 	<div class="applicant_count count_card">
+										<img src="/static/images/applicant.png">
+										<div class="">참여인원 <span th:text="${project.numberOfApplyCount}"></span>명</div>
+									</div>
+                                </div>
+                            </div>
+						</li>
+					</ul>
+					<div id="comment" th:if="${!commentHidden AND (project.status.name() == 'POSTED' OR project.status.name() == 'IN_PROGRESS')}">
+						<input id="projectId" th:field="${project.id}" type="text" hidden>
+						<!-- 메시지 -->
+						<h4 class="mb-2">메시지 (<span th:text="${commentList.size()}">0</span>)</h4>
+						<div class="comment-view" >
+							<ul class="comments" th:if="${commentList.size() > 0}" th:each="comment: ${commentList}">
+								<li class="receive" th:if="${comment.user.id != #authentication.id}">
+									<div class="comment">
+										<div class="img-thumbnail img-thumbnail-no-borders d-none d-sm-block" th:data-user-id="${comment.user.id}" th:data-user-name="${comment.user.exposeName}">
+											<img th:src="@{${(#strings.isEmpty(comment.user.profileImageUrl)?'/static/images/c_basic.jpg':comment.user.profileImageUrl)}}" class="avatar">
+										</div>
+										<span class="comment-by" th:text="${comment.project.postingClient.exposeName}"></span>
+										<div class="comment-block media-body">
+											<div style="color: #0088cc; font-size: 12px;line-height: 15px;" th:if="${comment.targetUser != null}" th:text="${comment.targetUser.exposeName + ' 에게 전송'}"></div>
+											<div class="comment-arrow"></div>
+											<p th:text="${comment.content}"></p>
+										</div>
+										<div>
+											<span class="date" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></span>
+											<span class="btn-delete" th:if="${comment.user.id == #authentication.id}" th:data-id="${comment.id}" style="margin-right: 4px;color: red">삭제</span>
+										</div>
+									</div>
+								</li>
+								<li class="send" th:if="${comment.user.id == #authentication.id}">
+									<div class="comment">
+										<span class="comment-by" th:text="${comment.user?.exposeName}"></span>
+										<div class="comment-block">
+											<div style="display: none" th:if="${comment.targetUser != null}" th:text="${comment.targetUser.exposeName + ' 에게 전송'}"></div>
+											<div class="comment-arrow"></div>
+											<p th:text="${comment.content}"></p>
+										</div>
+										<div class="">
+											<span class="date" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></span>
+											<span class="btn-delete" th:if="${comment.user.id == #authentication.id}" th:data-id="${comment.id}" style="margin-right: 4px;color: red">삭제</span>
+										</div>
+										<div class="img-thumbnail img-thumbnail-no-borders d-none d-sm-block">
+											<img th:src="@{${(#strings.isEmpty(comment.user.profileImageUrl)?'/static/images/f_basic.jpg':comment.user.profileImageUrl)}}" class="avatar">
+										</div>
+									</div>
+								</li>
+							</ul>
+							<div class="input-group mb-2" th:if="${project.status.name() != 'COMPLETED'}">
+								<textarea name="contents" rows="3" class="form-control" maxlength="1000" placeholder="메시지를 전달해주세요." style="resize: none;height: 50px;line-height: inherit;" th:disabled="${(bidCompleted AND project.status.name() != 'IN_PROGRESS')?'disabled':'false'}"></textarea>
+								<div class="input-group-append">
+									<button id="btnReply" class="btn btn-primary" type="button" style="min-width: 100px;">전송</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4">
+					<aside class="sidebar" id="sidebar" data-plugin-sticky data-plugin-options="{'minWidth': 991, 'containerSelector': '.container', 'padding': {'top': 110}}">
+						<div class="card p-3 mb-2 rounded-0" th:if="${!(project.status.name() == 'CANCELLED' OR projectBid?.bidStatus?.name() == 'FAILED')}">
+							<div class="form-row">
+								<div class="col-4 col-md-12 col-lg-12 col-xl-4">
+	                                <div class="profile_img_crop">
+                                        <div class="center-crop-wrapper rounded">
+                                            <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(client.profileImageUrl)?'/static/images/c_basic.jpg':client.profileImageUrl)}}">
+                                        </div>
+                                    </div>
+									<span class="badge badge-light px-2 py-1 mt-1 text-primary">클라이언트</span>
+								</div>
+								<div class="col-8 col-md-12 col-lg-12 col-xl-8 align-self-end">
+									<input type="hidden" name="clientId" th:value="${client.id}"/>
+									<div class="member font-weight-bold" th:text="${client.exposeName}">
+									</div>
+									<div class="text-1" th:text="${project.postingClient.businessType?.name}">개인사업자</div>
+									<div id="star">
+										<div class="rating-container theme-krajee-fas rating-xs rating-animate">
+                                            <div class="rating-stars">
+                                                <span class="empty-stars">
+                                                    <span class="star">
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                    <span class="star">
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                    <span class="star">
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                    <span class="star">
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                    <span class="star">
+                                                        <i class="far fa-star"></i>
+                                                    </span>
+                                                </span>
+                                                <span class="filled-stars" th:style="|width: ${client.ratingPercentageAsClient}%|">
+                                                    <span class="star">
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                    <span class="star">
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                    <span class="star">
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                    <span class="star">
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                    <span class="star">
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div style="font-size: 12px;margin-bottom: 3px;">프로젝트
+											<span id="allpjt_num" class="text-primary" th:text="${#numbers.formatInteger(client.completedProjectCount, 0, 'COMMA')}">10</span>건 중
+											<span id="markpjt_num" class="text-primary" th:text="${#numbers.formatInteger(client.ratedProjectCountAsClient, 0, 'COMMA')}">6</span>건 평가</div>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+							<hr/>
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex">
+										<span class="balance" th:if="${project.status.name() == 'IN_PROGRESS'}">
+											에스크로 예치 잔액
+											<span th:text="${#numbers.formatInteger(escrowAmount, 0, 'COMMA')}">4,200,000</span>원
+										</span>
+									</div>
+									<div class="d-flex">
+										<span class="ellipsis exposeEmail" th:text="${client.exposeEmail} ? ${client.email}: '비공개'">
+										</span>
+									</div>
+									<div class="d-flex">
+										<span class="exposeCellphone" th:text="${client.exposeCellphone} ? ${client.cellphone} : 비공개">
+										</span>
+									</div>
+									<div class="d-flex">
+										<a th:href="${client.homepageUrl}">
+											<span class="exposeSns" th:text="${client.exposeSns} ? ${client.homepageUrl} : 비공개">
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button type="button" th:if="${project.status.name() == 'POSTED' && projectBid == null && !project.postingEnd}" class="applyModal btn btn-primary btn-lg btn-block rounded-0 mb-2" data-target-custom="#bid"><span th:text="${projectProposition != null?'수락/입찰가제출':'입찰참여'}"></span></button>
+
+						<button type="button" th:if="${project.status.name() == 'POSTED' && projectBid == null}" class=" btnLike btn btn-light text-dark btn-lg btn-block rounded-0 mb-2">찜하기</button>
+						<button type="button" th:if="${projectProposition != null && projectProposition.status.name() == 'PROPOSE' && projectBid == null}" class=" btn btn-light text-dark btn-lg btn-block rounded-0 mb-2" th:onclick="|denyProjectProposition(${projectProposition?.id})|">거절</button>
+						<a href="javascript:history.back()" th:if="${project.status.name() == 'POSTED' && projectBid == null}">
+							<button type="button" class="btn btn-light text-dark btn-lg btn-block rounded-0 mb-2">이전페이지로 돌아가기</button>
+						</a>
+					</aside>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block th:include="modal/bid-modal"></th:block>
+
+	<!-- 승인거절 팝업 -->
+	<div class="modal fade modal_wrap" id="decline_approval" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+
+				<!-- 팝업 헤더 -->
+				<div class="head modal-header">
+					<h5 class="modal-title" id="ModalLabel">승인을 거절합니다</h5>
+					<div class="">
+						<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+					</div>
+				</div>
+				<!-- 팝업 헤더// -->
+
+				<!-- 팝업 컨텐츠 -->
+				<div class="content modal-body">
+					<table class=" popup_boardform">
+						<colgroup>
+							<col width="50%">
+							<col width="">
+						</colgroup>
+						<tbody>
+						<tr>
+							<th>거절사유</th>
+							<td id="denyReason"></td>
+						</tr>
+						</tbody>
+					</table>
+
+					<div class="popup_boardbutton">
+						<div class="tc">
+							<a href="#" class="btn-basic large pop_close" data-dismiss="modal" aria-label="Close">닫기</a>
+						</div>
+					</div>
+				</div>
+				<!-- 팝업 컨텐츠//-->
+
+			</div>
+		</div>
+	</div>
+	<th:block th:include="modal/common-modals"></th:block>
+	<th:block th:include="modal/rate-spec-modals"></th:block>
+
+	<script th:inline="javascript">
+		var userInfoInput = [[${user?.infoInput}]];
+		var bidCompleted = [[${bidCompleted}]];
+		var projectBudget = [[${project.budget}]];
+		var projectTitle = [[${project.title}]];
+		var projectInProgress = [[${project.status.name() == 'IN_PROGRESS'}]];
+		var useNdaIp = [[${project.useNdaIp}]];
+		var isLoggedIn = [[${isLoggedIn}]];
+		var loginAsClient = [[${loginAsClient}]];
+		var projectId = [[${project.id}]];
+		var notPostedStatusAlarm = [[${notPostedStatusAlarm}]];
+	</script>
+
+	<script src="/static/js/rate-spec-common.js"></script>
+	<script src="/static/js/freelancer/details/project-detail.js"></script>
+</section>
+
+
+</html>

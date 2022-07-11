@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/project.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/projectHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 프로젝트보기</h1>
+					<table class="boardform">
+						<tbody>
+							<tr>
+								<th width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/basic|">기본정보</a></th>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/bid|">입찰정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/work|">진행정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/message|">메시지정보</a></td>
+							</tr>
+						</tbody>
+					</table>	
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>진행상황</th>
+								<td colspan="3" style="color:#ddd;">
+									<span th:each="status : ${T(com.freelancerk.domain.Project.Status).values()}"
+										  th:text="${status.desc}"
+										  th:style="|margin-left: 5px; ${item.status.name() == status.name()?'color:#000':''}|"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+						<tr>
+							<th>클라이언트아이디</th>
+							<td><span th:text="${item.postingClient.username}"></span></td>
+							<th>클라이언트휴대폰</th>
+							<td th:text="${item.postingClient.cellphone}"></td>
+						</tr>
+						<tr>
+							<th>프리랜서아이디</th>
+							<td colspan="3" th:text="${item.contractedFreelancer?.username}"></td>
+						</tr>
+						<tr>
+							<th>프로젝트명</th>
+							<td colspan="3" th:text="${item.title}">프론트엔드개발/재택/2주</td>
+						</tr>
+						<tr>
+							<th>키워드</th>
+							<td colspan="3">
+							<div id="tag_con">
+								<th:block th:each="mapItem: ${categoryMap}">
+									<div class="tag_list mt-3">
+										<div th:text="${mapItem.key.name}"></div>
+										<div class="tag_sub_list">
+											<span th:each="category: ${mapItem.value}" class="badge badge-dark badge-sm badge-pill text-uppercase px-2 py-1 mr-1" th:text="${category.name}"></span>
+										</div>
+									</div>
+								</th:block>
+							</div>
+							</td>
+						</tr>
+						<tr>
+							<th>상세내용</th>
+							<td colspan="3" th:text="${item.description}"></td>
+
+						</tr>
+						<tr>
+							<th>첨부파일</th>
+							<td colspan="3">
+								<th:block th:if="${#strings.isEmpty(item.projectDescriptionFileName)}">
+									관련문서가 없습니다
+								</th:block>
+								<th:block th:if="${!#strings.isEmpty(item.projectDescriptionFileName)}">
+									<a th:href="@{${item.projectDescriptionFileUrl}}" th:text="${item.projectDescriptionFileName}"></a>
+								</th:block>
+							</td>
+						</tr>
+						<tr>
+							<th>예상 프로젝트 기간</th>
+							<td th:text="${item.expectedPeriodTxt}">1주일 이내</td>
+							<th>예산</th>
+							<td th:text="${item.budget}">소형프로젝트 100만원~200만원 미만</td>
+						</tr>
+						<tr>
+							<th>대금 지급 기준</th>
+							<td th:text="${item.payCriteria}"></td>
+							<th>작업 장소</th>
+							<td th:text="${item.workPlace}">On-line 선호</td>
+						</tr>
+						<tr>
+							<th>에스크로 사용</th>
+							<td colspan="3" th:text="${item.useEscrow}">Y</td>
+						</tr>
+						<tr>
+							<th>포스팅 기간</th>
+							<td colspan="3"><span th:text="${item.postingStartDate}"></span> ~ <span th:text="${item.postingEndDate}"></span> </td>
+						</tr>
+						<tr>
+							<th>입찰연장수</th>
+							<td colspan="3" th:text="${purchaseCount}"></td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="Hspace"></div>
+					<h1>■ 결제내역(프로젝트 포스팅 옵션을 결제한 내역)</h1>
+					<table class="boardform">
+						<colgroup>
+							<col width=150>
+							<col width=200>
+							<col width=100>
+							<col width=100>
+							<col width=100>
+							<col width=100>
+							<col width=100>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>항목</th>
+								<th>이용기간</th>
+								<th>상태</th>
+								<th>등록</th>
+							</tr>
+							<tr th:each="ticketLog: ${ticketLogs}">
+								<td th:text="${ticketLog.projectProductItemType.name}">럭셔리P</td>
+								<td th:text="${ticketLog.getValidationDateSpans()}">2018.02.01 ~ 2018.10.30</td>
+								<td th:text="${ticketLog.expired?'만료':'이용중'}">이용중</td>
+								<td>본인</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="Hspace"></div>
+					<h1>■ 관리자 직권등록(유료결제한 것과 같은 결과)</h1>
+					<table class="boardform">
+						<colgroup>
+							<col width=50>
+							<col width=200>
+							<col width=200>
+						</colgroup>
+						<tr>
+							<th>선택</th>
+							<th>항목</th>
+							<th>기간입력</th>
+						</tr>
+						<tr>
+<!--							todo-->
+<!--							<td><input type="checkbox"></td>-->
+<!--							<td>외부노출</td>-->
+<!--							<td>yyyy.mm.dd ~ yyyy.mm.dd</td>-->
+						</tr>
+					</table>
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<a th:href="|javascript:toModifyView(${item.id})|" class="btn-colorline large">수정</a>
+							<a href="" class="btn-colorline large">목록</a>
+						</div>
+						<div class="tr">
+							<span class="btn-color large del_btn">삭제</span>
+						</div>
+					</div>
+					<form name="" id="" action="" method="post">
+						<table class="boardform" style="margin-top:20px;">
+							<colgroup><col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>상담내용</th>
+									<td colspan="3" style="color:#ddd;">
+										<textarea name="" rows="20" style="width:90%;"></textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="저장" class="btn-color large">
+								<a href="/project/list" class="btn-colorline large">목록</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script>
+			function toModifyView(projectId) {
+				if (!confirm('프로젝트의 클라이언트로 로그인하여 프로젝트 수정을 시작합니다. 링크의 유효시간은 1시간 입니다.')) {
+					return;
+				}
+				window.open('https://www.freelancerk.com/redirect/projects/' + projectId);
+			}
+		</script>
+	</section>
+	
+
+
+</html>

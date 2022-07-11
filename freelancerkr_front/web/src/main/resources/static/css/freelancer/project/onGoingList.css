@@ -1,0 +1,316 @@
+
+.contest-img-top.cover-img{
+	height: 150px;
+}
+.contest-img-top{
+	height: 150px;	
+}
+.contest-sector{
+	margin-top: 4rem;
+}
+.btn-light a {
+ color: #777 ;
+}
+
+
+.contest-img-top.cover-img{
+	height: 150px;
+}
+.contest-img-top{
+	height: 150px;	
+}
+.contest-sector{
+	margin-top: 4rem;
+}
+.btn-light a {
+ color: #777 ;
+}
+
+#comment .comment-view{
+    position: relative;
+    margin-bottom: 0.5rem;
+    height: 208px;
+    padding: 0;
+}
+#comment .comment-view .comments{
+    /*position:absolute;
+    left:0;
+    right:0;    
+    top:0;
+    bottom:0;*/
+    height: 100%;
+    padding: 1rem;
+    overflow:auto;
+}
+ul.comments li.send .comment .comment-by{
+	display: none;
+}
+ul.comments li.send .comment .img-thumbnail{
+	display: none;
+}
+ul.comments li img.avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+ul.comments li.send{
+	padding:0;
+	padding-left:100px;
+}
+ul.comments li.receive .comment .img-thumbnail {
+    margin-left: -70px;
+    margin-top: 23px;
+    position: absolute;
+    top: 0;
+    padding: 0;
+    border-radius: 50%;
+}
+ul.comments li.receive {
+    position: relative;
+    padding: 0;
+    padding-right: 100px;
+    padding-left: 70px;
+}
+ul.comments li.receive .comment-block .date {
+    color: #999;
+    font-size: 0.9em;
+    position: absolute;
+    right: -75px;
+    bottom: 3px;
+}
+ul.comments li.send .comment-block .date {
+    color: #999;
+    font-size: 0.9em;
+    position: absolute;
+    left: -75px;
+    bottom: 3px;
+}
+.contest.list_card .font_emp{
+	font-weight: 900;
+}
+.contest.list_card .font_emp.red{
+	color: #e36159;
+    font-size: 13px;
+    background-color: #f7e7e1;
+    padding: 3px 0;
+    font-weight: 700;
+}
+.post-image .image-cover{
+	height:255px;overflow: hidden;
+}
+.post-image .image-cover .thumb-info img{
+	height:255px;
+}
+
+
+
+.guide{text-align: center;}
+.guide_title{
+    position:relative;
+    margin-top:30px;
+    font-size: 20px;
+    font-weight:700;
+    text-align: center;
+}
+.guide_title:before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: calc(50% - 20px);
+    height: 4px;
+    width: 40px;
+    background-color: black;
+}
+.pickme_guid_1 img,
+.pickme_guid_2 img,
+.pickme_guid_3 img,
+.pickme_guid_4 img{
+	max-width: 175px;
+	margin-top:1rem;
+	margin-bottom:1rem;
+}
+.pickme_guid_1:after,
+.pickme_guid_2:after,
+.pickme_guid_3:after{
+    content: '';
+    background:url('/static/images/use-guide/pickme_guid_arow1.png')no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: -24px;
+    top:calc(50% - 14px);
+    width: 55px;
+    height: 27px;
+}
+
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+	
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	.contest-img-top.cover-img{
+		height: 200px;
+	}
+	.contest-img-top{
+		height: 200px;	
+	}
+	.contest-sector{
+		margin-top: 5rem;
+	}
+
+ }	
+
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.contest-img-top.cover-img{
+		height: 100px;		
+	}
+	.contest-img-top{
+		height: 100px;
+		margin-bottom: 1rem;	
+	}
+	.contest-sector{
+		margin-top: 2rem;
+	}
+	.post-image .image-cover{
+		height: 150px;
+	}
+	.post-image .image-cover .thumb-info img{
+		height:150px;
+	}
+	.comment-view{
+		height:auto;
+		max-height: 208px;
+	}
+	ul.comments li.send{
+		padding:0;
+		padding-left:230px;
+		padding-left: 70px;
+	}
+	ul.comments li.receive{
+		padding:0;
+		padding-right:230px;
+		padding-left: 70px;
+	}
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 130px;
+	}
+	.pickme_guid_2:after{
+	    display: none;
+	}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.contest-img-top.cover-img{
+		height: 100px;
+	}
+	.contest-img-top{
+		height: 100px;
+		margin-bottom: 1rem;	
+	}
+	.contest-sector{
+		margin-top: 2rem;
+	}
+	.post-image .image-cover{
+		height: 150px;
+	}
+	.post-image .image-cover .thumb-info img{
+		height:150px;
+	}
+	ul.comments li.send{
+		padding:0;
+		padding-left: 70px;
+		padding-left: 70px;
+	}
+	ul.comments li.receive{
+		padding:0;
+		padding-right:70px;
+		padding-left: 70px;
+	}
+	.comment-view{
+		height:auto;
+		max-height: 208px;
+	}
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 130px;
+	}
+	.pickme_guid_1:after{
+		top: calc(50% - 9px);
+    	width: 45px;
+    	height: 18px;
+	}
+	.pickme_guid_2:after{
+	    display: none;
+	}
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+	.contest-img-top.cover-img{
+		height: 100px;
+	}
+	.contest-img-top{
+		height: 100px;
+		margin-bottom: 1rem;	
+	}
+	.contest-sector{
+		margin-top: 2rem;
+	}
+	.post-image .image-cover{
+		height: 150px;
+	}
+	.post-image .image-cover .thumb-info img{
+		height:150px;
+	}
+	ul.comments li .img-thumbnail{
+		display: block;
+	}
+	ul.comments li.send{
+		padding:0;
+		padding-left: 70px;
+	}
+	ul.comments li.receive{
+		padding:0;
+		padding-right: 70px;
+		padding-left: 70px;
+	}
+	.comment-view{
+		height:auto;
+		max-height: 208px;
+	}
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 130px;
+	}
+	.pickme_guid_1:after{
+		top: calc(50% - 30px);
+    	width: 45px;
+    	height: 18px;
+	}
+	.pickme_guid_2:after{
+	    top: 100%;
+	    width: 45px;
+	    height: 18px;
+	    opacity: 0.5;
+	    right: 0;
+	    left: -20px;
+	    transform: rotate(90deg);
+	}
+	.pickme_guid_3:after{
+		top: calc(50% - 30px);
+    	width: 45px;
+    	height: 18px;
+	}
+}

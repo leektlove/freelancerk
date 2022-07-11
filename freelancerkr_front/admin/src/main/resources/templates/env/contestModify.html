@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/env.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/envHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+				<h1>■ 컨테스트 수정</h1>
+				<form name="" id="" action="" method="post" >
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>분류코드</th>
+								<td>
+									40c0
+								</td>
+							</tr>
+							<tr>
+								<th>출력</th>
+								<td>
+									<label><input type="radio" name="fr_display" value="Y" checked>출력</label>&nbsp;&nbsp;
+									<label><input type="radio" name="fr_display" value="N">미출력</label>
+								</td>
+							</tr>
+
+							<tr>
+								<th>순서</th>
+								<td><input type="text" name="" value="" size="4"></td>
+							</tr>
+
+							<tr>
+								<th>분류명</th>
+								<td>
+									<input type="text" name="" value="" size="50">
+								</td>
+							</tr>
+							<tr>
+								<th>이미지</th>
+								<td>
+									<input type="file">
+								</td>
+							</tr>
+							<tr>
+								<th>섹터설명수정</th>
+								<td>
+									<input type="text" name="" value="로고, 명함, CI, BI, 간판& 각종브랜딩" size="50">
+								</td>
+							</tr>
+							<tr>
+								<th>소분류수정/추가</th>
+								<td>
+									<div style="margin-top:10px">
+										<input type="text" name="" value="로고(CI,BI,심볼)" size="50">
+										<input type="text" name="" value="30만원" size="30">
+									</div>
+									<div style="margin-top:10px">
+										<input type="text" name="" value="명함(로고제외)" size="50">
+										<input type="text" name="" value="30만원" size="30">
+									</div>
+									<div style="margin-top:10px">
+										<input type="text" name="" value="간판(로고제)" size="50">
+										<input type="text" name="" value="30만원" size="30">
+									</div>
+									<div style="margin-top:10px">
+										<a href="" class="btn-black medium">수정</a>
+										<a href="" class="btn-black medium">소분류 추가 입력(텍스트/가격)</a>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									푸시
+									키워드입력
+								</th>
+								<td>
+									<div>
+										<input type="text" value="" id="fc_tag" maxlength="20"> <span class="btn-black medium" id="fc_tag_add">추가</span>
+									</div>
+									<div id="tag_con">
+									</div>
+									(설명) : 현재 프로젝트의 경우 클라이언트가 프로젝트를 등록하면 프로젝트 정보의 키워드와 프리랜서의 키워드가 2개 이상 중복되는 경우 푸시 이메일 이 전송됨.(입찰참여 독려) 그러나 컨테스트는 클라이언트가 따로 키워드를 추가하지 않으므로 이곳에서 관리자가 디폴트로 설정해 둠. If 이곳에 관리자 가 [포토샵], [로고], [간판]을 입력해 둔 상태에서 클라이언트가 컨테스트를 등록완료하면 이 키워드 중 2개 이상 중복되는 프리랜서에게 컨테스트에 참 여하라는 중복키워드 알림 이메일 전송
+								</td>
+							</tr>
+							</tbody>
+						</table>
+							
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="완료" class="btn-color large">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div><!-- container-->
+	</section>
+	
+	
+</html>

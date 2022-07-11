@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){        
+        var isDoctor = "[[${isDoctor}]]";
+        if(isDoctor){
+     	 $(".doctor-score").readonly(true);
+		}        
+
+	});   
+	
+	function deleteSkinScore(){
+		showConfirm("삭제 하시겠습니까?", function(){
+			form1.action = "/w1/skin/delete";
+			form1.submit();
+		});
+	}
+	
+	function goList(){
+		location.href="/w1/skin/go_doctor_list";		
+	}
+	function updateStatus(){
+	
+	if ( confirm("넘기시겠습니까?") == true){   
+                    	
+		var skinId = "[[${userSkinView.skin.skinId}]]";
+		$.ajax({
+		        url : "/w1/skin/update_status_wait",
+		        data : skinId,
+		        type : 'post',
+		        contentType:"application/json; charset=UTF-8", 
+		        success : function(data){
+		         	console.log(data);
+		         	$(".send_doctor").remove();
+		        },
+		        error : function(e){
+		        	console.log(e);
+		        }
+	    });
+	}else{   
+       return;
+     }
+}
+
+function saveDoctorSkin(){
+	
+	showModal("등록 하시겠습니까?", true, function(){
+		form1.submit();		
+	});
+
+}
+
+
+ 
+ 
+
+ 
+</script>
+
+	<div class="">
+		<div class="row">		
+		
+			<div class="col-md-12 col-sm-12">
+				<div class="x_panel">
+					
+					<div class="x_title">
+						<h2>
+							사용자 피부진단 상세
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>							
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="x_content">
+						
+						<form class="form-horizontal form-label-left" th:object=${userSkinView.skin} th:action="@{/w1/skin/doctor_save}" method="post" id="form1" name="form1" novalidate>
+							<input type="hidden" name="seq" id="seq" th:value="*{seq}" />
+							<input type="hidden" name="skinId" id="skinId" th:value="*{skinId}" />																				
+							<input type="hidden" name="userId" id="userId" th:value="*{userId}" />
+							<input type="hidden" name="groupId" id="groupId" th:value="*{groupId}" />
+							
+							
+							<span class="section">사용자 피부진단 : <span th:text="*{seq}"></span></span>
+
+						    <div class="form-group row align-items-center" style="JUSTIFY-CONTENT: CENTER;">								
+								<div class="col-md-5 col-sm-5 " style="text-align: center;">
+									<img src="./images/tree.jpg" 
+										th:attr="src=*{aiUrl}"
+										class="img-responsive img-rounded">
+								</div>
+							</div>
+							
+							<div class="form-group row align-items-center">
+								<label class="control-label col-md-2 col-sm-2 ">사용자명</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="" name="userName" id="userName" th:value="*{userName}">
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">분석일자</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="" name="dDay" id="dDay" th:value="*{dDay}">
+								</div>
+							</div>
+							
+							<div class="form-group row align-items-center">								
+								<label class="control-label col-md-2 col-sm-2 ">총점</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="" name="totalScore" id="totalScore" th:value="*{totalScore}">
+								</div>								
+								<div class="col-md-6 col-sm-6 " th:text="*{comment}" ></div>
+							</div>
+							
+							<div class="form-group row align-items-center">
+								<label class="control-label col-md-1 col-sm-1 ">피부랭킹</label>
+								<div class="col-md-2 col-sm-2 ">
+									상위 : <span th:text="${userSkinView.skinRankPercent}"></span> </span> %
+									<input type="text" class="form-control" placeholder="" name="skinRank" id="skinRank" th:value="${userSkinView.skinRank}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">만나이</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="text" class="form-control" placeholder="" name="skinAge01" id="skinAge01" th:value="${userSkinView.manAge}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">피부나이 1</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="text" class="form-control" placeholder="" name="skinAge01" id="skinAge01" th:value="${userSkinView.skinAge01}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">피부나이 2</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="text" class="form-control" placeholder="" name="skinAge02" id="skinAge02" th:value="${userSkinView.skinAge02}">
+								</div>
+							</div>
+							
+
+ 							<div id="skinScoreList" th:each="skinScore : ${userSkinView.skinScoreList}">							
+								<div class="form-group row" style="border: 1px solid gray" >
+								  <div class="col-3" style="border: 1px solid gray" >
+								    <div class="col" >
+								      <div class="row ">
+								      	<div class="col-12" style="text-align: center;"><b th:text="${skinScore.itemName}">주름</b></div>
+								      </div>							      
+								      <div class="row">
+								      	<div class="col-5">점수</div>
+								      	<div class="col-7" th:text="${skinScore.adjustScore}">35</div>
+								      </div>
+								      <div class="row">
+								      	<div class="col-5">AI 점수</div>
+								      	<div class="col-7" th:text="${skinScore.score}">5.2222215</div>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="col-9" th:text="${skinScore.comment}">가나다라 마바사....</div>
+								</div>
+							</div>
+							<div class="form-group row align-items-center" th:object="${doctorScore}">
+							<input type="hidden" name="doctor_seq" id="doctor_seq" th:value="*{seq}">
+								<label class="control-label col-md-1 col-sm-1 ">이마</label>
+								<div class="col-md-2 col-sm-2 " >
+									<input type="number" class="form-control doctor-score" placeholder="" name="forehead" id="forehead" min="0" max="100" th:value="*{forehead}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">U Zone Left</label>
+								<div class="col-md-2 col-sm-2 ">
+										<input type="number" class="form-control doctor-score" placeholder="" name="leftZone" id="leftZone" min="0" max="100" th:value="*{leftZone}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">홍조</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="redness" id="redness" min="0" max="100" th:value="*{redness}" >
+								</div>
+								<label class="control-label col-md-1 col-sm-1 "></label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="button" class="form-control  btn-app" name="skinAge02" id="skinAge02" onclick="alert('진단불가미구현')" th:if="${isDoctor}" value="진단불가"  >
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">미간</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="middle" id="middle" min="0" max="100" th:value="*{middle}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">U Zone Right</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="rightZone" id="rightZone" min="0" max="100" th:value="*{rightZone}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">트러블</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="trouble" id="trouble" min="0" max="100" th:value="*{trouble}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 "></label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="button" class="form-control btn-app" placeholder="" name="skinAge02" id="skinAge02" onClick="saveDoctorSkin()" th:if="${isDoctor}" value="진단완료">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">팔자</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="wrinkle" id="wrinkle" min="0" max="100" th:value="*{wrinkle}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">T Zone Top</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="topZone" id="topZone" min="0" max="100" th:value="*{topZone}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">Pigment</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="pigment" id="pigment" min="0" max="100" th:value="*{pigment}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 "></label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="hidden" class="form-control" >
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">입주위</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="mouth" id="mouth" min="0" max="100" th:value="*{mouth}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">T Zone Bottom</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="bottomZone" id="bottomZone" min="0" max="100" th:value="*{bottomZone}">
+								</div>
+								<label class="control-label col-md-1 col-sm-1 "></label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="hidden" class="form-control"  >
+								</div>
+								<label class="control-label col-md-1 col-sm-1 "></label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="hidden" class="form-control" >
+								</div>
+								<label class="control-label col-md-1 col-sm-1 ">눈주위</label>
+								<div class="col-md-2 col-sm-2 ">
+									<input type="number" class="form-control doctor-score" placeholder="" name="eye" id="eye" min="0" max="100" th:value="*{eye}">
+								</div>
+							</div>
+							
+							<div class="control-group row ">								
+								<div class="col-md-12 col-sm-12  justify-content-end" style="display: flex;">
+								
+		                  			<a class="btn btn-app"  onClick="goList()">		                    			
+		                    			<i class="fa fa-list"></i> List
+		                  			</a>
+		                  			<a class="btn btn-app" onClick="deleteSkinScore()">		                    			
+		                    			<i class="fa fa-remove"></i> Delete
+		                  			</a>
+								</div>
+							</div>
+							
+							</form>							
+													
+					</div>
+					
+				</div>
+			</div>
+			
+				<!-- -----------------  -->
+		</div>
+	</div>
+</th:block>
+
+    
+</html>

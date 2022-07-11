@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/ref.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/referenceHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner" id="tab_con_editor">
+				<h1>■ 자료실 수정</h1>
+
+				<form name="referencesForm" id="referencesForm" action="/reference/add_references" method="post" enctype="multipart/form-data">
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<input type ="hidden" name="id" th:value="${reference.id}">
+							<tr>
+								<th>등록일</th>
+								<td colspan="3">
+									<input type="text" name="" th:value="${reference.createdAt}" readonly class="readonly search_date hasDatepicker">
+								</td>
+							</tr>
+							<tr>
+								<th>조회수</th>
+								<td colspan="3">
+									<input type="text" name="" th:value="${reference.hits}" readonly class="readonly">
+								</td>
+							</tr>
+							<tr>
+								<th>제목</th>
+								<td><input type="text" name="title" th:value="${reference.title}" class="ibw"></td>
+							</tr>
+							<tr>
+								<th>상세내용</th>
+								<td>
+									<textarea name="content" rows="20" cols="100" th:text="${reference.content}"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<th>첨부파일 1	</th>
+								<td>
+									<input type="file" name="file[]" id="">
+								</td>
+							</tr>
+								<tr>
+								<th>첨부파일 2	</th>
+								<td>
+									<input type="file" name="file[]" id="">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tc">
+							<input type="submit" value="저장" class="btn-color large" id="">
+							<a href="/reference/list" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+					<script>
+    
+						$("#referencesFormBtn").on("click", function () {
+							console.log('referencesForm');
+							
+					        var form = $("form")[0];        
+					        var formData = new FormData(form);
+					        
+					        $.ajax({
+					            cache: false,
+					            url : '/add_references', 
+					            enctype: 'multipart/form-data',
+					            processData: false,
+					            contentType: false,
+					            type : 'POST', 
+					            data : formData, 
+					            success : function(data) {
+					              alert('입력 성공하였습니다.');
+					            }, 
+					            error:function(request,status,error){
+							    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							   }
+					        }); 
+					        return false;
+				    	});
+					</script>
+				</form>
+				</div>
+			</div>
+		</div>
+	</section>	
+	
+	
+</html>

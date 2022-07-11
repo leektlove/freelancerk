@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">			
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/bid/cancel/list.css">
+</head>
+	
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>취소(종료)된 입찰</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+        <section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+            <div class="container" style="margin-bottom: -3px;">
+                <ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+                    <li class="nav-item mb-0">
+						<a th:href="@{/client/bid/suggestList}" class="nav-link d-flex">
+							<span>참여요청</span>
+							<span class="count_alarm" th:text="${propositionsCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/client/bid/processingList}" class="nav-link d-flex">
+							<span>진행중인 입찰</span>
+							<span class="count_alarm" th:text="${processingCount}">2</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/client/bid/cancelList}" class="nav-link d-flex">
+							<span>취소(종료)된 입찰</span>
+							<span class="count_alarm" th:text="${cancelledCount}">1</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/client/bid/autoSave}" class="nav-link d-flex">
+							<span>임시저장한 입찰</span>
+							<span class="count_alarm" th:text="${tempSavedCount}">0</span>
+						</a>
+					</li>
+                </ul>
+            </div>
+        </section>
+        <!-- 탭메뉴// -->
+		
+		<section>
+			<div class="container">
+				<div class="content-body py-4">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="page_counter">
+								<div class="row mb-3">
+									<div class="col-lg-10 col-md-9 col-sm-8">
+										<p class="mb-0">총 <span class="text-color-primary" th:text="${page.getTotalElements()}">0</span> 건의 취소(종료)된 입찰이 있습니다.</p>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-4">
+									</div>
+								</div>
+							</div>
+							<div class="cancel_list">
+								<th:block th:each="item: ${page}">
+
+									<!-- 프로젝트 자세히보기 -->
+									<article class="project list_card bg-white post post-medium" th:if="${item.projectType.name() =='PROJECT'}">
+										<div class="row">
+											<div class="col-12">
+												<div class="card_title_date">
+													<div class="title" th:text="${item.title}">
+													</div>
+													<div class="date">
+														<span th:text="${#temporals.format(item.postingStartAt, 'yyyy.MM.dd')}"></span>
+														<span>~</span>
+														<span th:text="${#temporals.format(item.cancelAt, 'yyyy.MM.dd')}"></span>
+													</div>
+												</div>
+												<div class="cellbox">
+													<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					최저 입찰가 <span class="font_emp" th:text="|*{#numbers.formatInteger(item.minBidAmount, 0, 'COMMA')}원|"></span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					최고 입찰가 <span class="font_emp" th:text="|*{#numbers.formatInteger(item.maxBidAmount, 0, 'COMMA')}원|"></span>
+								    				</div>
+													<div class="cell">
+														<span class="list_deco">▪︎</span>
+														참여자평균경력 <span class="font_emp" th:text="|${item.avgCareerYear}년|"></span>
+													</div>
+													<div class="cell">
+														<span class="list_deco">▪︎</span>
+														총 참여 인원 <span class="font_emp" th:text="|*{#numbers.formatInteger(item.numberOfApplyCount, 0, 'COMMA')}명|"></span>
+													</div>
+										    	</div>
+										    	<div class="action_line">
+											    	<div class="row">
+														<div class="col-lg-6">
+														</div>
+														<div class="col-lg-6 text-right">
+															<div aria-label="Buttons Group" class="btn-group" role="group">
+																<button class="btn btn-light rounded-0 align-self-end" type="button" th:onclick="|deleteItem(${item.id})|">삭제</button>
+																<button class="btn btn-primary rounded-0" type="button" th:onclick="|projectDetail(${item.id})|">프로젝트 상세보기<i class="fas fa-angle-right"></i></button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+									<!-- 프로젝트 리스트// -->
+
+									<!-- 컨테스트 리스트 -->
+									<article class="contest list_card bg-white post post-medium" th:if="${item.projectType.name() =='CONTEST'}">
+										<div class="row">
+											<div class="col-12">
+												<div class="card_title_date">
+													<div class="title" th:text="${item.title}">
+													</div>
+													<div class="date">
+														<span th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd')}"></span>
+														<span>~</span>
+														<span th:text="${#temporals.format(item.postingEndAt, 'yyyy.MM.dd')}"></span>
+													</div>
+												</div>
+												<div class="cellbox">
+													<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					보증금(선정시 전액환불) <span class="font_emp">100,000원</span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					확정상금 <span class="font_emp" th:text="|*{#numbers.formatInteger(item.totalPrize, 0, 'COMMA')}원|"></span>
+								    				</div>
+													<div class="cell">
+														<span class="list_deco">▪︎</span>
+														미 선정 시 환불가능금액 <span class="font_emp" th:text="|*{#numbers.formatInteger(item.refundablePriceWhVat, 0, 'COMMA')}원|"></span>
+														<span class="question-pop text-secondary">
+															<i class="far fa-question-circle"></i>
+															<div class="popup-content">
+																<div class="tooltip_profile_detail">
+																	<table class="table table_two table-sm text-center table-bordered">
+																		<thead style="background-color: #c43f40">
+																			<tr>
+																				<th class="text-light" colspan="5">환불규정</th>
+																			</tr>
+																		</thead>
+																		<tr class="table-active text-center">
+																			<td style="width: 15%">구분</td>
+																			<td style="width: 16%">상황</td>
+																			<td style="width: 25%">보증금</td>
+																			<td style="width: 29%">확정상금</td>
+																			<td style="width: 15%">저작권이전</td>
+																		</tr>
+																		<tr>
+																			<td class="table-active">선정</td>
+																			<td class="table-active">기한 내 선정</td>
+																			<td class="table-active">전액환불</td>
+																			<td class="table-active">수상자에게 상금 지급</td>
+																			<td class="table-active">가능</td>
+																		</tr>
+																		<tr>
+																			<td class="table-active">-</td>
+																			<td class="table-active">무응찰</td>
+																			<td class="table-active">전액환불</td>
+																			<td class="table-active">전액환불</td>
+																			<td class="table-active">N/A</td>
+																		</tr>
+																		<tr>
+																			<td rowspan="3" style="vertical-align: middle;">미선정</td>
+																			<td>1~2인 참여</td>
+																			<td><strong>80%환불</strong><br>20%참여자배당</td>
+																			<td><strong>70%환불</strong><br>20%참여자배당<br>10%수수료</td>
+																			<td style="color: #df564f;vertical-align:middle">불가</td>
+																		</tr>
+																		<tr>
+																			<td>3~5인 참여</td>
+																			<td><strong>50%환불</strong><br>50%참여자배당</td>
+																			<td><strong>50%환불</strong><br>40%참여자배당<br>10%수수료</td>
+																			<td style="color: #df564f;vertical-align:middle">불가</td>
+																		</tr>
+																		<tr>
+																			<td>6인 이상 참여</td>
+																			<td><strong>20%환불</strong><br>80%참여자배당</td>
+																			<td><strong>20%환불</strong><br>70%참여자배당<br>10%수수료</td>
+																			<td style="color: #df564f;vertical-align:middle">불가</td>
+																		</tr>
+																		<tr>
+																			<td colspan="5" class="text-left">** 미선정 : 컨테스트를 취소하거나 포스팅 기한이 만료된 경우를 의미합니다.</td>
+																		</tr>
+																	</table>
+																</div>
+															</div>
+														</span>
+														<div style="font-size: 12px;">(<span class="text-secondary">VAT 포함금액</span>, 영업일 일주일 내 결제취소)</div>
+													</div>
+										    	</div>
+										    	<div class="action_line">
+											    	<div class="row">
+														<div class="col-lg-6">
+														</div>
+														<div class="col-lg-6 text-right">
+															<div aria-label="Buttons Group" class="btn-group" role="group">
+																<input type="hidden" name="totalPrize" th:value="${item.totalPrize}"/>
+																<input type="hidden" name="totalChangedOptionMoney" th:value="${item.totalChangedOptionMoney}"/>
+																<input type="hidden" name="totalSupplyAmount" th:value="${item.totalSupplyAmount}"/>
+																<input type="hidden" name="totalVatAmount" th:value="${item.totalVatAmount}"/>
+																<input type="hidden" name="totalDiscountAmount" th:value="${item.totalDiscountAmount}"/>
+																<input type="hidden" name="totalPurchaseAmount" th:value="${item.totalPurchaseAmount}"/>
+																<input type="hidden" name="numberOfApplyCount" th:value="${item.numberOfApplyCount}"/>
+																<input type="hidden" name="refundablePrice" th:value="${item.refundablePriceWhVat}"/>
+																<input type="hidden" name="firstPurchasedAt" th:value="${#temporals.format(item.firstPurchasedAt, 'yyyy.MM.dd')}"/>
+																<input type="hidden" name="cancelAt" th:value="${#temporals.format(item.cancelAt, 'yyyy.MM.dd')}"/>
+												    			<button class="btn btn-light text-secondary rounded-0 " type="button"  data-toggle="modal" data-target="#refund_report">환불명세보기</button>
+												    			<button class="btn btn-light rounded-0" type="button" th:onclick="|deleteItem(${item.id})|">삭제</button>
+												    			<button class="btn btn-secondary rounded-0" type="button" th:onclick="|contestDetail(${item.id})|">컨테스트 상세보기<i class="fas fa-angle-right"></i></button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+									<!-- 컨테스트 리스트//-->
+
+
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 환불명세서 팝업 -->
+			<div class="modal fade modal_wrap" id="refund_report" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+				 aria-hidden="true">
+				<div class="modal-dialog" role="document" style="max-width: 400px">
+					<div class="modal-content">
+
+						<!-- 팝업 헤더 -->
+						<div class="head modal-header">
+							<h5 class="modal-title" id="ModalLabel">환불명세서</h5>
+							<div class="">
+								<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+							</div>
+						</div>
+						<!-- 팝업 헤더// -->
+
+						<!-- 팝업 컨텐츠 -->
+						<div class="content modal-body">
+							<div class="top_content">
+								<div class="apply_count">
+									총 참여 인원 : <span class="numberOfApplyCount">12</span>명
+								</div>
+								<div class="day">
+									<span class="firstPurchasedAt"></span>(결제일)
+									 ~ 
+									<span class="cancelAt"></span>(취소일)
+								</div>
+							</div>
+							<table class="table table_one">
+								<tr>
+									<th>확정상금</th>
+									<td><span class="bill totalPrize">0</span>원</td>
+								</tr>
+								<tr>
+									<th>보증금</th>
+									<td><span class="bill depositMoney">100,000</span>원</td>
+								</tr>
+								<tr>
+									<th>옵션결제내역</th>
+									<td><span class="bill totalChangedOptionMoney">0</span>원</td>
+								</tr>
+								<tr>
+									<th>공급가액</th>
+									<td><span class="bill totalSupplyAmount">0</span>원</td>
+								</tr>
+								<tr>
+									<th>부가가치세</th>
+									<td><span class="bill totalVatAmount">0</span>원</td>
+								</tr>
+								<tr>
+									<th>옵션 할인 금액</th>
+									<td><span class="bill totalDiscountAmount" >0</span>원</td>
+								</tr>
+								<tr>
+									<th>최종결제금액</th>
+									<td><span class="bill totalPurchaseAmount">0</span>원</td>
+								</tr>
+							</table>
+
+							<div class="middle_content">
+								<div class="refundable_price">
+									<div>환불금액(VAT포함)</div>
+									<div><span class="refundablePrice"></span>원</div>
+								</div>
+								<div class="info">영업일 14일 이내에 결제취소 됩니다.</div>
+							</div>
+
+							<table class="table table_two table-sm text-center table-bordered">
+								<thead style="background-color: #c43f40">
+									<tr>
+										<th class="text-light" colspan="5">환불규정</th>
+									</tr>
+								</thead>
+								<tr class="table-active text-center">
+									<td style="width: 15%">구분</td>
+									<td style="width: 16%">상황</td>
+									<td style="width: 25%">보증금</td>
+									<td style="width: 29%">확정상금</td>
+									<td style="width: 15%">저작권이전</td>
+								</tr>
+								<tr>
+									<td class="table-active">선정</td>
+									<td class="table-active">기한 내 선정</td>
+									<td class="table-active">전액환불</td>
+									<td class="table-active">수상자에게 상금 지급</td>
+									<td class="table-active">가능</td>
+								</tr>
+								<tr>
+									<td class="table-active">-</td>
+									<td class="table-active">무응찰</td>
+									<td class="table-active">전액환불</td>
+									<td class="table-active">전액환불</td>
+									<td class="table-active">N/A</td>
+								</tr>
+								<tr>
+									<td rowspan="3" style="vertical-align: middle;">미선정</td>
+									<td>1~2인 참여</td>
+									<td><strong>80%환불</strong><br>20%참여자배당</td>
+									<td><strong>70%환불</strong><br>20%참여자배당<br>10%수수료</td>
+									<td style="color: #df564f;vertical-align:middle">불가</td>
+								</tr>
+								<tr>
+									<td>3~5인 참여</td>
+									<td><strong>50%환불</strong><br>50%참여자배당</td>
+									<td><strong>50%환불</strong><br>40%참여자배당<br>10%수수료</td>
+									<td style="color: #df564f;vertical-align:middle">불가</td>
+								</tr>
+								<tr>
+									<td>6인 이상 참여</td>
+									<td><strong>20%환불</strong><br>80%참여자배당</td>
+									<td><strong>20%환불</strong><br>70%참여자배당<br>10%수수료</td>
+									<td style="color: #df564f;vertical-align:middle">불가</td>
+								</tr>
+								<tr>
+									<td colspan="5" class="text-left">** 미선정 : 컨테스트를 취소하거나 포스팅 기한이 만료된 경우를 의미합니다.</td>
+								</tr>
+							</table>
+							<div class="bottom_content">(주)플랫폼위즈컴퍼니</div>
+							<div class="btn-group d-block mb-3">
+								<button class="btn btn-block btn-lg btn-primary rounded-0" data-dismiss="modal" aria-label="Close">확인</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 환불명세서 팝업// -->
+
+			<!-- 보증금환불규정 팝업 -->
+			<div class="modal fade modal_wrap" id="deposit_money_refund_info" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+				 aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+
+						<!-- 팝업 헤더 -->
+						<div class="head modal-header">
+							<h5 class="modal-title" id="ModalLabel">보증금환불규정</h5>
+							<div class="">
+								<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+							</div>
+						</div>
+						<!-- 팝업 헤더// -->
+
+						<!-- 팝업 컨텐츠 -->
+						<div class="content modal-body">
+							<table class="table table_two table-sm text-center table-bordered">
+								<thead style="background-color: #c43f40">
+									<tr>
+										<th class="text-light" colspan="5">환불규정</th>
+									</tr>
+								</thead>
+								<tr class="table-active text-center">
+									<td style="width: 15%">구분</td>
+									<td style="width: 16%">상황</td>
+									<td style="width: 25%">보증금</td>
+									<td style="width: 29%">확정상금</td>
+									<td style="width: 15%">저작권이전</td>
+								</tr>
+								<tr>
+									<td class="table-active">선정</td>
+									<td class="table-active">기한 내 선정</td>
+									<td class="table-active">전액환불</td>
+									<td class="table-active">수상자에게 상금 지급</td>
+									<td class="table-active">가능</td>
+								</tr>
+								<tr>
+									<td class="table-active">-</td>
+									<td class="table-active">무응찰</td>
+									<td class="table-active">전액환불</td>
+									<td class="table-active">전액환불</td>
+									<td class="table-active">N/A</td>
+								</tr>
+								<tr>
+									<td rowspan="3" style="vertical-align: middle;">미선정</td>
+									<td>1~2인 참여</td>
+									<td><strong>80%환불</strong><br>20%참여자배당</td>
+									<td><strong>70%환불</strong><br>20%참여자배당<br>10%수수료</td>
+									<td style="color: #df564f;vertical-align:middle">불가</td>
+								</tr>
+								<tr>
+									<td>3~5인 참여</td>
+									<td><strong>50%환불</strong><br>50%참여자배당</td>
+									<td><strong>50%환불</strong><br>40%참여자배당<br>10%수수료</td>
+									<td style="color: #df564f;vertical-align:middle">불가</td>
+								</tr>
+								<tr>
+									<td>6인 이상 참여</td>
+									<td><strong>20%환불</strong><br>80%참여자배당</td>
+									<td><strong>20%환불</strong><br>70%참여자배당<br>10%수수료</td>
+									<td style="color: #df564f;vertical-align:middle">불가</td>
+								</tr>
+								<tr>
+									<td colspan="5" class="text-left">** 미선정 : 컨테스트를 취소하거나 포스팅 기한이 만료된 경우를 의미합니다.</td>
+								</tr>
+							</table>
+							<div class="btn-group w-100">
+								<div class="btn btn-lg btn-primary mx-auto rounded-0" data-dismiss="modal" aria-label="Close" style="min-width: 200px">확인</div>
+							</div>
+						</div>
+						<!-- 팝업 컨텐츠// -->
+						
+					</div>
+				</div>
+			</div>
+			<!-- 보증금환불규정 팝업// -->
+
+		</section>
+
+
+		<script src="/static/js/client/bid/common.js"></script>
+		<script src="/static/js/client/bid/cancel/list.js"></script>
+	</div>
+	
+
+</html>

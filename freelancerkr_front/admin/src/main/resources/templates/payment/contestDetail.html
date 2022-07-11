@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/payment.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		
+		<div id="container_side">
+			<th:block th:include="fragments/paymentHeader"></th:block>
+		</div>
+		<div id="container_content">
+			<div class="container_inner">
+				<h1>■ 컨티스트결제 보기</h1>
+				<table class="boardform">
+				<colgroup>
+					<col width="150">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+					<col width="100">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>상태</th>
+						<td colspan="15">상태명</td>
+						<td rowspan="2">
+							<a href="" class="btn-black medium">완불완료처리</a>
+						</td>
+					</tr>
+					<tr>
+						<th>총 참여자 수</th>
+						<td colspan="15">참여자 수</td>
+					</tr>
+					<tr>
+						<th>컨테스트/클라이언트</th>
+						<td colspan="3">컨테스트명</td>
+						<td colspan="3">클라이언트닉네임</td>
+						<td colspan="3">클라이언트회사명</td>
+						<td colspan="3">이메일</td>
+						<td colspan="3">휴대폰</td>
+						<td></td>
+					</tr>
+					<tr>
+						<th rowspan="2">결제내역</th>
+						<td colspan="2" width=100>보증금</td>
+						<td colspan="2">최소상금</td>
+						<td colspan="">인센티브</td>
+						<td colspan="2">수수료부담</td>
+						<td colspan="2">포스팅옵션</td>
+						<td colspan="1">포인트차감</td>
+						<td colspan="2">부가가치세</td>
+						<td colspan="3">총결제금액</td>
+						<td rowspan="2"><a href="" class="btn-black medium">클라이언트 결제명세서</a></td>
+					</tr>
+					<tr>
+						<td colspan="2">100,000</td>
+						<td colspan="2">300,000</td>
+						<td colspan="">100,000</td>
+						<td colspan="2">40,000</td>
+						<td colspan="2">10,000</td>
+						<td colspan="1">10,000</td>
+						<td colspan="2">58,000</td>
+						<td colspan="3">600,000</td>
+					</tr>
+					<tr>
+						<td colspan="17" style="height:10px;padding:0;background-color:#ddd"></td>
+					</tr>
+					<tr>
+						<th>클라이언트 환불</th>
+						<td colspan="2" width=100>=보증금*환불조건</td>
+						<td colspan="2">=최소상금*환불조건</td>
+						<td>=인센티브*환불조건</td>
+						<td colspan="2">=수수료부담*환불조건</td>
+						<td colspan="2">해당사항 X</td>
+						<td>해당사항 X</td>
+						<td colspan="5"></td>
+						<td rowspan="2"><a href="" class="btn-black medium">클라이언트 환불명세서</a></td>
+					</tr>
+					<tr>
+						<th>클라이언트 총 환불</th>
+						<td colspan="15">=위 환불금액 합계</td>
+					</tr>
+					<tr>
+						<th>프리랜서 배당</th>
+						<td colspan="2">=보증금*배당조건</td>
+						<td colspan="2">=최소상금*배당조건</td>
+						<td>=인센티브*배당조건</td>
+						<td colspan="2">=수수료부담*배당조건</td>
+						<td colspan="2">해당사항 X</td>
+						<td>해당사항 X</td>
+						<td colspan="5"></td>
+						<td rowspan="3"><a href="" class="btn-black medium">프리랜서 환불명세서</a></td>
+					</tr>
+					<tr>
+						<th>프리랜서 총배당</th>
+						<td colspan="15">=위 배당금액의 합계</td>
+					</tr>
+					<tr>
+						<th>프리랜서 1인당 배당</th>
+						<td colspan="15">= 위 프리랜서총배당액 / 참여자 수</td>
+					</tr>
+					<tr>
+						<th>배당대상프리랜서</th>
+						<td colspan="2">이름</td>
+						<td colspan="2">닉네임</td>
+						<td>은행</td>
+						<td colspan="3">계좌번호</td>
+						<td colspan="3">이메일</td>
+						<td colspan="3">휴대폰번호</td>
+						<td>사업자구분</td>
+						<td rowspan="2"><a href="" class="btn-black medium">배당완료처리</a></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td colspan="2">김제니</td>
+						<td colspan="2">제니제니</td>
+						<td>국민</td>
+						<td colspan="3">123-123-123-4</td>
+						<td colspan="3">Jenny@gmail.com</td>
+						<td colspan="3">010-1234-1234</td>
+						<td>개인</td>
+					</tr>
+					<tr>
+						<td colspan="17" style="height:10px;padding:0;background-color:#ddd"></td>
+					</tr>
+					<tr>
+						<th rowspan="4">확정상금지금</th>
+						<td>순위</td>
+						<td>상태</td>
+						<td>이름</td>
+						<td colspan="2">닉네임</td>
+						<td>은행</td>
+						<td colspan="3">계좌번호</td>
+						<td colspan="3">이메일</td>
+						<td colspan="2">휴대폰</td>
+						<td>사업자구분</td>
+						<td rowspan="4"><a href="" class="btn-black medium">상금지급완료처리</a></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td colspan="2"></td>
+						<td></td>
+						<td colspan="3"></td>
+						<td colspan="3"></td>
+						<td colspan="2"></td>
+						<td></td>
+					</tr>
+
+				</tbody>
+			</table>
+			</div>
+		</div>
+	</section>
+	
+	
+</html>

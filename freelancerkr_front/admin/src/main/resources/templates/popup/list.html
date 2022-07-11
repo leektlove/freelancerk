@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/popup.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/popupHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 팝업 검색</h1>
+					<form id="" name="" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody><tr>
+								<th>키워드</th>
+								<td>
+									<input type="text" name="s_search" value="" size="100" placeholder="메모">
+								</td>
+							</tr>
+						</tbody></table>
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="https://www.freelancerk.com:443/admin/popup/popup_list.php" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+					<h1>■ 팝업 리스트</h1>
+					<table class="boardlist">
+						<colgroup>
+							<col width="80">
+							<col width="80">
+							<col width="120">
+							<col width="200">
+							<col width="">
+							<col width="180">
+							<col width="180">
+						</colgroup>
+
+						<tbody>
+							<tr>
+								<th>번호</th>
+								<th>출력</th>
+								<th>이미지</th>
+								<th>연결기간</th>
+								<th>메모</th>
+								<th>방식</th>
+								<th>비고</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td th:text="*{#numbers.formatInteger(item.id, 0, 'COMMA')}">16</td>
+								<td th:text="${item.deviceType?.name()}"></td>
+								<td>
+									<img th:src="${item.imageUrl}" class="sian_pop">
+								</td>
+								<td th:text="|${item.startAt} - ${item.endAt}|">2017-10-18 ~ 2017-10-31</td>
+								<td th:text="${item.memo}"></td>
+								<td th:text="${item.linkType.name() == 'NEW'?'새창':'현재창'}"></td>
+								<td>
+									<a href="" class="btn-black mini">수정</a>
+									<span class="btn-black mini del_btn">삭제</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+							<span class="current">1</span>
+							</div>
+						</div>
+						<div class="tr">
+							<a href="https://www.freelancerk.com:443/admin/popup/popup_form.php" class="btn-color large">등록</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+</html>

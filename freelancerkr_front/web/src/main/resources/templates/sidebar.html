@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="sidebarFragment">
+
+	<div class="col-md-3 left_col">
+		<div class="left_col scroll-view">
+			<div class="navbar nav_title" style="border: 0;">
+				<a href="/w1" class="site_title"><i class="fa fa-paw"></i> <span>Portal
+						Home</span></a>
+			</div>
+
+			<div class="clearfix"></div>
+
+			<!-- menu profile quick info -->
+			<div class="profile clearfix">
+				<div class="profile_pic">
+					<img src="/images/img.jpg" alt="..." class="img-circle profile_img">
+				</div>
+				<div class="profile_info">
+					<span>안녕하세요</span>
+					<h2>개발자님</h2>
+				</div>
+			</div>
+			<!-- /menu profile quick info -->
+
+			<br />
+
+
+			<!-- sidebar menu -->
+			<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+				<div class="menu_section">
+					<h3>General</h3>
+					<ul class="nav side-menu">
+
+						<li><a><i class="fa fa-user"></i> 사용자 관리<span
+								class="fa fa-chevron-down"></span></a>
+							<ul class="nav child_menu">
+								<li><a href="/w1/user/go_list?reset=Y">사용자 목록</a></li>
+								<li><a href="/w1/user/go_create">사용자 등록</a></li>
+								<li><a href="/w1/user/go_model_list?reset=Y">사용자 Feed목록</a></li>
+							</ul></li>
+
+						<li><a><i class="fa fa-edit"></i> Content 관리<span
+								class="fa fa-chevron-down"></span></a>
+							<ul class="nav child_menu">
+								<li><a href="/w1/content/go_list?reset=Y">Content 목록</a></li>
+								<li><a href="/w1/content/go_create">Content 등록</a></li>
+							</ul></li>
+						<li><a><i class="fa fa-tint"></i>제품 관리<span
+								class="fa fa-chevron-down"></span></a>
+							<ul class="nav child_menu">
+								<li><a href="/w1/product/go_list?reset=Y">제품 목록</a></li>
+								<li><a href="/w1/product/go_create">제품 등록</a></li>
+							</ul></li>
+						<li><a><i class="fa fa-cloud"></i> 날씨 관리<span
+								class="fa fa-chevron-down"></span></a>
+							<ul class="nav child_menu">
+								<li><a href="/w1/weather/go_list?reset=Y">날씨 목록</a></li>
+							</ul></li>
+						<li><a><i class="fa fa-credit-card"></i> 포인트 관리<span
+								class="fa fa-chevron-down"></span></a>
+							<ul class="nav child_menu">
+								<li><a href="/w1/point/go_list?reset=Y">포인트 타입</a></li>
+								<li><a href="/w1/point/go_mile_list?reset=Y">마일리지</a></li>
+								<li><a href="/w1/point/go_exp_list?reset=Y">경험치</a></li>
+							</ul></li>
+						<li><a><i class="fa fa-credit-card"></i> 신고 관리<span
+								class="fa fa-chevron-down"></span></a>
+							<ul class="nav child_menu">
+								<li><a href="/w1/report/go_list?reset=Y">신고 목록</a></li>
+							</ul></li>
+
+
+						<li><a><i class="fa fa-gears"></i> AI 진단 관리<span
+								class="fa fa-chevron-down"></span></a>
+							<ul class="nav child_menu">
+								<li><a href="/w1/skin/go_skingroup_list?reset=Y">피부 진단
+										정보 관리</a></li>
+								<li><a href="/w1/skin/go_list?reset=Y">사용자 피부 진단 목록</a></li>
+								<li><a href="/w1/skin/go_doctor_list?reset=Y">전문의 피부 진단
+										목록</a></li>
+							</ul></li>
+					</ul>
+				</div>
+
+			</div>
+			<!-- /sidebar menu -->
+
+			<!-- /menu footer buttons -->
+			<div class="sidebar-footer hidden-small">
+				<a data-toggle="tooltip" data-placement="top" title="Settings">
+					<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+				</a> <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+					<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+				</a> <a data-toggle="tooltip" data-placement="top" title="Lock"> <span
+					class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+				</a> <a data-toggle="tooltip" data-placement="top" title="Logout"
+					href="/w1/login_out"> <span class="glyphicon glyphicon-off"
+					aria-hidden="true"></span>
+				</a>
+			</div>
+			<!-- /menu footer buttons -->
+		</div>
+	</div>
+
+</th:block>
+
+</html>

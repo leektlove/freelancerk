@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/bid/suggestedList.css">
+</head>
+
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>제안받은 프로젝트</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더//-->
+
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/findProject/list}" class="nav-link active d-flex">
+							<span>프로젝트 찾기</span>
+							<span class="count_alarm" th:text="${processingCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/freelancer/bid/suggestedList}" class="nav-link d-flex" href="#">
+							<span>제안받은 프로젝트</span>
+							<span class="count_alarm" th:text="${propositionsCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/project/pickList}" class="nav-link disabled d-flex">
+							<span>찜한 프로젝트</span>
+							<span class="count_alarm" th:text="${tempSavedCount}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<section class="row mb-3">
+						<div class="col-lg-10 col-md-9 col-sm-8">
+							<p class="mb-0">총 <span class="text-primary" th:text="${page.totalElements}">0</span> 건의 제안이 있습니다.</p>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-4 mt-2 mt-sm-0">
+
+							<!-- 검색 필터 -->
+							<select class="custom-select" name="sortBy">
+								<option value="CREATED_AT" th:selected="${sortBy == null || sortBy.name() == 'CREATED_AT'}">최근순</option>
+								<option value="END_AT" th:selected="${sortBy.name() == 'END_AT'}">마감임박순</option>
+							</select>
+							<!-- 검색필터// -->
+
+						</div>
+
+					</section>
+
+					<section>
+						<th:block th:each="item : ${page.content}">
+
+							<!-- 프로젝트 리스트 -->
+							<article class="project list_card bg-white post post-medium"  th:if="${item.project.projectType.name()} == 'PROJECT'">
+								<div th:class="${item.existsBid?'bid_completed active':'bid_completed'}">
+		        					<div class="wrap_img">
+			        					<img class="img" src="/static/images/stamp-completed.png">
+			        				</div>
+			        			</div>
+								<div class="row">
+									<div class="col-12">
+										<div class="card_title_date">
+											<div class="title" th:text="${item.project.title}">
+											</div>
+											<div class="date">
+												<!-- <span th:text="|클라이언트 : ${item.project.postingClient.exposeName}|"></span> -->
+												<span th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+												~
+												<span th:text="${#temporals.format(item.project.postingEndAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+											</div>
+										</div>
+										<div class="cellbox">
+											<div class="cell">
+						    					<span class="list_deco">▪︎</span>
+						    					예상프로젝트기간 :<span class="font_emp" th:text="${item.project.expectedPeriodTxt}"></span>
+						    				</div>
+						    				<div class="cell">
+						    					<span class="list_deco">▪︎</span>
+						    					급여방식 : 
+						    					<span class="font_emp">
+						    						<span th:text="${item.project.payMean?.shortName}"></span>
+						    						<span th:text="${item.project.budget}"></span>
+						    					</span>
+						    				</div>
+						    				<div class="cell">
+						    					<span class="list_deco">▪︎</span>
+						    					지급기준 : <span class="font_emp" th:text="${item.project.payCriteria}"></span>
+						    				</div>
+						    				<div class="cell">
+						    					<span class="list_deco">▪︎</span>
+						    					작업장소 : <span class="font_emp" th:text="${item.project.workPlace}"></span>
+						    				</div>
+								    	</div>
+								    	<div class="action_line">
+											<div class="row">
+												<div class="col-lg-6 align-self-center">
+													<div class="card_info d-block d-lg-flex">
+														<div class="content_wrap">
+															<i class="icon-calendar icons"></i>
+															<span th:if="${!item.project.postingEnd}">D-<span th:text="${item.project.remainDays}"></span></span>
+															<span th:if="${item.project.postingEnd}"><span>선정 중...</span></span>
+														</div>
+														<div class="content_wrap">
+															<i class="icon-user icons"></i>
+															<span th:text="|${item.project.numberOfApplyCount}명이 지원하였습니다|">
+															</span>
+														</div>
+														<div class="content_wrap">
+															<i class="icon-envelope icons"></i>
+															<span th:text="|${item.project.messageCountByClient}개의 메시지가 있습니다|"></span>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6 text-right">
+													<div class="btn-group">
+														<th:block th:if="${item.status.name()} == 'PROPOSE'">
+															<input class="clientId" th:value="${item.project.postingClient.id}" type="hidden" >
+															<input class="projectId" th:value="${item.project.id}" type="hidden" >
+															<input class="projectPropositionId" th:value="${item.id}" type="hidden" >
+														</th:block>
+														<div>
+															<div class="d-flex" th:if="${item.status.name() == 'REJECT'}" style="padding: 0.4rem 1rem;">
+																<i class="fas fa-check" style="color: #15aabf;padding: 0.2rem 0.5rem;"></i>
+																<div class="font-weight-bold">거절하였습니다!</div>
+															</div>
+															<div class="d-flex" th:if="${item.status.name() == 'ACCEPT' || item.existsBid}" style="padding: 0.4rem 1rem;justify-content: flex-end;">
+																<i class="fas fa-check" style="color: #15aabf;padding: 0.2rem 0.5rem;"></i>
+																<div class="font-weight-bold">수락완료!</div>
+															</div>
+														</div>
+														<!-- <th:block th:if="${!item.existsBid}"> -->
+															<a class="text-light" th:href="@{|/freelancer/projects/${item.project.id}/details|}">
+																<button class="btn btn-primary rounded-0">
+																	프로젝트 자세히보기<i class="fas fa-angle-right"></i>
+																</button>
+															</a>
+														<!-- </th:block> -->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</article>
+							<!-- 프로젝트 리스트// -->
+
+							<!-- 컨테스트 리스트 -->
+							<article class="contest list_card bg-white post post-medium"  th:if="${item.project.projectType.name()} == 'CONTEST'">
+								<div th:class="${item.existsBid?'bid_completed active':'bid_completed'}">
+		        					<div class="wrap_img">
+			        					<img class="img" src="/static/images/stamp-completed.png">
+			        				</div>
+			        			</div>
+								<div class="row">
+									<div class="col-12">
+										<div class="card_title_date">
+											<div class="title" th:text="${item.project.title}">
+											</div>
+											<div class="date">
+												<!-- <span th:text="|클라이언트 : ${item.project.postingClient.exposeName}"|></span> -->
+												<span th:text="|제안일 : ${#temporals.format(item.createdAt, 'yyyy.MM.dd')}|"></span>
+												<span th:text="|마감일 : ${#temporals.format(item.project.postingEndAt, 'yyyy.MM.dd')}|"></span>
+											</div>
+										</div>
+										<div class="cellbox">
+											<div class="cell">
+						    					<span class="list_deco">▪︎</span>
+						    					확정상금 : <span class="font_emp" th:text="|*{#numbers.formatInteger(item.project.totalPrize, 0, 'COMMA')}원|"></span>
+						    				</div>
+						    				<div class="cell">
+						    					<span class="list_deco">▪︎</span>
+						    					컨테스트 종료 후 당선자와 프로젝트 진행 : 
+						    					<span class="font_emp">
+						    						<span th:if="${item.project.proceedProjectAfterContest}">가능</span>
+													<span th:if="${!item.project.proceedProjectAfterContest}">불가능</span>
+						    					</span>
+						    				</div>
+						    				<div class="cell">
+						    					<span class="list_deco">▪︎</span>
+						    					취소시 예상배당포인트 : <span class="font_emp" th:text="|*{#numbers.formatInteger(item.project.expectedCancelDividend, 0, 'COMMA')}P|"></span>
+						    					<span class="question-pop text-secondary"data-toggle="tooltip" data-placement="top" title="중도취소, 기한만료 등으로 컨테스트가 취소되는 경우 프리랜서가 받을 수 있는 배당포인트 입니다"><i class="far fa-question-circle"></i></span>
+						    				</div>
+						    				<div class="cell">
+						    					<span class="list_deco">▪︎</span>
+						    					<span class="font_emp" th:text="|*{item.project.prizeTargetPersons}위 까지 선정|"></span>
+						    				</div>
+								    	</div>
+								    	<div class="action_line">
+									    	<div class="row">
+												<div class="col-lg-6 align-self-center">
+													<div class="card_info d-block d-lg-flex">
+														<div class="content_wrap">
+															<i class="icon-calendar icons"></i>
+															<span th:if="${!item.project.postingEnd}">D-<span th:text="${item.project.remainDays}"></span></span>
+															<span th:if="${item.project.postingEnd}"><span>선정 중...</span></span>
+														</div>
+														<div class="content_wrap">
+															<i class="icon-user icons"></i>
+															<span th:text="|${item.project.numberOfApplyCount}명이 지원하였습니다|">
+															</span>
+														</div>
+														<div class="content_wrap" th:onclick="|projectDetail(${item.id}, '#comment')|">
+															<i class="icon-envelope icons"></i>
+															<span th:text="|${item.project.messageCountByClient}개의 메시지가 있습니다|"></span>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6 text-right">
+													<div aria-label="Buttons Group" class="btn-group" role="group">
+														<th:block th:if="${item.status} == 'PROPOSE'">
+															<input class="clientId" th:value="${item.project.postingClient.id}" type="text" hidden>
+															<input class="projectId" th:value="${item.project.id}" type="text" hidden>
+															<button class="btn btn-light rounded-0" th:onclick="|viewContestDetail(${item.project.id})|" >작품제출하기</button>
+															<button class="btn btn-light rounded-0 rejectModal" data-toggle="modal" data-target="#refuse">거절</button>
+														</th:block>
+														<div>
+															<div class="d-flex" th:if="${item.status == 'REJECT'}">
+																<i class="fas fa-check" style="color: #15aabf;padding: 0.2rem 0.5rem;"></i>
+																<div class="font-weight-bold">거절하였습니다!</div>
+															</div>
+															<div class="d-flex" th:if="${item.status == 'ACCEPT' || item.existsBid}" style="padding: 0.4rem 1rem;justify-content: flex-end;">
+																<i class="fas fa-check" style="color: #15aabf;padding: 0.2rem 0.5rem;"></i>
+																<div class="font-weight-bold">수락완료!</div>
+															</div>
+														</div>
+														<!-- <th:block th:if="${!item.existsBid}"> -->
+															<a class="text-light" th:href="@{|/freelancer/contests/${item.project.id}/details|}">
+																<button class="btn btn-secondary rounded-0">
+																	컨테스트 상세보기<i class="fas fa-angle-right"></i>
+																</button>
+															</a>
+														<!-- </th:block> -->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</article>
+							<!-- 컨테스트 리스트// -->
+
+						</th:block>
+
+						<!-- 가이드 -->
+						<div class="heading heading-border heading-middle-border mb-2">
+		                    <h4 class=""><strong class="font-weight-bold">프로젝트 참여 제안을 받으셨군요!</strong></h4>
+		                </div>
+		                <div class="">
+		                	<i class="fas fa-exclamation-circle" style="color:#ffb200"></i>
+		                	<strong class="font-weight-bold text-4">알람을 받으셨으나 내역이 없는 경우</strong><br class="d-block d-md-none"><span class="ml-0 ml-md-2">해당 프로젝트가 이미 다른 프리랜서에게 낙찰되었거나, 종료된 경우입니다.</span>
+		                </div>
+						<div class="row" style="align-items: center;margin: auto;margin-top: 5rem;margin-bottom: 5rem;text-align: center;max-width: 800px;">
+							<div class="col-lg-8">
+								<div class="row">
+									<div class="pickme_guid_1 guide col-6">
+										<div class="form-row">
+											<div class="col-lg-12">
+												<img src="/static/images/use-guide/suggested_1.png" class="img-fluid">
+											</div>
+											<div class="col-lg-12" style="align-self: center;">
+												픽미업을 둘러본 <br class="d-block d-md-none">클라이언트가<br/> 해당 프리랜서에게 참여제안을 해요.
+											</div>
+										</div>
+									</div>
+									<div class="pickme_guid_2 guide col-6">
+										<div class="form-row">
+											<div class="col-lg-12">
+												<img src="/static/images/use-guide/suggested_2.png" class="img-fluid">
+											</div>
+											<div class="col-lg-12" style="align-self: center;">
+												제안받은 프로젝트를<br> 확인해보세요
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="row">
+									<div class="pickme_guid_3 guide col-12">
+										<div class="form-row">
+											<div class="col-12">
+												<img src="/static/images/use-guide/suggested_3.png" class="img-fluid">
+											</div>
+											<div class="col-12" style="align-self: center;">
+												수락/거절할 수 있어요.<br/> 물론 제안받은 프로젝트를<br/> 수락하는 경우 낙찰확률이 높아요.
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 가이드// -->
+					</section>
+				</div>
+			</div>
+		</section>
+		<!-- 입찰제의 거절 팝업 -->
+		<div class="modal fade modal_wrap" id="refuse" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title" id="ModalLabel">입찰제의를 거절합니다</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<div class="content modal-body">
+						<div class="title">
+							거절 하고자 하는 이유를 선택해 주세요.<br>
+						</div>
+						<div>
+							<select id="popUpSelectReject" name="fo_can_type" class="frm_select" style="width:100%">
+								<option value="0">참여할 시간이 부족합니다.</option>
+								<option value="1">금액 규모가 낮습니다.</option>
+								<option value="2">기타사유.</option>
+							</select>
+							<textarea id="popUpTxtReject" name="fo_can_text" style="width: 100%; margin-top: 10px;" rows="7"></textarea>
+						</div>
+						<div class="popup_boardbutton">
+							<div class="tc">
+								<input id="popUpBidId" type="text" hidden>
+								<a href="#" class="btnDenyBid btn-color large" id="reject_btn">거절하기</a>
+								<a href="#" class="btn-basic large pop_close" data-dismiss="modal" aria-label="Close">닫기</a>
+							</div>
+						</div>
+					</div>
+					<!-- 팝업 컨텐츠//-->
+
+				</div>
+			</div>
+		</div>
+		<!-- 입찰제의 거절 팝업// -->
+
+		<script th:inline="javascript">
+            var userInfoInput = [[${user.infoInput}]];
+            var sortBy = [[${sortBy}]];
+		</script>
+		<script src="/static/js/freelancer/bid/suggested-list.js"></script>
+
+	</div>
+	
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/cash.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/transactionHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 출금 검색</h1>
+					<form id="" name="" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>날짜</th>
+									<td>
+										<input type="text" name="s_date_1" value="" size="8" readonly="" class="readonly search_date hasDatepicker" id="dp1542119924515">
+										 ~ 
+										<input type="text" name="s_date_2" value="" size="8" readonly="" class="readonly search_date hasDatepicker" id="dp1542119924516">
+										<span class="btn-black medium">오늘</span>
+										<span class="btn-black medium">이번주</span>
+										<span class="btn-black medium">이번달</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+					<div class="Hspace"></div>
+					<h1>■ <span>1</span>건의 입금이 검색되었습니다.</h1>
+					<table class="boardlist">
+						<tbody>
+							<tr>
+								<th>날짜</th>
+								<th>시간</th>
+								<th>No</th>
+								<th>클라이언트</th>
+								<th>프리랜서</th>
+								<th>용역대금</th>
+								<th>수수료</th>
+								<th>VAT</th>
+								<th>사업소득세</th>
+								<th>지방소득세</th>
+								<th>환불</th>
+							</tr>
+							<tr>
+								<td>
+									20171018</td>
+								<td>09:41</td>
+								<td>
+									1
+								</td>
+								<td>YGP</td>
+								<td>권미희</td>
+								<td class="tr">790,000</td>
+								<td class="tr">23,700</td>
+								<td class="tr">76,630</td>
+								<td class="tr"></td>
+								<td class="tr"></td>
+								<td class="tr"></td>
+							</tr>
+							<tr>
+								<td class="total" colspan="5">소계(항목별)</td>
+								<td class="total tr amount">
+									<span>27,379,999</span>원
+								</td>
+								<td class="total tr amount">
+									<span>821,390</span>원
+								</td>
+								<td class="total tr amount">
+									<span>1,947,740</span>원
+								</td>
+								<td class="total tr amount">
+									<span>212,430</span>원
+								</td>
+								<td class="total tr amount">
+									<span>21,230</span>원
+								</td>
+								<td class="total tr amount">
+									<span>570,000</span>원
+								</td>
+							</tr>
+							<tr>
+								<td class="total" colspan="5">총계</td>
+								<td class="total tr amount" colspan="6">
+									<span>30,952,789</span>원
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+								<span class="current">1</span><a href="">2</a><a href="">3</a>
+							</div>
+						</div>
+						<div class="tr"></div>
+					</div>
+
+				</div>
+			</div>
+		</div><!--container//-->
+	</section>
+
+</html>

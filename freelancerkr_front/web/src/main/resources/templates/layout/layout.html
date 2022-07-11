@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html class="side-header-hamburguer-sidebar side-header-hamburguer-sidebar-right side-header-above side-header-right-no-reverse" lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>프리랜서코리아</title>
+
+    <meta name="keywords" content="프리랜서코리아, 크라우드소싱플랫폼" />
+    <meta name="description" content="대한민국 크라우드소싱 플랫폼">
+    <meta name="author" content="프리랜서코리아">
+    <meta name="naver-site-verification" content="e43e72eaa788db600d47a9f3da8f7e8f265f2cac"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/images/favi.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css" rel="stylesheet" type="text/css">
+    <link href="//db.onlinewebfonts.com/c/67680f2eb947c5cbd58b40961b4a61e9?family=Apple+SD+Gothic+Neo" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spectral:600,600i,700,700i&display=swap&subset=latin-ext" rel="stylesheet">
+
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+    <link rel="stylesheet" href="/static/vendor/simple-line-icons/css/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- 전역적용 css -->
+    <link rel="stylesheet" href="/static/css/plugin/jquery/ui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="/static/css/plugin/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/common/reset.css">
+    <link rel="stylesheet" href="/static/css/common/common.css">
+    <link rel="stylesheet" href="/static/css/common/header.css">
+    <link rel="stylesheet" href="/static/css/common/navigation.css">
+    <link rel="stylesheet" href="/static/css/common/custom_component.css">
+    <link rel="stylesheet" href="/static/css/common/style.css">
+    <link rel="stylesheet" href="/static/css/common/animate.css">
+    <link rel="stylesheet" href="/static/css/common/card.css">
+    <link rel="stylesheet" href="/static/css/common/category.css">
+    <link rel="stylesheet" href="/static/css/common/message.css">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.css" />
+
+    <link rel="stylesheet" href="/static/vendor/owl.carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/vendor/owl.carousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/static/vendor/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="/static/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="/static/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="/static/vendor/bootstrap-star-rating/css/star-rating.min.css">
+    <link rel="stylesheet" href="/static/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.css">
+
+    <!-- Specific Page Vendor CSS -->
+    <link rel="stylesheet" href="/static/vendor/pnotify/pnotify.custom.css" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/theme.css" />
+    <link rel="stylesheet" href="/static/css/tmp/theme-elements.css">
+    <link rel="stylesheet" href="/static/css/tmp/theme-blog.css">
+    <link rel="stylesheet" href="/static/css/tmp/theme-shop.css">
+
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/skins/default.css" />
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="/static/css/tmp/custom.css">
+
+    <!-- Head Libs -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+    <!-- 전역적용 Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
+    <script src="/static/js/plugin/jquery/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/polyfill.js"></script>
+    <script src="/static/js/detail-common.js"></script>
+    <script src="/static/js/plugin/bootstrap/4.0.0/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery.uploadPreview.min.js"></script>
+    <script src="/static/js/datePicker.js"></script>
+
+    <title>프리랜서코리아</title>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-52R8MD5');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (noscript) -->
+<!--    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52R8MD5"-->
+<!--                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>-->
+    <!-- End Google Tag Manager (noscript) -->
+</head>
+
+<body style="padding-top:58px;">
+
+    <!-- 클라이언트 헤더 -->
+    <th:block th:if="${#authentication.isLoginAsClient()}" sec:authorize="isAuthenticated()">
+        <header th:replace="fragments/headerClient :: header">
+            <p>This is default header area for default layout</p>
+        </header>
+        <header id="header" class="side-header side-header-lg side-header-hide">
+            <div class="header-body">
+                <div class="header-container container d-flex h-100 p-0">
+                    <div class="header-column flex-lg-column justify-content-center h-100" style="overflow-y: scroll;">
+                        <div class="header-row header-row-side-header flex-row h-100 mb-3">
+                            <button class="hamburguer-btn hamburguer-btn-side-header active" data-set-active="false" style="z-index: 100;">
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                            <div class="side-header-scrollable scrollable colored-slider h-100" data-plugin-scrollable>
+                                <div class="scrollable-content p-0 h-100">
+                                    <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-expand header-nav-click-to-open align-self-start h-100">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1 h-100" style="padding:5px">
+                                            <nav class="d-none d-md-block h-100" style="padding:1rem;">
+                                                <div class="my_menu" style="width: 100%;">
+                                                    <div class="client card">
+                                                        <div class="card_top">
+                                                            <div class="profile_img">
+                                                                <div class="profile_img_crop">
+                                                                    <div class="center-crop-wrapper rounded">
+                                                                        <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(user?.profileImageUrl)?'/static/images/default_avatar.jpg':user?.profileImageUrl)}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="info">
+                                                                <div class="username member" th:text="${user.name}"></div>
+                                                                <span class="badge">클라이언트</span>
+                                                                <div class="par">프로젝트 
+                                                                    <span id="allpjt_num" class="count" th:text="${#numbers.formatInteger(user.completedProjectCount, 0, 'COMMA')}">10</span>건 중
+                                                                    <span id="markpjt_num" class="count" th:text="${#numbers.formatInteger(user.ratedProjectCountAsClient, 0, 'COMMA')}">6</span>건 평가
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card_middle">
+                                                            <div class="rating-container theme-krajee-fas rating-sm rating-animate">
+                                                                <div class="rating-stars">
+                                                                    <span class="empty-stars">
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="filled-stars" th:style="|width: ${user.ratingPercentageAsClient}%|">
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="price">
+                                                                <div>마이포인트</div>
+                                                                <div th:text="|${#numbers.formatDecimal(user?.points, 0, 'DEFAULT', 0, 'DEFAULT')}P|"></div>
+                                                            </div>
+                                                            <div class="balance">
+                                                                <div>에스크로 예치 잔액</div>
+                                                                <div th:text="|${#numbers.formatInteger(remainEscrow, 0, 'COMMA')}원|"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card_bottom">
+                                                            <div class="expose_emal" th:text="${user.exposeEmail} ? ${user.email}: '비공개'"></div>
+                                                            <div class="cellphone" th:text="${user.exposeCellphone} ? ${user.cellphone}: '비공개'"></div>
+                                                            <a class="homepageUrl" th:href="${user.homepageUrl}">
+                                                                <i class="fas fa-home"></i>
+                                                                <span th:text="${user.exposeSns} ? ${user.homepageUrl} : 비공개"></span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="message_alarm">
+                                                            <div>신규메시지</div>
+                                                            <div class="message_badge" onclick="location.href='/client/profile/index#overview'">
+                                                                <!-- <span class="badge" onClick="window.location.reload()">0건</span> -->
+                                                                <span class="badge">0건</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="nav nav-pills" id="mainNav">
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item" href="/client/profile/index">
+                                                            마이페이지
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown open">
+                                                        <a class="dropdown-item dropdown-toggle border-bottom-0" href="/client/payment/list">
+                                                            결제/포인트관리
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="CLIENT_PAYMENT">●</span> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/payment/list">
+                                                                    <span style="position: relative;">
+                                                                        결제/포인트관리
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_PAYMENT">●</span> -->
+                                                                    </span>
+                                                                </a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/payment/escrowList" >
+                                                                    <span style="position: relative;">
+                                                                        에스크로
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_ESCROW">●</span> -->
+                                                                    </span>
+                                                                </a>
+
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item" href="/client/directMarket/index">
+                                                            직거래마켓
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="CLIENT_DIRECT_MARKET">●</span> -->
+                                                    </li>
+                                                    <li class="dropdown open">
+                                                        <a onclick="location.href='/infoPosting'" class="dropdown-item dropdown-toggle border-bottom-0" href="#">
+                                                            포스팅
+                                                        </a>
+                                                        <!-- <ul class="dropdown-menu" th:if="${user.infoInput}">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/posting/project">프로젝트</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/posting/contest">컨테스트</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/bid/autoSave" data-menu-code="CLIENT_TEMP_SAVED">
+                                                                    <span style="position: relative;">
+                                                                        임시저장
+                                                                        <span class="new_noti_point_item" data-menu-code="CLIENT_TEMP_SAVED">●</span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+
+                                                        </ul> -->
+                                                        <ul class="dropdown-menu" th:if="${!user.infoInput}">
+                                                            <li>
+                                                                <a class="dropdown-item" href="javascript:toProjectViaProfile()">프로젝트</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="javascript:toContestViaProfile()">컨테스트</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/bid/autoSave" data-menu-code="CLIENT_TEMP_SAVED">
+                                                                    <span style="position: relative;">
+                                                                        임시저장
+                                                                        <span class="new_noti_point_item" data-menu-code="CLIENT_TEMP_SAVED">●</span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown open">
+                                                        <a class="dropdown-item dropdown-toggle border-bottom-0" href="/client/bid/processingList">
+                                                            입찰현황
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="CLIENT_BID">●</span> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/bid/suggestList" data-menu-code="CLIENT_PROPOSITION">
+                                                                    <span style="position: relative;">
+                                                                        참여요청
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_PROPOSITION">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/bid/processingList" data-menu-code="CLIENT_POSTING">
+                                                                    <span style="position: relative;">
+                                                                        진행중인 입찰
+                                                                        <span class="new_noti_point_item" th:if="${existsUnreadPostedProject != null AND existsUnreadPostedProject}" data-menu-code="CLIENT_POSTING">●</span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/bid/cancelList" data-menu-code="CLIENT_CANCELLED">
+                                                                    <span style="position: relative;">취소(종료)된 입찰
+                                                                    <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_CANCELLED">●</span> -->
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown open">
+                                                        <a class="dropdown-item dropdown-toggle border-bottom-0" href="/client/project/processingList">
+                                                            나의 프로젝트
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="CLIENT_PROJECT">●</span> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/project/processingList" data-menu-code="CLIENT_IN_PROGRESS">
+                                                                    <span style="position: relative;">
+                                                                        낙찰 후 진행중인 프로젝트
+                                                                        <span class="new_noti_point_item" th:if="${existsUnreadInProgressProject != null AND existsUnreadInProgressProject}" data-menu-code="CLIENT_IN_PROGRESS">●</span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/client/project/doneList" data-menu-code="CLIENT_COMPLETED">
+                                                                    <span style="position: relative;">
+                                                                        완료된 프로젝트
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="CLIENT_COMPLETED">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item" href="/view/pick-me-ups">
+                                                            픽미업
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown open">
+                                                        <a class="dropdown-item dropdown-toggle border-bottom-0" href="/common/notice">
+                                                        Blog
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="COMMON">●</span> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/common/notice">
+                                                                    <span style="position: relative;">
+                                                                        Blog
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="NOTICE">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/common/reference">
+                                                                    <span style="position: relative;">
+                                                                        자료실
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="REFERENCE">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/common/howItWorks?role=ROLE_CLIENT" class="dropdown-item">
+                                                            <!-- <i class="far fa-question-circle mr-2"></i> -->
+                                                            <span>이용안내</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/aboutus" class="dropdown-item">
+                                                            <!-- <i class="far fa-building mr-2"></i> -->
+                                                            <span>프리랜서코리아팀</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/common/helpList" class="dropdown-item">
+                                                            <!-- <i class="fas fa-headset mr-2"></i> -->
+                                                            <span>고객센터</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/logout" class="dropdown-item" style="color:  #1f87cc;">
+                                                            <span>로그아웃</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- 클라이언트 헤더// -->
+
+    <!-- 프리랜서 헤더 -->
+    <th:block th:if="${!#authentication.isLoginAsClient()}" sec:authorize="isAuthenticated()">
+        <header th:replace="fragments/headerFreelancer :: header">
+            <p>This is default header area for default layout</p>
+        </header>
+        <header id="header" class="side-header side-header-lg side-header-hide">
+            <div class="header-body">
+                <div class="header-container container d-flex h-100 p-0">
+                    <div class="header-column flex-lg-column justify-content-center h-100" style="overflow-y: scroll;">
+                        <div class="header-row header-row-side-header flex-row h-100 pb-3">
+                            <button class="hamburguer-btn hamburguer-btn-side-header active" data-set-active="false" style="z-index: 100">
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                            <div class="side-header-scrollable scrollable colored-slider h-100" data-plugin-scrollable>
+                                <div class="scrollable-content p-0 h-100">
+                                    <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-expand header-nav-click-to-open align-self-start h-100">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1 h-100" style="padding:5px">
+                                            <nav class="d-none d-md-block h-100" style="padding:1rem;">
+                                                <div class="my_menu" style="width: 100%;">
+                                                    <div class="card">
+                                                        <div class="card_top">
+                                                            <div class="profile_img">
+                                                                <div class="profile_img_crop">
+                                                                    <div class="center-crop-wrapper rounded">
+                                                                        <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(user?.profileImageUrl)?'/static/images/default_avatar.jpg':user?.profileImageUrl)}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="info">
+                                                                <div class="username member" th:text="${user.name}"></div>
+                                                                <span class="badge">프리랜서</span>
+                                                                <div class="par">프로젝트 
+                                                                    <span id="allpjt_num" class="count" th:text="${#numbers.formatInteger(user.contractedProjectCount, 0, 'COMMA')}">10</span>건 중
+                                                                    <span id="markpjt_num" class="count" th:text="${#numbers.formatInteger(user.ratedProjectCountAsFreelancer, 0, 'COMMA')}">6</span>건 평가
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card_middle">
+                                                            <div class="rating-container theme-krajee-fas rating-sm rating-animate">
+                                                                <div class="rating-stars">
+                                                                    <span class="empty-stars">
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="far fa-star"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="filled-stars" th:style="|width: ${user.ratingPercentageAsFreelancer}%|">
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                        <span class="star">
+                                                                            <i class="fas fa-star"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="sns_export">
+                                                                <span th:class="@{|sns ${!#strings.isEmpty(user.facebookLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.facebookLinkUrl)?user.facebookLinkUrl:''}')|}">
+                                                                    <i class="fab fa-facebook-square"></i>
+                                                                </span>
+                                                                <span th:class="@{|sns ${!#strings.isEmpty(user.instagramLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.instagramLinkUrl)?user.instagramLinkUrl:''}')|}">
+                                                                    <i class="fab fa-instagram"></i>
+                                                                </span>
+                                                                <span th:class="@{|sns ${!#strings.isEmpty(user.twitterLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.twitterLinkUrl)?user.twitterLinkUrl:''}')|}">
+                                                                    <i class="fab fa-twitter-square"></i>
+                                                                </span>
+                                                                <span th:class="@{|sns ${!#strings.isEmpty(user.youtubeLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.youtubeLinkUrl)?user.youtubeLinkUrl:''}')|}">
+                                                                    <i class="fab fa-youtube-square"></i>
+                                                                </span>
+                                                                <span th:class="@{|sns ${!#strings.isEmpty(user.linkedInLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.linkedInLinkUrl)?user.linkedInLinkUrl:''}')|}">
+                                                                    <i class="fab fa-linkedin"></i>
+                                                                </span>
+                                                                <span th:class="@{|sns ${!#strings.isEmpty(user.githubLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.githubLinkUrl)?user.githubLinkUrl:''}')|}">
+                                                                    <i class="fab fa-github-square"></i>
+                                                                </span>
+                                                                <span th:class="@{|sns ${!#strings.isEmpty(user.blogLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(user.blogLinkUrl)?user.blogLinkUrl:''}')|}">
+                                                                    <i class="fas fa-rss-square"></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="price">
+                                                                <div>마이포인트</div>
+                                                                <div th:text="|${#numbers.formatDecimal(user?.points, 0, 'DEFAULT', 0, 'DEFAULT')}P|"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card_bottom">
+                                                            <div class="expose_email" th:text="${user.exposeEmail} ? ${user.email}: '비공개'"></div>
+                                                            <div class="cllphone" th:text="${user.exposeCellphone} ? ${user.cellphone}: '비공개'"></div>
+                                                        </div>
+                                                        <div class="message_alarm">
+                                                            <div>신규메시지</div>
+                                                            <div class="message_badge" onclick="location.href='/freelancer/profile/index#overview'">
+                                                                <!-- <span class="badge" style="cursor: pointer;" onClick="window.location.reload()">0건</span> -->
+                                                                <span class="badge">0건</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="nav nav-pills" id="mainNav">
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item" href="/freelancer/profile/index">
+                                                            마이페이지
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item" href="/freelancer/payment/index">
+                                                            결제/포인트관리
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="FREELANCER_PAYMENT">●</span> -->
+                                                    </li>
+                                                    <!-- <li class="dropdown">
+                                                        <a class="dropdown-item" href="/freelancer/pickMeUp/choiceEnrollment">
+                                                            픽미업 등록
+                                                        </a>
+                                                    </li> -->
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item" href="/freelancer/pickMeUp/list">
+                                                            포트폴리오 관리
+                                                        </a>
+                                                    </li>
+                                                    <!-- <li class="dropdown">
+                                                        <a class="dropdown-item" href="/freelancer/pickMeUp/list">
+                                                            포트폴리오/픽미업등록
+                                                        </a>
+                                                    </li> -->
+                                                    <li class="dropdown open">
+                                                        <a class="dropdown-item dropdown-toggle border-bottom-0" href="/freelancer/findProject/list">
+                                                            프로젝트 찾기
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="FREELANCER_PROJECT">●</span> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item"  href="/freelancer/findProject/list">프로젝트 찾기</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/freelancer/bid/suggestedList">
+                                                                    <span style="position: relative;">
+                                                                        제안받은 프로젝트
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="FREELANCER_PROPOSED">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/freelancer/project/pickList">
+                                                                    <span style="position: relative;">
+                                                                        찜한 프로젝트
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="FREELANCER_FAVORITED">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown open">
+                                                        <a class="dropdown-item dropdown-toggle border-bottom-0" href="/freelancer/bid/onGoingList">
+                                                            입찰현황
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="FREELANCER_BID">●</span> -->
+                                                        <!-- 알람 -->
+                                                        <!-- <span class="new_noti_point">●</span> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/freelancer/bid/onGoingList">
+                                                                    <span style="position: relative;">
+                                                                        참여중인 입찰
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="FREELANCER_POSTING">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/freelancer/bid/successList">
+                                                                    <span style="position: relative;">
+                                                                        성공한 입찰
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="FREELANCER_SUCCESS">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/freelancer/bid/failList">
+                                                                    <span style="position: relative;">
+                                                                        입찰취소/미낙찰
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="FREELANCER_FAILED">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown open">
+                                                        <a class="dropdown-item dropdown-toggle border-bottom-0" href="/freelancer/project/onGoingList">
+                                                            나의 프로젝트
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="FREELANCER_MY_PROJECT">●</span> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/freelancer/project/onGoingList">
+                                                                    <span style="position: relative;">
+                                                                        낙찰 후 진행 중인 프로젝트
+                                                                        <span class="new_noti_point_item" th:if="${existsUnreadInProgressProject != null AND existsUnreadInProgressProject}" data-menu-code="FREELANCER_IN_PROGRESS">●</span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/freelancer/project/completedList">
+                                                                    <span style="position: relative;">
+                                                                        완료된 프로젝트
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="FREELANCER_COMPLETED">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a class="dropdown-item" href="/view/pick-me-ups">
+                                                            픽미업
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown open">
+                                                        <a class="dropdown-item dropdown-toggle border-bottom-0" href="/common/notice">
+                                                        Blog
+                                                        </a>
+                                                        <!-- <span class="new_noti_point" data-parent-menu-code="COMMON">●</span> -->
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/common/notice">
+                                                                    <span style="position: relative;">
+                                                                        Blog
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="NOTICE">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="/common/reference">
+                                                                    <span style="position: relative;">
+                                                                        자료실
+                                                                        <!-- <span class="new_noti_point_item" data-menu-code="REFERENCE">●</span> -->
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/common/howItWorks?role=ROLE_CLIENT" class="dropdown-item">
+                                                            <span>이용안내</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/aboutus" class="dropdown-item">
+                                                            <span>프리랜서코리아팀</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/common/helpList" class="dropdown-item">
+                                                            <span>고객센터</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown">
+                                                        <a href="/logout" class="dropdown-item" style="color:  #1f87cc;">
+                                                            <span>로그아웃</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- 프리랜서 헤더// -->
+    
+    <!-- 비로그인 헤더 -->
+    <th:block th:if="${loggedIn == null || !loggedIn}" sec:authorize="!isAuthenticated()">
+        <div style="position:fixed;width:100%;top:0;height: 58px; z-index: 1000!important;">
+            <div class="bg-gray container-fluid border-bottom p-0" style="height:58px;">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-2">
+                            <div class="">
+                                <a href="/">
+                                    <img alt="프리랜서코리아" class="header_main_logo" width="148" height="40" src="/static/images/logo-black.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-10 header-column p-0">
+                            <nav class="d-none d-lg-flex justify-content-between">
+                                <ul class="nav nav-pills">
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/common/howItWorks?role=ROLE_CLIENT"  style="padding:0.5rem 1rem;">
+                                            이용안내
+                                        </a>
+                                    </li>
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/aboutus"  style="padding:0.5rem 1rem;">
+                                            프리랜서코리아팀
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-pills" id="mainNav">
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/auth/login" style="padding:0.5rem 1rem;">
+                                            로그인
+                                        </a>
+                                    </li>
+                                    <li class="dropdown align-self-center">
+                                        <a class="dropdown-item" href="/auth/join" style="padding:0.5rem 1rem;">
+                                            회원가입
+                                        </a>
+                                    </li>
+                                    <li class="dropdown text-uppercase d-flex justify-content-center">
+                                        <a class="text-center">
+                                            <button onclick="location.href='/infoPosting'" class="btn btn-primary font-weight-semibold rounded-0">프로젝트/컨테스트 포스팅</button>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <div class="d-flex justify-content-end">
+                                <button onclick="location.href='/infoPosting'" class="d-block d-lg-none btn btn-primary rounded-0 align-self-center">프로젝트/컨테스트 포스팅</button>
+                                <button class="d-block d-lg-none hamburguer-btn hamburguer-btn-dark hamburguer-btn-sticky-dark" data-set-active="false">
+                                    <!-- <span class="new_noti_point">●</span> -->
+                                    <span class="hamburguer">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header id="header" class="side-header side-header-lg side-header-hide d-flex d-lg-none">
+            <div class="header-body">
+                <div class="header-container container d-flex h-100 p-0">
+                    <div class="header-column flex-lg-column justify-content-center h-100">
+                        <div class="header-row header-row-side-header flex-row h-100 pb-5 mt-5">
+                            <button class="hamburguer-btn hamburguer-btn-side-header active" data-set-active="false">
+                                <span class="close">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </button>
+                            <div class="side-header-scrollable scrollable colored-slider" data-plugin-scrollable>
+                                <div class="scrollable-content p-0">
+                                    <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-expand header-nav-click-to-open align-self-start">
+                                        <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1" style="padding:5px;">
+                                            <nav class="d-none d-md-block" style="padding:1rem;">
+                                                <ul class="nav nav-pills p-0" id="mainNav">
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/common/howItWorks?role=ROLE_CLIENT">
+                                                            이용안내
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/aboutus">
+                                                            프리랜서코리아팀
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/auth/login">
+                                                            로그인
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase">
+                                                        <a class="dropdown-item" href="/auth/join">
+                                                            회원가입
+                                                        </a>
+                                                    </li>
+                                                    <li class="dropdown text-uppercase p-3 d-flex justify-content-center">
+                                                        <a class="text-center">
+                                                            <button onclick="location.href='/infoPosting'" class="btn btn-primary rounded-0">프로젝트/컨테스트 포스팅</button>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="header-row justify-content-end pb-lg-3">
+                            <ul class="header-social-icons social-icons social-icons-clean">
+                                <li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                            <p class="text-1 pt-3">© 2018 PORTO. All rights reserved</p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </header>
+    </th:block>
+    <!-- 비로그인 헤더// -->
+
+    <script th:inline="javascript">
+        var serverUrl = [[${serverUrl}]];
+    </script>
+    
+    <section id="content" layout:fragment="content">
+        <p>This is default main content with default layout</p>
+    </section>
+    
+
+    <!-- 푸터 -->
+    <footer th:replace="fragments/footer :: footer">
+        <p>This is default footer area for default layout</p>
+    </footer>
+    <!-- 푸터// -->
+
+    <!-- 회원탈퇴 팝업 -->
+    <div class="modal fade modal_wrap" id="leaveModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+
+                <!-- 팝업 헤더 -->
+                <div class="head modal-header">
+                    <h5 class="modal-title" id="ModalLabel">회원을 탈퇴합니다.</h5>
+                    <div class="">
+                        <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                    </div>
+                </div>
+                <!-- 팝업 헤더// -->
+
+                <!-- 팝업 컨텐츠 -->
+                <div class="content modal-body">
+                    <h4>탈퇴하고자 하는 이유를 선택해주세요.</h4>
+                    <select class="w-100 form-control" name="leaveReason" onchange="showDiv('hidden_div', this)">
+                        <option value="1">더 이상 이용 할 필요가 없습니다.</option>
+                        <option value="2">이용하기 매우 어렵습니다.</option>
+                        <option value="3">기타사유.</option>
+                    </select>
+                    <textarea type="text" class="form-control mt-3" placeholder="탈퇴하고 싶은 이유를 적어주세요." rows="3" id="hidden_div" style="display: none"></textarea>
+                    <div class="btn-group d-block mb-3 mt-3">
+                        <button class="btn btn-primary rounded-0" id="leaveBtn">회원 탈퇴하기</button>
+                        <button class="btn btn-light rounded-0" data-dismiss="modal" aria-label="Close">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 회원탈퇴 팝업// -->
+
+
+    <!-- Vendor -->
+    <script src="/static/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="/static/lib/moment/moment-with-locales.min.js"></script>
+    <script src="/static/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="/static/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.kr.min.js"></script>
+    <script src="/static/vendor/common/common.js"></script>
+    <!-- <script src="/static/vendor/nanoscroller/nanoscroller.js"></script> -->
+    <script src="/static/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="/static/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+    <script src="/static/vendor/jquery.appear/jquery.appear.min.js"></script>
+    <script src="/static/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="/static/vendor/jquery.cookie/jquery.cookie.min.js"></script>
+    
+    <script src="/static/vendor/jquery.validation/jquery.validate.js"></script>
+    <script src="/static/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="/static/vendor/jquery.gmap/jquery.gmap.min.js"></script>
+    <script src="/static/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
+    <script src="/static/vendor/isotope/jquery.isotope.min.js"></script>
+    <script src="/static/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <!-- <script src="/static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script> -->
+    <script src="/static/vendor/bootstrap-star-rating/js/star-rating.min.js"></script>
+    <script src="/static/vendor/bootstrap-star-rating/themes/krajee-fas/theme.min.js"></script>
+    <script src="/static/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <!-- <script src="/static/vide/jquery.vide.min.js"></script> -->
+<!--    <script src="/static/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"></script>
+    
+    <script>
+        function showDiv(divId, element)
+        {
+            document.getElementById(divId).style.display = element.value == 3 ? 'block' : 'none';
+        }
+    </script>
+    
+    <!-- Theme Base, Components and Settings -->
+    <script src="/static/js/tmp/theme.js"></script>
+    
+    <!-- Theme Custom -->
+    <script src="/static/js/tmp/custom.js"></script>
+    
+    <!-- Theme Initialization Files -->
+    <script src="/static/js/tmp/theme.init.js"></script> 
+
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+/* 페이징 */
+.paging_con{padding:30px 0px; margin:3px; text-align:center; clear:both;}
+.paging_con a{display:inline-block; width:30px; height:30px; line-height:30px; vertical-align:middle; margin:3px; border:1px solid #ddd; background-color:#fff; color:#ccc; text-decoration:none; font-size:12px;}
+.paging_con a.prev{background-color:#f3f3f3;}
+.paging_con a.next{background-color:#f3f3f3;}
+.paging_con a:hover{border:1px solid #0088cc; background-color:#fff; color:#0088cc;}
+.paging_con a:active{border:1px solid #0088cc; background-color:#fff; color:#0088cc;}
+.paging_con .current{border:1px solid #0088cc; background-color:#fff; color:#0088cc; display:inline-block; width:30px; height:30px; line-height:30px; vertical-align:middle; margin:3px;}
+
+/*좌측 메시지 페이징*/
+.c_paging_con{padding:30px 0px; margin:3px; text-align:center; clear:both;}
+.c_paging_con a{display:inline-block; width:30px; height:30px; line-height:30px; vertical-align:middle; margin:3px; border:1px solid #ddd; background-color:#fff; color:#ccc; text-decoration:none; font-size:12px;}
+.c_paging_con a.prev{background-color:#f3f3f3;}
+.c_paging_con a.next{background-color:#f3f3f3;}
+.c_paging_con a:hover{border:1px solid #0088cc; background-color:#fff; color:#0088cc;}
+.c_paging_con a:active{border:1px solid #0088cc; background-color:#fff; color:#0088cc;}
+.c_paging_con .current{border:1px solid #0088cc; background-color:#fff; color:#0088cc; display:inline-block; width:30px; height:30px; line-height:30px; vertical-align:middle; margin:3px;}

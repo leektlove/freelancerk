@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/project/onGoingList.css">
+</head>
+
+	
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>낙찰 후 진행중인 프로젝트</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+		
+		<!-- 탭메뉴 -->
+		<section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+			<div class="container" style="margin-bottom: -3px;">
+				<ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/freelancer/project/onGoingList}" class="nav-link active d-flex">
+							<span>낙찰 후 진행중인 프로젝트</span>
+							<span class="count_alarm" th:text="${processingCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/freelancer/project/completedList}" class="nav-link disabled">
+							<span>완료된 프로젝트</span>
+							<span class="count_alarm" th:text="${cancelledCount}">0</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 탭메뉴// -->
+
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<div>
+						<section class="row mb-3">
+							<div class="col-lg-10 col-md-9 col-sm-8">
+								<p class="mb-0">총 <span class="text-primary" th:text="${page.content.size()}">0</span> 건의 프로젝트가 있습니다.</p>
+							</div>
+							<div class="col-lg-2 col-md-3 col-sm-4">
+
+							</div>
+						</section>
+
+						<section class="">
+							<th:block th:each="project : ${projects}">
+
+								<!-- 프로젝트 리스트 -->
+								<article class="project list_card bg-white post post-medium" th:if="${project.projectType.name() == 'PROJECT'}">
+									<div class="row">
+										<!-- <div class="d-none d-md-flex col-md-3 justify-content-center">
+											<div class="c_logo_img" th:style="|${'background-image: url(' + (#strings.isEmpty(project.postingClient.logoImageUrl)?'/static/images/project_logo_new.png':project.postingClient.logoImageUrl) + ')'}; background-position: center;background-size: contain;height:100px;|"></div>
+										</div> -->
+										<div class="col-12">
+											<div class="card_title_date">
+												<div class="title" th:text="${project.title}">
+												</div>
+												<div class="date">
+													<span th:text="|낙찰일 : ${#temporals.format(project.startAt, 'yyyy.MM.dd HH:mm:ss')}|"></span>
+												</div>
+											</div>
+											<div class="cellbox">
+												<div class="cell">
+							    					<span class="list_deco">▪︎</span>
+							    					<span th:text="${project.startFromDirectMarket?'계약금액':'낙찰금액'}"></span> <span class="font_emp ml-1" th:text="|*{#numbers.formatInteger(project.successBidPrice, 0, 'COMMA')}원|"></span>
+							    				</div>
+									    	</div>
+									    	<div class="action_line">
+												<div class="row">
+													<div class="col-lg-6 align-self-center">
+														<div class="card_info d-block d-lg-flex">
+															<div class="content_wrap" th:onclick="|projectDetail(${project.id}, '#comment')|">
+																<i class="icon-envelope icons"></i>
+																<span th:text="|${project.messageCountByClient}개의 메시지가 있습니다|"></span></span>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-6 text-right">
+														<div class="btn-group">
+															<button th:if="${project.projectComplete == null AND (project.lastPaymentToUser == null OR project.lastPaymentToUser.rerequestable)}" class="btn btn-light text-primary rounded-0 requestPaymentToUserModalBtn" type="button" data-toggle="modal" data-target-custom="#paymentToUserModal"
+																	th:data-project-id="${project.id}" th:data-exists-payed="${not #lists.isEmpty(project.payedPaymentToUsers)}">
+																<div>용역대금 지급청구</div>
+															</button>
+															<button th:if="${project.lastPaymentToUser != null AND project.lastPaymentToUser.status.name() == 'REQUESTED'}" class="btn btn-light rounded-0 requestPaymentToUserModalBtn" type="button" data-toggle="modal" data-target-custom="#paymentToUserModal"
+																	th:data-id="${project.lastPaymentToUser.id}"
+																	th:data-amount="${project.lastPaymentToUser.amount}"
+																	th:data-description="${project.lastPaymentToUser.description}"
+																	th:data-project-id="${project.id}" th:data-exists-payed="${not #lists.isEmpty(project.payedPaymentToUsers)}">
+																<div>수정하여 다시 청구</div>
+															</button>
+															<button th:if="${project.lastPaymentToUser != null AND project.lastPaymentToUser.status.name() == 'ACCEPTED'}" class="btn btn-light text-primary rounded-0 requestPaymentToUserModalBtn" type="button">
+																<div>프코에서 확인 중</div>
+															</button>
+															<!-- <button th:if="${project.projectComplete == null}" class="btn btn-light rounded-0 projectDetailBtn" th:data-id="${project.id}" type="button"><a class="text-light projectDetailBtn" th:data-id="${project.id}" th:href="@{|/freelancer/projects/${project.id}/details|}" style="color: #777 !important;">프로젝트 자세히보기</a></button> -->
+															<button th:if="${project.projectComplete != null}" class="btn btn-light rounded-0" type="button">
+																<!-- <div class="small text-left">클라이언트의</div> -->
+																<div>프로젝트 완료처리 대기 중</div>
+															</button>
+															<button th:if="${project.projectComplete == null}" class="btn btn-light rounded-0" type="button" data-toggle="modal" data-target="#rateModal" th:data-project-id="${project.id}" th:data-exists-payed="${not #lists.isEmpty(project.payedPaymentToUsers)}">
+																<input class="raterId" th:value="${project.contractedFreelancer?.id}" type="text" hidden>
+																<input class="ratedId" th:value="${project.postingClient.id}" type="text" hidden>
+																<input class="projectId" th:value="${project.id}" type="text" hidden>
+																<span>완료 및 평가</span>
+															</button>
+															<button th:if="${project.projectComplete != null && project.projectComplete.clientAccept}" class="btn btn-light btn-outline rounded-0" type="button"><span data-toggle="tooltip" data-placement="top" title="">프로젝트 완료</span></button>
+															<a th:data-id="${project.id}" th:href="@{|/freelancer/projects/${project.id}/details|}">
+																<button class="btn btn-primary rounded-0" th:if="${project.projectComplete == null}" th:data-id="${project.id}">
+						                                            프로젝트 상세보기<i class="fas fa-angle-right"></i>
+					                                        	</button>
+					                                        </a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</article>
+								<!-- 프로젝트 리스트// -->
+
+								<!-- 컨테스트 리스트 -->
+								<article class="contest list_card bg-white post post-medium"  th:if="${project.projectType.name() == 'CONTEST'}">
+									<div class="clearfix">
+										
+										<div class="float-right post-meta">
+											<div class="d-block d-md-flex">
+												<div class="mr-0 mr-md-2 ml-0 ml-md-2">
+													당선일 : <span th:text="${#temporals.format(project.myProjectBid.successBidAt, 'yyyy/MM/dd HH:mm:ss')}"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 order-2 order-lg-1 d-flex justify-content-center">
+				                            <div class="post-image w-100 mt-2 mt-lg-0">
+												<div class="image-cover">
+													<span class="thumb-info thumb-info-no-borders" th:each="thumbnail : ${project.entryFileThumbnailUrl}" >
+														<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons thumb-info-wrapper rounded-0">
+															<img th:style="|${'background-image: url(' + thumbnail + ')'}; background-position: center;background-size: cover;|" class="img-fluid border-radius-0">
+														</span>
+														<span class="thumb-info-title">
+															<span class="thumb-info-inner line-height-1" th:text="${user.exposeName}"></span>
+															<span class="thumb-info-type bg-dark">
+																<div  style="line-height: 16px" th:if="${user.exposeEmail}" th:text="${user.email}">
+																	parkeunzin@gamil.com
+													            </div>
+																<div  style="line-height: 16px" th:if="${user.exposeCellphone}" th:text="${user.cellphone}">
+																	010-3215-6546
+																</div>
+															</span>
+														</span>
+													</span>
+													<span class="thumb-info thumb-info-no-borders" th:if="${#lists.isEmpty(project.entryFileThumbnailUrl)}">
+														<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons thumb-info-wrapper rounded-0">
+															<img th:style="|${'background-image: url(' + /static/images/no-image.jpg + ')'}; background-position: center;background-size: cover;|">
+														</span>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4 order-1 order-lg-2">
+											<div class="overflow-hidden d-flex mb-2">
+												<div class="text-color-secondary font-weight-light text-5" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width:calc(100% - 65px);">
+											    	<span th:text="${project.title}"></span>
+											    </div>
+											</div>
+											<ul class="list list-borders">
+												<li class="">
+													<div class="d-flex">
+								    					<img src="/static/images/good_icon.png" class="mr-2" style="width: 27px;height:27px;">
+								    					<span style="padding-top: 7px;align-self: center;">축하합니다 
+								    						<span class="text-secondary">
+								    							<span th:text="${project.myProjectBid.pickedRank + 1}"></span>위
+								    						</span>로 당선되셨습니다!
+								    					</span>
+								    				</div>
+												</li>
+												<li>
+													<div>
+														<span class="list_deco mr-2">▪︎</span>
+														<div style="width: 110px;display: inline-block;">당선상금</div>
+														<span class="font_emp" th:text="|*{#numbers.formatInteger(project.myPrizeMoney, 0, 'COMMA')}원|"></span>
+													</div>
+												</li>
+												<li>
+													<div>
+														<span class="list_deco mr-2">▪︎</span>
+														<div style="width: 110px;display: inline-block;">총상금</div>
+														<span class="font_emp" th:text="|*{#numbers.formatInteger(project.totalPrize, 0, 'COMMA')}원|"></span>
+													</div>
+												</li>
+												<li>
+													<div>
+														<span class="list_deco mr-2">▪︎</span>
+														<div style="width: 110px;display: inline-block;">섹터</div>
+														<th:block th:each="contestSectorItem : ${project.contestSectors}">
+														<span class="font_emp" th:text="|${contestSectorItem.contestSectorType.contestSectorMetaType.name} Contest|"></span>
+														</th:block>
+													</div>
+												</li>
+												<li>
+													<div>
+														<span class="list_deco mr-2">▪︎</span>
+														<div style="width: 110px;display: inline-block;">수정/보완 마감일</div>
+														<span class="font_emp" th:text="${#temporals.format(project.giveRewardEndDateTime, 'yyyy.MM.dd HH:mm:ss')}"></span>
+													</div>
+												</li>
+						    				</ul>
+						    				<span class="font_emp red">
+												* 수정/보완이 이뤄지지 않은 경우 상금 지급이 지연될 수 있습니다.
+											</span>
+						    			</div>
+						    			<div class="col-lg-5 order-3">
+						    				<div id="comment">
+												<div class="comment-view">
+													<ul class="comments" th:if="${not #lists.isEmpty(project.myProjectBid.comments)}">
+														<li th:each="commentItem: ${project.myProjectBid.comments}" th:class="${#authentication.id == commentItem.user?.id?'send':'receive'}">
+															<div class="comment">
+																<div th:if="${#authentication.id == commentItem.user.id}" class="img-thumbnail img-thumbnail-no-borders">
+																	<img th:src="@{${(#strings.isEmpty(commentItem.user.profileImageUrl)?'/static/images/c_basic.jpg':commentItem.user.profileImageUrl)}}" class="avatar">
+																</div>
+																<span class="comment-by" th:text="${#authentication.id == commentItem.user.id?'프리랜서':'클라이언트'}"></span>
+																<div class="comment-block media-body">
+																	<div class="comment-arrow"></div>
+																	<div th:if="${commentItem.type.name() == 'MESSAGE'}" th:text="${commentItem.content}"></div>
+																	<a th:if="${commentItem.type.name() == 'FILE'}" target="_blank" th:href="${commentItem.fileUrl}" th:text="${commentItem.fileName}"></a>
+																</div>
+																<div class="date" th:text="${#temporals.format(commentItem.createdAt, 'yyyy.MM.dd')}"></div>
+																<div th:if="${#authentication.id != commentItem.user.id}" class="img-thumbnail img-thumbnail-no-borders">
+																	<img th:src="@{${(#strings.isEmpty(commentItem.user.profileImageUrl)?'/static/images/f_basic.jpg':commentItem.user.profileImageUrl)}}" class="avatar">
+																</div>
+															</div>
+														</li>
+													</ul>
+												</div>
+												<form th:action="|/project-bids/${project.myProjectBid.id}/comments|" method="post" enctype="multipart/form-data">
+													<div class="input-group">
+														<div class="">
+															<input type="file" style="display: none;" name="commentFile" />
+															<button class="btn btn-light border-0 p-2" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="파일을 첨부해주세요" th:onclick="clickAddFile(this)"><i class="fas fa-plus fa-lg"></i></button>
+														</div>
+														<textarea rows="1" class="form-control rounded" name="contents" maxlength="1000" placeholder="메시지 입력 또는 파일을 전송하세요!" style="resize: none;height:33px;line-height: 20px;"></textarea>
+														<div class="">
+															<button type="button" th:onclick="|writeComment(this)|" class="btn btn-light border-0 text-color-primary py-1 px-2"><i class="fas fa-arrow-alt-circle-up fa-2x"></i></button>
+														</div>
+													</div>
+												</form>
+												
+											</div>
+											
+										</div>
+									</div>
+									<div class="action_line">
+		                                <div class="row">
+		                                    <div class="col-12 text-right">
+		                                        <div class="btn-group">
+		                                            <a class="text-light" th:href="@{|/freelancer/contests/${project.id}/details|}">
+		                                                <button class="btn btn-secondary rounded-0" type="button">
+		                                                    컨테스트 상세보기
+		                                                    <i class="fas fa-angle-right"></i>
+		                                                </button>
+		                                            </a>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+								</article>
+								<!-- 컨테스트 리스트// -->
+
+							</th:block>
+							
+							<!-- 가이드 -->
+							<div class="heading heading-border heading-middle-border" style="margin-top:5rem;">
+					            <h4 class="font-weight-normal"><strong class="font-weight-bold">낙찰 후 진행중인 프로젝트</strong></h4>
+					        </div>
+							<div class="row" style="align-items: center;padding-bottom:5rem;">
+								<!-- <div class="guide_title col-12 mb-5">낙찰 후 진행중인 프로젝트</div> -->
+								<div class="col-lg-6">
+									<div class="row">
+										<div class="pickme_guid_1 guide col-6">
+											<div class="form-row">
+												<div class="col-lg-12">
+													<img src="/static/images/use-guide/bid_1.png" class="img-fluid">
+												</div>
+												<div class="col-lg-12" style="align-self: center;">
+													선정되셨군요!<br class="d-block d-md-none"> 축하합니다!
+												</div>
+											</div>
+										</div>
+										<div class="pickme_guid_2 guide col-6">
+											<div class="form-row">
+												<div class="col-lg-12">
+													<img src="/static/images/use-guide/bid_2.png" class="img-fluid">
+												</div>
+												<div class="col-lg-12" style="align-self: center;">
+													클라이언트와<br class="d-block d-md-none"> 자주 소통하시며<br/>작업하세요.
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="row">
+										<div class="pickme_guid_3 guide col-6">
+											<div class="form-row">
+												<div class="col-12">
+													<img src="/static/images/use-guide/bid_3.png" class="img-fluid">
+												</div>
+												<div class="col-12" style="align-self: center;">
+													[지급청구]버튼 꾹.<br/>수고하신 댓가를 받으세요!
+												</div>
+											</div>
+										</div>
+										<div class="pickme_guid_4 guide col-6">
+											<div class="form-row">
+												<div class="col-12">
+													<img src="/static/images/use-guide/bid_4.png" class="img-fluid">
+												</div>
+												<div class="col-12" style="align-self: center;">
+													클라이언트를 평가하시고,<br/> 프로젝트를 종료하세요.
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 가이드// -->
+
+
+						</section>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 클라이언트 평가하기 팝업 -->
+		<div class="modal fade modal_wrap" id="rateModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<form method="post" id="rateForm">
+					<input type="hidden" name="raterType" value="FREELANCER"/>
+				<div class="modal-content">
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title" id="ModalLabel">클라이언트 평가하기</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<div class="content modal-body">
+						<div class="title">
+							<i class="icon-magic-wand icons mr-1"></i>
+							클라이언트를 평가해주세요.
+						</div>
+						<table class="popup_boardform">
+							<colgroup>
+								<col width="200">
+								<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>전반적인 만족도</th>
+									<td>
+										<input type="hidden" name="projectId" />
+										<select name="type1Rate" id="satisfactory" style="width:80px">
+											<option value="">선택</option>
+											<option value="5">최상</option>
+											<option value="4">상</option>
+											<option value="3">중</option>
+											<option value="2">하</option>
+											<option value="1">최하</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>존중하는 태도</th>
+									<td>
+										<select name="type2Rate" id="respectAttitude" style="width:80px">
+											<option value="">선택</option>
+											<option value="5">최상</option>
+											<option value="4">상</option>
+											<option value="3">중</option>
+											<option value="2">하</option>
+											<option value="1">최하</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>명확한 업무지시</th>
+									<td>
+										<select name="type3Rate" id="accuracy" style="width:80px">
+											<option value="">선택</option>
+											<option value="5">최상</option>
+											<option value="4">상</option>
+											<option value="3">중</option>
+											<option value="2">하</option>
+											<option value="1">최하</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>신뢰성 (대금 관련)</th>
+									<td>
+										<select name="type4Rate" id="reliability" style="width:80px">
+											<option value="">선택</option>
+											<option value="5">최상</option>
+											<option value="4">상</option>
+											<option value="3">중</option>
+											<option value="2">하</option>
+											<option value="1">최하</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>소통능력</th>
+									<td>
+										<select name="type5Rate" id="communication" style="width:80px">
+											<option value="0">선택</option>
+											<option value="5">최상</option>
+											<option value="4">상</option>
+											<option value="3">중</option>
+											<option value="2">하</option>
+											<option value="1">최하</option>
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="title mt-4">
+							<i class="icon-bubble icons mr-1"></i>
+							피드백을 남겨주세요
+						</div>
+						<div>
+							<textarea class="form-control" name="content" style="width:99%" rows="3"></textarea>
+						</div>
+						<div class="popup_boardbutton">
+							<div class="d-flex mb-3 justify-content-center">
+								<input id="ratePopupRaterId" type="text" hidden>
+								<input id="ratePopupRatedId" type="text" hidden>
+								<input id="ratePopupProjectId" type="text" hidden>
+								<button type="submit" class="btn btn-light rounded-0">평가남기기</button>
+								<button type="button" class="btn btn-light rounded-0" onclick="requestProjectCompletedWithoutRate();">평가하지 않고 완료처리</button>
+								<a href="#" class="btn btn-light rounded-0 pop_close" data-dismiss="modal" aria-label="Close">취소</a>
+							</div>
+						</div>
+					</div>
+					<!-- 팝업 컨텐츠//-->
+				</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- 용역대금지급청구 팝업//-->
+		<div class="modal fade modal_wrap" id="paymentToUserModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title">지급청구</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<form id="paymentToUserForm" action="/payment-to-users/status/requested" method="post">
+						<div class="content modal-body">
+							<table class="table">
+								<colgroup>
+									<col width="25%">
+									<col width="">
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>요청금액</th>
+										<td class="d-flex">
+											<input type="hidden" name="id" />
+											<input type="hidden" name="projectId" />
+											<input type="hidden" name="amount" />
+											<input type="text" class="form-control text-right font-weight-bold" size="" maxlength="11" name="amountWithCommas" onkeyup="numberWithCommas(this);" onchange="numberWithCommas(this);">
+											<span class="ml-2 align-self-center">원</span>
+										</td>
+									</tr>
+									<tr>
+										<th>요청내용</th>
+										<td>
+											<textarea class="form-control required" title="요청내용" rows="5" style="width:99%" name="description"></textarea>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div class="text mt-3" style="font-size: 13px">
+								<div class="text-secondary">
+									<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+									  금액은 세전금액(VAT미포함)으로 입력해주세요.
+								</div>
+								<div class="text-secondary">
+									<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+									  오후 5시 이후 클라이언트의 승인이 있는 경우, 익일 지급 처리됩니다.
+								</div>
+							</div>
+
+							<div class="popup_boardbutton">
+								<div class="tc">
+									<input id="billingProjectId" type="text" hidden>
+									<button class="btn btn-lg btn-primary rounded-0"  id="btnAskBilling" type="submit">요청하기</button>
+									<a href="#" class="btn btn-lg btn-light rounded-0 pop_close" data-dismiss="modal" aria-label="Close">취소</a>
+								</div>
+							</div>
+
+						</div>
+					</form>
+					<!-- 팝업 컨텐츠//-->
+
+				</div>
+			</div>
+		</div>
+		<script th:inline="javascript">
+			var requestPaymentAvailable = [[${user.requestPaymentAvailable}]];
+		</script>
+		<script>
+			$(document).ready(function(){
+			    $(".comments").animate({ scrollTop: $(this).height() }, "slow");
+  				return false;
+			});
+		</script>
+		<!-- 용역대금지급청구 팝업// -->
+		
+		<script src="/static/js/freelancer/project/on-going-list.js"></script>
+	</div>
+	
+
+</html>

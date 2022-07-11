@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/project.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/projectHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 프로젝트 문자 검색</h1>
+					<form id="" name="" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="350">
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody><tr>
+								<th>발송일</th>
+								<td colspan="3">
+									<input type="text" name="" value="" size="8" readonly="" class="readonly search_date hasDatepicker">
+									 ~ 
+									<input type="text" name="" value="" size="8" readonly="" class="readonly search_date hasDatepicker">
+									<span class="btn-black medium">오늘</span>
+									<span class="btn-black medium">이번주</span>
+									<span class="btn-black medium">이번달</span>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+
+					<div class="Hspace"></div>
+					<h1>■ <sapn>1</sapn>건이 검색되었습니다.</h1>
+					<form name="" id="" method="post">
+						<table class="boardlist">
+							<tbody><tr>
+								<th>순서</th>
+								<th>발송일</th>
+								<th>내용</th>
+								<th>발송수</th>
+								<th>상세보기</th>
+							</tr>
+							<tr>
+								<td>
+									174
+								</td>
+								<td>2018-11-08 16:34:36</td>
+								<td>귀하의 프로젝트가 성공적으로 포스팅되었습니다. 등록된 …</td>
+								<td>1</td>
+								<td>
+									<a href="" class="btn-black medium">보기</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									173
+								</td>
+								<td>2018-11-08 13:51:36</td>
+								<td>김재홍이사님 안녕하세요. 문의주신글에 답변해드렸습니다.…</td>
+								<td>1</td>
+								<td>
+									<a href="" class="btn-black medium">보기</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									172
+								</td>
+								<td>2018-11-01 14:57:42</td>
+								<td>개발, 디자인, 번역, 광고 등 65섹터의 12,000…</td>
+								<td>1</td>
+								<td>
+									<a href="" class="btn-black medium">보기</a>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</form>
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+							<span class="current">1</span><a href="">2</a></div>
+						</div>
+						<div class="tr"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

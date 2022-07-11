@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/paymentOption.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/paymentOptionHeader"></th:block>
+			</div>
+			<div id="container_content">
+
+				<div class="container_inner">
+
+					<h1>■ 옵션 결제 현황 조회</h1>
+					
+					<table class="boardform">
+						<colgroup>
+							<col width="100">
+							<col width="100">
+							<col width="100">
+							<col width="900">
+						</colgroup>
+						<tr>
+							<td>
+								<select>
+									<option>기간선택</option>
+									<option>최근1개월</option>
+									<option>최근3개월</option>
+									<option>최근6개월</option>
+									<option>최근12개월</option>
+								</select>
+							</td>
+							<td>
+								<select>
+									<option>옵션선택</option>
+									<option>전체</option>
+									<option>포트폴리오</option>
+									<option>프로젝트</option>
+									<option>컨테스트(클라이언트)</option>
+									<option>컨테스트(프리랜서)</option>
+								</select>
+							</td>
+							<td><button class="btn-black medium">조회</button></td>
+							<td></td>
+						</tr>
+					</table>
+					
+					<div class="Hspace"></div>
+					<h1>■ 결과</h1>
+					<table class="boardform">
+						<tbody><tr>
+							<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">포트폴리오</a></td>
+							<th width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">프로젝트</a></th>
+							<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">컨테스트(클라이언트)</a></td>
+							<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">컨테스트(프리랜서)</a></td>
+						</tr>
+						</tbody>
+					</table>
+
+					<div class="Hspace"></div>
+					<h1>■ 기본옵션상세</h1>
+
+					<table class="boardlist">
+						<colgroup>
+
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>코드</th>
+								<th>기본옵션</th>
+								<th>옵션명</th>
+								<th>기준금액</th>
+								<th>기간</th>
+								<th>설명</th>
+							</tr>
+							<tr>
+								<td>pmu11</td>
+								<td>기본옵션</td>
+								<td>Featured(강조)</td>
+								<td>20,000</td>
+								<td>1개월</td>
+								<td>플랫폼 메인화면의 포트폴리오에 노출되어 전문가를 광고합니다.</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tl">
+							<a href="" class="btn-color large">옵션추가</a>
+							<a href="" class="btn-color large">현재옵션수정</a>
+						</div>
+					</div>
+
+					<div class="Hspace"></div>
+					<h1>■ 패키지옵션상세</h1>
+
+					<table class="boardlist">
+						<colgroup>
+
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>코드</th>
+								<th>팩옵션</th>
+								<th>옵션명 및 옵션상세</th>
+								<th>기준금액 및 할인금액</th>
+								<th>할인율</th>
+								<th>기간</th>
+							</tr>
+							<tr>
+								<td rowspan="2">pmu21</td>
+								<td rowspan="2">팩옵션</td>
+								<td>Junior Pack</td>
+								<td style="text-decoration:line-through">70,000</td>
+								<td rowspan="2">14.3%</td>
+								<td rowspan="2">1개월</td>
+							</tr>
+							<tr>
+								<td>(기본+강조+상위노출)</td>
+								<td>60,000</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="boardbutton">
+						<div class="tl">
+							<a href="" class="btn-color large">옵션추가</a>
+							<a href="" class="btn-color large">현재옵션수정</a>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+	
+
+</html>

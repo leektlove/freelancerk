@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/bid/autoSave.css">
+</head>
+
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>임시저장한 입찰</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<!-- 탭메뉴 -->
+        <section class="tabs tabs-bottom tabs-center tabs-simple" style="border-bottom: 3px solid #eee;background-color: #f7f7f7">
+            <div class="container" style="margin-bottom: -3px;">
+                <ul class="nav nav-tabs justify-content-start mb-0 font-weight-bold">
+                    <li class="nav-item mb-0">
+						<a th:href="@{/client/bid/suggestList}" class="nav-link d-flex">
+							<span>참여요청</span>
+							<span class="count_alarm" th:text="${propositionsCount}">0</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/client/bid/processingList}" class="nav-link d-flex">
+							<span>진행중인 입찰</span>
+							<span class="count_alarm" th:text="${processingCount}">2</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0">
+						<a th:href="@{/client/bid/cancelList}" class="nav-link d-flex">
+							<span>취소(종료)된 입찰</span>
+							<span class="count_alarm" th:text="${cancelledCount}">1</span>
+						</a>
+					</li>
+					<li class="nav-item mb-0 active">
+						<a th:href="@{/client/bid/autoSave}" class="nav-link d-flex">
+							<span>임시저장한 입찰</span>
+							<span class="count_alarm" th:text="${tempSavedCount}">0</span>
+						</a>
+					</li>
+                </ul>
+            </div>
+        </section>
+        <!-- 탭메뉴// -->
+		
+		<section>
+			<div class="container">
+				<div class="content-body py-4">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="row mb-3">
+								<div class="col-lg-10 col-md-9 col-sm-8">
+									<div class="font-weight-bold text-dark mb-1">
+										<i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+										임시저장 후 1개월이 지난 포스트는 삭제됩니다.
+									</div>
+									<p class="mb-0">총 <span class="text-primary" th:text="${page.totalElements}">0</span> 건의 입찰이 있습니다.</p>
+								</div>
+								<div class="col-lg-2 col-md-3 col-sm-4">
+
+								</div>
+							</div>
+							<div class="auto_save_list">
+								<th:block th:each="item: ${page.content}">
+								
+									<!-- 프로젝트 리스트 -->
+									<article class="project list_card mb-3 bg-white post post-medium"  th:if="${item.projectType.name() =='PROJECT'}">
+										<div class="row">
+											<div class="col-12">
+												<div class="card_title_date">
+													<div class="title" th:text="${item.title}">
+													</div>
+													<div class="date">
+														<span th:text="${#temporals.format(item.postingStartAt, 'yyyy.MM.dd')}"></span>
+														~
+														<span th:text="${#temporals.format(item.postingEndAt, 'yyyy.MM.dd')}"></span>
+													</div>
+												</div>
+												<div class="cellbox">
+													<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					예상프로젝트기간 : <span class="font_emp" th:text="${item.expectedPeriodTxt}"></span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					급여방식 : 
+								    					<span class="font_emp"> 
+								    						<span th:text="${item.payMean?.shortName}"></span>
+								    						<span th:text="${item.budget}"></span>
+								    					</span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					지급기준 : <span class="font_emp" th:text="${item.payCriteria}"></span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					작업장소 : <span class="font_emp" th:text="${item.workPlace}"></span>
+								    				</div>
+								    			</div>
+								    			<div class="action_line">
+									    			<div class="row">
+														<div class="col-lg-6 align-self-center">
+															<div class="card_info d-block d-lg-flex">
+																<div class="content_wrap">
+																	<span>지금 바로 프로젝트를 포스팅하고, 프리랜서들의 입찰을 받아보세요!</span>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-6 text-right">
+															<div aria-label="Buttons Group" class="btn-group" role="group">
+															  	<button class="btn btn-primary rounded-0" type="button" th:onclick="|modifyProjectItem(${item.id})|">다시 포스트를 작성합니다</button>
+															  	<button class="btn btn-light rounded-0" type="button" th:onclick="|deleteItem(${item.id})|">삭제</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+									<!-- 프로젝트 리스트// -->
+
+									<!-- 컨테스트 리스트 -->
+									<article class="contest list_card mb-3 bg-white post post-medium"  th:if="${item.projectType.name() =='CONTEST'}">
+										<div class="row">
+											<div class="col-12">
+												<div class="card_title_date">
+													<div class="title" th:text="${item.title}">
+													</div>
+													<div class="date">
+														<span th:text="${#temporals.format(item.postingStartAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+														~
+														<span th:text="${#temporals.format(item.postingEndAt, 'yyyy.MM.dd HH:mm:ss')}"></span>
+													</div>
+												</div>
+												<div class="cellbox">
+													<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					확정상금 : <span class="font_emp" th:text="|*{#numbers.formatInteger(item.totalPrize, 0, 'COMMA')}원|"></span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					보증금 : <span class="font_emp">100,000원</span>
+								    				</div>
+								    				<div class="cell">
+								    					<span class="list_deco">▪︎</span>
+								    					미 선정 시 환불가능금액 :  
+								    					<span class="font_emp" th:text="|*{#numbers.formatInteger(item.refundablePriceWhVat, 0, 'COMMA')}원|"> </span>
+								    					<span class="question-pop text-secondary">
+															<i class="far fa-question-circle"></i>
+															<div class="popup-content">
+																<div class="tooltip_profile_detail">
+																	<table class="table table_two table-sm text-center table-bordered">
+																		<thead style="background-color: #c43f40">
+																			<tr>
+																				<th class="text-light" colspan="5">환불규정</th>
+																			</tr>
+																		</thead>
+																		<tr class="table-active text-center">
+																			<td style="width: 15%">구분</td>
+																			<td style="width: 16%">상황</td>
+																			<td style="width: 25%">보증금</td>
+																			<td style="width: 29%">확정상금</td>
+																			<td style="width: 15%">저작권이전</td>
+																		</tr>
+																		<tr>
+																			<td class="table-active">선정</td>
+																			<td class="table-active">기한 내 선정</td>
+																			<td class="table-active">전액환불</td>
+																			<td class="table-active">수상자에게 상금 지급</td>
+																			<td class="table-active">가능</td>
+																		</tr>
+																		<tr>
+																			<td class="table-active">-</td>
+																			<td class="table-active">무응찰</td>
+																			<td class="table-active">전액환불</td>
+																			<td class="table-active">전액환불</td>
+																			<td class="table-active">N/A</td>
+																		</tr>
+																		<tr>
+																			<td rowspan="3" style="vertical-align: middle;">미선정</td>
+																			<td>1~2인 참여</td>
+																			<td><strong>80%환불</strong><br>20%참여자배당</td>
+																			<td><strong>70%환불</strong><br>20%참여자배당<br>10%수수료</td>
+																			<td style="color: #df564f;vertical-align:middle">불가</td>
+																		</tr>
+																		<tr>
+																			<td>3~5인 참여</td>
+																			<td><strong>50%환불</strong><br>50%참여자배당</td>
+																			<td><strong>50%환불</strong><br>40%참여자배당<br>10%수수료</td>
+																			<td style="color: #df564f;vertical-align:middle">불가</td>
+																		</tr>
+																		<tr>
+																			<td>6인 이상 참여</td>
+																			<td><strong>20%환불</strong><br>80%참여자배당</td>
+																			<td><strong>20%환불</strong><br>70%참여자배당<br>10%수수료</td>
+																			<td style="color: #df564f;vertical-align:middle">불가</td>
+																		</tr>
+																		<tr>
+																			<td colspan="5" class="text-left">** 미선정 : 컨테스트를 취소하거나 포스팅 기한이 만료된 경우를 의미합니다.</td>
+																		</tr>
+																	</table>
+																</div>
+															</div>
+														</span>
+														<div class="ml-0 ml-md-2">(표시금액은 <span class="text-secondary">VAT 포함</span>)</div>
+								    				</div>
+								    			</div>
+									    		<ul class="list list-icons list-dark list-borders text-2">
+													<li class="p-0">
+														<div class="">
+															<div class="post-image">
+																<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+																	<div class="row mx-0 justify-content-end">
+																		<div class="col-lg-2 col-md-3 col-sm-4 p-1" th:each="imageUrl: ${item.entryFileThumbnailUrl}">
+																			<a th:href="${imageUrl}">
+																				<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons">
+																					<span class="thumb-info-wrapper">
+																						<img th:src="${imageUrl}" class="img-fluid" alt="">
+																						<span class="thumb-info-action">
+																							<span class="thumb-info-action-icon thumb-info-action-icon-light">
+																								<i class="fas fa-plus text-dark"></i>
+																							</span>
+																						</span>
+																					</span>
+																				</span>
+																			</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</li>
+												</ul>
+												<div class="action_line">
+													<div class="row">
+														<div class="col-lg-6 align-self-center">
+															<div class="card_info d-block d-lg-flex">
+																<div class="content_wrap">
+																	<span>지금 바로 컨테스트를 포스팅하고, <sapn class="d-none d-md-inline-block">프리랜서들의</sapn> 입찰을 받아보세요!</span>
+																</div>
+															</div>
+														</div>
+														<div class="col-lg-6 text-right">
+															<div aria-label="Buttons Group" class="btn-group" role="group">
+															  	<button class="btn btn-secondary rounded-0" type="button" th:onclick="|toContestPosting(@{${item.id}})|">다시 포스트를 작성합니다</button>
+															  	<button class="btn btn-light rounded-0" type="button" th:onclick="|deleteProject(@{${item.id}})|">삭제</button>
+															</div>
+														</div>
+													</div>												
+												</div>
+											</div>
+										</div>
+									</article>
+									
+									<!-- 컨테스트 리스트 -->
+
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+		<script src="/static/js/client/bid/common.js"></script>
+		<script src="/static/js/client/bid/autoSave.js"></script>
+	</div>
+	
+
+</html>

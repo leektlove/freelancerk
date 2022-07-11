@@ -1,0 +1,45 @@
+.clearfix{content: '';display: block;clear:both;}
+.payment{float:left;display:inline-block;padding:1rem; width:47%;border:1px solid #ddd;margin-top:2rem; margin-bottom:2rem;}
+.authority{float:right;display:inline-block;padding:1rem; width:47%;border:1px solid #ddd;margin-top:2rem; margin-bottom:2rem;}
+.boardform_cus{width:100%;font-size: 13px;}
+.boardform_cus th{width:25px;background: #f3f3f3;border: 1px solid #ddd;padding: 10px;text-align: left;}
+.border-bottom{text-align:center;border-bottom:1px solid #ddd;}
+.boardform_cus td{padding:0.5rem;}
+
+
+/* message */ 
+.boardform td {vertical-align:top;}
+.comment_submit { width:100%;height:100px !important; border:none; cursor:pointer;}
+.comment_textarea {width:100%;}
+
+.client {margin-bottom:30px; float:right; }
+.freelancer {margin-bottom:30px; float:right;}
+.admin {margin-bottom:30px; float:left; }
+
+.clear {clear:both;}
+.client_img {float:right;width:100px;height:100px;}
+.client_text { float:left; border:1px solid #ddd;}
+.client_info {border-bottom:1px solid #ddd;width:548px;}
+.client_info span.mini {float:right;}
+.client_content{width:548px; min-height:74px;}
+
+.freelancer_img {float:right;width:100px;height:100px;}
+.freelancer_text {float:left; border:1px solid #ddd;}
+.freelancer_info {border-bottom:1px solid #ddd;width:548px;}
+.freelancer_info span.mini {float:right;}
+.freelancer_content{width:548px; min-height:74px;}
+
+.admin_img {float:left;width:100px;height:100px;}
+.admin_text {float:left; border:1px solid #ddd;}
+.admin_info {border-bottom:1px solid #ddd;width:548px;}
+.admin_info span.mini {float:right;}
+.admin_content{width:548px; min-height:74px;}
+
+
+
+.name_box {border:1px solid #ddd;width:268px;height:50px;padding:5px;}
+.name_box_img { border:1px solid #ddd;width:50px;height:50px;float:left;}
+.name_box_text { border:1px solid #ddd;float:left;margin-left:5px;line-height:16.8px; }
+#amount_list{margin-top:20px;}
+#amount_list th, #amount_list td{text-align:center;}
+.boardlist th, .boardlist td{text-align:center;}

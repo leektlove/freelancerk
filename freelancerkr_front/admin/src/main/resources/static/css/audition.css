@@ -1,0 +1,44 @@
+.passTypeDiv{
+	display:flex; 
+	border:1px solid #cccccc; 
+	border-bottom: 0px solid #fff;
+	text-align: center;
+	
+}
+.passTypeSpan{
+	flex: 1; 
+	border-right: 1px solid #cccccc;
+	height:30px; 
+	line-height: 30px;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.onPassType{
+    background: #5D5D5D;
+    color:#fff;
+    font-size: 13px;
+    font-weight: 600;
+}	
+.displayN{
+	display: none;
+}
+.auditionBtn {
+    display: inline-block;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 20px 8px 20px;
+    margin-top: -4px;
+    border-radius: 4px;
+}
+.txtBtn{
+	position: absolute;
+	left: 10px;
+	top:0;
+}
+.mailBtn{
+	position: absolute;
+	left: 125px;
+	top:0;
+}

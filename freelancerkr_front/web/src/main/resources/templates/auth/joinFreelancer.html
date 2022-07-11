@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css-->
+    <link rel="stylesheet" href="/static/css/auth/joinFreelancer.css">
+    <link rel="stylesheet" href="/static/css/auth/privacy.css">
+    <link rel="stylesheet" href="/static/css/freelancer/join.css"/>
+</head>
+    <section layout:fragment="content" class="container">
+        <form action="/users" method="post" id="form">
+            <div id="f_join" class="contents">
+                <div class="top_area">
+                    <div class="img">
+                        <img src="/static/images/icon_free.gif">
+                    </div>
+                    <div class="title">
+                        <span>Freelancer</span> Join
+                    </div>
+                </div>
+                <div class="keyword_select">
+                    <div class="title">
+                        <div class="text">어떤 분야의 능력자 이신가요?</div>
+                        <img src="/static/images/icon/ability.svg"/>
+                    </div>
+                    <div class="info">
+                        <i class="icon fas fa-exclamation-circle"></i>
+                        <div class="text">최대한 많은 키워드를 등록하시면 더 많은 기회가 생깁니다.</div>
+                    </div>
+                    <div class="keyword_btn btn btn-lg btn-light" data-toggle="modal"
+                         data-target="#key_add_pop">
+                        키워드 등록(클릭)
+                    </div>
+                    <div class="selected-keywords-container">
+                    </div>
+                    <div class="btn_next">
+                        <button class="btn btn_lg btn-secondary ok_btn" type="button">다음</button>
+                    </div>
+                </div>
+                <div class="wrap_more_write" style="display: none">
+                    <div class="middle_area">
+                        <input type="hidden" name="role" value="ROLE_FREELANCER">
+                        <input type="hidden" name="fpUser" value="N">
+                        <input type="hidden" name="authType" value="EMAIL">
+                        <input type="hidden" name="thirdPartyUserId">
+                        <input type="hidden" name="thirdPartyAccessToken">
+                        <div class="clause_check">
+                            <div class="link_text">
+                                <a target="_blank" href="/common/usagePolicy">이용약관</a>
+                                <a target="_blank" href="/common/privateInfoPolicy">개인정보 취급방침</a>
+                                <a target="_blank" href="/common/escrowPolicy">에스크로서비스</a>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="agree" value="1" id="agree">
+                                <label class="custom-control-label" for="agree">전체동의</label>
+                            </div>
+                        </div>
+                        <div class="input">
+                            <div class="box">
+                                <input type="text" name="email" placeholder="이메일" title="이메일"
+                                       style="ime-mode:inactive;">
+                            </div>
+                            <div class="box">
+                                <input type="password" name="password" class="i_pass" placeholder="패스워드(4자 이상)"
+                                       title="패스워드" maxlength="16" style="ime-mode:inactive;">
+                                <div class="b_notice" id="password-txt"></div>
+                            </div>
+                            <div class="box">
+                                <input type="password" name="password_confirm" value="" class="i_pass"
+                                       placeholder="패스워드(확인)" title="패스워드(확인)" maxlength="16"
+                                       style="ime-mode:inactive;">
+                                <div class="b_notice" id="password-confirm-txt"></div>
+                            </div>
+                            <div class="box">
+                                <input type="text" name="name" placeholder="이름" title="이름" maxlength="15"
+                                       style="ime-mode:inactive;">
+                            </div>
+                            <div class="box">
+                                <input type="number" onkeypress="return onlyNumInput(event);" name="cellphone"
+                                       placeholder="휴대번호" title="휴대번호" maxlength="13"
+                                       style="ime-mode:inactive;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom_area">
+                        <div id="naverIdLogin"></div>
+                        <div class="btn_sns">
+                            <div class="text">간편하게 소셜로 가입하기</div>
+                            <div class="sns_icon">
+                                <a href="javascript:signUpWithKakao()">
+                                    <img class="auth_sns_kakao" src="/static/images/icon/auth_sns_kakao.png">
+                                </a>
+                                <a href="javascript:signUpWithFb()">
+                                    <img class="auth_sns_facebook" src="/static/images/icon/auth_sns_facebook.png">
+                                </a>
+                                <a href="javascript:signUpWithNaver()">
+                                    <img class="auth_sns_naver" src="/static/images/icon/auth_sns_naver.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="btn_join">
+                            <input class="btn btn_lg btn-secondary ok_btn" type="button" value="회원가입" disabled onclick="join()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        <!-- 키워드등록팝업 -->
+        <div class="modal fade modal_wrap" id="key_add_pop" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+             aria-hidden="true">
+
+            <!-- 등록버튼 -->
+            <div class="key_btn">
+                <span class="btn btn-primary btn-lg w-100 key_add_btn" id="key_add_btn">키워드등록완료</span>
+            </div>
+            <!-- 등록버튼// -->
+
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <!-- 팝업헤더 -->
+                    <div class="head modal-header">
+                        <h5 class="modal-title" id="ModalLabel">키워드 등록</h5>
+                        <div class="">
+                            <a class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 팝업헤더// -->
+
+                    <!-- 팝업컨텐츠 -->
+                    <div class="content bg-white">
+
+                        <!-- 공지 -->
+                        <ul class="pt-3 pt-md-0 px-3">
+                            <li>
+                                <i class="fas text-primary fa-exclamation-circle mr-1"></i>
+                                원하는 섹터를 제안해주세요. 적극적으로 피드백 해드리겠습니다.
+                                <a href="/common/askForHelp">
+                                    <button class="btn btn-primary rounded-0 btn-sm ml-2">제안하기</button>
+                                </a>
+                            <li>
+                                <i class="fas text-primary fa-exclamation-circle mr-1"></i>
+                                인기키워드와 참고키워드를 먼저 검토하신 후, 본인의 키워드가 없는 경우 직접 입력해주세요.
+                            </li>
+                        </ul>
+                        <!-- 공지// -->
+
+                        <!-- 키워드 테이블 -->
+                        <div class="px-3">
+                            <div class="sectorTable row" style="margin-bottom:80px;">
+                            </div>
+                        </div>
+                        <!-- 키워드 테이블// -->
+
+                    </div>
+                    <!-- 팝업컨텐츠// -->
+
+                </div>
+            </div>
+        </div>
+        <!-- 키워드등록팝업// -->
+
+        <script th:inline="javascript">
+            var kakaoAppId = [[${kakaoAppId}]];
+            var facebookAppId = [[${facebookAppId}]];
+            var naverClientId = [[${naverClientId}]];
+            var naverCallbackUrl = serverUrl + '/callback/oauth2/naver?role=ROLE_FREELANCER&type=SIGN_UP';
+
+        </script>
+        <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+        <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+        <script src="/static/js/thirdparty-common.js"></script>
+        <script type='text/javascript'>
+
+            var selectedKeywords = [];
+            function signUpWithFb() {
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                FB.login(function(response) {
+                    if (response.authResponse) {
+                        var accessToken = response.authResponse.accessToken;
+                        FB.api('/me', function(response) {
+                            console.log(response);
+                            var userId = response.id;
+                            var name = response.name;
+                            $('input[name=name]').val(name);
+                            $('input[name=email]').val('');
+                            $('input[name=thirdPartyUserId]').val(userId);
+                            $('input[name=thirdPartyAccessToken]').val(accessToken);
+                            $('input[name=authType]').val('FACEBOOK');
+                            $.ajax({
+                                type: "POST",
+                                url: $('#form').attr('action'),
+                                data: new FormData($('#form')[0]),
+                                processData: false,
+                                contentType: false,
+                                success: function(data)
+                                {
+                                    try {
+                                        window.dataLayer = window.dataLayer || [];
+                                        window.dataLayer.push({'pageCategory': 'freelancer'});
+                                    } catch (e) {
+                                        console.error(e);
+                                    }
+                                    location.href = '/freelancer/profile/index';
+                                },
+                                error: function(jqXHR, textStatus) {
+                                    if (jqXHR.status === 409) {
+                                        alert("이미 가입한 계정입니다.");
+                                    } else {
+                                        alert("가입 시도에 실패했습니다.");
+                                    }
+                                }
+                            });
+                        });
+                    } else {
+                        console.log('User cancelled login or did not fully authorize.');
+                    }
+                });
+            }
+
+            function signUpWithKakao() {
+                // 로그인 창을 띄웁니다.
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                Kakao.Auth.login({
+                    success: function(authObj) {
+                        Kakao.API.request({
+                            url: '/v2/user/me',
+                            success: function(res) {
+                                console.log(JSON.stringify(res));
+                                console.log(JSON.stringify(authObj));
+                                var userId = res.id;
+                                $('input[name=name]').val(res.properties['nickname']);
+                                $('input[name=email]').val(res.kaccount_email);
+                                $('input[name=thirdPartyUserId]').val(res.id);
+                                $('input[name=thirdPartyAccessToken]').val(authObj.access_token);
+                                $('input[name=authType]').val('KAKAO');
+                                $.ajax({
+                                    type: "POST",
+                                    url: $('#form').attr('action'),
+                                    data: new FormData($('#form')[0]),
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(data)
+                                    {
+                                        try {
+                                            window.dataLayer = window.dataLayer || [];
+                                            window.dataLayer.push({'pageCategory': 'freelancer'});
+                                        } catch (e) {
+                                            console.error(e);
+                                        }
+                                        location.href = '/freelancer/profile/index';
+                                    },
+                                    error: function(jqXHR, textStatus) {
+                                        if (jqXHR.status === 409) {
+                                            alert("이미 가입한 계정입니다.");
+                                        } else {
+                                            alert("가입 시도에 실패했습니다.");
+                                        }
+                                    }
+                                });
+                                console.log(res.id);
+                                console.log(res.kaccount_email);
+                                console.log(res.properties['nickname']);
+                                console.log(authObj.access_token);
+                            }
+                        })
+                    },
+                    fail: function(err) {
+                        console.log(JSON.stringify(err));
+                    }
+                });
+
+            };
+
+            function signUpWithNaver() {
+                if (!$('input:checkbox[name=agree]').is(':checked')) {
+                    alert('이용약관 등에 대한 동의가 필요합니다');
+                    return false;
+                }
+                var authorizeUrl = naverLogin.generateAuthorizeUrl();
+                var popup = window.open(authorizeUrl, "", "width=400,height=500");
+                popup.onbeforeunload = function(){
+                    try {
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({'pageCategory': 'freelancer'});
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    location.href = '/freelancer/profile/index';
+                    return null;
+                }
+            }
+
+            function reload() {
+                location.href = '/freelancer/profile/index';
+            }
+        </script>
+        <script>
+            $(".btn_next .ok_btn").click(function(){
+                if (selectedKeywords.length === 0 && $('input[name=selectedKeywordJson\\[\\]]').length === 0) {
+                    alert('나의 섹터와 관련 키워드를 등록해주세요(필수)');
+                    return;
+                }
+
+                if (selectedKeywords.length < 3) {
+                    alert('키워드를 3개 이상 선택 또는 입력해주세요. 많은 키워드를 선택할 수록 매칭 확률이 높아집니다. :)');
+                    return;
+                }
+
+                $(".wrap_more_write").show();
+                $(".btn_next").hide();
+              });
+        </script>
+        <script>
+            $('#agree').click(function () {
+                //check if checkbox is checked
+                if ($(this).is(':checked')) {
+                    $('.bottom_area .ok_btn').removeAttr('disabled'); //enable input
+                    $('.bottom_area .sns_icon').css('opacity','1');
+
+                } else {
+                    $('.bottom_area .ok_btn').attr('disabled', true); //disable input
+                    $('.bottom_area .sns_icon').css('opacity','0.5');
+                }
+            });
+        </script>
+        <script src="/static/lib/zxcvbn/zxcvbn.js"></script>
+        <script src="/static/js/freelancer/join.js"></script>
+    </section>
+    
+
+</html>

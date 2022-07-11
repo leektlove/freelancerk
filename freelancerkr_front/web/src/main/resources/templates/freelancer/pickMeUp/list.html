@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/pickMeUp/list.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row mb-3">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>포트폴리오 관리</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8 col-xl-9">
+						<ol class="mb-0">
+							<li class="mb-2" style="line-height: 18px;font-size: 15px;">
+								<i class="fas fa-angle-right mr-2"></i>
+								저장된 포트폴리오는 [프로젝트]나 [컨테스트]의 입찰에 참여한 경우, 
+								<span class="mark">
+									<strong class="font-weight-bold">해당 클라이언트만 열람</strong>
+								</span>
+								할 수 있습니다.
+							</li>
+							<li class="mb-2" style="line-height: 18px;font-size: 15px;">
+								<i class="fas fa-angle-right mr-2"></i>
+								포트폴리오 전체공개(픽미업)는 유료서비스입니다.
+								<span class="mark">
+									<strong class="font-weight-bold">직거래, 우선노출 등의 옵션</strong>
+								</span>
+								을 선택할 수 있습니다.
+							</li>
+							<li class="mb-2" style="line-height: 18px;font-size: 15px;">
+								<i class="fas fa-angle-right mr-2"></i>
+								직거래옵션을 사용하면
+								<span class="mark">
+									<strong class="font-weight-bold">본인이 프로필에서 선택한 컨택포인트가 공개</strong>
+								</span>
+								되어 자유롭게 직거래 할 수 있습니다. 
+							</li>
+						</ol>
+					</div>
+					<div class="col-lg-4 col-xl-3">
+						<a href="javascript:toRegisterPortfolio()">
+							<button type="button" class="btn btn-primary btn-lg mt-4 mt-lg-2 w-100">
+								<i class="fas fa-upload mr-2"></i>
+								포트폴리오(픽미업) 등록하기
+							</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더//-->
+
+		<div class="container">
+
+			<div class="content-body">
+				<div class="wrap">
+
+					<!-- 포트폴리오 리스트 -->
+					<div class="pickMeUp">
+						<div class="row">
+							<div th:each="pickMeUp, iter : ${pickMeUpPages.content}" class="col-6 col-sm-6 col-md-3 col-lg-1-5 col-xl-2 mb-4">
+	                            <article th:class="${(pickMeUp.featured?'featured ':'post '+'pickmeup_card '+'mb-2')}">
+	                                <span class="badge-g-list" style="max-width: 70%;">
+	                                    <span th:if="${pickMeUp.directDealAvailable}"class="direct" data-toggle="tooltip" data-placement="top" data-original-title="직거래가능"><i class="fas fa-phone"></i></span>
+	                                    <span th:if="${pickMeUp.highQuality}"class="master" data-toggle="tooltip" data-placement="top" data-original-title="고급인력"><i class="far fa-thumbs-up"></i></span>
+	                                    <span th:if="${pickMeUp.creative}"class="creative" data-toggle="tooltip" data-placement="top" data-original-title="독창적"><i class="far fa-lightbulb"></i></span>
+	                                </span>
+	                                <div class="image_wrap">
+	                                    <div class="post-image" style="position: relative;">
+	                                        <div class="kind-c">
+												<img th:if="${pickMeUp.contentType == 'VIDEO'}" src="/static/images/card_video.png" class="card_video" style="width: 40px;">
+												<img th:if="${pickMeUp.contentType == 'AUDIO'}" src="/static/images/card_audio.png" class="card_audio" style="width: 40px;">
+											</div>
+	                                        <div class="pickmeup_portfolio_card">
+	                                            <div class="blog_text" th:if="${pickMeUp.contentType?.name() == 'BLOG'}">
+	                                                <div class="text text-dark" th:text="${pickMeUp.onlyTextDescription}">
+	                                                </div>
+	                                            </div>
+	                                            <div class="center-crop-wrapper">
+	                                                <img th:src="${pickMeUp.representativeImageUrl}" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="image_button text-light" style="position: absolute;top: 5px;right: 10px;white-space: nowrap;">
+	                                        <i class="fas fa-cog mr-2" th:id="${pickMeUp.id}"  th:onclick="|javascript:location.href='/freelancer/pickMeUp/modify?pickMeUpId=${pickMeUp.id}'|"></i>
+	                                        <i class="fas fa-times" th:onclick="|deletePickMeUp(this, ${pickMeUp.id}, ${pickMeUp.pickMeUpExpose}, ${pickMeUp.freeCharge})|"></i>
+	                                    </div>
+	                                </div>
+	                                <div th:class="|pickmeup-profile-image ${pickMeUp.project != null?'certification':''}|">
+	                                    <img th:src="@{${(#strings.isEmpty(pickMeUp.user.profileImageUrl)?'/static/images/icon/freelancer_noimg.png':pickMeUp.user.profileImageUrl)}}">
+	                                </div>
+	                                <div class="pickmeup_card_sector">
+                                        <span class="" th:text="${pickMeUp.category1st?.name}"></span>
+                                        <i class="fas fa-arrow-right"></i>
+                                        <span class="" th:text="${pickMeUp.category2nd?.name}"></span>
+                                    </div>
+	                                <!-- <div class="card-infomation">
+			                            <div class="counter">
+			                                <div class="counter_c" th:text="${#numbers.formatInteger(pickMeUp.directDealCount, 0, 'COMMA')}">0</div>
+			                                <div class="counter_t">직거래</div>
+			                            </div>
+			                            <div class="counter">
+			                                <div class="counter_c" th:text="${#numbers.formatInteger(pickMeUp.projectPropositionCount, 0, 'COMMA')}">0</div>
+			                                <div class="counter_t">요청</div>
+			                            </div>
+			                            <div class="counter">
+			                                <div class="counter_c" th:text="${#numbers.formatInteger(pickMeUp.hits, 0, 'COMMA')}">0</div>
+			                                <div class="counter_t">조회수</div>
+			                            </div>
+			                        </div> -->
+                                    <div class="card-title text-dark">
+                                        <div th:text="${pickMeUp.title}"></div>
+                                    </div>
+                                    <div class="see_more_button" th:onclick="|toDetailView('@{/portfolios/__${pickMeUp.id}__/details(pickMeUpIds=${pickMeUpIds},currentIndex=${iter.index})}')|" style="cursor: pointer;">
+                                    	미리보기 >
+                                    </div>
+	                            </article>
+	                            <div th:class="|pickmeup-open ${pickMeUp.pickMeUpExpose?' active':''}|">
+                                	<div class="open_wrap" th:if="${pickMeUp.pickMeUpExpose}"style="white-space: nowrap;">
+                                		픽미업 공개중입니다
+										<div th:if="${pickMeUp.freeCharge}">(무제한)</div>
+										<div th:if="${!pickMeUp.freeCharge}" th:text="|~ ${pickMeUp.getOptionValidationSpan('PICK_ME_UP')}|"></div>
+                                	</div>
+                                	<div class="open_wrap" th:if="${!pickMeUp.pickMeUpExpose}"style="white-space: nowrap;">
+                                		비공개입니다
+                                	</div>
+                                </div>
+                            	<div class="d-flex">
+                                	<button type="button" class="btn btn-block mb-1 rounded-0" th:if="${!pickMeUp.pickMeUpExpose}" onclick="openPickMeUp()" style="border:1px solid #e36159;color: #e36159;">
+                                		<i class="fas fa-volume-up mr-1"></i>
+                                		픽미업에 공개하기
+                                	</button>
+									<button type="button" class="btn btn-block mb-1 rounded-0" th:if="${pickMeUp.pickMeUpExpose}" th:onclick="|toPaymentView('/freelancer/pickMeUp/extend?pickMeUpId=${pickMeUp.id}')|" style="border:1px solid #0088cc;color: #0088cc;">
+										<i class="fas fa-gift mr-1"></i>
+										옵션추가/연장
+									</button>
+								</div>
+								<!-- <div class="d-flex">
+									<button type="button" class="btn btn-modern w-50 btn-light btn-sm rounded-0" th:id="${pickMeUp.id}" href="#" th:onclick="|javascript:location.href='/freelancer/pickMeUp/modify?pickMeUpId=${pickMeUp.id}'|">수정하기</button>
+									<button type="button" class="btn btn-modern w-50 btn-light btn-sm rounded-0" th:onclick="|deletePickMeUp(this, ${pickMeUp.id}, ${pickMeUp.pickMeUpExpose}, ${pickMeUp.freeCharge})|">삭제하기</button>
+								</div> -->
+	                        </div>
+
+						</div>
+					</div>
+					<!-- 포트폴리오 리스트//-->
+
+					<!-- 가이드 -->
+					<div class="heading heading-border heading-middle-border">
+	                    <h4 class=""><strong class="font-weight-bold">포트폴리오 관리방법</strong></h4>
+	                </div>
+					<div class="row" style="align-items: center;margin-top:3rem;margin-bottom:3rem;">
+						<div class="col-lg-6">
+							<div class="row">
+								<div class="pickme_guid_1 guide col-6">
+									<div class="form-row">
+										<div class="col-lg-12">
+											<img src="/static/images/use-guide/pickme_guid_1.png" class="img-fluid">
+										</div>
+										<div class="col-lg-12" style="align-self: center;">
+											포트폴리오를<br class="d-block d-md-none"> 업로드 하세요.
+										</div>
+									</div>
+								</div>
+								<div class="pickme_guid_2 guide col-6">
+									<div class="form-row">
+										<div class="col-lg-12">
+											<img src="/static/images/use-guide/pickme_guid_2.png" class="img-fluid">
+										</div>
+										<div class="col-lg-12" style="align-self: center;">
+											옵션을 선택하셔서<br class="d-block d-md-none"> 포트폴리오를<br class="d-none d-md-block"/>픽미업에 <br class="d-block d-md-none">공개하세요.
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6" style="margin-top:30px;">
+							<div class="row">
+								<div class="pickme_guid_3 guide col-6 col-lg-12">
+									<div class="form-row">
+										<div class="col-lg-6">
+											<img src="/static/images/use-guide/pickme_guid_3.png" class="img-fluid">
+										</div>
+										<div class="col-lg-6 text-center text-lg-left" style="align-self: center;">
+											프로젝트(컨테스트)에<br class="d-block d-md-none"> 대한<br class="d-none d-md-block"/> 참여요청을 <br class="d-block d-md-none">받을 수 있어요.
+										</div>
+									</div>
+								</div> 
+								<div class="pickme_guid_4 guide col-6 col-lg-12">
+									<div class="form-row">
+										<div class="col-lg-6">
+											<img src="/static/images/use-guide/pickme_guid_4.png" class="img-fluid">
+										</div>
+										<div class="col-lg-6 text-center text-lg-left" style="align-self: center;">
+											직거래 옵션으로<br class="d-block d-md-none"> 클라이언트와<br/> 직거래 할 수 있어요.
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 가이드// -->
+
+				</div>
+			</div>
+		</div>
+
+		<script src="/static/js/popup.js"></script>
+		<script th:inline="javascript">
+			var category1stId = [[${category1stId}]];
+			var category2ndId = [[${category2ndId}]];
+            var userInfoInput = [[${user.infoInput}]];
+			var totalPortfolioCount = [[${totalPortfolioCount}]];
+			var contentType;
+
+			function toDetailView(linkUrl) {
+				window.open(linkUrl);
+			}
+
+			function toPaymentView() {
+				alert('나의 결제관리로 이동합니다.');
+				location.href = '/freelancer/payment/index';
+			}
+		</script>
+
+		<script src="/static/js/portfolio-common.js"></script>
+		<script src="/static/js/freelancer/pickMeUp/pickmeup-common.js"></script>
+		<script>
+			// For Demo purposes only (show hover effect on mobile devices)
+			[].slice.call( document.querySelectorAll('a[href="#"') ).forEach( function(el) {
+				el.addEventListener( 'click', function(ev) { ev.preventDefault(); } );
+			} );
+		</script>
+	</section>
+	
+
+</html>

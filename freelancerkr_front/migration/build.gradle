@@ -1,0 +1,23 @@
+apply plugin: 'war'
+
+jar {
+    baseName = 'web'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile project(':common')
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
+    compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.3.0'
+    compile('org.thymeleaf.extras:thymeleaf-extras-java8time')
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    compile("org.springframework.boot:spring-boot-starter-tomcat")
+}
+
+eclipse {
+    classpath {
+        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7'
+    }
+}

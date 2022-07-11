@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<link rel="stylesheet" href="/static/css/freelancer/profile/modify.css">
+	<link rel="stylesheet" href="/static/vendor/slim-image-cropper/slim.min.css">
+</head>
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>프로필 수정</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<div class="container">
+			<div class="content-body">
+				<section class="card form-wizard" id="w5">
+					<header class="card-header">
+						<div class="wizard-progress wizard-progress-lg">
+							<div class="steps-progress">
+								<div class="progress-indicator"></div>
+							</div>
+							<ul class="nav wizard-steps">
+								<li class="nav-item active">
+									<a class="nav-link" href="#w5-one" data-toggle="tab"><span>1</span>
+									이미지수정</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#w5-two" data-toggle="tab"><span>2</span>기본정보</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#w5-three" data-toggle="tab"><span>3</span>커뮤니케이션 방법</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#w5-four" data-toggle="tab"><span>4</span>비밀번호변경</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#w5-five" data-toggle="tab"><span>5</span>프리랜서<br/>상세프로필</a>
+								</li>
+							</ul>
+						</div>
+					</header>
+					<div class="">
+						<form id="form" th:action="@{/freelancer/profile/modify}" th:object="${user}" method="post" enctype="multipart/form-data">
+							<input type="hidden" th:field="*{id}" th:value="${user.id}"/>
+							<div class="tab-content pt-5">
+								<div id="w5-one" class="tab-pane active">
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="text-dark">
+															<div class="font-weight-bold">나의 이미지를 업로드 해주세요.</div>
+															<div>샘플이미지보다 나의 이미지가 더 좋습니다.</div>
+														</label>
+														<span class="required"> *</span>
+														<div class="form-row">
+															<div class="file_container p-0 col-lg-5">
+																<!-- <p class="text-left">프리랜서코리아는 프리랜서의 [실력과 경력]으로 평가 받는 플랫폼을 지향합니다<br /> 본인의 작업물이나 본인을 형상화 할 수 있는 이미지를 올려주세요
+																</p> -->
+																<input type="hidden" name="uploadedProfileImageUrl" th:value="${user.profileImageUrl}"/>
+																<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="나의 이미지 업로드(클릭)" id="my-cropper" style="max-width: 70%;">
+																	<input name="profileImageUrl" type="file" class="form-control-file" style="height:46px; margin-bottom:5px;">
+																</div>
+															</div>
+															<div class="col-lg-7">
+																<img src="/static/images/sample_05.png" class="pms_c">
+																<img src="/static/images/sample_04.png" class="pms_c">
+																<img src="/static/images/sample_06.png" class="pms_c">
+																<img src="/static/images/sample_03.png" class="pms_c">
+																<img src="/static/images/sample_02.png" class="pms_c">
+																<img src="/static/images/sample_01.png" class="pms_c">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div id="w5-two" class="tab-pane">
+									<div class="form-row">
+										<div class="form-group col-sm-9 mx-auto">
+											<div class="">
+												<label class="font-weight-bold text-dark">
+													기본정보를 입력해주세요
+												</label>
+											</div>
+										</div>
+									</div>
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">
+															본인의 이름을 입력해주세요<span class="required"> *</span>
+														</label>
+														<input th:field="*{name}" th:value="${name}" type="text" class="form-control" placeholder="" required title="이름" maxlength="20" >
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">
+															닉네임을 입력해주세요<span class="required"> *</span>
+														</label>
+														<div class="input-group">
+															<input th:field="*{nickname}" th:value="${nickname}" name="nickname" type="text" class="form-control" placeholder="예) Designer_Y" required>
+															<div class="input-group-append">
+																<div id="btn-check-nickname" class="btn btn-primary">중복체크</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">
+															이름과 닉네임 중 어느 것을 노출하시겠어요?
+														</label><span class="required"> *</span>
+														<select th:field="*{exposeType}" id="exposeType" class="form-control" required>
+															<option th:value="NAME" th:selected="${exposeType == null OR exposeType.name() == 'NAME'}">이름</option>
+															<option th:value="NICKNAME" th:selected="${exposeType != null AND exposeType.name() == 'NICKNAME'}">닉네임</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">
+															이메일을 입력해주세요<span class="required"> *</span>
+														</label>
+														<input type="text" name="" th:field="*{email}" th:value="${email}" class="required email form-control" maxlength="100" required title="이메일" placeholder="">
+														<!--<input th:if="${user.authType.name() == 'EMAIL'}" type="text" name="" th:field="*{email}" th:value="${email}" class="required email form-control" maxlength="100" required title="이메일" placeholder="" readonly>
+														<input th:if="${user.authType.name() != 'EMAIL'}" type="text" name="" th:field="*{email}" th:value="${email}" class="required email form-control" maxlength="100" required title="이메일" placeholder=""> -->
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">휴대폰번호로 본인을 인증해주세요.<span class="required"> *</span></label>
+														<div>
+															<span class="mark">
+																<i class="fas fa-exclamation-circle mr-1"></i>
+																<span class="font-weight-bold">해외 거주자</span>의 경우 <span class="font-weight-bold">국가 코드</span>를 함께 입력해주세요.
+															</span>
+															<div class="mb-2">
+																예) 日本 : <span class="font-weight-bold">81</span>801234567
+															</div>
+														</div>
+														<div class="input-group">
+															<input th:field="*{cellphone}" th:value="${cellphone}" type="text" class="form-control" required title="휴대폰" placeholder="" maxlength="15">
+															<input type="text" class="form-control" name="certificationCode" id="certificationCode" placeholder="인증코드" style="display: none" required maxlength="12">
+															<input type="hidden" name="cellphoneCertified" th:value="${user.cellphoneCertified}"/>
+															<div class="input-group-append">
+																<div class="btn btn-primary btn-certify" style="display: none">인증</div>
+															</div>
+															<div class="input-group-append">
+																<div class="btn btn-primary btn-request-certify">인증받기</div>
+															</div>
+														</div>
+														<div id="remainTimesContainer" style="margin: 8px;margin-bottom:0; font-size: 9pt;color: grey; display: none">
+															남은시간 <span id="remainTimes">03:00</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">
+															이메일 수신여부를 선택해주세요<span class="required"> *</span>
+														</label>
+														<select th:field="*{receiveEmail}" id="" class="form-control" required>
+															<option th:value="true" th:selected="${user.receiveEmail}">네 수신합니다</option>
+															<option th:value="false" th:selected="${!user.receiveEmail}">아니오 수신하지 않겠습니다</option>
+														</select>
+														<div class="help-block">프로젝트 알림, 진행 상황, 클라이언트(의뢰자)의 제안 등이 등록된 이메일로 실시간 전송됩니다 <br>
+														등록된 이메일을 본인의 휴대폰과 동기화하시면 보다 빠른 피드백이 가능합니다
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>	
+								<div id="w5-three" class="tab-pane">
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<label class="font-weight-bold text-dark">
+														컨택포인트를 선택해주세요.
+														<span class="required"> *</span>
+													</label>
+													<div class="help-block">
+														<div class="d-flex mb-2">
+															<i class="fas fa-exclamation-circle text-dark align-self-center"></i>
+															<div class="ml-2 font-weight-bold">입찰 등에서 클라이언트와의 커뮤니케이션에 사용됩니다.</div>
+														</div>
+														<div class="d-flex mb-2">
+															<i class="fas fa-exclamation-circle text-dark align-self-center"></i>
+															<div class="ml-2 font-weight-bold">
+																<mark>직거래옵션을 사용하실 경우 선택하신 컨택포인트가 노출됩니다.</mark>
+															</div>
+														</div>
+														<div class="d-flex mb-2">
+															<i class="fas fa-exclamation-circle text-dark align-self-center"></i>
+															<div class="ml-2 font-weight-bold">최대한 많은 컨택포인트를 노출하시면 더 많은 기회가 생깁니다.</div>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="custom-control custom-checkbox">
+								                                <input type="checkbox" class="custom-control-input" name="checkBoxExposeEmail"  id="checkBoxExposeEmail" value="true" th:field="*{exposeEmail}" th:checked="${exposeEmail}"/>
+								                                <label class="custom-control-label" for="checkBoxExposeEmail">이메일</label>
+								                            </div>
+								                            <input type="text" id="email" class="profile_email form-control" name="email" th:value="${user.email}" th:placeholder="|${user.email}|"/>
+								                           <!-- <input th:if="${user.authType.name() == 'EMAIL'}" type="text" id="email" class="profile_email form-control" name="email" th:value="${user.email}" th:placeholder="|${user.email}|" th:disabled="${!user.exposeEmail}" readonly/>
+								                            <input th:if="${user.authType.name() != 'EMAIL'}" type="text" id="email" class="profile_email form-control" name="email" th:value="${user.email}" th:placeholder="|${user.email}|" th:disabled="${!user.exposeEmail}"/> -->
+
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="custom-control custom-checkbox">
+								                                <input type="checkbox" class="custom-control-input" name="checkBoxExposeCellphone"  id="checkBoxExposeCellphone" value="true"  th:field="*{exposeCellphone}" th:checked="${exposeCellphone}"/>
+								                                <label class="custom-control-label" for="checkBoxExposeCellphone">휴대폰</label>
+								                            </div>
+								                            <input type="text" class="form-control" th:placeholder="|${user.cellphone}|" th:value="${user.cellphone}" name="cellphone" th:disabled="${!user.exposeCellphone}"/>
+														</div>
+													</div>
+													<div class="form-row">
+														<div class="form-group col">
+															<div class="custom-control custom-checkbox">
+								                                <input type="checkbox" class="custom-control-input" name="cm_display_1_3"  id="checkBoxExposeSns" value="true"  th:field="*{exposeSns}" th:checked="${user.exposeSns}"/>
+								                                <label class="custom-control-label" for="checkBoxExposeSns">SNS/홈페이지</label>
+								                            </div>
+								                            <span class="mark">http부터 시작하는 전체 URL을 넣어주세요.</span>
+														</div>
+													</div>
+													<div class="form-row cm_display_1_3_con bg-light">
+														<div class="form-group col-md-10 mx-auto d-flex">
+															<div class="" style="align-self: flex-end;font-size: xx-large;padding: 5px;color: #3a5896;">
+																<i class="fab fa-facebook-square"></i>
+															</div>
+															<div class="ml-2 w-100">
+																<label class="font-weight-bold text-dark">Facebook 계정</label>
+																<input type="text" th:field="*{facebookLinkUrl}" id="cm_sns_1" title="페이스북 링크" class="form-control only_nes" placeholder="https://www.facebook.com/XXXXXX"/>
+															</div>
+														</div>
+														<div class="form-group col-md-10 mx-auto d-flex">
+															<div class="" style="align-self: flex-end;font-size: xx-large;padding: 5px;color: #dd2a7b;">
+																<i class="fab fa-instagram"></i>
+															</div>
+															<div class="ml-2 w-100">
+																<label class="font-weight-bold text-dark">Instagram 계정</label>
+																<input type="text" th:field="*{instagramLinkUrl}" id="cm_sns_2" title="인스타그램 링크" class="form-control only_nes" placeholder="https://www.instagram.com/XXXXXX"/>
+															</div>
+														</div>
+														<div class="form-group col-md-10 mx-auto d-flex">
+															<div class="" style="align-self: flex-end;font-size: xx-large;padding: 5px; color: #38A1F3;">
+																<i class="fab fa-twitter-square"></i>
+															</div>
+															<div class="ml-2 w-100">
+																<label class="font-weight-bold text-dark">Twitter 계정</label>
+																<input type="text" th:field="*{twitterLinkUrl}" id="cm_sns_3" title="트위터 링크" class="form-control only_nes" placeholder="https://www.twitter.com/XXXXXX"/>
+															</div>
+														</div>
+														<div class="form-group col-md-10 mx-auto d-flex">
+															<div class="" style="align-self: flex-end;font-size: xx-large;padding: 5px; color: #cd201f;">
+																<i class="fab fa-youtube-square"></i>
+															</div>
+															<div class="ml-2 w-100">
+																<label class="font-weight-bold text-dark">YouTube 계정</label>
+																<input type="text" th:field="*{youtubeLinkUrl}" id="cm_sns_4" title="유튜브 링크" class="form-control only_nes" placeholder="https://www.youtube.com/XXXXXX"/>
+															</div>
+														</div>
+														<div class="form-group col-md-10 mx-auto d-flex">
+															<div class="" style="align-self: flex-end;font-size: xx-large;padding: 5px; color: #0077b5;">
+																<i class="fab fa-linkedin"></i>
+															</div>
+															<div class="ml-2 w-100">
+																<label class="font-weight-bold text-dark">Linkedin 계정</label>
+																<input type="text" th:field="*{linkedInLinkUrl}" id="cm_sns_5" title="링크드인 링크" class="form-control only_nes" placeholder="https://www.linkedin.com/in/XXXXXX"/>
+															</div>
+														</div>
+														<div class="form-group col-md-10 mx-auto d-flex">
+															<div class="" style="align-self: flex-end;font-size: xx-large;padding: 5px;color: #913399;">
+																<i class="fab fa-github-square"></i>
+															</div>
+															<div class="ml-2 w-100">
+																<label class="font-weight-bold text-dark">GitHub 계정</label>
+																<input type="text" th:field="*{githubLinkUrl}" id="cm_sns_6" title="깃허브 링크" class="form-control only_nes" placeholder="https://www.github.com/XXXXXX"/>
+															</div>
+														</div>
+														<div class="form-group col-md-10 mx-auto d-flex">
+															<div class="" style="align-self: flex-end;font-size: xx-large;padding: 5px;color: #000;">
+																<i class="fas fa-rss-square"></i>
+															</div>
+															<div class="ml-2 w-100">
+																<label class="font-weight-bold text-dark">Blog/Homepage 계정</label>
+																<input type="text" th:field="*{blogLinkUrl}" id="cm_sns_7" title="블로그 링크" class="form-control only_nes" placeholder="https://www.XXXXXX.com"/>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div id="w5-four" class="tab-pane">
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">비밀번호 변경이 필요한 경우에만 입력해주세요</label>
+														<div class="form-group">
+															<label class="font-weight-bold text-dark form-group" for="password">비밀번호를 입력해주세요</label>
+															<input th:field="*{password}" th:disabled="${user.authType?.name() != 'EMAIL'}" id="inputPassword" type="password" class="form-control mb-2" placeholder="*******">
+															<div class="help-block" for="password">영문,숫자,특수문자의 조합이 가장 안전합니다.(사용되지 않는 특수문자: \"'?/)</div>
+														</div>
+														<div class="form-group">
+															<label class="font-weight-bold text-dark" for="passwordConfirm">비밀번호를 한번 더 입력해 주세요</label>
+															<input id="inputRepassword" th:disabled="${user.authType?.name() != 'EMAIL'}" type="password" class="form-control mb-2" placeholder="*******">
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div id="w5-five" class="tab-pane">
+									<div class="form-row">
+										<div class="form-group col-sm-9 mx-auto">
+											<div class="">
+												<label class="font-weight-bold text-dark">프로필을 입력해주세요.(가장 중요합니다)</label>
+											</div>
+										</div>
+									</div>
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">어떠한 종류의 프리랜서 이신가요?</label><span class="required"> *</span>
+														<select th:field="*{businessType}" class="form-control" required>
+															<option th:value="INDIVIDUAL" th:selected="${businessType != null AND businessType.name() == 'INDIVIDUAL'}">개인</option>
+															<option th:value="INDIV_BUSINESS" th:selected="${businessType != null AND businessType.name() == 'INDIV_BUSINESS'}">팀(개인사업자)</option>
+															<option th:value="CORP_BUSINESS" th:selected="${businessType != null AND businessType.name() == 'CORP_BUSINESS'}">팀(법인사업자)</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li class="company-info-container">
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">회사명을 입력해 주세요</label>
+														<input type="text" th:field="*{corporateName}" class="form-control" name="corporateName" th:value="${user.corporateName}" title="회사명" placeholder="예) 삼성전자">
+													</div>
+												</div>
+											</div>
+										</li>
+										<li class="company-info-container">
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">사업자 등록번호를 입력해주세요(선택)
+														</label>
+														<input type="text" th:field="*{corporateNumber}" name="corporateNumber" th:value="${user.corporateNumber}" id="fm_license_number" title="사업자등록번호" placeholder="예) 123-45-67890" class="form-control only_nd">
+														<label class="font-weight-bold text-dark mt-2">사업자 등록증을 첨부해주세요
+														</label>
+														<div>
+															<span class="file_con real-file-input" th:style="|display: ${user == null OR user?.businessLicenseUrl == null?'inline':'none'}|">
+																<input type="file" class="form-control-file w-50 d-inline-block" name="businessLicenseFile" id="attachedFile">
+															</span>
+															<span th:if="${user?.businessLicenseUrl != null}" class="file_con mr-5 fake-file-input">
+																<button type="button" class="btn" id="fake-file-btn" style="background-color: lightgray;border: 1px solid;">파일선택</button>
+																<span class="form-control-file w-50 d-inline-block" th:text="${user?.businessLicenseFileName}"></span>
+															</span>
+															<span class="btn btn-info rounded-0" id="attachedFileCancelUpload" th:style="|display: ${user?.businessLicenseUrl != null?'inline-block':'none'}|">파일취소
+															</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col mb-0">
+													<div class="">
+														<label>
+															<div class="font-weight-bold text-dark">세금납부 관련 정보를 선택해주세요</div>
+															<div>(나중에 입력하셔도 됩니다)</div>
+														</label>
+														<!-- <div class="form-row">
+															<div class="form-group">
+																<div class="form-check indiv-info-container">
+																	<input th:field="*{taxType}" th:value="COLLECTION_IN_ADVANCE" class="form-check-input" type="radio" id="taxCIA"
+																		   checked>
+																	<label class="form-check-label" for="taxCIA">
+																		사업소득세와 지방소득세(3.3%) 원천징수 - 모든 개인과 일부 개인사업자
+																		<br />
+																		<div class="form-row">
+																			<div class="col-md-4 mb-3">
+																				<input th:field="*{registrationNumber}" type="text" class="form-control only_nd" title="주민등록번호" placeholder="주민등록번호" value="주민등록번호"maxlength="14">
+																				<div class="valid-feedback">Looks good!</div>
+																			</div>
+																			<div class="col-md-4 mb-3">
+																				<input th:field="*{realName}" type="text" class="form-control " title="실명" placeholder="실명" maxlength="5">
+																				<div class="valid-feedback">Looks good!</div>
+																			</div>
+																		</div>
+																	</label>
+																</div>
+															</div>
+															<div class="form-group">
+																<div class="form-check company-info-container">
+																	<input th:field="*{taxType}" th:value="VAT" class="form-check-input" type="radio" id="taxVAT">
+																	<label class="form-check-label" for="taxVAT">
+																		세금계산서 발행 후 부가가치세 납부 - 모든 법인과 일부 개인사업자
+																	</label>
+																</div>
+															</div>
+														</div> -->
+														<div class="form-row">
+															<div class="form-group">
+																<div class="indiv-info-container custom-control custom-radio">
+									                                <input type="radio" id="taxCIA" name="tax" class="custom-control-input" th:field="*{taxType}" th:value="COLLECTION_IN_ADVANCE" checked="checked">
+									                                <label class="custom-control-label" for="taxCIA">
+									                                	사업소득세와 지방소득세(3.3%) 원천징수 - 모든 개인과 일부 개인사업자
+									                                	<div class="mt-2">
+																			<div class="form-row">
+																				<div class="col-md-4 mb-3">
+																					<input th:field="*{registrationNumber}" type="text" class="form-control only_nd" title="주민등록번호" placeholder="주민등록번호" value="주민등록번호" maxlength="14">
+																					<div class="valid-feedback">Looks good!</div>
+																				</div>
+																				<div class="col-md-4 mb-3">
+																					<input th:field="*{realName}" type="text" class="form-control " title="실명" placeholder="실명" maxlength="5">
+																					<div class="valid-feedback">Looks good!</div>
+																				</div>
+																			</div>
+																		</div>
+									                                </label>
+																</div>
+															</div>
+															<div class="form-group">
+																<div class="custom-control custom-radio">
+																	<input type="radio" id="taxVAT" name="tax" class="custom-control-input" th:field="*{taxType}" th:value="VAT">
+																	<label class="custom-control-label" for="taxVAT">
+																		세금계산서 발행 후 부가가치세 납부 - 모든 법인과 일부 개인사업자
+																	</label>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label><div class="font-weight-bold text-dark">용역대금을 수령하실 계좌번호를 입력해 주세요.</div><div>(나중에 입력하셔도 됩니다)</div></label>
+														<select class="custom-select" th:field="*{bankForReceivingPayment}">
+															<option value="">선택해주세요</option>
+															<option th:each="bank: ${allBanks}" th:value="${bank.id}" th:text="${bank.name}"
+																	th:selected="${bank.name == user.bankForReceivingPayment?.name}">
+															</option>
+														</select>
+														<div class="row mt-3">
+															<div class="col">
+																<input th:field="*{bankAccountForReceivingPayment}" th:value=${bankAccountForReceivingPayment} type="text"
+																	   class="form-control mb-2" placeholder="계좌번호" />
+															</div>
+															<div class="col">
+																<input th:field="*{bankAccountName}" th:value=${bankAccountName} type="text" class="form-control mb-2"
+																	   placeholder="예금주" />
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label>
+															<div class="font-weight-bold text-dark">어떠한 분야의 전문가이신가요?
+																<span class="required"> (중요)</span>
+															</div>
+														</label>
+														<button id="btnShowMySector" type="button" class="w-100 btn-primary btn-lg text-4 rounded-0 add_keyword" data-toggle="modal"
+														 data-target="#key_add_pop">
+															<img src="/static/images/mypage_form_keyword.png" alt="list_icon">
+															최대한 많은 키워드를 선택하세요
+														</button>
+														<div class="selected-keywords-container" style="margin-top: 15px;">
+															<th:block th:each="category: ${user.categories}">
+																<!-- <input type="hidden" name="selectedKeywordJson[]" th:value="${category.keywordJsonString}"> -->
+															</th:block>
+															<th:block th:each="sector: ${user.sectorsByParent}">
+																<div class="tag_list">
+																	<div th:text="${sector.key.name}"></div>
+																	<div class="tag_sub_list">
+																		<span th:each="childSector: ${sector.value}" class="badge badge-pill keyword_badge">
+																			<span class='tag_word' th:text="${childSector.name}"></span>
+																			<span class='tag_del del_selected_tag ml-2' th:data-keyword="${childSector.name}"
+																				  th:data-category-name="${childSector.parentCategory.name}"
+																				  th:data-category-id="${childSector.parentCategory.id}"
+																			>X</span>
+																		</span>
+
+																	</div>
+																</div>
+															</th:block>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label>
+															<div class="font-weight-bold text-dark"> 자신에 대한 소개를 서술형으로 입력해주세요.</div>
+															<div>(상세 경력은 밑에서 입력 가능합니다)</div>
+														</label>
+														<div class="">
+															<textarea th:field="*{aboutMe}" id="txtAboutMe" class="form-control" onkeyup="countChar(this)" rows="4" required title="소개말" maxlength="1000" placeholder="경력을 입력 해주세요"></textarea>
+															<div class="text_cnt"><span id="textCnt" th:text="${user.aboutMe!=null?user.aboutMe.length():0}">0</span>/1,000자</div>
+															<div class="help-block" >
+																<div class="font-weight-bold mb-2">[예시]</div>
+																<div style="background-color: #f5f5f5;padding: 1rem;font-size: 12px;">
+																	- 경력요약 -<br/>
+																	약 10년 동안 국내 대형증권사 투자금융사업부(IB)에 재직하며, IPO/M&A Advisory/PI/PEF 등의 영역에서 기업분석, 주식가치평가(Valuation) 등의 실무, PM, RM을 담당했습니다 이후 금융이 아닌 건설 인더스트리에 속하는 중견기업에 입사하여 6개월 정도의 기간 동안 전략담당임원(CSO)으로 실무 경력을 쌓았고, 퇴사 후 프리랜서를 시작하며 M&A Advisory Firm을 설립했습니다 수행했던 M&A, 투자 등 IB관련 deal은 약 21건 정도가 되며, 한 두건을 제외하고 모두 성공적으로 클로징했습니다.
+																	<br/>
+																	<br/>
+																	- 성향요약 -<br/>
+																	업무 진행에 있어 처리 속도가 매우 빠르고, 공격적인 성향이 강합니다 또한 고객과의 협상, 영업, 프리젠테이션 등 커뮤니케이션 스킬이 탁월합니다
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark d-block">
+															관련 업무경력은 몇년인가요?
+															<span class="required"> *</span>
+														</label>
+														<select th:field="*{careerYear}" class="form-control" id="exampleFormControlSelect1" required style="width: 100px;display: inline-block;">
+															<option value="">--선택--</option>
+															<option th:each="i: ${#numbers.sequence(1, 30)}" th:value="${i}" th:text="${i}" th:selected="${i==user.careerYear}">1</option>
+														</select>
+														<span class="ml-2">년</span>
+													</div>
+												</div>
+											</div>
+										</li>
+										<!-- <li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<label class="font-weight-bold text-dark d-block">
+															클라이언트가 참고할 수 있는 이력서, 포트폴리오 등의 문서를 첨부해주세요(선택)
+													</label>
+													<div class="">
+														<input name="aboutMeFile" type="file" class="-file small" id="inputAboutMeFile" />
+														<a th:href="@{*{aboutMeFileUrl}}" class="btn">
+															<span th:text="*{aboutMeFileName}"></span>
+					                                    </a>
+					                                    <span id="cancel-resume-upload" class="btn-black medium" style="margin-left:2px; background-color:#3a8b95; border:1px solid #3a8b95; font-size:13px; padding:10px 20px; display: none">
+					                                        파일취소
+					                                    </span>
+					                                </div>
+												</div>
+											</div>
+										</li> -->
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">
+															당신의 선호도를 알려주세요
+															<span class="required"> *</span>
+														</label>
+														<div class="row">
+															<div class="col-md-4">
+																<label class="font-weight-bold text-dark mb-0">
+																	프로젝트 기간
+																</label>
+																<select th:field="*{userJobPreference.projectDuration}" class="form-control mb-3" required>
+																	<option value="">---- 선택 ----</option>
+																	<option th:each="item : ${T(com.freelancerk.domain.Project.ExpectedPeriod).values()}"
+																			th:value="${item}"
+																			th:text="${item.name}"
+																			th:if="${item.name() != 'DIRECT'}"
+																			th:selected="${item.name() == user.userJobPreference?.projectDuration?.name()}"></option>
+																</select>
+															</div>
+															<div class="col-md-4">
+																<label class="font-weight-bold text-dark mb-0">
+																	프로젝트 규모
+																</label>
+																<select th:field="*{userJobPreference.projectSize}" class="form-control mb-3" required>
+																	<option value="">---- 선택 ----</option>
+																	<option th:each="item : ${T(com.freelancerk.domain.UserJobPreference.ProjectSize).values()}"
+																			th:value="${item}"
+																			th:text="${item.name}"
+																			th:selected="${item.name() == user.userJobPreference?.projectSize?.name()}"></option>
+																</select>
+															</div>
+															<div class="col-md-4">
+																<label class="font-weight-bold text-dark mb-0">
+																	급여수령기준
+																</label>
+																<select th:field="*{userJobPreference.payCriteria}" class="form-control mb-3">
+																	<option value="">----선택----</option>
+																	<option th:each="item : ${T(com.freelancerk.domain.Project.PayCriteria).values()}"
+																			th:value="${item}"
+																			th:text="${item.name}"
+																			th:selected="${item.name() == user.userJobPreference?.payCriteria?.name()}"></option>
+																</select>
+															</div>
+															<!-- <div class="col-md-6">
+																<label class="font-weight-bold text-dark mb-0">
+																	작업장소
+																</label>
+																<select th:field="*{userJobPreference.workPlace}" class="form-control mb-3" required>
+																	<option value="">----선택----</option>
+																	<option th:each="item : ${T(com.freelancerk.domain.Project.WorkPlace).values()}"
+																			th:value="${item}"
+																			th:text="${item.name}"
+																			th:selected="${item.name() == user.userJobPreference?.workPlace?.name()}"></option>
+																</select>
+															</div> -->
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="tech form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">
+															보유기술을 입력해주세요
+														</label>
+														<div class="form-row mb-3 p-3" style="background-color: #eeeeee; border-radius: 8px;">
+															<div class="col-md-6">
+																<div class="">
+																	<div>기술명</div>
+																	<input id="inputSkillName" type="text" class="form-control mb-3 mb-md-0" placeholder="기술명" maxlength="60" />
+																</div>
+															</div>
+															<div class="col-md-6 col-lg-5">
+																<div class="">
+																	<div class="fm_business_type">등급</div>
+																	<select id="selectSkillLevel" class="form-control">
+																		<option value="NOEN">----선택----</option>
+																		<option value="초급">초급</option>
+																		<option value="중급">중급</option>
+																		<option value="고급">고급</option>
+																	</select>
+																</div>
+															</div>
+															<div class="col-md-12 col-lg-1 d-flex justify-content-center">
+																<button id="btnAddSkill" type="button" class="btn btn-primary align-self-end btn-sm mb-1 mt-2 mt-lg-0">추가</button>
+															</div>
+														</div>
+														<input id="inputUserSkillList" name="skillList" th:value="${allSkills}" type="text" hidden />
+														<table class="table table-sm">
+															<thead>
+																<tr class="text-center">
+																	<th style="width:70%;font-weight: 700;font-size:14px;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">기술명</th>
+																	<th style="width:20%;font-weight: 700;font-size:14px;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">등급</th>
+																	<th style="width:10%;font-weight: 700;font-size:14px;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;min-width: 40px">비고</th>
+																</tr>
+															</thead>
+															<tbody id="ulUserSkillList">
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="certificatie form-row">
+												<div class="form-group col">
+													<label class="font-weight-bold text-dark">
+														자격증을 입력해주세요
+													</label>
+													<div class="form-row mb-3 p-3" style="background-color: #eeeeee; border-radius: 8px;">
+														<div class="col-md-8">
+															<div class="">
+																<div>자격증명</div>
+																<input id="inputCertName" type="text" class="form-control mb-3 mb-md-0" maxlength="120">
+															</div>
+														</div>
+														<div class="col-md-3">
+															<div class="">
+																<div>발행처</div>
+																<input id="inputCertOrganization" type="text" class="form-control" maxlength="120">
+															</div>
+														</div>
+														<div class="col-md-1 d-flex justify-content-center">
+															<button id="btnCertAdd" type="button" class="btn btn-primary align-self-end btn-sm mb-1 mt-2 mt-lg-0">추가</button>
+														</div>
+													</div>
+													<input id="inputUserCertificationList" name="certList" th:value="${allCerts}" type="hidden" />
+													<table class="table table-sm">
+														<thead>
+															<tr class="text-center">
+																<th style="width:70%;font-weight: 700;font-size:14px;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">자격증명</th>
+																<th style="width:20%;font-weight: 700;font-size:14px;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;">발행처</th>
+																<th style="width:10%;font-weight: 700;font-size:14px;border-top:1px solid #9c9c9c;border-bottom:1px solid #9c9c9c;min-width: 40px;">비고</th>
+															</tr>
+														</thead>
+														<tbody id="ulUserCertificationList">
+															
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="career form-row">
+												<div class="form-group col">
+													<label class="font-weight-bold text-dark">
+														경력을 입력해주세요
+													</label>
+													<div class="form-row mb-3 p-3" style="background-color: #eeeeee; border-radius: 8px;">
+														<div class="col-md-4">
+															<div class="">
+																<div>경력기간</div>
+																<div class="d-flex mb-3">
+																	<div class="sub-search-date mr-1 mb-0">
+												                        <input type="text" id="inputCareerStartDate" readonly class="form-control search_input search_date datepicker" placeholder="시작일">
+										                            </div>
+										                            <div class="align-self-center">~</div>
+										                            <div class="sub-search-date ml-1 mb-0">
+										                                <input type="text" name="inputCareerEndDate" id="inputCareerEndDate" readonly class="form-control search_input search_date datepicker" placeholder="종료">
+										                            </div>
+										                        </div>
+															</div>
+														</div>
+														<div class="col-md-7">
+															<div class="">
+																<div>프로젝트명(또는 회사명)</div>
+																<input id="inputCareerProjectName" type="text" class="form-control mb-3" maxlength="120">
+															</div>
+														</div>
+														<div class="col-md-11">
+															<div class="">
+																<div>주요업무</div>
+																<input id="inputCareerJobDesc" type="text" maxlength="255" class="form-control">
+															</div>
+														</div>
+														<div class="col-md-1 d-flex justify-content-center">
+															<button id="btnCareerAdd" type="button" class="btn btn-primary align-self-end btn-sm mb-1 mt-2 mt-lg-0" >추가</button>
+														</div>
+													</div>
+													<input id="inputUserCareerList" name="careerList" th:value="${allCareers}" type="hidden" />
+													<table class="table table-sm">
+														<tbody id="ulUserCareerList">
+															
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer" style="height: 60px">
+						<ul class="pager">
+							<li class="previous">
+								<a><i class="fas fa-angle-left"></i> 이전</a>
+							</li>
+							<li class="next">
+								<a>다음 <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="finish hidden float-right">
+								<a id="submit">저장하기</a>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<!-- 키워드등록팝업 -->
+		<div class="modal fade modal_wrap" id="key_add_pop" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+		 aria-hidden="true">
+
+		 	<!-- 등록버튼 -->
+			<div class="key_btn">
+				<span class="btn btn-primary btn-lg w-100 key_add_btn" id="key_add_btn">키워드등록완료</span>
+			</div>
+			<!-- 등록버튼// -->
+
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+
+					<!-- 팝업헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title" id="ModalLabel">키워드 등록</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
+					</div>
+					<!-- 팝업헤더// -->
+
+					<!-- 팝업컨텐츠 -->
+					<div class="content bg-white">
+
+						<!-- 공지 -->
+						<ul class="pt-3 pt-md-0 px-3">
+							<li>
+								<i class="fas text-primary fa-exclamation-circle mr-1"></i>
+								원하는 섹터를 제안해주세요. 적극적으로 피드백 해드리겠습니다. 
+								<a href="/common/askForHelp">
+									<button class="btn btn-primary rounded-0 btn-sm ml-2">제안하기</button>
+								</a>
+							<li>
+								<i class="fas text-primary fa-exclamation-circle mr-1"></i>
+								인기키워드와 참고키워드를 먼저 검토하신 후, 본인의 키워드가 없는 경우 직접 입력해주세요.
+							</li>
+						</ul>
+						<!-- 공지// -->
+
+						<!-- 키워드 테이블 -->
+						<div class="px-3">
+							<div class="sectorTable row" style="margin-bottom:80px;">
+							</div>
+						</div>
+						<!-- 키워드 테이블// -->
+
+					</div>
+					<!-- 팝업컨텐츠// -->
+
+				</div>
+			</div>
+		</div>
+		<!-- 키워드등록팝업// -->
+		<!-- 에스크로서비스란 팝업 -->
+		<div class="modal fade modal_wrap" id="escrow_info" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+		 aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document" style="max-width: 800px">
+				<div class="modal-content">
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title">에스크로서비스란</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<div class="content modal-body">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tbody>
+								<tr>
+									<td>
+										<img src="/static/images/user_03.jpg" class="w-100">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 에스크로서비스란 팝업// -->
+
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+		<script src="/static/lib/moment/moment.min.js"></script>
+
+
+		<script th:inline="javascript">
+			var iamportMerchantId = [[${iamportMerchantId}]];
+
+			var IMP = window.IMP;
+			IMP.init(iamportMerchantId);
+
+			var afterRedirect = [[${afterRedirect}]];
+            var nicknameAvailableMap = {};
+            var cellphoneAvailableMap = {};
+            var nickname = [[${user.nickname}]];
+            var cellphone = [[${user.cellphone}]];
+            var profileImageUrl = [[${user.profileImageUrl}]];
+            nicknameAvailableMap[nickname] = true;
+			cellphoneAvailableMap[cellphone] = true;
+			var selectedKeywords = [];
+
+			var index = 0;
+			/*<![CDATA[*/
+			/*[# th:each="sector : ${user.sectorsByParent}"]*/
+			/*[# th:each="childSector : ${sector.value}"]*/
+			var dic = {};
+			var categoryId = /*[[${sector.key.id}]]*/;
+			var categoryName = /*[[${sector.key.name}]]*/;
+			var keyword = /*[[${childSector.name}]]*/;
+			if (keyword && categoryId && categoryName) {
+				dic['id'] = categoryId;
+				dic['categoryName'] = categoryName;
+				dic['keyword'] = keyword;
+
+				selectedKeywords.push(JSON.stringify(dic));
+			}
+			/*[/]*/
+			/*[/]*/
+
+			/*]]>*/
+		</script>
+		<script>
+			var remainSeconds = 180;
+			$(document).on('click', '.btn-certify', function() {
+				if (!confirm('인증 하시겠습니까?')) {
+					return;
+				}
+
+				var cellphone = $('input[name=cellphone]').val();
+				var certificationCode = $('input[name=certificationCode]').val();
+				var formData = new FormData();
+				formData.append('cellphone', cellphone);
+				formData.append('code', certificationCode);
+
+				$.ajax({
+					type: 'POST',
+					url: '/users/cellphone/certifications',
+					data: formData,
+					processData: false,
+					cache: false,
+					contentType: false,
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							cellphoneAvailableMap[cellphone] = true;
+							$('input[name=cellphone]').val(cellphone);
+							$('input[name=cellphoneCertified]').val(true);
+							alert('인증 완료되었습니다.');
+
+							$('#certificationCode').hide();
+							$('#remainTimesContainer').hide();
+							$('.btn-request-certify').show();
+							$('.btn-certify').hide();
+						} else {
+							alert('요청에 실패했습니다.');
+						}
+					},
+					error: function(error){
+						alert('요청에 실패했습니다.');
+					}
+				});
+			});
+
+			$(document).on('click', '.btn-request-certify', function () {
+				if (!confirm('인증코드를 요청하시겠습니까?')) {
+					return;
+				}
+				var cellphone = $('input[name=cellphone]').val();
+
+				if (!cellphone) {
+					alert('휴대전화번호를 입력해 주세요.');
+					return;
+				}
+				remainSeconds = 180;
+
+				var formData = new FormData();
+				formData.append('cellphone', cellphone);
+
+				$.ajax({
+					type: 'POST',
+					url: '/users/cellphone/codes',
+					data: formData,
+					processData: false,
+					cache: false,
+					contentType: false,
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							alert('인증코드가 발송되었습니다.');
+
+							var formattedSeconds = moment().startOf('day')
+									.seconds(remainSeconds)
+									.format('mm:ss');
+							$('#remainTimes').text(formattedSeconds);
+							$('#certificationCode').show();
+							$('#remainTimesContainer').show();
+							$('.btn-request-certify').hide();
+							$('.btn-certify').show();
+
+							timer = setInterval(function() {
+								if (remainSeconds <= 0) {
+									clearInterval(timer);
+
+									$('#certificationCode').hide();
+									$('#remainTimesContainer').hide();
+									$('.btn-request-certify').show();
+									$('.btn-certify').hide();
+									return;
+								} else {
+									remainSeconds = remainSeconds - 1;
+									var formattedSeconds = moment().startOf('day')
+											.seconds(remainSeconds)
+											.format('mm:ss');
+									$('#remainTimes').text(formattedSeconds);
+								}
+							}, 1000);
+						} else {
+							alert('요청에 실패했습니다.');
+						}
+					},
+					error: function(error) {
+						console.error(error);
+						alert('요청에 실패했습니다.');
+					}
+				})
+			})
+
+			function countChar(val) {
+				var content = $('textarea[name=aboutMe]').val();
+				var len = content.length;
+				if (len >= 1000) {
+					$('textarea[name=aboutMe]').val(content.substring(0, 1000));
+					$('#textCnt').text(content.substring(0, 1000).length.toLocaleString());
+				} else {
+					$('#textCnt').text(len.toLocaleString());
+				}
+			}
+		</script>
+		<script>
+			$('#checkBoxExposeSns').click(function () {
+				//check if checkbox is checked
+				if ($(this).is(':checked')) {
+
+					$('.only_nes').removeAttr('disabled'); //enable input
+
+				} else {
+					$('.only_nes').attr('disabled', true); //disable input
+				}
+			});
+		</script>
+		<script src="/static/vendor/slim-image-cropper/slim.kickstart.min.js"></script>
+		<script src="/static/js/tagsinput.js"></script>
+		<script src="/static/vendor/jquery-validation/jquery.validate.js"></script>
+	    <script src="/static/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+	    <script src="/static/vendor/pnotify/pnotify.custom.js"></script>
+
+		<script src="/static/js/freelancer/profile/modify.js"></script>
+		<script src="/static/js/freelancer/profile/modify-step.js"></script>
+	</section>
+
+</html>

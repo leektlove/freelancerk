@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/project.css">
+</head>
+
+
+<section id="content" layout:fragment="content">
+	<div id="container">
+		<div id="container_side">
+			<th:block th:include="fragments/contestHeader"></th:block>
+		</div>
+		<div id="container_content">
+			<div class="container_inner">
+				<h1>■ 컨테스트 등록</h1>
+				<table class="boardform">
+					<colgroup>
+						<col width="150">
+						<col width="350">
+						<col width="150">
+						<col width="">
+					</colgroup>
+					<tbody><tr>
+						<form name="searchForm" action="/contest/add" method="get">
+							<th>클라이언트</th>
+							<td colspan="3">
+								<input type="text" value="" name="clientNameKeyword" required="" class=" required"  style="width:400px;" title="클라이언트">
+								<button type="submit" class="btn-black small">클라이언트찾기</button>
+							</td>
+						</form>
+					</tr>
+					<!--						<tr>-->
+					<!--							<th>프리랜서</th>-->
+					<!--							<td colspan="3">-->
+					<!--								<input type="hidden" name="freelancerNameKeyword" value="" id="">-->
+					<!--								<input type="text" value="" readonly="" class="readonly" id="" style="width:400px;">-->
+					<!--								<span class="btn-black small">프리랜서찾기</span>-->
+					<!--							</td>-->
+					<!--						</tr>-->
+					</tbody>
+				</table>
+				<table class="boardform" style="margin-top: 12px">
+					<thead>
+					<th>선택</th>
+					<th>No</th>
+					<th>아이디</th>
+					<th>클라이언트 이름</th>
+					<th>회사명</th>
+					<th>이메일</th>
+					<th>휴대전화번호</th>
+					</thead>
+					<tbody>
+					<tr th:each="item: ${users}">
+						<td><input type="radio" name="id" th:value="${item.id}"/></td>
+						<td th:text="${item.id}"></td>
+						<td th:text="${item.username}"></td>
+						<td th:text="${item.name}"></td>
+						<td th:text="${item.corporateName}"></td>
+						<td th:text="${item.email}"></td>
+						<td th:text="${item.cellphone}"></td>
+					</tr>
+					</tbody>
+				</table>
+				</form>
+				<form>
+					<div class="boardbutton">
+						<div class="tc">
+							<button type="button" class="btn-color large" onclick="goToRegister()">등록하러가기</button>
+							<a href="/project/list" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div><!-- container-->
+	<script>
+		function goToRegister() {
+			var selectedId = $('input[name=id]:checked').val();
+			if (!selectedId) {
+				alert('클라이언트를 검색하여 선택해 주세요');
+				return;
+			}
+			if (!confirm('선택하신 클라이언트로 로그인하여 컨테스트 등록을 시작합니다. 링크의 유효시간은 1시간 입니다.')) {
+				return;
+			}
+
+			window.open('https://www.freelancerk.com/redirect/contests/users/' + selectedId);
+		}
+	</script>
+</section>
+
+
+</html>

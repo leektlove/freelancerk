@@ -1,0 +1,46 @@
+.no-bid{
+	width: 100%;
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    background: url(/static/images/use-guide/client_bid_bg.png)no-repeat;
+    background-position: center;
+    background-size: 50% auto;
+}
+.content-line .p-img img {
+    width: 75px;
+    height: 75px;
+}
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+	.no-bid{
+	    background-size: 85% auto;
+	    min-height: 500px;
+	}
+}
+	
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.no-bid{
+	    background-size: 85% auto;
+	    min-height: 500px;
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.no-bid{
+	    background-size: 65% auto;
+	    min-height: 500px;
+	}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}

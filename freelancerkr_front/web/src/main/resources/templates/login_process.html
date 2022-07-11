@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/login">
+
+<th:block layout:fragment="content">	
+<script>
+	function goLogin(){
+		console.log("login");
+	}
+</script>
+
+   <div>
+     <a class="hiddenanchor" id="signup"></a>
+     <a class="hiddenanchor" id="signin"></a>
+
+     <div class="login_wrapper">
+       <div class="animate form login_form">
+         <section class="login_content">
+           <form>
+             
+             login in process
+             
+            
+           </form>
+         </section>
+       </div>      
+     </div>
+   </div>
+      
+</th:block>
+</html>

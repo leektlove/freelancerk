@@ -1,0 +1,25 @@
+<div class="ajax-container multi-portfolio" xmlns:th="http://www.w3.org/1999/xhtml" style="background-color: #e6e6e6;padding:70px 30px 70px 30px;border-radius: 10px;">
+    <div class="controller">
+    </div>
+    <div class="main-container row">
+        <div class="col-sm-12">
+            <div class="">
+                <div th:each="item: ${items}">
+                    <div th:if="${item.fileType?.name() == 'IMAGE'}" class="img-thumbnail border-0 border-radius-0 p-0 d-block">
+                        <div style="position: relative;background-color: #e6e6e6" class="img-thumbnail border-0 border-radius-0 p-0 d-block" >
+                            <!--                            <img th:src="${item.fileUrl}" style="opacity: 0; position: absolute; top:0"/>-->
+                            <div style="overflow-y: hidden; text-align: center;">
+                                <img th:src="${item.fileUrl}" style="display: inline !important; width: inherit !important; max-width: 100%;"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${item.fileType?.name() == 'VIDEO'}" class="img-thumbnail border-0 border-radius-0 p-0 d-block">
+                        <div class="img-thumbnail border-0 border-radius-0 p-0 d-block" style="text-align: center; background-color: #e6e6e6">
+                            <video class="image-fluid" th:src="${item.fileUrl}" controls="controls"></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

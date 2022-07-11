@@ -1,0 +1,155 @@
+<!-- 키워드등록팝업 -->
+<div class="modal fade modal_wrap" id="key_add_pop" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+       <div class="modal-content">
+
+           <!-- 팝업헤더 -->
+           <div class="head modal-header">
+               <h5 class="modal-title" id="ModalLabel">키워드 등록</h5>
+               <div class="">
+                   <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+               </div>
+           </div>
+           <!-- 팝업헤더// -->
+
+           <!-- 팝업컨텐츠 -->
+           <div class="content bg-white">
+
+               <!-- 공지 -->
+               <table class="info table">
+                  <tr>
+                    <td class="info-icon text-center">
+                      <i class="far fa-file-alt fa-4x"></i>
+                    </td>
+                    <td>
+                      <ul class="text-4">
+                        <li>
+                          <i class="fas fa-exclamation-circle mr-1"></i>
+                          원하는 섹터를 제안해주세요. 적극적으로 피드백 해드리겠습니다. <span>[ 제안 ]</span></li>
+                        <li>
+                          <i class="fas fa-exclamation-circle mr-1"></i>
+                          인기키워드와 참고키워드를 먼저 검토하신 후, 본인의 키워드가 없는 경우 직접 입력해주세요.
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+               <!-- 공지// -->
+
+               <!-- 키워드 테이블 -->
+               <div class="px-3">
+                   <table class="sectorTable boardform" style="margin-bottom:40px;">
+                    <tr class="parentCategory">
+                        <th rowspan="2">
+                            <label>
+                                <span>디자인</span>
+                            </label>
+                        </th>
+                        <th>
+                            <label>
+                                <input type="checkbox" value="" class="fc_check_2" checked>
+                                <input type="hidden" value="">
+                                <span>웹-앱디자인</span>
+                            </label>
+                        </th>
+                        <td>
+                            <div class="">
+                                <div>
+                                    <span class="btn-black small key_show align-middle">인기키워드 <span>▼</span></span>
+                                    <span class="btn-black small key_show align-middle mr-3">참고키워드 <span>▼</span></span>
+                                    <input type="text" value="" id="key_text_" maxlength="20" placeholder="직접입력">
+                                    <span class="btn-color small key_add align-middle">키워드추가</span>
+                                </div>
+                                <div style="padding-top:8px;">
+                                    <span class='tag_box'>
+                                        <span class='tag_word'>UX-UI 디자인</span>
+                                        <span class='tag_del'>X</span>
+                                    </span>
+                                    <span class='tag_box'>
+                                        <span class='tag_word'>UX-UI 디자인</span>
+                                        <span class='tag_del'>X</span>
+                                    </span>
+                                    <span class='tag_box'>
+                                        <span class='tag_word'>UX-UI 디자인</span>
+                                        <span class='tag_del'>X</span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <div style="padding-top:8px">
+                                        <span class='btn-color micro1'>#<span></span>웹디자인</span>
+                                        <span class='btn-color micro1'>#<span></span>CSS3</span>
+                                        <span class='btn-color micro1'>#<span></span>단순웹작업</span>
+                                    </div>
+                                    <div style="padding-top:8px;">
+                                        <span class='btn-basic micro2'>#<span></span>포토샵</span>
+                                        <span class='btn-basic micro2'>#<span></span>퍼블리셔</span>
+                                        <span class='btn-basic micro2'>#<span></span>CSS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="parentCategory">
+                        <th>
+                            <label>
+                                <input type="checkbox" value="" class="fc_check_2" checked>
+                                <input type="hidden" value="">
+                                <span>웹-앱디자인</span>
+                            </label>
+                        </th>
+                        <td>
+                            <div class="">
+                                <div>
+                                    <input type="text" value="" id="key_text_" maxlength="20" placeholder="직접입력">
+                                    <span class="btn-color small key_add align-middle">키워드추가</span>
+                                    <span class="btn-black small key_show align-middle">인기키워드 <span>▼</span></span>
+                                    <span class="btn-black small key_show align-middle">참고키워드 <span>▼</span></span>
+                                </div>
+                                <div style="padding-top:8px;">
+                                    <span class='tag_box'>
+                                        <span class='tag_word'>UX-UI 디자인</span>
+                                        <span class='tag_del'>X</span>
+                                    </span>
+                                    <span class='tag_box'>
+                                        <span class='tag_word'>UX-UI 디자인</span>
+                                        <span class='tag_del'>X</span>
+                                    </span>
+                                    <span class='tag_box'>
+                                        <span class='tag_word'>UX-UI 디자인</span>
+                                        <span class='tag_del'>X</span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <div style="padding-top:8px">
+                                        <span class='btn-color micro1'>#<span></span>웹디자인</span>
+                                        <span class='btn-color micro1'>#<span></span>CSS3</span>
+                                        <span class='btn-color micro1'>#<span></span>단순웹작업</span>
+                                    </div>
+                                    <div style="padding-top:8px;">
+                                        <span class='btn-basic micro2'>#<span></span>포토샵</span>
+                                        <span class='btn-basic micro2'>#<span></span>퍼블리셔</span>
+                                        <span class='btn-basic micro2'>#<span></span>CSS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                   </table>
+               </div>
+               <!-- 키워드 테이블// -->
+
+               <!-- 등록버튼 -->
+               <div class="text-center">
+                   <span class="btn btn-primary btn-lg w-100" id="key_add_btn">키워드등록완료</span>
+               </div>
+               <!-- 등록버튼// -->
+
+           </div>
+           <!-- 팝업컨텐츠// -->
+
+       </div>
+   </div>
+</div>
+<!-- 키워드등록팝업 -->

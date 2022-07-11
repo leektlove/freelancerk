@@ -1,0 +1,34 @@
+.priority>h5, .work>h5 {border-bottom: 2px solid #282828;}
+.priority .btn_container { background-color: #000000; }
+.ranking { position: absolute; top: 0; left: 0; width: 100%; padding: calc(.5rem + 5px ); }
+.btn { color: #fff; }
+.first, .first:hover, .first:active { background-color: #FE4C61; border-color: #FE4C61; color: #fff; }
+.second, .second:hover, .second:active { background-color: #4675BB; border-color: #4675BB; color: #fff; }
+.third, .third:hover, .third:active { background-color: #2FBA7E; border-color: #2FBA7E; color: #fff; }
+.cancel, .cancel:hover, .cancel:active { background-color: #A7A7A7; border-color: #A7A7A7; color: #fff; }
+.first:hover, .second:hover, .third:hover { opacity: 0.8; }
+.btn_container>div { padding-left: 2px; padding-right: 2px; }
+
+.work>.responsive-table { padding-top: 3rem; }
+.work .table th, .work .table td { border: none; font-weight: 400; font-size: .8rem; }
+.work .table th:first-child, .work .table td:first-child { color: #232323;  }
+.work .table th:last-child, .work .table td:last-child { color: #ACACAC; text-align: right; }
+.work .table thead, .work .table tbody { border: 1px solid #DDDDDD; }
+.work .table thead { background-color: #FAFAFA; }
+.work .table tbody { background-color: #FFFFFF; }
+.btn_container:last-child { text-align: center; }
+
+.bid_project p { font-weight: 400; color: #1B1C1D; text-align: center; }
+.bid_project p span { color: #FE4C61; }
+
+@media screen and (min-width: 768px) {
+    .work .table {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .work>.responsive-table {
+        padding : 3rem;
+        /* text-align: center; */
+    }
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/auth/loginClient.css">
+	<link rel="stylesheet" href="/static/css/client/join.css"/>
+</head>
+
+
+<section id="content" layout:fragment="content" class="container">
+	<div id="c_login" class="contents">
+		<div class="top_area">
+			<div class="img">
+				<img src="/static/images/icon_client.gif">
+			</div>
+			<div class="title">
+				<span>Client</span> Login
+			</div>
+		</div>
+		<form id="form" action="/login" role="form" method="post" enctype="application/x-www-form-urlencoded">
+			<div class="middle_area">
+				<input type="hidden" name="" value="client">
+				<div class="input">
+					<div class="box">
+						<input type="text" name="username" placeholder="이메일" required title="이메일">
+						<input type="hidden" name="thirdPartyUserId">
+						<input type="hidden" name="thirdPartyAccessToken">
+					</div>
+					<div class="box">
+						<input type="password" name="password" placeholder="패스워드" required title="패스워드">
+					</div>
+				</div>
+				<div class="other_action">
+					<div class="auto_login">
+						<input type="hidden" name="role" value="ROLE_CLIENT" />
+						<input type="hidden" name="authType" value="EMAIL" />
+						<div class="custom-control custom-checkbox">
+		                    <input type="checkbox" class="custom-control-input" name="RememberMe" value="1" id="auto_client_login_btn" data-text="auto_client_login_btn">
+		                    <label class="custom-control-label" for="auto_client_login_btn">자동로그인</label>
+		                </div>
+					</div>
+					<div class="join_n_findpw">
+						<span class="join" onclick="location.href='/join/client'">회원가입</span>
+						<span>/</span>
+						<a class="findpw" href="javascript:window.open('/findPassword')" >
+							패스워드를 잊으셨나요?
+						</a>
+					</div>
+				</div>
+				<div class="login-failure-container"></div>
+				<div class="btn_login">
+					<input class="btn btn_lg btn-primary" type="submit" value="로그인">
+				</div>
+			</div>
+			<div class="bottom_area">
+				<div id="naverIdLogin"></div>
+				<div class="btn_sns">
+		            <div class="text">SNS계정으로 간편하게 로그인</div>
+		            <div class="sns_icon">
+			            <a href="javascript:loginWithKakao()">
+			                <img class="auth_sns_kakao" src="/static/images/icon/auth_sns_kakao.png">
+			            </a>
+			            <a href="javascript:loginWithFb();">
+			                <img class="auth_sns_facebook" src="/static/images/icon/auth_sns_facebook.png">
+			            </a>
+			            <a href="javascript:loginWithNaver()">
+			                <img class="auth_sns_naver" src="/static/images/icon/auth_sns_naver.png">
+			            </a>
+			        </div>
+		        </div>
+		    </div>
+		</form>
+	</div>
+	<script src="/static/js/client/login.js"></script>
+	<script th:inline="javascript">
+		var kakaoAppId = [[${kakaoAppId}]];
+		var facebookAppId = [[${facebookAppId}]];
+		var naverClientId = [[${naverClientId}]];
+		var naverCallbackUrl = serverUrl + '/callback/oauth2/naver?role=ROLE_CLIENT&type=LOGIN';
+
+	</script>
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+	<script src="/static/js/thirdparty-common.js"></script>
+	<script>
+		function loginWithFb() {
+			FB.login(function(response) {
+				if (response.authResponse) {
+					var accessToken = response.authResponse.accessToken;
+					FB.api('/me', function(response) {
+						console.log(response);
+						var userId = response.id;
+
+						var formData = new FormData();
+						formData.append('username', userId);
+						formData.append('role', 'ROLE_CLIENT');
+						formData.append('authType', 'FACEBOOK');
+						$.ajax({
+							type: "POST",
+							url: $('#form').attr('action'),
+							data: formData,
+							processData: false,
+							contentType: false,
+							success: function(data)
+							{
+								location.href = '/client/profile/index';
+
+							},
+							error: function(jqXHR, textStatus) {
+								alert('가입정보가 없습니다.');
+							}
+						});
+
+					});
+				} else {
+					console.log('User cancelled login or did not fully authorize.');
+				}
+			});
+		}
+
+		function loginWithKakao() {
+			Kakao.Auth.login({
+				success: function(authObj) {
+					Kakao.API.request({
+						url: '/v2/user/me',
+						success: function(res) {
+							console.log(JSON.stringify(res));
+							console.log(JSON.stringify(authObj));
+							var userId = res.id;
+							var formData = new FormData();
+							formData.append('username', userId);
+							formData.append('role', 'ROLE_CLIENT');
+							formData.append('authType', 'KAKAO');
+							$.ajax({
+								type: "POST",
+								url: $('#form').attr('action'),
+								data: formData,
+								processData: false,
+								contentType: false,
+								success: function (data) {
+									location.href = '/client/profile/index';
+
+								},
+								error: function (jqXHR, textStatus) {
+									alert('가입정보가 없습니다.');
+								}
+							});
+
+							console.log(res.id);
+							console.log(res.kaccount_email);
+							console.log(res.properties['nickname']);
+							console.log(authObj.access_token);
+						}
+					})
+				},
+				fail: function(err) {
+					console.log(JSON.stringify(err));
+				}
+			});
+		};
+
+		function loginWithNaver() {
+			var authorizeUrl = naverLogin.generateAuthorizeUrl();
+			var popup = window.open(authorizeUrl, "", "width=400,height=500");
+			popup.onbeforeunload = function(){
+				location.reload();
+				return null;
+			}
+		}
+
+		function reload() {
+			location.href = '/client/profile/index';
+		}
+	</script>
+	<script async defer src="https://connect.facebook.net/ko_KR/sdk.js"></script>
+</section>
+
+
+</html>

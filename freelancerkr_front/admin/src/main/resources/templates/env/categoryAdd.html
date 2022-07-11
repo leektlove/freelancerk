@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator=" layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/env.css">
+</head>
+
+
+<section id="content" layout:fragment="content">
+
+    <div id="container">
+        <div id="container_side">
+            <th:block th:include="fragments/envHeader"></th:block>
+        </div>
+        <div id="container_content">
+            <div class="container_inner">
+                <h1>■ 기본정보 등록</h1>
+                <form id="form" action="/categories" method="post" th:object="${form}">
+                    <table class="boardform">
+                        <colgroup>
+                            <col width="150">
+                            <col width="350">
+                            <col width="150">
+                            <col width="">
+                        </colgroup>
+                        <tbody>
+                        <tr th:if="${parentCategory != null}">
+                            <th>상위 카테고리</th>
+                            <td>
+                                <span th:text="${parentCategory.name}"></span>
+                                <input type="hidden" name="parentCategory.id" th:value="${parentCategory.id}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>출력</th>
+                            <td>
+                                <label><input type="radio" th:field="*{hidden}" value="false" checked>출력</label>&nbsp;&nbsp;
+                                <label><input type="radio" th:field="*{hidden}" value="true">미출력</label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>순서</th>
+                            <td><input type="text" th:field="*{seq}" size="4"></td>
+                        </tr>
+
+                        <tr>
+                            <th>분류명</th>
+                            <td>
+                                <input type="text" th:field="*{name}" size="50">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                추천키워드
+                            </th>
+                            <td>
+                                <div>
+                                    <input type="text" value="" id="fc_tag" maxlength="20"> <span
+                                        class="btn-black medium" id="fc_tag_add">추가</span>
+                                </div>
+                                <div id="tag_con">
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="boardbutton">
+                        <div class="tc">
+                            <input type="submit" value="저장" class="btn-color large">
+                            <a href="/env/categoryList" class="btn-colorline large">목록</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#form').submit(function(e) {
+            if (!confirm('저장 하시겠습니까?')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</section>
+
+
+</html>

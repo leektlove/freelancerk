@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/contest.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<div id="cs_list">
+					<ul>
+						<li><a href="">컨테스트 리스트</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="container_content">		
+				<div class="container_inner">
+					<h1>■ 컨테스트 보기</h1>			
+					<table class="boardform">
+						<tbody>
+							<tr>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">기본정보</a></td>
+								<th width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">입찰정보</a></th>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">완료정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">메시지정보</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<h1>■ <span>2</span>명의 입찰자가 검색되었습니다.</h1>
+					<table class="boardlist">
+						<colgroup>
+							<col width="120">
+							<col width="120">
+							<col width="120">
+							<col width="180">
+							<col width="120">
+							<col width="200">
+							<col width="">
+							<col width="">
+							<col width="180">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>
+									입찰일
+									<span class="obtn obtn_now" data-no="1|a">▽</span>
+								</th>
+								<th>
+									입찰시각
+									<span class="obtn" data-no="2|d">▽</span>
+								</th>
+								<th colspan="2">작품</th>
+								<th>프리랜서명</th>
+								<th>누적거래금액</th>
+								<th>평점</th>
+								<th>상태</th>
+								<th>상세보기</th>
+							</tr>
+							<tr>
+								<td>2018-11-09</td>
+								<td>23:53</td>
+								<td>이미지</td>
+								<td><a href="" class="btn-black medium">수정</a>
+									<a href="" class="btn-black medium">삭제</a></td>
+								<td>박은진</td>
+								<td>-</td>
+								<td>평점데이터</td>
+								<td>상태</td>
+								<td><a href="" class="btn-black medium">상세보기</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tc">
+							<div class="boardpage">
+								<span class="current">1</span><a href="">2</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

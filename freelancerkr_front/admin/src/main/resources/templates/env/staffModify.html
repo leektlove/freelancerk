@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/env.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+		<div id="container_side">
+			<th:block th:include="fragments/envHeader"></th:block>
+		</div>
+		<div id="container_content">	
+			<div class="container_inner">
+				<h1>■ 직원 등록</h1>
+				<form name="" id="" action="" method="post">
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>부서</th>
+								<td>
+									<input type="text" name="" value="">
+								</td>
+								<th>직급</th>
+								<td>
+									<input type="text" name="" value="">
+								</td>
+							</tr>
+							<tr>
+								<th>직원아이디</th>
+								<td>
+									<input type="text" name="" value="" id="" readonly="" class="readonly" maxlength="100" title="직원아이디">
+								</td>
+								<th>직원비밀번호</th>
+								<td>
+									<input type="password" name="" id="" class="" maxlength="20" title="직원비밀번호">
+								</td>
+							</tr>
+							<tr>
+								<th>연락처</th>
+								<td>
+									<input type="text" name="" value="">
+								</td>
+								<th>이메일</th>
+								<td>
+									<input type="text" name="" value="">
+								</td>
+							</tr>
+							<tr>
+								<th>직원명</th>
+								<td colspan="3">
+									<input type="text" name="" value="" id="" class="required" required="" maxlength="100" title="직원명">
+								</td>
+							</tr>
+							<tr>
+								<th>사진</th>
+								<td colspan="3">
+									<input type="file" name="" id="" class="imgext imgsize">
+								</td>
+							</tr>
+							<tr>
+								<th>직원메모</th>
+								<td colspan="3">
+									<textarea name="" rows="5" cols="100"></textarea>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="Hspace"></div>
+					<h1>
+						■ 접근권한
+						<input type="checkbox" id="chk_all">
+						<span style="font-size:11px;">전체선택</span>
+					</h1>
+					<table class="boardlist check_con">
+					<tbody><tr>
+						<th colspan="2">환경설정</th>
+						<th colspan="2">클라이언트</th>
+						<th colspan="2">프리랜서</th>
+						<th colspan="2">프로젝트</th>
+						<th colspan="2">문의관리</th>
+						<th colspan="2">자료실관리</th>
+						<th colspan="2">팝업관리</th>
+						<th colspan="2">게시물관리</th>
+						<th colspan="2">입금/환불관리</th>
+						<th colspan="2">결제관리</th>
+					</tr>
+					<tr>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+						<th>열람</th>
+						<th>수정</th>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="" value="N" checked></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+						<td><input type="checkbox" name="" value="N" ></td>
+					</tr>
+					</tbody></table>
+
+					<div class="boardbutton">
+						<div class="tc">
+							<input type="submit" value="저장" class="btn-color large">
+							<a href="" class="btn-colorline large">목록</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		</div><!-- container-->
+	</section>
+	
+	
+</html>

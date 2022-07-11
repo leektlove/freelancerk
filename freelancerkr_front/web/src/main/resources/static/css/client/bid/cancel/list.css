@@ -1,0 +1,101 @@
+.cancel_list {
+    margin-bottom: 20rem;
+}
+#refund_report .top_content{
+	text-align: center;
+	padding: 1rem;
+	margin-bottom: 0.5rem;
+}
+#refund_report .top_content .apply_count{
+	font-size: 17px;
+	margin-bottom: 0.5rem;
+}
+#refund_report .top_content .apply_count span{
+	font-weight: 700;
+}
+#refund_report .top_content .day{
+	font-size: 11px;
+}
+#refund_report .top_content .day span{
+	font-weight: 700;
+}
+
+#refund_report .table_one{
+	max-width: 300px;
+	margin:auto;
+	margin-bottom:1rem;
+}
+#refund_report .table_one .bill{
+	font-size: 15px;
+	font-weight: 700;
+	margin-right: 0.5rem;
+}
+#refund_report .table_one th{
+	width: 120px;
+	font-size: 13px;
+	border: 0;
+	padding: 3px 5px;
+}
+#refund_report .table_one td{
+	text-align: right;
+	border: 0;
+	padding: 3px 5px;
+}
+#refund_report .table_one tr:nth-child(3),
+#refund_report .table_one tr:nth-child(6){
+	border-bottom: 1px solid #ddd;
+}
+
+#refund_report .middle_content{
+	max-width: 320px;
+	margin:auto;
+	background-color: #f1f1f1;
+    font-size: 11px;
+    padding: 1rem;
+    line-height: 1.2rem;
+    margin-bottom: 1rem;
+}
+#refund_report .middle_content .refundable_price{
+	display: flex;
+	justify-content: space-between;
+}
+#refund_report .middle_content .refundable_price span{
+	font-size: 15px;
+	font-weight: 700;
+	margin-right: 0.5rem;
+}
+#refund_report .middle_content .refundable_price .info{
+	font-weight: 700;
+}
+
+#refund_report .table_two{
+	max-width: 320px;
+	margin:auto;
+	margin-bottom: 1rem;
+}
+#refund_report .table_two thead th{
+	background-color: #bc3f3f;
+	color: #fff;
+}
+#refund_report .table_two th{
+	font-size: 11px;
+	vertical-align: middle;
+}
+#refund_report .table_two td{
+	font-size: 11px;
+	vertical-align: middle;
+}
+
+#refund_report .bottom_content{
+	font-size: 15px;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+#refund_report .btn-group .btn{
+	max-width: 320px;
+	margin: auto;
+}
+
+
+

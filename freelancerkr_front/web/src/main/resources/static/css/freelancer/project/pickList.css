@@ -1,0 +1,90 @@
+.wish {background-color:#fff;width:100%; height:auto; border-bottom: 1px solid #ddd;}
+.wish ul {padding:30px;}
+.wish .contents {float:left; font-size:17px; color:#111; font-weight:700; line-height:25px;}
+.wish .contents p {font-size:14px; color:#aaa; font-weight:400;}
+.wish .contents p span {color:#ff0000; font-weight:700;}
+.wish .btn {float:right;margin-bottom:10px;}
+.icon-folder-alt.icons {
+    font-size: 450%;
+}
+.icon-trophy.icons {
+    font-size: 450%;
+}
+.list_card .card_title_date .project.title{
+    color: #0088cc;
+}
+.list_card .card_title_date .contest.title{
+    color: #e36159;
+}
+
+
+/** 가이드 **/
+.guide{text-align: center;}
+.guide_title{
+    position:relative;
+    margin-top:30px;
+    font-size: 20px;
+    font-weight:700;
+    text-align: center;
+}
+.guide_title:before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: calc(50% - 20px);
+    height: 4px;
+    width: 40px;
+    background-color: black;
+}
+.pickme_guid_1 img,
+.pickme_guid_2 img{
+	max-width: 175px;
+	margin-top:1rem;
+	margin-bottom:1rem;
+}
+.pickme_guid_1:after{
+    content: '';
+    background:url('/static/images/use-guide/pickme_guid_arow1.png')no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: -24px;
+    top:calc(50% - 40px);
+    width: 55px;
+    height: 27px;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+	input.search_input{width:100%!important;}
+	input.search_input.search_date.hasDatepicker {width: 35%!important;}
+	/** 가이드 **/
+	.pickme_guid_1 img,
+	.pickme_guid_2 img{
+		max-width: 100px;
+	}
+	.pickme_guid_1:after{
+		top: calc(50% - 44px);
+    	width: 45px;
+    	height: 18px;
+	}
+}
+	
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+/*.post .col-6 i.icons{display: none}*/
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}

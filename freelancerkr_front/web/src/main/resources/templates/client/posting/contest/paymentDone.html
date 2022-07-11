@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client/posting/contest/paymentDone.css">
+</head>
+
+
+<div id="content" layout:fragment="content" >
+
+        <!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md mb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                        <h1 class="text-dark"><strong>컨테스트 포스팅 완료</strong></h1>
+                    </div>
+                    <div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 페이지헤더// -->
+        
+        
+        <section>
+            <!-- 최초 완료 되었을때 -->
+        	<div class="container" th:if="${mode == null OR mode?.name() != 'EXTEND'}">
+                <div class="content-body">
+            		<div class="after_pjt_posting">
+            			<div class="title">컨테스트 포스팅이 완료되었습니다!</div>
+            			<ul>
+            				<li>
+                                <img src="/static/images/icon/red_check.png">
+                                <div>컨테스트 현황은 <span class="font_emp">[나의입찰관리]</span>에서 확인하실 수 있습니다.</div>
+                            </li>
+            				<li>
+                                <img src="/static/images/icon/red_check.png">
+                                <div>
+                                    <span class="font_emp">"실시간 확인"</span>이 필요하신 분께서는<br/>
+                                    꼭! <span class="font_emp">등록하신 이메일</span>(등록한 이메일 주소)을 <span class="font_emp">휴대폰과 동기화</span>해주세요!<br/>
+                                    플랫폼이 컨테스트 상황 등을 이메일 푸시합니다.
+                                </div>
+            				</li>
+            			</ul>
+            			<div class="suggest">
+                            이제 전문가들의 포트폴리오를 확인하시고,<br/>
+                            [참여제안]을 해보세요.
+                        </div>
+            			<div class="btn_container">
+            				<button id="confirm" type="button" onclick="location.href='/view/pick-me-ups?afterPosting=true'" class="btn">확인</button>
+            			</div>
+            		</div>
+                </div>
+        	</div>
+            <!-- 최초 완료 되었을떄// -->
+
+            <!-- 수정되었을때 -->
+            <div class="container" th:if="${mode != null AND mode?.name() == 'EXTEND'}">
+                <div class="after_pjt_posting col-md-9 mx-auto p-3 p-lg-5">
+                    <span class="text-5 text-md-8">포스팅옵션이 <span class="">수정</span>되었습니다!</span>
+                    <hr class="mt-2 mb-3 mb-md-4">
+                    <ul class="mb-3 mb-md-4">
+                        <li class="text-3 text-md-4 mb-3">
+                            <i class="fas fa-cube mr-2"></i>
+                            포스팅 하신 프로젝트 또는 컨테스트에 대한 옵션 결제/연장은 언제든 <span class="mark">[결제관리]</span>에서 확인하실 수 있습니다.</li>
+                        <li class="text-3 text-md-4 mb-3">
+                            <i class="fas fa-cube mr-2"></i>옵션에 대한 KPI는 <span class="mark">(1)조회 수, (2)지원자 수, (3)프리랜서에게담긴(찜한) 수로 구성됩니다.</span> 옵션효율을 항상 점검해보세요.
+                        </li>
+                    </ul>
+                    <hr class="mt-2 mb-3 mb-md-4">
+                    <div class="btn_container pt-2 text-center">
+                        <button id="confirm" type="button" onclick="location.href='/view/pick-me-ups?afterPosting=true'" class="btn btn-lg btn-primary rounded-0 col-lg-3">결제관리로 이동</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 수정되었을때// -->
+        </section>
+
+</div>

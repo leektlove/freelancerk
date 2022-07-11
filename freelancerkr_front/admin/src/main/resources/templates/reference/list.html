@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/pickmeup.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/referenceHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 자료실 검색</h1>
+					<form id="" name="" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+
+							<tbody>
+								<tr>
+									<th>클라이언트/프리랜서</th>
+									<td>
+										<label><input type="radio" name="" value="" checked> 전체</label>
+										<label><input type="radio" name="" value="1"> 클라이언트</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="2"> 프리랜서</label>&nbsp;&nbsp;
+									</td>
+								</tr>
+
+								<tr>
+									<th>키워드</th>
+									<td>
+										<input type="text" name="" value="" size="100" placeholder="제목">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="boardbutton">
+							<div class="tc">	
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+
+					<h1>■ 자료실리스트</h1>
+					<table class="boardlist">
+						<colgroup>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>구분</th>
+								<th>제목</th>
+								<th>등록일</th>
+								<th>조회수</th>
+								<th>비고</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td th:text="${item.type?.desc}"></td>
+								<td th:text="${item.title}">회원간 계약서 - 양식</td>
+								<td th:text="|${#temporals.format(item.createdAt, 'yyyy-MM-dd')}|">2017-10-17</td>
+								<td th:text="${item.hits}">173</td>
+								<td>
+									<a th:href="@{/reference/detail/{id}(id = ${item.id})}" class="btn-black mini">보기</a>
+									<a th:href="@{/reference/modify/{id}(id = ${item.id})}" class="btn-black mini">수정</a>
+									<span class="btn-black medium del_btn" th:onclick="|deleteItem(${item.id})|">삭제</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+							<span class="current">1</span>
+							</div>
+						</div>
+						<div class="tr">
+							<a href="" class="btn-color large">등록</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			function modifyItem(id) {
+				location.href = '/notice/' + id + '/form';
+			}
+			function deleteItem(id) {
+				if (!confirm('삭제하시겠습니까?')) {
+					return;
+				}
+
+				$.ajax({
+					type: 'DELETE',
+					url: '/reference/' + id,
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							alert('성공적으로 요청되었습니다.');
+							location.reload();
+							return;
+						} else {
+							alert('요청 중 문제가 발생했습니다.');
+						}
+					},
+					error: function(error) {
+						alert('요청 중 문제가 발생했습니다.');
+						console.error(error);
+
+					}
+				})
+			}
+		</script>
+	</section>
+	
+</html>

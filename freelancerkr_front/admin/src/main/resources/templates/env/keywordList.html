@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/env.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/envHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 키워드</h1>
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="">
+						</colgroup>
+
+						<tbody>
+							<tr>
+								<th>키워드</th>
+								<td>
+									<div id="">
+										업데이트시간 : 실시간 반영
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<h1 style="margin-top: 10px;">■ 인기키워드</h1>
+					<table class="boardlist" style="margin-top:10px;">
+						<colgroup>
+							<col width="120">
+							<col width="200">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>분류코드</th>
+								<th>분류명</th>
+								<th></th>
+							</tr>
+							<tr th:each="secondTopCategory: ${secondTopCategoryList}">
+								<td th:text="|${secondTopCategory.id}"></td>
+								<td th:text="${secondTopCategory.name}"> 전반</td>
+								<td style="text-align:left;">
+									<a th:each="popularKeywordItem: ${secondTopCategory.popularKeywords}"
+									   th:text="|${popularKeywordItem.name} (${popularKeywordItem.usageCount})|"
+									   th:href="|/freelancer/list?keywordName=${popularKeywordItem.name}&parentCategoryId=${secondTopCategory.id}|" target="_blank" class="tag_box" style="cursor:pointer;" >웹개발 (286)</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div><!-- container-->
+	</section>
+	
+
+</html>

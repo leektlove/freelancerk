@@ -1,0 +1,27 @@
+.btn span.sns_join_facebook{background: url(/static/images/btn_f_off.png) no-repeat;height: 25px;width: 25px;background-position: center center;display:inline-block;vertical-align: middle;background-size: contain;}
+.btn span.sns_join_facebook:hover{background: url(/static/images/btn_f_on.png) no-repeat;background-position: center center;}
+.btn .active span.sns_join_facebook{background: url(/static/images/btn_f_on.png) no-repeat;background-position: center center;}
+.btn span.sns_join_naver{background: url(/static/images/btn_n_off.png) no-repeat;height: 25px;width: 25px;background-position: center center;display:inline-block;vertical-align: middle;background-size: contain;}
+.btn span.sns_join_naver:hover{background: url(/static/images/btn_n_on.png) no-repeat;background-position: center center;}
+.btn .active span.sns_join_naver{background: url(/static/images/btn_n_on.png) no-repeat;background-position: center center;}
+.btn span.sns_join_blog{background: url(/static/images/btn_b_off.png) no-repeat;height: 25px;width: 25px;background-position: center center;display:inline-block;vertical-align: middle;background-size: contain;}
+.btn span.sns_join_blog:hover{background: url(/static/images/btn_b_on.png) no-repeat;background-position: center center;}
+.btn .active span.sns_join_blog{background: url(/static/images/btn_b_on.png) no-repeat;background-position: center center;}
+.btn span.sns_join_kakao{background: url(/static/images/btn_k_off.png) no-repeat;height: 25px;width: 25px;background-position: center center;display:inline-block;vertical-align: middle;background-size: contain;}
+.btn span.sns_join_kakao:hover{background: url(/static/images/btn_k_on.png) no-repeat;background-position: center center;}
+.btn .active span.sns_join_kakao{background: url(/static/images/btn_k_on.png) no-repeat;background-position: center center;}
+.btn i.fa-instagram{color: #a6a6a6;border: 2px solid #a6a6a6;padding: 7px;border-radius: 25%;margin-top:1px;}
+.btn i.fa-instagram:hover{color:#dd2a7b;border: 2px solid #dd2a7b;}
+.btn .active i.fa-instagram{color:#dd2a7b;border: 2px solid #dd2a7b;}
+.btn i.fa-twitter{color: #a6a6a6;border: 2px solid #a6a6a6;padding: 7px 6px;border-radius: 50%;}
+.btn i.fa-twitter:hover{color:#38A1F3;border: 2px solid #38A1F3;}
+.btn .active i.fa-twitter{color:#38A1F3;border: 2px solid #38A1F3;}
+.btn i.fa-youtube{color: #a6a6a6;border: 2px solid #a6a6a6;padding: 7px 6px;border-radius: 50%;margin-top:1px;}
+.btn i.fa-youtube:hover{color:#cd201f;border: 2px solid #cd201f;}
+.btn .active i.fa-youtube{color:#cd201f;border: 2px solid #cd201f;}
+.btn i.fa-linkedin-in{color: #a6a6a6;border: 2px solid #a6a6a6; padding: 7px;border-radius: 50%;margin-top:1px;}
+.btn i.fa-linkedin-in:hover{color:#0077b5;border: 2px solid #0077b5;}
+.btn .active i.fa-linkedin-in{color:#0077b5;border: 2px solid #0077b5;}
+.btn i.fa-github-alt{color: #a6a6a6;border: 2px solid #a6a6a6; padding: 7px;border-radius: 50%;margin-top:1px;}
+.btn i.fa-github-alt:hover{color:#913399;border: 2px solid #913399;}
+.btn .active i.fa-github-alt{color:#913399;border: 2px solid #913399;}

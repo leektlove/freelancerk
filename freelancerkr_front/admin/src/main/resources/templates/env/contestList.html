@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/env.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/envHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+
+					<h1>■ 컨테스트 관리</h1>
+
+					<table class="boardlist">
+						<colgroup>
+							<col width="">
+							<col width="180">
+							<col width="120">
+							<col width="120">
+							<col width="120">
+							<col width="180">
+						</colgroup>
+						<tbody><tr>
+							<th colspan="2">구분</th>
+							<th>갯수</th>
+							<th>노출</th>
+							<th>순서</th>
+							<th>비고</th>
+						</tr>
+						<tr>
+							<td>
+								Identity
+							</td>
+							<td>
+								코드
+							</td>
+							<td>
+								12
+							</td>
+							<td>
+								Y
+							</td>
+							<td>
+								2
+							</td>
+							<td>
+								<a href="" class="btn-black mini">수정</a>
+								<a href="" class="btn-black mini">비노출전환</a>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					
+					<div class="boardbutton">
+						<div class="tc">
+							<a href="" class="btn-color large">신규섹터추가</a>
+						</div>
+					</div>
+					<div class="boardbutton">
+						<div class="tc">
+							<div class="boardpage">
+								<span class="current">1</span>
+								<a href="">2</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- container-->
+	</section>
+	
+	
+</html>

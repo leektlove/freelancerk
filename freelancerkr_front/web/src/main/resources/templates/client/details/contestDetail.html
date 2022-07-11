@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layout/layout">
+
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/details/contestDetail.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>컨테스트 상세보기</strong></h1>
+
+					</div>
+					<div class="col-md-6 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더// -->
+
+		<div class="container">			
+			<div class="contest content-body">
+				<div class="row">
+					<div class="detail_container col-lg-9 col-md-8">
+						<h2 class="main_title" th:text="${contest.title}"></h2>
+						<ul class="list list-icons list-icons-style-1 list-secondary list-borders">
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									종류
+								</div>
+								<div class="list_content">
+									<div class="form-check form-check-inline">
+										<div class="custom-control custom-radio d-flex align-self-start">
+			                                <input type="radio" name="projectType" class="custom-control-input" id="projectTypeContest" th:checked="${!contest.proceedProjectAfterContest}" readonly disabled>
+			                                <label class="custom-control-label" for="projectTypeContest">
+			                                	<span class="text-dark">컨테스트</span><br/>
+												<span class="text-2">예)책 표지 디자인</span>
+			                                </label>
+			                            </div>
+			                        </div>
+			                        <div class="form-check form-check-inline">
+										<div class="custom-control custom-radio d-flex align-self-start">
+			                                <input type="radio" name="projectType" class=" custom-control-input" id="projectTypeContestToProject" th:checked="${contest.proceedProjectAfterContest}" readonly disabled>
+			                                <label class="custom-control-label" for="projectTypeContestToProject">
+			                                	<span class="text-dark">컨테스트 후 프로젝트 진행</span><br/>
+												<span class="text-2">예)책 표지 디자인으로 평가 후 200p 북디자인</span>
+			                                </label>
+			                            </div>
+			                        </div>
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									섹터
+								</div>
+								<div class="list_content">
+									<th:block th:each="contestSectorItem : ${contest.contestSectors}">
+										<div th:text="${contestSectorItem.contestSectorType.contestSectorMetaType.name + ' > ' + contestSectorItem.contestSectorType.name}">
+										</div>
+									</th:block>
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									클라이언트의 업종과 주요제품
+								</div>
+								<div class="list_content">
+									<span th:text="|${contest?.categoryOfBusiness}/${contest?.majorProduct}|"></span>
+								</div>
+							</li>
+							<li class="description">
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									상세설명
+								</div>
+								<div class="list_content" th:utext="${contest.description}">
+								</div>
+							</li>
+							<li class="amount">
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									분량
+								</div>
+								<div class="list_content">
+									<div class="num">
+										<div class="text" th:text="|${contest.quantityPage}건|"></div>
+									</div>
+									<div class="explanation" th:utext="${#strings.replace(contest.descriptionPerPage, T(org.apache.commons.lang3.StringUtils).LF, '&lt;br /&gt;')}"></div>
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									 참고소재 또는 도메인주소
+								</div>
+								<div class="list_content">
+									<div class="tag-list">
+										<th:block th:each="referenceWebUrl: ${contest.referenceWebUrlList}">
+											<div>
+												<span class="tag"><a target="_blank" th:href="@{${referenceWebUrl}}" th:text="${referenceWebUrl}"></a></span>
+											</div>
+										</th:block>
+									</div>
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									운영중인 웹사이트
+								</div>
+								<div class="list_content">
+									<a target="_blank" th:href="@{${contest.workingWebUrl}}" th:text="${contest.workingWebUrl}"></a>
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									상호명 또는 슬로건
+								</div>
+								<div class="list_content" th:text="${contest.corporateNameOrCatchPhrase}">
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									디자인 취향
+								</div>
+								<div class="list_content">
+									<div th:text="${contest.priorityTone}"></div>
+									<span class="feeling badge badge-pill keyword_badge" th:text="${feeling.desc}" th:each="feeling: ${contest.feelings}"></span>
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">첨부파일</div>
+								<div class="list_content">
+									<a th:href="${contest.projectDescriptionFileUrl}" th:text="${contest.projectDescriptionFileName}"></a>
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">수수료 부담 조건</div>
+								<div class="list_content">
+									<div class="form-check form-check-inline">
+										<div class="custom-control custom-radio d-flex align-self-start">
+			                                <input type="radio" name="fee" class=" custom-control-input" id="feeY" th:checked="${contest.payForFeeToFreelancer!=null && contest.payForFeeToFreelancer}" readonly disabled>
+			                                <label class="custom-control-label" for="feeY">
+			                                	<span class="text-dark">Yes</span>
+												<span class="text-2 font-weight-bold"><mark>(클라이언트가 프리랜서의 수수료를 부담합니다)</mark></span>
+			                                </label>
+			                            </div>
+									</div>
+									<div class="form-check form-check-inline">
+										<div class="custom-control custom-radio d-flex align-self-start">
+			                                <input type="radio" name="fee" class=" custom-control-input" id="feeN" th:checked="${contest.payForFeeToFreelancer==null || !contest.payForFeeToFreelancer}" disabled>
+			                                <label class="custom-control-label" for="feeN">
+			                                	<span class="text-dark">No</span>
+												<span class="text-2"></span>
+			                                </label>
+			                            </div>
+									</div>
+								</div>
+							</li>
+							<li class="prize_money">
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									확정상금<span th:if="${contest.postingClient.id == #authentication.id}">(수정불가)</span>
+								</div>
+								<div class="list_content">
+									<div class="min_prize wrap">
+										<div class="title">최소상금</div>
+										<div class="content" th:if="${contest.totalPrize != null && contest.incentive != null}">
+											<span th:text="@{| *{#numbers.formatInteger((contest.totalPrize - contest.incentive), 0, 'COMMA')}원|}">
+											</span>
+										</div>
+									</div>
+									<div class="arithmetic">+</div>
+									<div class="incentive wrap">
+										<div class="title">인센티브</div>
+										<div class="content" th:if="${contest.incentive > 0}">
+											<span th:text="@{|*{#numbers.formatInteger(contest.incentive, 0, 'COMMA')}원|}">
+											</span>
+										</div>
+									</div>
+									<div class="arithmetic">=</div>
+									<div class="totalPrize wrap">
+										<div class="title">확정상금</div>
+										<div class="content" th:if="${contest.totalPrize != null && contest.incentive != null}">
+											<span th:text="|*{#numbers.formatInteger((contest.totalPrize), 0, 'COMMA')}원|">
+											</span>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="price">
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+									상금분배
+								 	(<span class="price" th:text="@{|${contest.prizeTargetPersons}위까지 선정|}">
+									</span>)<span> - 선정후 1회 수정 가능</span>
+								</div>
+								<div class="list_content">
+									<div class="one lank" th:if="${contest.prizeFor1st != null && contest.prizeFor1st > 0}">
+										<i class="fas fa-trophy"></i>
+										<div class="title">1위상금</div>
+										<div class="content">
+											<span th:text="|*{#numbers.formatInteger(contest.prizeFor1st, 0, 'COMMA')}원|"></span>
+										</div>
+									</div>
+									<div class="two lank" th:if="${contest.prizeFor2nd != null && contest.prizeFor2nd > 0}">
+										<i class="fas fa-trophy"></i>
+										<div class="title">2위상금</div>
+										<div class="content">
+											<span th:text="|*{#numbers.formatInteger(contest.prizeFor2nd, 0, 'COMMA')}원|"></span>
+										</div>
+									</div>
+									<div class="three lank" th:if="${contest.prizeFor3rd != null && contest.prizeFor3rd > 0}">
+										<i class="fas fa-trophy"></i>
+										<div class="title">3위상금</div>
+										<div class="content">
+											<span th:text="|*{#numbers.formatInteger(contest.prizeFor3rd, 0, 'COMMA')}원|"></span>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li style="display: none;">
+								<i class="fas fa-check"></i>
+								<div class="list_title">
+								 	포스팅옵션
+								</div>
+								<div class="list_content">
+									<table class="table">
+										<thead class="text-center font-weight-bold text-3">
+										<tr>
+											<th>옵션명</th>
+											<th>유효기한</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr th:each="optionItem: ${contestOptions}" th:class="${optionItem.category != null?'disabled':''}">
+											<th:block th:if="${optionItem.mountOfMoneyUnit != 0}">
+												<th scope="row">
+													<label class="chk_container paid-option-container" th:style="${optionItem.category!=null?'padding-left: 10px;':''}">
+														<input type="checkbox" th:value="${optionItem.id}"
+															   name="projectPaymentOptionId[]"
+															   th:attr="data-option-code=${optionItem.code}"
+															   th:checked="${contest.isContainProjectOption(optionItem.id)}"
+															   readonly="readonly"
+															   onclick="return false">
+														<input type="hidden" value="1" name="projectPaymentOptionCount[]">
+														<span class="checkmark"></span>
+														<span th:if="${optionItem.category!=null}">+</span><span th:text="${optionItem.name}"></span>
+													</label>
+												</th>
+												<td th:text="${contest.getProjectOptionValidationSpan(optionItem.id)}"></td>
+											</th:block>
+											<th:block th:if="${optionItem.mountOfMoneyUnit == 0}">
+												<th colspan="2">
+													<label class="chk_container">
+														<input type="checkbox" th:value="${optionItem.id}" name="projectPaymentOptionId[]" th:checked="${contest.isContainProjectOption(optionItem.id)}" readonly="readonly" onclick="return false">
+														<input type="hidden" value="1" name="projectPaymentOptionCount[]">
+														<span class="checkmark"></span>
+														<span th:text="${optionItem.name}"></span>
+													</label>
+												</th>
+											</th:block>
+										</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</li>
+							<li>
+								<i class="fas fa-check"></i>
+								<div class="list_title">참여작품(<span th:text="${contest.numberOfApplyCount}"></span>건)</div>
+								<div class="post-image" th:if="${contest.postingClient.id == #authentication.id}">
+									<div class="list_content">
+										<div class="row mx-0">
+											<div class="col-lg-2 col-md-3 col-4 p-1" th:each="bidItem: ${contest.projectBids}">
+												<span th:href="@{/view/contest-entries/__${bidItem.id}__/details/ajax}" data-ajax-on-modal th:if="${bidItem.primaryContestEntryFile?.fileType?.name() == 'IMAGE'}">
+													<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons">
+														<span class="thumb-info-wrapper" >
+															<img th:style="|${'background-image: url(' + bidItem.primaryContestEntryFile.fileUrl + ')'}; background-position: center;background-size: cover; height:125px;|">
+															<span class="thumb-info-action">
+																<span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+															</span>
+														</span>
+													</span>
+												</span>
+												<span th:if="${bidItem.primaryContestEntryFile?.fileType?.name() == 'VIDEO'}" data-toggle="modal" data-target="#videoModal" th:data-url="${bidItem.primaryContestEntryFileUrl}">
+													<span class="thumb-info thumb-info-no-borders thumb-info-centered-icons">
+													<span class="thumb-info-wrapper">
+														<img th:style="|${'background-image: url(' + bidItem.primaryContestEntryFile.videoImageUrl + ')'}; background-position: center;background-size: cover; height:125px;|">
+													</span>
+													</span>
+												</span>
+												<div class="text-2" style="white-space: nowrap;width:100%;overflow: hidden;text-overflow: ellipsis;" th:text="${bidItem.participant.exposeName}"></div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</li>
+							<li th:if="${contest.status.name() == 'CANCELLED'}">
+								<i class="fas fa-check"></i>
+								<div class="list_title">미선정사유</div>
+								<div class="list_content">
+									<div class="list_content">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+										<label class="form-check-label" for="inlineRadio1">기한만료</label>
+									</div>
+									<div class="list_content">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+										<label class="form-check-label" for="inlineRadio2">의뢰자취소</label>
+									</div>
+								</div>
+							</li>
+							<li id="count_applicant" th:if="${contest.status.name() == 'POSTED'}">
+							    <div class="row">
+	                                <div class="col-lg-6 mt-3">
+	                                	<div class="dday_count count_card">
+		                                    <div class="circular-bar circular-bar-sm single-line mb-0">
+												<div class="circular-bar-chart" th:attr="data-percent=|${contest.remainRate}|" data-plugin-options="{'size': 110, 'lineWidth': 10, 'barColor': '#e36159'}" style="margin-top:10px;width: 110px;height: 110px;">
+													<strong th:if="${!contest.postingEnd}" style="font-style: italic;white-space: nowrap;">D-<span th:text="${contest.remainDays}"></span></strong>
+													<strong th:if="${contest.postingEnd}" style="white-space: nowrap;"><span>선정중...</span></strong>
+												</div>
+											</div>
+											<div class="">
+												<div class="remainDays mb-2">남은기간 <span th:text="${contest.remainDays}"></span>일</div>
+												<div>(<span th:text="${#temporals.format(contest.postingEndAt, 'yyyy.MM.dd HH:mm')}"></span>까지)</div>
+											</div>
+										</div>
+	                                </div>
+	                                 <div class="col-lg-6 mt-3">
+	                                 	<div class="applicant_count count_card">
+											<img src="/static/images/applicant_c.png">
+											<div class="">참여인원 <span th:text="${contest.numberOfApplyCount}"></span>명</div>
+										</div>
+	                                </div>
+	                            </div>
+							</li>
+						</ul>
+						<!-- <div id="comment" th:if="${contest.postingClient.id == #authentication.id}">
+							<input id="projectId" th:field="${contest.id}" type="text" hidden>
+							
+							<h4 class="mb-2">메시지 (<span th:text="${commentList.size()}">0</span>)</h4>
+							<div class="comment-view">
+								<ul class="comments" th:if="${commentList.size() > 0}" th:each="comment: ${commentList}">
+									<li class="send" th:if="${comment.user.id == #authentication.id}">
+										<div class="comment">
+											<div class="img-thumbnail d-none d-sm-block p-0">
+												<img th:src="@{${(#strings.isEmpty(comment.user.profileImageUrl)?'/static/images/c_basic.jpg':comment.user.profileImageUrl)}}" class="avatar">
+											</div>
+											<span class="comment-by" th:text="${comment.project.postingClient.exposeName}"></span>
+											<div class="comment-block media-body">
+												<div class="comment-arrow"></div>
+												<p th:text="${comment.content}"></p>
+											</div>
+											<div class="date" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></div>
+										</div>
+									</li>
+									<li class="receive" th:if="${comment.user.id != #authentication.id}">
+										<div class="comment">
+											<span class="comment-by" th:text="${comment.user.exposeName}"></span>
+											<div class="comment-block">
+												<div class="comment-arrow"></div>
+												<p th:text="${comment.content}"></p>
+											</div>
+											<div class="date" th:text="|${#temporals.format(comment.createdAt, 'yy-MM-dd HH:mm:ss')}|"></div>
+											<div class="img-thumbnail d-none d-sm-block p-0">
+												<img th:src="@{${(#strings.isEmpty(comment.user.profileImageUrl)?'/static/images/f_basic.jpg':comment.user.profileImageUrl)}}" class="avatar">
+											</div>
+										</div>
+									</li>
+								</ul>
+								<div class="input-group mb-2">
+									<textarea id="inputReply" rows="3" class="form-control" maxlength="1000" placeholder="프리랜서들에게 안내사항(전체 메시지)등을 전달해주세요. 개별 메시지(댓글)는 특정인을 선택 후 전송하시면 됩니다." style="resize: none;height: 50px;line-height: inherit;"></textarea>
+									<div class="input-group-append">
+										<button id="btnReply" class="btn btn-secondary" type="button" style="width: 100px">전송</button>
+									</div>
+								</div>
+							</div>
+							
+						</div> -->
+					</div>
+					<div class="side_container col-lg-3 col-md-4">
+						<aside class="sidebar" id="sidebar" data-plugin-sticky data-plugin-options="{'minWidth': 991, 'containerSelector': '.container', 'padding': {'top': 110}}">
+							<!-- <div class="card p-3 mb-2 rounded-0" th:if="${contest.postingClient.id != #authentication.id}">
+								<div class="form-row" style="margin: 5px">
+									<div class="col-4 col-md-12 col-lg-4">
+										<div class="profile_img_crop" style="position: relative;">
+		                                    <div class="center-crop-wrapper rounded">
+		                                        <img class="card-img-top rounded" th:src="@{${(#strings.isEmpty(contest.postingClient.profileImageUrl)?'/static/images/c_basic.jpg':contest.postingClient.profileImageUrl)}}">
+		                                    </div>
+		                                </div>
+										<span class="badge badge-light px-2 py-1 mt-1 text-primary" style="justify-content: center;align-content: flex-start;display: flex;margin-bottom: 2px;text-align: center;">클라이언트</span>
+									</div>
+									<div class="col-8 col-md-12 col-lg-8 align-self-end">
+										<div class="member font-weight-bold" style="line-height: 20px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${contest.postingClient.exposeName}">노출 이름</div>
+										<div class="text-1" style="line-height: 17px" th:text="${contest.postingClient.businessType.name}">개인사업자</div>
+										<div id="star">
+											<div class="rating-container theme-krajee-fas rating-xs rating-animate">
+                                                <div class="rating-stars">
+                                                    <span class="empty-stars">
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="far fa-star"></i>
+                                                        </span>
+                                                    </span>
+                                                    <span class="filled-stars" th:style="|width: ${user.ratingPercentageAsFreelancer}%|">
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                        <span class="star">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div style="font-size: 13px;font-weight: 600;">프로젝트 <span id="allpjt_num" class="text-primary" th:text="${#numbers.formatInteger(contest.postingClient.completedProjectCount, 0, 'COMMA')}">10</span>건 중
+												<span id="markpjt_num" class="text-primary" th:text="${#numbers.formatInteger(contest.postingClient.ratedProjectCountAsClient, 0, 'COMMA')}">6</span>건 평가</div>
+                                            </div>
+                                        </div>
+									</div>
+								</div>
+								<hr class="my-1" style="background-color: #c1c1c1;" />
+								<div class="row">
+									<div class="col-12">
+										<div class="d-flex" style="margin:4px">
+											<i class="icon-envelope-open icons mr-2 align-self-center"></i>
+											<span class="text-2" th:text="${contest.postingClient.exposeEmail} ? ${contest.postingClient.email}: '비공개'" style="line-height: 20px">
+											</span>
+										</div>
+										<div class="d-flex" style="margin:4px">
+											<i class="icon-screen-smartphone icons mr-2 align-self-center"></i>
+											<span class="text-2" th:text="${contest.postingClient.exposeCellphone} ? ${contest.postingClient.cellphone} : 비공개" style="line-height: 20px">
+											</span>
+										</div>
+										<div class="d-flex" style="margin:4px">
+											<i class="icon-home icons mr-2 align-self-center"></i>
+											<a th:href="${contest.postingClient.homepageUrl}" style="width:100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;line-height: 20px;">
+												<span class="text-2" th:text="${contest.postingClient.exposeSns} ? ${contest.postingClient.homepageUrl} : 비공개" >
+												</span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<hr class="my-1" style="background-color: #c1c1c1;" />
+							</div> -->
+
+							<!-- 취소시 환불가능금액 -->
+							<div class="cancel_card" th:if="${contest.postingClient.id == #authentication.id}">
+								<div class="card-header">미 선정 시 환불가능금액</div>
+								<div class="card-body">
+									<div class="expected_cancel_divided">
+										<div class="count" th:text="|*{#numbers.formatInteger(contest.refundablePriceWhVat, 0, 'COMMA')}원|"></div>
+									</div>
+									<div class="description">
+										기한만료, 클라이언트의 중도취소 등으로 <strong>미선정 되어 종료된 경우</strong>, 클라이언트가 받을 수 있는 <strong>환불금액</strong>입니다.<br>(상금을 지급하셔야 저작권이 클라이언트에게 이전됩니다)
+									</div>
+								</div>
+								<div class="card-bottom">
+									<div class="btn" data-toggle="modal" data-target="#deposit_money_refund_info">환불 및 배당규정 보기</div>
+								</div>
+							</div>
+							<!-- 취소시 환불가능금액//-->
+
+							<button type="button" th:if="${contest.postingClient.id == #authentication.id}" class="btn btn-secondary btn-lg btn-block rounded-0 mb-2" th:onclick="|goToPickView(${contest.id}, ${contest.numberOfApplyCount})|">선정하기</button>
+							<button type="button" th:if="${(contest.status.name() == 'POSTED') && contest.postingClient.id == #authentication.id}" class="btn btn-light btn-lg btn-block rounded-0 mb-2" th:onclick="|cancelItem(${contest.id}, ${contest.numberOfApplyCount}, 'CONTEST')|">컨테스트 취소</button>
+							<button type="button" th:if="${contest.postingClient.id == #authentication.id}" class="btn btn-lg btn-block rounded-0 mb-2" th:onclick="|javascript:location.href='/client/posting/contest?id=${contest.id}'|" style="background-color: #ecacae">컨테스트 내용 수정</button>
+							<a href="javascript:history.back()">
+								<button type="button" class="btn btn-light btn-lg btn-block rounded-0 mb-2">이전페이지로 돌아가기</button>
+							</a>
+						</aside>
+					</div>
+				</div>	
+			</div>
+		</div>
+
+		<!-- 보증금 환불규정 팝업 -->
+		<div class="modal fade modal_wrap" id="deposit_money_refund_info" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+			 aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+
+					<!-- 팝업 헤더 -->
+					<div class="head modal-header">
+						<h5 class="modal-title" id="ModalLabel">보증금환불규정</h5>
+						<div class="">
+							<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+						</div>
+					</div>
+					<!-- 팝업 헤더// -->
+
+					<!-- 팝업 컨텐츠 -->
+					<div class="content modal-body">
+						<table class="table table-sm table-bordered text-center">
+							<thead class="text-center" style="background-color: #c43f40">
+								<tr>
+									<th class="text-light" colspan="5">환불규정</th>
+								</tr>
+							</thead>
+							<tr class="table-active text-center">
+								<td>구분</td>
+								<td>상황</td>
+								<td>보증금</td>
+								<td>확정상금</td>
+								<td class="text-center">저작권이전</td>
+							</tr>
+							<tr>
+								<td class="table-active">선정</td>
+								<td class="table-active">기한 내 선정</td>
+								<td class="table-active">전액환불</td>
+								<td class="table-active">수상자에게 상금 지급</td>
+								<td class="table-active text-center">가능</td>
+							</tr>
+							<tr>
+								<td class="table-active">-</td>
+								<td class="table-active">무응찰</td>
+								<td class="table-active">전액환불</td>
+								<td class="table-active">전액환불</td>
+								<td class="table-active text-center">N/A</td>
+							</tr>
+							<tr>
+								<td rowspan="3" style="vertical-align: middle;">미선정</td>
+								<td>1~2인 참여</td>
+								<td><strong>80%환불</strong><br>20%참여자배당</td>
+								<td><strong>70%환불</strong><br>20%참여자배당<br>10%수수료</td>
+								<td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+							</tr>
+							<tr>
+								<td>3~5인 참여</td>
+								<td><strong>50%환불</strong><br>50%참여자배당</td>
+								<td><strong>50%환불</strong><br>40%참여자배당<br>10%수수료</td>
+								<td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+							</tr>
+							<tr>
+								<td>6인 이상 참여</td>
+								<td><strong>20%환불</strong><br>80%참여자배당</td>
+								<td><strong>20%환불</strong><br>70%참여자배당<br>10%수수료</td>
+								<td class="text-secondary text-center" style="vertical-align: middle;">불가</td>
+							</tr>
+							<tr>
+								<td colspan="5">** 미선정 : 컨테스트를 취소하거나 포스팅 기한이 만료된 경우를 의미합니다.</td>
+							</tr>
+						</table>
+						<div class="btn-group w-100">
+		                    <div class="ok_btn btn btn-lg btn-primary mx-auto rounded-0" data-dismiss="modal" aria-label="Close" style="min-width: 200px">확인</div>
+		                </div>
+					</div>
+					<!-- 팝업 컨텐츠// -->
+					
+				</div>
+			</div>
+		</div>
+		<!-- 보증금환불규정 팝업// -->
+
+		<script>
+			$(function () {
+				$('#myTab li:last-child a').tab('show')
+			})
+		</script>
+		<script th:inline="javascript">
+			var numberOfApply = [[${contest.numberOfApplyCount}]]
+		</script>
+		<script src="/static/js/portfolio-common-popup.js"></script>
+		<script src="/static/js/client/bid/common.js"></script>
+		<script src="/static/js/freelancer/details/contest-detail.js"></script>
+
+		<script>
+
+			var currentZoom = 100;
+			$(document).on('click', '#zoomIn', function() {
+				if (currentZoom > 150) return;
+				currentZoom = currentZoom + 10;
+				$('.owl-item.active').find('img').css('width', currentZoom + '%');
+			});
+
+			$(document).on('click', '#zoomOut', function() {
+				if (currentZoom < 10) return;
+				currentZoom = currentZoom - 10;
+				$('.owl-item.active').find('img').css('width', currentZoom + '%');
+			});
+
+			$(document).on('click', '#contestEntryFileFullBtn', function(e) {
+				var id = $(e.target).data('id');
+				window.open("/view/contest-entries/" + id + "/details", '_blank');
+			})
+		</script>
+
+	</section>
+	
+	
+</html>

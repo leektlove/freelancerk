@@ -1,0 +1,82 @@
+.after_pjt_posting{
+	width: 100%;
+	text-align: center;
+	margin-top: 5rem;
+	margin-bottom: 5rem;
+}
+.after_pjt_posting .title{
+	font-size: 30px;
+	margin-bottom: 4rem;
+}
+.after_pjt_posting ul li{
+	font-size: 15px;
+	margin-bottom: 2rem;
+}
+.after_pjt_posting ul li .font_emp{
+	color: #df564f;
+	font-weight: 700;
+}
+.after_pjt_posting ul li img{
+	margin-bottom: 0.8rem;
+}
+.after_pjt_posting .suggest{
+	margin-top: 7rem;
+}
+.after_pjt_posting .btn_container{
+	margin-top: 2rem;
+	width: 100%;
+	text-align: center;
+}
+.after_pjt_posting .btn_container .btn{
+	display: inline-block;
+	border-radius: 0;
+	padding: 0.8rem;
+	font-size: 15px;
+	min-width: 250px;
+}
+.after_pjt_posting .btn_container .btn.find_project{
+	background-color: #df564f;
+	color: #fff;
+}
+.after_pjt_posting .btn_container .btn.bid_list{
+	border: 1px solid #df564f;
+	color: #df564f;
+}
+
+/******************************** 반응형 ********************************/
+@media (min-width: 1200px) { 
+
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	
+}
+@media (max-width: 575.98px) {
+	.after_pjt_posting .title {
+	    font-size: 22px;
+	    margin-bottom: 2rem;
+	    font-weight: 700;
+	}
+	.after_pjt_posting ul li {
+	    font-size: 13px;
+	    margin-bottom: 2rem;
+	}
+	.after_pjt_posting ul li img {
+	    margin-bottom: 0.5rem;
+	    width: 23px;
+	}
+	.after_pjt_posting .suggest {
+		font-size: 13px;
+	    margin-top: 3rem;
+	}
+	.after_pjt_posting .btn_container .btn {
+	    width: 100%;
+	    display: block;
+	    margin-bottom: 0.5rem;
+	}
+}

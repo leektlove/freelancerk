@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:700');
+.custom-control-label::before {
+	top: 0.15rem;
+}
+.custom-control-label::after {
+	top: 0.15rem;
+}
+#c_login.contents{
+	width: 100%;
+	max-width: 450px;
+	margin: auto;
+	margin-top: 5rem;
+	margin-bottom: 5rem;
+}
+.top_area {
+	text-align: center;
+	margin-bottom: 3rem;
+}
+.top_area img{
+	width: 155px;
+}
+.top_area .title {
+	font-size:45px;
+	color:#b2b2b2;
+	text-transform:uppercase;
+	font-family:'Raleway', sans-serif;
+}
+.top_area .title span {
+	color:#0088cc;
+	font-family:'Raleway', sans-serif;
+}
+
+.middle_area{
+	margin-bottom: 3rem;
+}
+.middle_area .input {
+	
+}
+.middle_area .input .box input{
+	width: 100%;
+	font-size: 15px;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 0.5rem;
+	padding: 0.7rem;
+}
+.middle_area .input .box input:focus{
+	box-shadow: none;
+	border-bottom: 1px solid #0088cc;
+}
+.middle_area .other_action{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 4rem;
+}
+.middle_area .other_action .join_n_findpw{
+	font-size: 13px;
+	white-space: nowrap;
+}
+.middle_area .other_action .join_n_findpw .join{
+	cursor: pointer;
+	color: #0088cc;
+	white-space: nowrap;
+}
+.middle_area .other_action .join_n_findpw .findpw{
+	cursor: pointer;
+	color: #333;
+	white-space: nowrap;
+}
+.middle_area .other_action .auto_login{
+
+}
+.middle_area .btn_login .btn{
+	display: block;
+	width: 100%;
+	max-width: 200px;
+	margin: auto;
+	font-size: 15px;
+}
+.middle_area .noti{
+	display: flex;
+	max-width: 380px;
+    margin: auto;
+    margin-bottom: 4rem;
+}
+.middle_area .noti .fa-md-3x{
+	color: #ffd42a;
+	margin-right: 1rem;
+	align-self: center;
+}
+.middle_area .noti .text{
+	font-weight: 700;
+	font-size: 15px;
+}
+.middle_area .noti .text .point{
+	position: relative;
+}
+.middle_area .noti .text .point .color_pen{
+	position: absolute;
+
+}
+.middle_area .noti .text .bold{
+	color: #0088cc;
+}
+.bottom_area{
+	margin-bottom: 4rem;
+}
+.bottom_area .btn_sns{
+	display: flex;
+	justify-content: space-between;
+}
+.bottom_area .btn_sns .text{
+	align-self: center;
+}
+.bottom_area .btn_sns .sns_icon{
+	
+}
+.bottom_area .btn_sns .sns_icon a {
+    margin-left: 0.5rem;
+}
+.login-failure-container {
+	display: none;
+	color: #df564f;
+    text-align: center;
+    margin-bottom: 1rem;
+    background-color: #fbecec;
+    padding: 5px;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+	#c_login.contents{
+		margin-top: 3rem;
+		margin-bottom: 3rem;
+	}
+	#c_login .title {
+	    line-height: 50px;
+	}
+	.middle_area{
+		margin-bottom: 1rem;
+	}
+	.middle_area .other_action{
+		margin-bottom: 2rem;
+	}
+	.middle_area .noti{
+		max-width: 350px;
+		margin-bottom: 3rem;
+	}
+	.middle_area .noti .text{
+		font-size: 13px;
+	}
+	.middle_area .btn_login .btn{
+		max-width: none;
+	}
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 	
+	
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+	
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator=" layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/env.css">
+</head>
+
+
+<section id="content" layout:fragment="content">
+
+    <div id="container">
+        <div id="container_side">
+            <th:block th:include="fragments/envHeader"></th:block>
+        </div>
+        <div id="container_content">
+            <div class="container_inner">
+
+                <h1>■ 기본정보 등록</h1>
+
+                <form id="form" action="/categories" method="post" th:object="${category}" enctype="multipart/form-data">
+                    <table class="boardform">
+                        <input type="hidden" th:field="*{id}"/>
+                        <colgroup>
+                            <col width="150">
+                            <col width="350">
+                            <col width="150">
+                            <col width="">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th>분류코드</th>
+                            <td th:text="${category.id}"></td>
+                            <input th:if="${category.parentCategory != null}" type="hidden" name="parentCategory.id" th:value="${category.parentCategory.id}"/>
+                        </tr>
+                        <tr>
+                            <th>출력</th>
+                            <td>
+                                <label><input type="radio" th:field="*{hidden}" value="false" checked>출력</label>&nbsp;&nbsp;
+                                <label><input type="radio" th:field="*{hidden}" value="true">미출력</label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>순서</th>
+                            <td><input type="text" th:field="*{seq}" size="4"></td>
+                        </tr>
+
+                        <tr>
+                            <th>분류명</th>
+                            <td>
+                                <input type="text" th:field="*{name}" size="50">
+                            </td>
+                        </tr>
+                        <tr th:if="${category.parentCategory == null}">
+                            <th>
+                                메뉴이미지
+                            </th>
+                            <td>
+                                <input type="file" th:field="*{imageFileAtMenu}" class="imgext imgsize">
+                                <div class="sian_pop"
+                                     th:style="|background:url(${category.imageAtMenuUrl}) no-repeat;vertical-align: middle;background-position:center center;|">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${category.parentCategory == null}">
+                            <th>
+                                메뉴이미지 (선택)
+                            </th>
+                            <td>
+                                <input type="file" th:field="*{imageFileActiveAtMenu}" class="imgext imgsize">
+                                <div class="sian_pop"
+                                     th:style="|background:url(${category.imageActiveAtMenuUrl}) no-repeat;vertical-align: middle;background-position:center center;|">
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="boardbutton">
+                        <div class="tc">
+                            <input type="submit" value="저장" class="btn-color large">
+                            <a href="/env/categoryList" class="btn-colorline large">목록</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</html>

@@ -1,0 +1,42 @@
+
+<!-- 입찰제의 팝업 -->
+<div class="modal fade modal_wrap" id="suggest_bid" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal-dialog modal-md" role="document" style="max-width: 600px;">
+        <div class="modal-content">
+
+            <!-- 팝업 헤더 -->
+            <div class="head modal-header">
+                <h5 class="modal-title" id="ModalLabel">내 프로젝트의 입찰에 참여해주세요.</h5>
+                <div class="">
+                    <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+            <!-- 팝업 헤더// -->
+
+            <!-- 팝업 컨텐츠 -->
+            <div class="content modal-body">
+                <div class="title">
+                    해당 포트폴리오의 프리랜서에게 참여 요청을 합니다.
+                </div>
+                <div id="">
+                    <input type="hidden" name="pickMeUpId" value="">
+
+                    <select name="proposition-project" title="프로젝트" class="frm_select" style="width:100%">
+                        <option value="">프로젝트를 선택해 주세요.</option>
+                        <th:block th:each="item: ${postedProjectList}">
+                            <option th:value="${item.id}" th:text="${item.title}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="text-center mt-3">
+                    <a th:href="|javascript:propose(${preventRefresh})|" class="btn btn-primary btn-large rounded-0" style="min-width: 120px">참여요청</a>
+                    <a href="#" class="btn btn-light btn-large rounded-0 pop_close" data-dismiss="modal" aria-label="Close" style="min-width: 100px;">닫기</a>
+                </div>
+            </div>
+            <!-- 팝업 컨텐츠// -->
+
+        </div>
+    </div>
+</div>
+<!-- 입찰제의 팝업//-->

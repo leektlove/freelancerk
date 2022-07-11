@@ -1,0 +1,29 @@
+/* 옵션 결제내역과 포인트*/
+.refund_container .table{
+    width: 1000px;
+    margin: auto;
+}
+.refund_container  .table thead th{
+    vertical-align: middle!important;
+    border: 0;
+    border-top: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0!important;
+    text-align: center;
+    font-size: 13px;
+}
+.refund_container  .table tbody td{
+    border: 0;
+}
+.refund_container  .table tbody td.refund_day{
+    min-width: 120px;
+}
+.refund_container  .table tbody td.count{
+    text-align: right;
+}
+.refund_container  .table tbody tr:nth-child(2n){
+    background-color: #fafafa;
+}
+.refund_container  .table tbody tr:last-child{
+    border-top: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0;
+}

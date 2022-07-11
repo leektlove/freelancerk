@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/directMarket/view.css">
+	<style type="text/css">
+        .tele_time table td{
+            font-size: 12px;
+			padding:1px;
+        }
+        .tele_time table td.time{
+            font-size: 11px;
+        }
+        .tele_time .fa-stop{
+        	font-size: 10px;
+            color:#ddd;
+        }
+        .tele_time .fa-stop.active{
+            color:#0088cc;
+        }
+    </style>
+
+	<!-- 로컬적용 script -->
+</head>
+	    
+	
+	<div id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>직거래마켓</strong></h1>
+
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+        <!-- 페이지헤더//-->
+
+		<section>
+			<div class="container">
+				<div class="content-body">
+					<div class="pickMeUp" th:if="${not #lists.isEmpty(data)}">
+			            <div class="heading heading-border heading-middle-border">
+	                        <h4 class="font-weight-normal"><strong class="font-weight-bold">내가 둘러본 직거래</strong></h4>
+	                    </div>
+	                    <div class="warn">
+	                    	<img src="/static/images/icon/caution_2.png">
+	                    	직접적인 작업의뢰가 아닌 홍보, 개인적 목적으로 연락을 취하는 경우, 곧 프리랜서코리아 관리자에게 해당 사안이 접수되며 이는 형사처벌의 대상이 될 수 있습니다.
+	                    </div>
+	                    <div class="btn_container">
+	                    	<div class="pick_freelancer">
+								<div class="text" data-toggle="modal" data-target="#escrow_info">
+									<div class="t">에스크로서비스적용</div>
+									<div class="strong"><i class="far fa-question-circle mr-1"></i>에스크로 서비스란?</div>
+								</div>
+						        <button id="submit" type="button" class="submit btn btn-lg">선택한 전문가와 프로젝트 진행</button>
+						    </div>
+	                    	<div class="left_btn">
+		                    	<button id="selectAllBtn" class="btn selectAllBtn">모두선택/해제</button>
+					            <button id="delete" class="btn delete">선택항목삭제</button>
+					        </div>
+					        <div class="right_btn">
+					        	<div class="text" data-toggle="modal" data-target="#escrow_info">
+									<div class="t">에스크로서비스적용</div>
+									<div class="strong"><i class="far fa-question-circle mr-1"></i>에스크로 서비스란?</div>
+								</div>
+						        <button id="submit" type="button" class="submit btn btn-lg">선택한 전문가와 프로젝트 진행</button>
+						    </div>
+				        </div>
+				        <div class="direct_market item-container">
+				        	<div class="pt-5">
+								<div class="row">
+
+						        	<!-- 마켓 카드 -->
+						        	<div class="col-xl-6" th:each="item, iter: ${data}">
+						        		<article class="form-row p-0">
+											<div class="col-7 col-md-4 col-lg-3 col-xl-4 mx-auto mb-3">
+												<div class="post pickmeup_card">
+					                                <span class="badge-g-list">
+					                                    <span th:if="${item.pickMeUp.directDealAvailable}"class="direct" data-toggle="tooltip" data-placement="top" data-original-title="직거래가능"><i class="fas fa-phone"></i></span>
+					                                    <span th:if="${item.pickMeUp.highQuality}"class="master" data-toggle="tooltip" data-placement="top" data-original-title="고급인력"><i class="far fa-thumbs-up"></i></span>
+					                                    <span th:if="${item.pickMeUp.creative}"class="creative" data-toggle="tooltip" data-placement="top" data-original-title="독창적"><i class="far fa-lightbulb"></i></span>
+					                                </span>
+					                                <a class="image_wrap" th:href="|javascript:toPickMeUpDetail('@{/portfolios/__${item.pickMeUp.id}__/details(pickMeUpIds=${pickMeUpIds},currentIndex=${iter.index})}', ${isLoggedIn}, ${item.pickMeUp.directDealAvailable})|">
+					                                    <div class="post-image" style="position: relative;">
+					                                        <div class="kind-c">
+					                                            <img th:if="${item.pickMeUp.contentType == 'VIDEO'}" src="/static/images/card_video.png" class="card_video" style="width: 40px;">
+					                                            <img th:if="${item.pickMeUp.contentType == 'AUDIO'}" src="/static/images/card_audio.png" class="card_audio" style="width: 40px;">
+					                                        </div>
+					                                        <div class="pickmeup_portfolio_card">
+					                                            <div class="blog_text" th:if="${item.pickMeUp.contentType?.name() == 'BLOG'}">
+					                                                <div class="text text-dark" th:text="${item.pickMeUp.onlyTextDescription}">
+					                                                </div>
+					                                            </div>
+					                                            <div class="center-crop-wrapper">
+					                                                <img th:src="${item.pickMeUp.representativeImageUrl}" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+					                                            </div>
+					                                        </div>
+					                                    </div>
+					                                </a> 
+					                                <div th:class="|pickmeup-profile-image ${item.pickMeUp.project != null?'certification':''}|">
+					                                    <img th:src="@{${(#strings.isEmpty(item.pickMeUp.user.profileImageUrl)?'/static/images/icon/freelancer_noimg.png':item.pickMeUp.user.profileImageUrl)}}">
+					                                </div>
+					                                <div class="pickmeup_card_sector">
+			                                            <span class="" th:text="${item.pickMeUp.category1st?.name}"></span>
+			                                            <i class="fas fa-arrow-right"></i>
+			                                            <span class="" th:text="${item.pickMeUp.category2nd?.name}"></span>
+			                                        </div>
+					                                <!-- <div class="card-infomation">
+					                                    <div class="counter">
+					                                        <div class="counter_c" th:text="${#numbers.formatInteger(item.pickMeUp.directDealCount, 0, 'COMMA')}">0</div>
+					                                        <div class="counter_t">직거래</div>
+					                                    </div>
+					                                    <div class="counter">
+					                                        <div class="counter_c" th:text="${#numbers.formatInteger(item.pickMeUp.projectPropositionCount, 0, 'COMMA')}">0</div>
+					                                        <div class="counter_t">요청</div>
+					                                    </div>
+					                                    <div class="counter">
+					                                        <div class="counter_c" th:text="${#numbers.formatInteger(item.pickMeUp.hits, 0, 'COMMA')}">0</div>
+					                                        <div class="counter_t">조회수</div>
+					                                    </div>
+					                                </div> -->
+					                                <a th:href="|javascript:toPickMeUpDetail('@{/portfolios/__${item.pickMeUp.id}__/details(pickMeUpIds=${pickMeUpIds},currentIndex=${iter.index})}', ${isLoggedIn}, ${item.pickMeUp.directDealAvailable})|">    
+					                                    <div class="card-title text-dark">
+					                                        <div th:text="${item.pickMeUp.title}"></div>
+					                                    </div>
+					                                </a>
+					                            </div>
+											</div>
+											<div class="col-12 col-md-8 col-lg-9 col-xl-8">
+												<div style="margin-left:10px;margin-right: 10px;">
+													<label class="mui-selectable-image">
+														<input type="checkbox" name="si1" th:attr="data-id=${item.id}">
+														<b class="indicator"></b>
+														<b class="indicator-back"></b>
+													</label>
+													<div style="height: 21px;">
+														<span class="font-weight-bold" th:text="${item.pickMeUp.user.exposeName}" style="font-size: 15px;color: #08c;">
+														</span>
+													</div>
+													<div style="height: 42px;">
+														<div th:if="${item.pickMeUp.directDealAvailable}">
+															<div class="mail" th:if="${item.pickMeUp.user.exposeEmail}" style="font-size: 13px;height: 21px;">
+												            	<span th:text="${item.pickMeUp.user.email}">
+												            	</span>
+												            </div>
+												            <div th:if="${item.pickMeUp.user.exposeCellphone}" style="font-size: 13px;height: 21px;">
+												            	<span th:text="${item.pickMeUp.user.cellphone}">
+												            	</span>
+												            </div>
+												        </div>
+												    </div>
+												    <div class="pickmeupDaytimes" style="margin-top:10px;margin-left:-5px;">
+													    <div th:if="${not #lists.isEmpty(item.pickMeUp.dayTimes) AND item.pickMeUp.directDealAvailable}">
+												    		<div style="display: inline-block;width: 100%;">
+										                        <div class="tele_time">
+										                            <table class="w-100 text-center">
+										                                <tr>
+										                                    <td>
+										                                        <div class="">월</div>
+										                                    </td>
+										                                    <td>
+										                                        <div class="">화</div>
+										                                    </td>
+										                                    <td>
+										                                        <div class="">수</div>
+										                                    </td>
+										                                    <td>
+										                                        <div class="">목</div>
+										                                    </td>
+										                                    <td>
+										                                        <div class="">금</div>
+										                                    </td>
+										                                    <td>
+										                                        <div class="">토</div>
+										                                    </td>
+										                                    <td>
+										                                        <div class="">일</div>
+										                                    </td>
+										                                    <td>
+										                                        <div class="">공휴일</div>
+										                                    </td>
+										                                    <td class="time">
+										                                    </td>
+										                                </tr>
+																		<tr th:each="dayTime: ${item.pickMeUp.dayTimes}">
+																			<td th:each="dayTimeIndex : ${#numbers.sequence(0, 7)}">
+																				<i th:class="|fas fa-stop ${dayTime.isChecked(dayTimeIndex)?'active':''}|"></i>
+																			</td>
+																			<td class="time" th:text="|${dayTime.times[0]} ~ ${dayTime.times[1]}|"></td>
+																		</tr>
+										                            </table>
+										                        </div>
+										                    </div>
+											            </div>
+								                    </div>
+													<div>
+								                        <div class="py-2 d-flex" style="display:inline-flex; align-items: center;margin:0 2px;">
+							                                <span th:class="@{|align-self-center sns ${!#strings.isEmpty(item.pickMeUp.user.facebookLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.pickMeUp.user.facebookLinkUrl)?item.pickMeUp.user.facebookLinkUrl:''}')|}">
+							                                    <i class="fab fa-facebook-square"></i>
+							                                </span>
+							                                <span th:class="@{|align-self-center sns ${!#strings.isEmpty(item.pickMeUp.user.instagramLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.pickMeUp.user.instagramLinkUrl)?item.pickMeUp.user.instagramLinkUrl:''}')|}">
+							                                    <i class="fab fa-instagram"></i>
+							                                </span>
+							                                <span th:class="@{|align-self-center sns ${!#strings.isEmpty(item.pickMeUp.user.twitterLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.pickMeUp.user.twitterLinkUrl)?item.pickMeUp.user.twitterLinkUrl:''}')|}">
+							                                    <i class="fab fa-twitter-square"></i>
+							                                </span>
+							                                <span th:class="@{|align-self-center sns ${!#strings.isEmpty(item.pickMeUp.user.youtubeLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.pickMeUp.user.youtubeLinkUrl)?item.pickMeUp.user.youtubeLinkUrl:''}')|}">
+							                                    <i class="fab fa-youtube-square"></i>
+							                                </span>
+							                                <span th:class="@{|align-self-center sns ${!#strings.isEmpty(item.pickMeUp.user.linkedInLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.pickMeUp.user.linkedInLinkUrl)?item.pickMeUp.user.linkedInLinkUrl:''}')|}">
+							                                    <i class="fab fa-linkedin"></i>
+							                                </span>
+							                                <span th:class="@{|align-self-center sns ${!#strings.isEmpty(item.pickMeUp.user.githubLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.pickMeUp.user.githubLinkUrl)?item.pickMeUp.user.githubLinkUrl:''}')|}">
+							                                    <i class="fab fa-github-square"></i>
+							                                </span>
+															<span th:class="@{|align-self-center sns ${!#strings.isEmpty(item.pickMeUp.user.blogLinkUrl)?'active':''}|}" th:onclick="@{|openWindow('${!#strings.isEmpty(item.pickMeUp.user.blogLinkUrl)?item.pickMeUp.user.blogLinkUrl:''}')|}">
+																<i class="fas fa-rss-square"></i>
+															</span>
+							                            </div>
+								                    </div>
+								                </div>
+												<div class="d-flex">
+													<div class="input-group" style="margin-left: 8px;margin-right:8px;margin-bottom:1rem;">
+														<textarea type="text" class="form-control" placeholder="이 곳에 메모를 해두세요(메모내용은 상대에게 보이지 않습니다)" name="content" th:attr="data-id=${item.id}" th:text="${item.pickMeUp.memo}" style="resize: none;font-size: 0.75rem;" rows="2"></textarea>
+											        	<div class="input-group-append">
+											        		<button class="btn btn-outline-secondary border" type="button" th:onclick="|saveComment(${item.id})|">저장</button>
+											        	</div>
+												    </div>
+												</div>
+											</div>
+										</article>
+									</div>
+									<!-- 마켓 카드//-->
+
+								</div>
+							</div>
+						</div>
+						<div class="fix_btn">
+							<button id="show_pickmeup" type="button" class="show_pickmeup btn btn-lg" >픽미업 더 둘러보기</button>
+						</div>
+					</div>
+
+					<!-- 가이드 -->
+					<div class="guide container">
+				        <div class="heading heading-border heading-middle-border">
+				            <h4 class="font-weight-normal"><strong class="font-weight-bold">직거래마켓 관리방법</strong></h4>
+				        </div>
+						<div class="row content">
+							<div class="pickme_guid_1 guide col-6 p-0">
+								<img src="/static/images/use-guide/client_dm_1.png" class="img-fluid">
+								<div>
+									픽미업을 둘러보시고<br class="d-block d-md-none"/> [직거래]가<br class="d-none d-md-block">
+									가능한<br class="d-block d-md-none"/> 포트폴리오를 <br>이곳에 담아두세요.
+								</div>
+							</div>
+							<div class="pickme_guid_2 guide col-6 p-0">
+								<img src="/static/images/use-guide/client_dm_2.png" class="img-fluid">
+								<div>
+									자유롭게 대화하시고<br class="d-block d-md-none"/>(메모하시고)<br/>프로젝트를 진행하세요.
+								</div>
+							</div>	
+						</div>
+					</div>
+					<!-- 가이드// -->
+
+				</div>
+
+				<!-- 에스크로서비스란 팝업 -->
+				<div class="modal fade modal_wrap" id="escrow_info" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+					 aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document" style="max-width: 800px">
+						<div class="modal-content">
+
+							<!-- 팝업 헤더 -->
+							<div class="head modal-header">
+								<h5 class="modal-title" id="ModalLabel">에스크로서비스란</h5>
+								<div class="">
+									<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+								</div>
+							</div>
+							<!-- 팝업 헤더// -->
+
+							<!-- 팝업 컨텐츠 -->
+							<div class="content modal-body">
+								<table cellpadding="0" cellspacing="0" border="0">
+									<tbody>
+									<tr>
+										<td>
+											<img src="/static/images/c_escrow_guide.png" class="w-100">
+										</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 에스크로서비스란 팝업// -->
+			</div>
+		</section>
+
+<!--		<script src="/static/js/portfolio-common-popup.js"></script>-->
+<!--		<script src="/static/js/popup.js"></script>-->
+		<script src="/static/js/client/directMarket/view.js"></script>
+	</div>
+	
+
+</html>

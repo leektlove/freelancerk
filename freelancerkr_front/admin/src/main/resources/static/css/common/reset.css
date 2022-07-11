@@ -1,0 +1,33 @@
+/* charset */
+@charset "utf-8";
+
+/* CSS Reset */
+html {overflow-x:hidden;overflow-y:scroll;}
+body{font-family: NotoSans;, Dotum,Arial,Helvetica,sans-serif;line-height:1.8; color:#666;font-size:13px; margin:0;min-width:1640px;}
+@media only screen and (max-width:1640px){
+	html{overflow-x:scroll;}
+}
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,
+blockquote,pre,abbr,address,cite,code,del,dfn,em,img,
+ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,
+fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,
+article,aside,canvas,details,figcaption,figure,footer,header,hgroup,
+menu,nav,section,summary,time,mark,audio,video{margin:0; padding:0; outline:0; border:0;}:focus{outline:0;}
+label, input, button, select, img {vertical-align:middle;box-sizing:border-box;}
+ol, ul, li {list-style:none;}
+table {border-collapse:collapse; border-spacing:0;}
+caption, th, td {font-weight:normal;}
+blockquote:before, blockquote:after, q:before, q:after {content: "";}
+blockquote, q {quotes: "" "";}
+textarea {margin:0; resize:none;border:1px solid #ddd;}
+a {color:#666;text-decoration:none}
+a:hover {text-decoration:none}
+
+/* CSS Layout */
+.vt {vertical-align:top}
+.vm {vertical-align:middle}
+.vb {vertical-align:bottom}
+.tl {text-align:left}
+.tc {text-align:center}
+.tr {text-align:right}
+.cb {clear:both}

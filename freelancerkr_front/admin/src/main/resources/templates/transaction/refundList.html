@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/cash.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/transactionHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<style>
+				.boardlist select{height:30px;}
+				.boardlist input{height:30px; width:104px;}
+				</style>
+
+				<div class="container_inner">
+
+					<h1>■ 환불 검색</h1>
+
+					<form id="form" name="/transaction/refundList" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>신청일</th>
+									<td>
+										<input type="text" name="createdAtFrom" th:value="${#request.getParameter('createdAtFrom')}" size="20" readonly="" class="readonly search_date datepicker from">
+										 ~
+										<input type="text" name="createdAtTo" th:value="${#request.getParameter('createdAtTo')}" size="20" readonly="" class="readonly search_date datepicker to" >
+										<span class="btn-black medium" onclick="today(this)">오늘</span>
+										<span class="btn-black medium" onclick="thisWeek(this)">이번주</span>
+										<span class="btn-black medium" onclick="thisMonth(this)">이번달</span>
+									</td>
+								</tr>
+								<tr>
+									<th>예상실행일</th>
+									<td>
+										<input type="text" name="refundedAtFrom" th:value="${#request.getParameter('refundedAtFrom')}" size="20" readonly="" class="readonly search_date datepicker from">
+										 ~ 
+										<input type="text" name="refundedAtTo" th:value="${#request.getParameter('refundedAtTo')}" size="20" readonly="" class="readonly search_date datepicker to" >
+										<span class="btn-black medium" onclick="today(this)">오늘</span>
+										<span class="btn-black medium" onclick="thisWeek(this)">이번주</span>
+										<span class="btn-black medium" onclick="thisMonth(this)">이번달</span>
+									</td>
+								</tr>
+								<tr>
+									<th>진행상태</th>
+									<td>
+										<label><input type="radio" name="type" value=""/>전체</label>
+										<label th:each="type : ${T(com.freelancerk.domain.EscrowRefundRequest.Type).values()}">
+											<input type="radio" name="type" th:value="${type.name()}" th:checked="${#request.getParameter('type') == type.name()}" th:text="${type.desc}"> </label>
+									</td>
+								</tr>
+								<tr>
+									<th>키워드</th>
+									<td>
+										<input type="text" name="keyword" th:value="${#request.getParameter('keyword')}" size="50" placeholder="회사명, 닉네임, 계좌명을 입력해주세요.">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<button type="button" class="btn-color large" onclick="search()">검색</button>
+								<a href="javascript:resetSearch()" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+					<div class="Hspace"></div>
+					<h1>■ <span th:text="${#numbers.formatInteger(page.totalElements, 0, 'COMMA')}">3</span>건의 환불이 검색되었습니다.</h1>
+					<table class="boardlist">
+						<tbody>
+							<tr>
+								<th rowspan="2">순서</th>
+								<th rowspan="2">신청일</th>
+								<th rowspan="2">
+									접수여부
+									<span class="obtn obtn_now" data-no="1|a">▽</span>			</th>
+								<th rowspan="2">
+									예상실행일
+									<span class="obtn" data-no="2|d">▽</span>			</th>
+								<th colspan="3">클라이언트</th>
+								<th colspan="3">계좌정보</th>
+								<th colspan="3">환불신청금액</th>
+								<th rowspan="2">에스크로잔액(VAT미포함)</th>
+								<th rowspan="2">사업자종류</th>
+								<th rowspan="2">
+									예약이체여부
+									<span class="obtn" data-no="3|d">▽</span>			</th>
+								<th rowspan="2">
+									세금계산서취소여부
+									<span class="obtn" data-no="4|d">▽</span>			</th>
+								<th rowspan="2">비고</th>
+							</tr>
+							<tr>
+								<th>이름</th>
+								<th>닉네임</th>
+								<th>사업자등록번호</th>
+								<th>계좌주</th>
+								<th>은행명</th>
+								<th>계좌번호</th>
+								<th>공급가액</th>
+								<th>부가세</th>
+								<th>환불금액</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td th:text="${#numbers.formatInteger(item.id, 0, 'COMMA')}">3</td>
+								<td th:text="${#temporals.format(item.createdAt, 'yyyyMMdd HH:mm:ss')}">20180702<br>13:20:25</td>
+								<td>
+									<select name="type" class="change_select" th:data-id="${item.id}">
+										<option th:each="typeItem: ${T(com.freelancerk.domain.EscrowRefundRequest.Type).values()}"
+												th:value="${typeItem}"
+												th:text="${typeItem.desc}"
+												th:selected="${typeItem.name() == item.type?.name()}"
+										>
+										</option>
+									</select>
+								</td>
+								<td>
+									<span th:if="${item.refundedAt != null}" th:text="${#temporals.format(item.refundedAt, 'yyyyMMdd HH:mm:ss')}">20180703<br>13:20:00</span>
+									<div style="width:150px;">
+										<input type="text" value="" name="refundedAtCandidate" class="cp_text_date" placeholder="yyyyMMdd HH:mm:ss" maxlength="17" style="text-align:center;"><button type="button" th:data-id="${item.id}" class="btn-black medium change_text saveRefundAtBtn">저장</button>
+									</div>
+								</td>
+								<td th:text="${item.user?.name}">(주)빅포미디어</td>
+								<td th:text="${item.user?.nickname}">서울아론</td>
+								<td th:text="${item.user?.registrationNumber}">-</td>
+								<td th:text="${item.accountName}">(주)빅포미디어</td>
+								<td th:text="${item.accountBank}">국민은행</td>
+								<td th:text="${item.accountNo}">0105206</td>
+								<td class="tr" th:text="${#numbers.formatInteger(item.supplyAmount, 0, 'COMMA')}">70,000</td>
+								<td class="tr" th:text="${#numbers.formatInteger(item.vat, 0, 'COMMA')}">7,000</td>
+								<td class="tr" th:text="${#numbers.formatInteger(item.amount, 0, 'COMMA')}">77,000</td>
+								<td class="tr">0</td>
+								<td>
+									<select class="change_select" name="businessType" th:data-id="${item.id}">
+										<option value="">선택</option>
+										<option th:each="businessTypeItem: ${T(com.freelancerk.domain.User.BusinessType).values()}"
+												th:value="${businessTypeItem}"
+												th:text="${businessTypeItem.name}"
+												th:selected="${businessTypeItem.name() == item.businessType?.name()}"
+										>
+										</option>
+									</select>
+								</td>
+								<td>
+									<select name="delayedTransfer" class="change_select" th:data-id="${item.id}">
+										<option value="">선택</option>
+										<option value="true" th:selected="${item.delayedTransfer}">완료</option>
+										<option value="false" th:selected="${!item.delayedTransfer}">미완료</option>
+									</select>
+								</td>
+								<td>
+									<select name="cancelReceipt" class="change_select" th:data-id="${item.id}">
+										<option value="">선택</option>
+										<option value="true" th:selected="${item.cancelReceipt}">완료</option>
+										<option value="false" th:selected="${!item.cancelReceipt}">미완료</option>
+									</select>
+								</td>
+								<td>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/project/list?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+						<div class="tr"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+			});
+			function today(elem) {
+				$(elem).siblings('input.from').val(moment().format('YYYY-MM-DD'));
+				$(elem).siblings('input.to').val(moment().add(1, 'day').format('YYYY-MM-DD'));
+			}
+
+			function thisWeek(elem) {
+				$(elem).siblings('input.from').val(moment().startOf('week').format('YYYY-MM-DD'));
+				$(elem).siblings('input.to').val(moment().add(1, 'week').startOf('week').format('YYYY-MM-DD'));
+			}
+
+			function thisMonth(elem) {
+				$(elem).siblings('input.from').val(moment().startOf('month').format('YYYY-MM-DD'));
+				$(elem).siblings('input.to').val(moment().add(1, 'month').startOf('month').format('YYYY-MM-DD'));
+			}
+
+			function orderBy(orderBy, direction) {
+				location.href = '/transaction/refundList?' + $('#form').serialize() + '&ordering=' + orderBy + '&direction=' + direction;
+			}
+
+			function resetSearch() {
+				location.href = '/transaction/refundList';
+			}
+
+			function search() {
+				$('#form').submit();
+			}
+
+			$(document).on('change', 'select[name=type]', function () {
+				$.ajax({
+					type: 'PUT',
+					url: '/escrow-refund-requests/' + $(this).data('id') + '?type=' + $(this).val(),
+					success: function() {
+						location.reload();
+					},
+					error: function() {
+						alert('요청에 실패했습니다.');
+					}
+				})
+			});
+
+			$(document).on('change', 'select[name=businessType]', function () {
+				$.ajax({
+					type: 'PUT',
+					url: '/escrow-refund-requests/' + $(this).data('id') + '?businessType=' + $(this).val(),
+					success: function() {
+						location.reload();
+					},
+					error: function() {
+						alert('요청에 실패했습니다.');
+					}
+				})
+			});
+
+			$(document).on('change', 'select[name=delayedTransfer]', function () {
+				$.ajax({
+					type: 'PUT',
+					url: '/escrow-refund-requests/' + $(this).data('id') + '?delayedTransfer=' + $(this).val(),
+					success: function() {
+						location.reload();
+					},
+					error: function() {
+						alert('요청에 실패했습니다.');
+					}
+				})
+			});
+
+			$(document).on('change', 'select[name=cancelReceipt]', function () {
+				$.ajax({
+					type: 'PUT',
+					url: '/escrow-refund-requests/' + $(this).data('id') + '?cancelReceipt=' + $(this).val(),
+					success: function() {
+						location.reload();
+					},
+					error: function() {
+						alert('요청에 실패했습니다.');
+					}
+				})
+			});
+
+			$(document).on('click', 'button.saveRefundAtBtn', function() {
+				if (!$(this).siblings('input[name=refundedAtCandidate]')) {
+					return;
+				}
+				$.ajax({
+					type: 'PUT',
+					url: '/escrow-refund-requests/' + $(this).data('id') + '?refundedAt=' + $(this).siblings('input[name=refundedAtCandidate]').val(),
+					success: function() {
+						location.reload();
+					},
+					error: function() {
+						alert('요청에 실패했습니다.');
+					}
+				})
+			});
+		</script>
+	</section>
+	
+</html>

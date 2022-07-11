@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  
+      
+    <head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <!-- Meta, title, CSS, favicons, etc. -->
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    
+	    
+	    <meta property="og:type" content="website">		
+		<meta property="og:title" content="피부 분석 공유">		
+		<meta property="og:image" content="https://storage.googleapis.com/bucket-beautage-com/common/og_share_img.png">
+		<meta property="og:description" content="">
+		<meta property="og:site_name" content="라벨르랩">
+		<meta property="og:locale" content="en_US">
+		
+		<meta property="og:image:width" content="1200">
+		<meta property="og:image:height" content="630">
+	    
+	
+	    <title>뷰티저니 피부분석</title>
+		
+	    <!-- Bootstrap -->
+	    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" />
+	    <!-- Font Awesome -->
+	    <link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+	    <!-- NProgress -->
+	    <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet"  />
+	    <!-- iCheck -->
+	    <link th:href="@{/vendors/iCheck/skins/flat/green.css}" rel="stylesheet"  />
+		
+	    <!-- bootstrap-progressbar -->  
+	    <link th:href="@{/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}" rel="stylesheet"  />
+	    <!-- JQVMap -->
+	    <link th:href="@{/vendors/jqvmap/dist/jqvmap.min.css}" rel="stylesheet"  />
+	    <!-- bootstrap-daterangepicker -->
+	    <link th:href="@{/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet"  />
+	      
+	    <link th:href="@{/vendors/switchery/dist/switchery.min.css}" rel="stylesheet">
+	    
+	    <link th:href="@{/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet">
+	    
+	
+		<link th:href="@{/css/custom.css}" rel="stylesheet" />
+  	</head>
+  
+  <body class="login" style="background:#FAFAFA">
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+        	<th:block layout:fragment="content"></th:block>
+        </div>
+        <!-- /page content -->
+  
+  </body>
+  
+</html>

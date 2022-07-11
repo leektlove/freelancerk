@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/contest.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<div id="cs_list">
+					<ul>
+						<li><a href="">컨테스트리스트</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 컨테스트 보기</h1>
+					<table class="boardform">
+						<tbody><tr>
+							<th width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">기본정보</a></th>
+							<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">입찰정보</a></td>
+							<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">진행정보</a></td>
+							<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:5px;"><a href="">메시지정보</a></td>
+						</tr>
+						</tbody>
+					</table>
+					<br>
+					<table class="boardform">
+						<colgroup><col width="150">
+						<col width="350">
+						<col width="150">
+						<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>진행상황</th>
+								<td colspan="3" style="color:#ddd;">
+									전체&nbsp;&nbsp;
+									임시저장&nbsp;&nbsp;<span style="color:#000;">입찰중</span>&nbsp;&nbsp;취소&nbsp;&nbsp;진행중&nbsp;&nbsp;완료&nbsp;&nbsp;
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="150">
+							<col width="150">
+							<col width="150">
+							<col width="150">
+						</colgroup>
+						<tbody>
+						<tr>
+							<th>클라이언트정보</th>
+							<td>아이디</td>
+							<td>이름</td>
+							<td>닉네임</td>
+							<td colspan="4">휴대폰번호</td>
+						</tr>
+						<tr>
+							<th>컨테스트명</th>
+							<td colspan="7">사보표지디자인</td>
+						</tr>
+						<tr>
+							<th>섹터분류</th>
+							<td colspan="7">
+								<select name="" id="">
+									<option value="">-1차분류-</option>
+								</select>
+								<select name="" id="">
+									<option value="">-2차분류-</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>상세내용</th>
+							<td colspan="6">
+								컨테스트 포스팅 때 클라이언트가 “자세히 설명해주세요” 부분에 입력한 텍스트
+							</td>
+						</tr>
+						<tr>
+							<th rowspan="3">분량</th>
+							<td rowspan="3" colspan="3">클라이언트가 선택한 값(기획한 37p)</td>
+							<th rowspan="3">참고소재</th>
+							<td colspan="2">URL</td>
+							<td>클라이언트가 선택한 값</td>
+						</tr>
+						<tr>
+							<td colspan="2">첨부파일</td>
+							<td>클라이언트가 선택한 값</td>
+						</tr>
+						<tr>
+							<td colspan="2">운영중인 웹사이트</td>
+							<td>클라이언트가 선택한 값</td>
+						</tr>
+						<tr>
+							<th rowspan="2">상호명 또는 캐치프레이즈</th>
+							<td rowspan="2" colspan="3">클라이언트가 선택한 값</td>
+							<th rowspan="2">선호스타일</th>
+							<td colspan="2">톤</td>
+							<td>클라이언트가 입력한 텍스트</td>
+						</tr>
+						<tr>
+							<td colspan="2">스타일</td>
+							<td>클라이언트가 선태한 값</td>
+						</tr>
+						<tr>
+							<th>최소상금</th>
+							<td colspan="3">기획안 39p의 값</td>
+							<th rowspan="3">상금지급조건</th>
+							<td colspan="2">1위</td>
+							<td>기획안 43p의 값</td>
+						</tr>
+						<tr>
+							<th>인센티브</th>
+							<td colspan="3">기획안 43p의 값</td>
+							<td colspan="2">2위</td>
+							<td>기획안 43p의 값</td>
+						</tr>
+						<tr>
+							<th>확정상금</th>
+							<td colspan="3">기획안 43p의 값</td>
+							<td colspan="2">3위</td>
+							<td>기획안 43p의 값</td>
+						</tr>
+						<tr>
+							<th>수수료대납조건</th>
+							<td colspan="3">기획안 43p의 값</td>
+							<th rowspan="2">최종결제명세</th>
+							<td rowspan="2" colspan="4">기획안 43p의 화면 인쇄</td>
+						</tr>
+						<tr>
+							<th>보증금</th>
+							<td colspan="3">기획안 43p의 값</td>
+						</tr>
+						<tr>
+							<th>낙찰자</th>
+							<td width="100">1위</td>
+							<td width="200">기획안 52p의 닉네임</td>
+							<td width="100">2위</td>
+							<td colspan="2">기획안 52p의 닉네임</td>
+							<td width="100">3위</td>
+							<td width="300">기획안 52p의 닉네임</td>
+						</tr>
+
+						</tbody>
+					</table>
+					<div class="boardbutton">
+						<div class="tl"></div>
+						<div class="tc">
+							<a href="" class="btn-colorline large">수정</a>
+							<a href="" class="btn-colorline large">목록</a>
+						</div>
+						<div class="tr">
+							<span class="btn-color large del_btn">삭제</span>
+							<input type="hidden" value="790">
+						</div>
+					</div>
+					
+					<div class="clearfix">
+						<div class="payment">
+							<table class="boardform_cus">
+								<tr>
+									<th rowspan="3">
+										결제내역
+									</th>
+									<td width="5"></td>
+									<td class="border-bottom">항목</td>
+									<td class="border-bottom">이용기간</td>
+									<td class="border-bottom">상태</td>
+									<td class="border-bottom">관리자기간수정</td>
+									<td class="border-bottom">최종수정</td>
+								</tr>
+								<tr>
+									<td width="5"></td>
+									<td>긴급</td>
+									<td>18.09.01~18.09.30</td>
+									<td>이용중</td>
+									<td><input type="date"></td>
+									<td>관리자</td>
+								</tr>
+								<tr>
+									<td width="5"></td>
+									<td>외부일반노출</td>
+									<td>18.09.01~18.09.30</td>
+									<td>종료</td>
+									<td><input type="date"></td>
+									<td>이용자</td>
+								</tr>
+							</table>
+							<div class="boardbutton">
+								<div class="tc">
+									<a href="" class="btn-colorline large">수정</a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="authority">
+							<table class="boardform_cus">
+								<tr>
+									<th rowspan="3">
+										직권등록
+									</th>
+									<td width="5"></td>
+									<td class="border-bottom">항목</td>
+									<td class="border-bottom">기간설정</td>
+								</tr>
+								<tr>
+									<td width="5"></td>
+									<td>긴급</td>
+									<td><input type="date"></td>
+								</tr>
+								<tr>
+									<td width="5"></td>
+									<td>돋보이게</td>
+									<td><input type="date"></td>
+								</tr>
+							</table>
+							<div class="boardbutton">
+								<div class="tc">
+									<a href="" class="btn-colorline large">수정</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<form name="" id="" action="" method="post">
+						<table class="boardform" style="margin-top:20px;">
+							<colgroup><col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>상담내용</th>
+									<td colspan="3" style="color:#ddd;">
+										<textarea name="" rows="20" style="width:90%;">
+										</textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="저장" class="btn-color large">
+								<a href="" class="btn-colorline large">목록</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

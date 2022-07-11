@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/qna.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/qnaHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 문의 등록</h1>
+					<form name="" id="" action="" method="post">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>진행상태</th>
+									<td colspan="3">
+										<label><input type="radio" name="" value="1">접수</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="2" checked>상담중</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="3">상담완료</label>
+									</td>
+								</tr>
+								<tr>
+									<th>클라이언트/프리랜서</th>
+									<td>
+										<label><input type="radio" name="" value="1" checked> 클라이언트</label>&nbsp;&nbsp;
+										<label><input type="radio" name="" value="2"> 프리랜서</label>
+									</td>
+								</tr>
+								<tr class="client_con">
+									<th>클라이언트</th>
+									<td>
+										<input type="text" readonly="" class="readonly" style="width:400px;">
+										<span class="btn-black small">클라이언트찾기</span>
+									</td>
+								</tr>
+								<tr class="freelancer_con" style="display:none;">
+									<th>프리랜서</th>
+									<td>
+										<input type="text" value="" readonly class="readonly" id="" style="width:400px;">
+
+										<span class="btn-black small">프리랜서찾기</span>
+									</td>
+								</tr>
+								<tr>
+									<th>제목</th>
+									<td><input type="text" name="" value="가입정보가 날아 갔네요" class="ibw"></td>
+								</tr>
+								<tr>
+									<th>상세내용</th>
+									<td>
+										<textarea name="" rows="20" cols="100">안녕하세요
+										</textarea>
+									</td>
+								</tr>
+								<tr>
+									<th>등록일</th>
+									<td colspan="3">
+										2018-11-08 09:58:09
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="저장" class="btn-color large">
+								<a href="" class="btn-colorline large">목록</a>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- conetent//-->
+
+</html>

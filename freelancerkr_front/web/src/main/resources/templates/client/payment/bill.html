@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/client/payment/bill.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container_center">
+			<div class="container_inner m-auto">
+				<div class="manage_bill">
+					<div class="ad_title h5 font-weight-bold text-center mb-5"><span>유료옵션</span>의 <span>효율</span>을 검토해보세요.</div>
+					<div id="ad_row" class="ad_images row h6 p-5">
+						<img class="img-fluid col-md-6" alt="Responsive image" src="https://dummyimage.com/1200x200/252525/fff" alt="">
+						<div class="col-md-6 ad_contents pl-3">
+							<div class="row mb-2 font-weight-bold">
+								<div class="title col-md-3">노출기간</div>
+								<div id="displayday" class="contents col-md-9">26일 17시간</div>
+							</div>
+							<div class="row mb-2 font-weight-bold">
+								<div class="title col-md-3">남은기간</div>
+								<div id="dday" class="contents col-md-9">D-4일</div>
+							</div>
+							<div class="row mb-2 font-weight-bold">
+								<div class="title col-md-3">종료시간</div>
+								<div id="enddate" class="contents col-md-9">2018년 5월 16일 22분 12분 종료</div>
+							</div>
+							<div class="ad_cnt mt-4 pt-3 text-center">
+								<div>
+									<div class="title">조회수</div>
+									<div id="cnt" class="contents h2 font-weight-bold">34건</div>
+								</div>
+								<div>
+									<div class="title">참여제안수</div>
+									<div id="limcnt" class="contents h2 font-weight-bold">12건</div>
+								</div>
+								<div>
+									<div class="title">직거래검토수</div>
+									<div id="dealcnt" class="contents h2 font-weight-bold">3건</div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="row btn_container mt-4 p-2">
+								<button type="button" id="expbill" class="button_middle btn btn-primary expand col-md-6">연장하기</button>
+								<button type="button" id="history" class="button_middle btn btn-primary bill col-md-6">결제내역</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pick_me_up mt-4">
+					<div class="h5 font-weight-bold pb-2">Pick me up</div>
+					<div id="p_row" class="row mr-0 ml-0 font-weight-bold">
+						<div class="col-md-6 col-lg-3 pl-0 pr-0 ad_images">
+							<div class="card_ad">
+								<div class="ad_images_small"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+								<div class="ad_contents">
+									<div class="row p-2">
+										<div class="title col-md-4">노출기간</div>
+										<div id="p_displayday" class="contents col-md-8">26일 17시간</div>
+									</div>
+									<div class="row p-2">
+										<div class="title col-md-4">남은기간</div>
+										<div id="p_dday" class="contents col-md-8">D-4일</div>
+									</div>
+									<div class="row p-2">
+										<div class="title col-md-4">종료시간</div>
+										<div id="p_enddate" class="contents col-md-8">2018년 5월 16일 22시 12분 종료</div>
+									</div>
+									<div class="ad_cnt mt-4 pt-3 text-center">
+										<div>
+											<div class="title">조회수</div>
+											<div id="p_cnt" class="contents h5 font-weight-bold">34건</div>
+										</div>
+										<div>
+											<div class="title">참여제안수</div>
+											<div id="p_limcnt" class="contents h5 font-weight-bold">12건</div>
+										</div>
+										<div>
+											<div class="title">직거래검토수</div>
+											<div id="p_dealcnt" class="contents h5 font-weight-bold">3건</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="row btn_container mr-0 ml-0 p-2">
+								<button id="p_expbill" class="button_middle btn btn-primary expand col-md-6">연장하기</button>
+								<button id="p_history" class="button_middle btn btn-primary bill col-md-6">결제내역</button>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3 pl-0 pr-0 ad_images">
+							<div class="card_ad">
+								<div class="ad_images_small"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+								<div class="ad_contents">
+									<div class="row p-2">
+										<div class="title col-md-4">노출기간</div>
+										<div id="p_displayday" class="contents col-md-8">26일 17시간</div>
+									</div>
+									<div class="row p-2">
+										<div class="title col-md-4">남은기간</div>
+										<div id="p_dday" class="contents col-md-8">D-4일</div>
+									</div>
+									<div class="row p-2">
+										<div class="title col-md-4">종료시간</div>
+										<div id="p_enddate" class="contents col-md-8">2018년 5월 16일 22시 12분 종료</div>
+									</div>
+									<div class="ad_cnt mt-4 pt-3 text-center">
+										<div>
+											<div class="title">조회수</div>
+											<div id="p_cnt" class="contents h5 font-weight-bold">34건</div>
+										</div>
+										<div>
+											<div class="title">참여제안수</div>
+											<div id="p_limcnt" class="contents h5 font-weight-bold">12건</div>
+										</div>
+										<div>
+											<div class="title">직거래검토수</div>
+											<div id="p_dealcnt" class="contents h5 font-weight-bold">3건</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="row btn_container mr-0 ml-0 p-2">
+								<button id="p_expbill" class="button_middle btn btn-primary expand col-md-6">연장하기</button>
+								<button id="p_history" class="button_middle btn btn-primary bill col-md-6">결제내역</button>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3 pl-0 pr-0 ad_images">
+							<div class="card_ad">
+								<div class="ad_images_small"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+								<div class="ad_contents">
+									<div class="row p-2">
+										<div class="title col-md-4">노출기간</div>
+										<div id="p_displayday" class="contents col-md-8">26일 17시간</div>
+									</div>
+									<div class="row p-2">
+										<div class="title col-md-4">남은기간</div>
+										<div id="p_dday" class="contents col-md-8">D-4일</div>
+									</div>
+									<div class="row p-2">
+										<div class="title col-md-4">종료시간</div>
+										<div id="p_enddate" class="contents col-md-8">2018년 5월 16일 22시 12분 종료</div>
+									</div>
+									<div class="ad_cnt mt-4 pt-3 text-center">
+										<div>
+											<div class="title">조회수</div>
+											<div id="p_cnt" class="contents h5 font-weight-bold">34건</div>
+										</div>
+										<div>
+											<div class="title">참여제안수</div>
+											<div id="p_limcnt" class="contents h5 font-weight-bold">12건</div>
+										</div>
+										<div>
+											<div class="title">직거래검토수</div>
+											<div id="p_dealcnt" class="contents h5 font-weight-bold">3건</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="row btn_container mr-0 ml-0 p-2">
+								<button id="p_expbill" class="button_middle btn btn-primary expand col-md-6">연장하기</button>
+								<button id="p_history" class="button_middle btn btn-primary bill col-md-6">결제내역</button>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3 pl-0 pr-0 ad_images">
+							<div class="card_ad">
+								<div class="ad_images_small"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+								<div class="ad_contents">
+									<div class="row p-2">
+										<div class="title col-md-4">노출기간</div>
+										<div id="p_displayday" class="contents col-md-8">26일 17시간</div>
+									</div>
+									<div class="row p-2">
+										<div class="title col-md-4">남은기간</div>
+										<div id="p_dday" class="contents col-md-8">D-4일</div>
+									</div>
+									<div class="row p-2">
+										<div class="title col-md-4">종료시간</div>
+										<div id="p_enddate" class="contents col-md-8">2018년 5월 16일 22시 12분 종료</div>
+									</div>
+									<div class="ad_cnt mt-4 pt-3 text-center">
+										<div>
+											<div class="title">조회수</div>
+											<div id="p_cnt" class="contents h5 font-weight-bold">34건</div>
+										</div>
+										<div>
+											<div class="title">참여제안수</div>
+											<div id="p_limcnt" class="contents h5 font-weight-bold">12건</div>
+										</div>
+										<div>
+											<div class="title">직거래검토수</div>
+											<div id="p_dealcnt" class="contents h5 font-weight-bold">3건</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="row btn_container mr-0 ml-0 p-2">
+								<button id="p_expbill" class="button_middle btn btn-primary expand col-md-6">연장하기</button>
+								<button id="p_history" class="button_middle btn btn-primary bill col-md-6">결제내역</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="bid mt-4">
+					<div class="h5 font-weight-bold pb-2">Bid</div>
+					<div id="b_row" class="row mr-0 ml-0 font-weight-bold">
+						<div class="col-md-6 col-lg-3 pl-0 pr-0 ad_images card_ad">
+							<div class="ad_images_small pt-3"><img src="https://dummyimage.com/100x100/252525/fff" alt="" class="img-fluid img-circle"></div>
+							<div class="ad_contents p-2">
+								<div class="mt-2 pt-3 pb-3">
+									<div class="row">
+										<div class="title col-md-4">제목</div>
+										<div id="b_title" class="contents col-md-8">와이지파트너스 웹사이트 2페이지 리뉴얼 컨테스트</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4">작품제출일</div>
+										<div id="b_dday" class="contents col-md-8">2018.1.18</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4">총상금</div>
+										<div id="b_reward" class="contents col-md-8">300,000원</div>
+									</div>
+								</div>
+								<div class="mt-2 pt-3 pb-3">
+									<div class="row">
+										<div class="title col-md-4">유료옵션</div>
+										<div id="b_opt1" class="contents col-md-8">입찰가강조</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4"></div>
+										<div id="b_opt2" class="contents col-md-8">독창적</div>
+									</div>
+								</div>
+								<div class="mt-2 pt-3 pb-3">
+									<div class="title mb-2">출품작</div>
+									<div id="photos" class="row mr-0 ml-0">
+										<div class="col-md-6 pr-1 pl-1"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+										<div class="col-md-6 pr-1 pl-1"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+									</div>
+								</div>
+							</div>
+							<div class="btn_container mr-0 ml-0 p-2">
+								<button id="pay_bill" class="btn btn-primary bill">결제 내역</button>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3 pl-0 pr-0 ad_images card_ad">
+							<div class="ad_images_small pt-3"><img src="https://dummyimage.com/100x100/252525/fff" alt="" class="img-fluid img-circle"></div>
+							<div class="ad_contents p-2">
+								<div class="mt-2 pt-3 pb-3">
+									<div class="row">
+										<div class="title col-md-4">제목</div>
+										<div id="b_title" class="contents col-md-8">와이지파트너스 웹사이트 2페이지 리뉴얼 컨테스트</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4">작품제출일</div>
+										<div id="b_dday" class="contents col-md-8">2018.1.18</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4">총상금</div>
+										<div id="b_reward" class="contents col-md-8">300,000원</div>
+									</div>
+								</div>
+								<div class="mt-2 pt-3 pb-3">
+									<div class="row">
+										<div class="title col-md-4">유료옵션</div>
+										<div id="b_opt1" class="contents col-md-8">입찰가강조</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4"></div>
+										<div id="b_opt2" class="contents col-md-8">독창적</div>
+									</div>
+								</div>
+								<div class="mt-2 pt-3 pb-3">
+									<div class="title mb-2">출품작</div>
+									<div id="photos" class="row mr-0 ml-0">
+										<div class="col-md-6 pr-1 pl-1"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+										<div class="col-md-6 pr-1 pl-1"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+									</div>
+								</div>
+							</div>
+							<div class="btn_container mr-0 ml-0 p-2">
+								<button id="pay_bill" class="btn btn-primary bill">결제 내역</button>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3 pl-0 pr-0 ad_images card_ad">
+							<div class="ad_images_small pt-3"><img src="https://dummyimage.com/100x100/252525/fff" alt="" class="img-fluid img-circle"></div>
+							<div class="ad_contents p-2">
+								<div class="mt-2 pt-3 pb-3">
+									<div class="row">
+										<div class="title col-md-4">제목</div>
+										<div id="b_title" class="contents col-md-8">와이지파트너스 웹사이트 2페이지 리뉴얼 컨테스트</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4">작품제출일</div>
+										<div id="b_dday" class="contents col-md-8">2018.1.18</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4">총상금</div>
+										<div id="b_reward" class="contents col-md-8">300,000원</div>
+									</div>
+								</div>
+								<div class="mt-2 pt-3 pb-3">
+									<div class="row">
+										<div class="title col-md-4">유료옵션</div>
+										<div id="b_opt1" class="contents col-md-8">입찰가강조</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4"></div>
+										<div id="b_opt2" class="contents col-md-8">독창적</div>
+									</div>
+								</div>
+								<div class="mt-2 pt-3 pb-3">
+									<div class="title mb-2">출품작</div>
+									<div id="photos" class="row mr-0 ml-0">
+										<div class="col-md-6 pr-1 pl-1"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+										<div class="col-md-6 pr-1 pl-1"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+									</div>
+								</div>
+							</div>
+							<div class="btn_container mr-0 ml-0 p-2">
+								<button id="pay_bill" class="btn btn-primary bill">결제 내역</button>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3 pl-0 pr-0 ad_images card_ad">
+							<div class="ad_images_small pt-3"><img src="https://dummyimage.com/100x100/252525/fff" alt="" class="img-fluid img-circle"></div>
+							<div class="ad_contents p-2">
+								<div class="mt-2 pt-3 pb-3">
+									<div class="row">
+										<div class="title col-md-4">제목</div>
+										<div id="b_title" class="contents col-md-8">와이지파트너스 웹사이트 2페이지 리뉴얼 컨테스트</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4">작품제출일</div>
+										<div id="b_dday" class="contents col-md-8">2018.1.18</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4">총상금</div>
+										<div id="b_reward" class="contents col-md-8">300,000원</div>
+									</div>
+								</div>
+								<div class="mt-2 pt-3 pb-3">
+									<div class="row">
+										<div class="title col-md-4">유료옵션</div>
+										<div id="b_opt1" class="contents col-md-8">입찰가강조</div>
+									</div>
+									<div class="row">
+										<div class="title col-md-4"></div>
+										<div id="b_opt2" class="contents col-md-8">독창적</div>
+									</div>
+								</div>
+								<div class="mt-2 pt-3 pb-3">
+									<div class="title mb-2">출품작</div>
+									<div id="photos" class="row mr-0 ml-0">
+										<div class="col-md-6 pr-1 pl-1"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+										<div class="col-md-6 pr-1 pl-1"><img src="https://dummyimage.com/1200x800/252525/fff" alt="" class="img-fluid"></div>
+									</div>
+								</div>
+							</div>
+							<div class="btn_container mr-0 ml-0 p-2">
+								<button id="pay_bill" class="btn btn-primary bill">결제 내역</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="point mt-4">
+					<div class="h5 font-weight-bold pb-2" style="position: relative;">Point</div>
+					<div class="table-responsive">
+						<table id="tblbill" class="table">
+							<thead>
+							<tr>
+								<th>날짜</th>
+								<th>내역</th>
+								<th>내포인트</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>
+									2018.02.04
+								</td>
+								<td>
+									2,000원 사용
+								</td>
+								<td>
+									50,000만원
+								</td>
+							</tr>
+							<tr>
+								<td>
+									2018.02.03
+								</td>
+								<td>
+									2,000원 사용
+								</td>
+								<td>
+									50,000만원
+								</td>
+							</tr>
+							<tr>
+								<td>
+									2018.02.04
+								</td>
+								<td>
+									2,000원 사용
+								</td>
+								<td>
+									50,000만원
+								</td>
+							</tr>
+							<tr>
+								<td>
+									2018.02.03
+								</td>
+								<td>
+									2,000원 사용
+								</td>
+								<td>
+									50,000만원
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

@@ -1,0 +1,368 @@
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/auth/main.css:
+  130  
+  131  h2 .title{
+  132:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif';
+  133      font-size:32px;
+  134      font-weight: 700;
+  ...
+  152  
+  153  .sub-title{
+  154:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif';
+  155      font-size: 20px;
+  156      line-height: 30px;
+  ...
+  238  .welcome-hero-txt h4 {
+  239      font-size: 20px;
+  240:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'
+  241      font-weight: normal;
+  242  }
+  ...
+  244      font-size: 30px;
+  245      margin: 20px 0 22px;
+  246:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'
+  247      font-weight: 400;
+  248  }
+  ...
+  250      font-size: 55px;
+  251      color:#0083c0;
+  252:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'
+  253      font-weight: 700;
+  254  }
+  255  .welcome-hero-txt h2 span:last-child{
+  256      color:#0083c0;
+  257:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'
+  258      font-weight: 700;
+  259  }
+  ...
+  494  
+  495  .thumb-info.thumb-info-hide-info-hover .thumb-info-title .thumb-info-inner {
+  496:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif';
+  497      width: 100%;
+  498      white-space: nowrap;
+  ...
+  503  
+  504  .thumb-info.thumb-info-hide-info-hover .thumb-info-type{
+  505:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif';
+  506      height: 15px;
+  507      overflow: hidden;
+  ...
+  526  
+  527  .lala-freelancer .title{
+  528:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'
+  529      font-weight: 400;
+  530      letter-spacing: normal;
+  531  }
+  532  .lala-freelancer .sub-title{
+  533:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'
+  534      text-align: center;
+  535  }
+  ...
+  574    animation: gradientBG 10s ease infinite;
+  575    border-top:none;
+  576:   font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'
+  577  }
+  578  
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/auth/privacy.css:
+    2  html{overflow-y:scroll; height:300px; overflow-y:scroll;}
+    3  html,body {padding:0; margin:0; width:100%; min-width:auto;}
+    4: input {font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
+    5  .policy li{margin-bottom:1rem;margin-left:1rem;}
+    6  
+    .
+   14  /* 비밀번호찾기팝업 */
+   15  html,body {padding:0; margin:0;  width:100%; min-width:auto;}
+   16: input {font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
+   17  #search {padding:40px;}
+   18  #search .right {}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/auth/whoAreYou.css:
+   27  #l_login_pop .input .box {float:left; padding-left:20px;}
+   28  #l_login_pop .input .icon {float:right; width:25px; height:25px; padding-right:20px; margin-top:15px;}
+   29: #l_login_pop .input input {width:400px; height:55px; line-height:55px; text-align:left; color:#0088cc; font-size:16px; font-weight:400; border:0; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   30  #l_login_pop .btn_sns {width:500px; margin:0 auto; padding:40px 0; overflow:hidden;}
+   31: #l_login_pop .btn_sns .t {float:left; color:#0088cc; font-size:17px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
+   32  #l_login_pop .btn_sns .btn {float:right;}
+   33  #l_login_pop .btn_sns .btn a {margin-left:5px;}
+   ..
+   52  #l_join_pop .input .box {float:left; padding-left:20px;}
+   53  #l_join_pop .input .icon {float:right; width:25px; height:25px; padding-right:20px; margin-top:15px;}
+   54: #l_join_pop .input input {width:400px; height:55px; line-height:55px; text-align:left; color:#0088cc; font-size:16px; font-weight:400; border:0; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   55  #l_join_pop .btn_sns {width:500px; margin:0 auto; padding:40px 0; overflow:hidden;}
+   56: #l_join_pop .btn_sns .t {float:left; color:#0088cc; font-size:17px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
+   57  #l_join_pop .btn_sns .btn {float:right;}
+   58  #l_join_pop .btn_sns .btn a {margin-left:5px;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/client/loginGuide.css:
+   31  #guide .input .box {float:left; padding-left:20px;}
+   32  #guide .input .icon {float:right; padding-right:20px; line-height:55px;}
+   33: #guide .input input {width:400px; height:55px; line-height:55px; text-align:left; color:#0088cc; font-size:16px; font-weight:400; border:0; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   34  #guide ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+   35    color: #0088cc;
+   ..
+   47  #guide .btn_login input {width:100%; height:55px; border:1px solid #0088cc; text-align:center; line-height:55px; font-family:raleway_b; font-size:19px; color:#fff;background-color:#0088cc; text-transform:uppercase; border-radius:3px;cursor: pointer;}
+   48  #guide .search { margin:0 auto; text-align:center; padding:30px 0; overflow:hidden;}
+   49: #guide .search a {font-size:17px; color:#0088cc; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700; transition:background-color .3s ease;}
+   50  #guide .search a:hover {color:#aaa; transition:background-color .3s ease;}
+   51  #guide .btn_join { margin:0 auto; padding-top:10px;}
+   ..
+   54  #guide .close {position:fixed; top:40px; right:40px; z-index:1001; cursor: pointer;}
+   55  #guide .close img {width:30px;}
+   56: #guide .sub_title {text-align:center; font-size:16px; color:#aaaaaa; line-height:30px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   57  #guide .sub_title p {color:#313131; font-size:20px;}
+   58  #guide .sub_title p span {color:#0088cc; font-weight:700;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/client/main.css:
+  258  #guide_pop .title {font-size:45px; color:#b2b2b2; text-transform:uppercase; font-family:raleway_r; padding:50px 0 20px 0;}
+  259  #guide_pop .title span {color:#0088cc; font-family:raleway_b;}
+  260: #guide_pop .sub_title {text-align:center; font-size:17px; color:#aaaaaa; line-height:27px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700; padding-bottom:40px;}
+  261  #guide_pop .sub_title p {color:#313131; font-size:20px;}
+  262  #guide_pop .sub_title p span {color:#0088cc; font-weight:700;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/client/mypage.css:
+   37  #main .input .box {float:left; padding-left:20px;}
+   38  #main .input .icon {float:right; padding-right:20px; line-height:55px;}
+   39: #main .input input {width:400px; height:55px; line-height:55px; text-align:left; color:#0088cc; font-size:16px; font-weight:400; border:0; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   40  #main ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+   41    color: #0088cc;
+   ..
+   53  #main .btn_login input {width:100%; height:55px; border:1px solid #0088cc; text-align:center; line-height:55px; font-family:raleway_b; font-size:19px; color:#fff;background-color:#0088cc; text-transform:uppercase; border-radius:3px;cursor: pointer;}
+   54  #main .search { margin:0 auto; text-align:center; padding:30px 0; overflow:hidden;}
+   55: #main .search a {font-size:17px; color:#0088cc; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700; transition:background-color .3s ease;}
+   56  #main .search a:hover {color:#aaa; transition:background-color .3s ease;}
+   57  #main .btn_join { margin:0 auto; padding-top:10px;}
+   ..
+   60  #main .close {position:fixed; top:40px; right:40px; z-index:1001; cursor: pointer;}
+   61  #main .close img {width:30px;}
+   62: #main .sub_title {text-align:center; font-size:16px; color:#aaaaaa; line-height:30px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   63  #main .sub_title p {color:#313131; font-size:20px;}
+   64  #main .sub_title p span {color:#0088cc; font-weight:700;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/client/payment/list.css:
+   74  .card .item .pickmeup_item .img_title_box .image{display: inline-block;vertical-align: middle;}
+   75  .card .item .pickmeup_item .img_title_box .title_box{display: inline-block;width: 95%;vertical-align: middle;}
+   76: .card .item .pickmeup_item .img_title_box .title{font-size: 20px;font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'',sans-serif;font-weight: 400;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
+   77  
+   78  .card .item .bid_item .image{margin:20px 0;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/client/posting/contest/view.css:
+   20  .collapse-card .box.r-box{position:relative;display:flex;align-items:center;justify-content: center;color:#fff;;background-color: #000;text-align: center;}
+   21  .collapse-card .box.r-box .img{height:100%;width:100%;opacity: 0.5;position: absolute;top:0;left:0;}
+   22: .collapse-card .box.r-box span{font-size:16px; font-weight:bold;padding:10px; z-index: 100;font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif';}
+   23  .collapse-item { font-size: 12px; font-weight: 400; white-space: normal;border:1px solid #ddd;margin-top:-1px;}
+   24  .collapse-item>div:first-child { font-size: .9rem }
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/client/project/payment.css:
+    1  
+    2  /* 공통 레이아웃으로 따로 빼주기 (점선과 하늘색 원이 있는 디자인 - mypage_form_left,mypage_form_center,mypage_form_right - 페이지의 레이아웃 잡을 때 사용 가능) */
+    3: .container_inner {max-width: 1310px; margin: auto; padding: 60px; font-size: 18px; font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif' color: #2a2a2a; font-weight: 400; padding-bottom: 60px;}
+    4  .mypage_form_left {text-align: right; min-width: 300px;}
+    5  .mypage_form_center, .center {display: table-cell; vertical-align: top; width: 63px; padding-top: 7px; text-align: center; flex: none;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/common/common.css:
+  538  #port_pop .title {font-size:45px; color:#b2b2b2; text-transform:uppercase; font-family:raleway_r; padding:120px 0 20px 0;}
+  539  #port_pop .title span {color:#0088cc; font-family:raleway_b;}
+  540: #port_pop .sub_title {text-align:center; font-size:16px; color:#aaaaaa; line-height:27px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700; padding-bottom:40px;}
+  541  #port_pop .sub_title p {color:#313131; font-size:20px;}
+  542  #port_pop .sub_title p span {color:#0088cc; font-weight:700;}
+  ...
+  899  
+  900  #footer.gray{
+  901:   font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif';
+  902    color: #343434;
+  903    background-color: #f7f7f7;
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/common/fonts.css:
+   34  
+   35  
+   36: /* fonts : 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'  */
+   37  /*@font-face {
+   38:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';
+   39      font-style: normal;
+   40      font-weight: 300;
+   ..
+   47  }
+   48  @font-face {
+   49:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';
+   50      font-style: normal;
+   51      font-weight: 400;
+   ..
+   58  }
+   59  @font-face {
+   60:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';
+   61      font-style: normal;
+   62      font-weight: 700;
+   ..
+   69  }
+   70  @font-face {
+   71:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';
+   72      font-style: normal;
+   73      font-weight: 700;
+   ..
+   80  }*/
+   81  /*@font-face {*/
+   82: /*    font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';*/
+   83  /*    font-weight: 400;*/
+   84: /*    src: url(../fonts/'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'R.eot);*/
+   85: /*    src: url(../fonts/'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'R.eot?#iefix) format('embedded-opentype'),*/
+   86: /*    url(../fonts/'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'R.woff) format('woff'),*/
+   87: /*    url(../fonts/'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'R.ttf) format('truetype');*/
+   88  /*}*/
+   89  /*@font-face {*/
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/common/howitworks.css:
+   24  .process_number{
+   25  	font-size: 40px;
+   26:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif';
+   27      font-weight: 700;
+   28  }
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/common/navigation.css:
+   96  }
+   97  #cssmenu {
+   98:   font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'
+   99    background: #333333;
+  100  }
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/common/portfolio-details.css:
+    1  body{
+    2: 	font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif';
+    3  }
+    4  h1{
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/common/reset.css:
+    2  /* reset */
+    3  
+    4: body{font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'}
+    5  body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button{margin:0;padding:0}
+    6  fieldset,img{border:0 none}
+    .
+   17  html {overflow-y:scroll}
+   18  body {background:#fff}
+   19: body,th,td,input,select,textarea,button {font-size:13px;font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'color:#2a2a2a;font-weight:400;} /* color값은 디자인가이드에 맞게사용 */
+   20  a {color:#333;text-decoration:none}
+   21  a:active, a:hover {text-decoration:none}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/fonts/'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'OTFBold.otf:
+    <binary>
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/fonts/'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'OTFExtraBold.otf:
+    <binary>
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/fonts/'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'OTFLight.otf:
+    <binary>
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/fonts/'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'OTFRegular.otf:
+    <binary>
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/freelancer/loginGuide.css:
+   31  #guide .input .box {float:left; padding-left:20px;}
+   32  #guide .input .icon {float:right; padding-right:20px; line-height:55px;}
+   33: #guide .input input {width:400px; height:55px; line-height:55px; text-align:left; color:#e36159; font-size:16px; font-weight:400; border:0; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   34  #guide .step_info {max-width:835px; height:145px; margin:0 auto; background:url('/static/images/free_info_line_bg.png') repeat; margin-top:45px;display: flex;justify-content: space-between;} 
+   35  #guide .step_info div{position: relative;}
+   ..
+   56  #guide .btn_login input {width:100%; height:55px; border:1px solid #e36159; text-align:center; line-height:55px; font-family:raleway_b; font-size:19px; color:#fff;background-color:#e36159; text-transform:uppercase; border-radius:3px;cursor: pointer;}
+   57  #guide .search { margin:0 auto; text-align:center; padding:30px 0; overflow:hidden;}
+   58: #guide .search a {font-size:17px; color:#e36159; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700; transition:background-color .3s ease;}
+   59  #guide .search a:hover {color:#aaa; transition:background-color .3s ease;}
+   60  #guide .btn_join { margin:0 auto; padding-top:10px;}
+   ..
+   63  #guide .close {position:fixed; top:40px; right:40px; z-index:1001; cursor: pointer;}
+   64  #guide .close img {width:30px;}
+   65: #guide .sub_title {text-align:center; font-size:16px; color:#aaaaaa; line-height:30px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   66  #guide .sub_title p {color:#313131; font-size:20px;}
+   67  #guide .sub_title p span {color:#e36159; font-weight:700;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/freelancer/mypage.css:
+   37  #main .input .box {float:left; padding-left:20px;}
+   38  #main .input .icon {float:right; padding-right:20px; line-height:55px;}
+   39: #main .input input {width:400px; height:55px; line-height:55px; text-align:left; color:#0088cc; font-size:16px; font-weight:400; border:0; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   40  #main ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+   41    color: #0088cc;
+   ..
+   53  #main .btn_login input {width:100%; height:55px; border:1px solid #0088cc; text-align:center; line-height:55px; font-family:raleway_b; font-size:19px; color:#fff;background-color:#0088cc; text-transform:uppercase; border-radius:3px;cursor: pointer;}
+   54  #main .search { margin:0 auto; text-align:center; padding:30px 0; overflow:hidden;}
+   55: #main .search a {font-size:17px; color:#0088cc; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700; transition:background-color .3s ease;}
+   56  #main .search a:hover {color:#aaa; transition:background-color .3s ease;}
+   57  #main .btn_join { margin:0 auto; padding-top:10px;}
+   ..
+   60  #main .close {position:fixed; top:40px; right:40px; z-index:1001; cursor: pointer;}
+   61  #main .close img {width:30px;}
+   62: #main .sub_title {text-align:center; font-size:16px; color:#aaaaaa; line-height:30px; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; font-weight:700;}
+   63  #main .sub_title p {color:#313131; font-size:20px;}
+   64  #main .sub_title p span {color:#0088cc; font-weight:700;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/freelancer/findProject/demoPaymentDone.css:
+    1  .wrap {padding: 10% 20%; }
+    2  .wrap em {color:#0088cc; font-weight: bold;}
+    3: .wrap h2.title {font-size:2rem; color:#000; font-family:'Nanum Gothic','Apple SD Gothic Neo','sans-seerif' padding-bottom:40px;font-weight: bold;}
+    4  .wrap ul li{list-style: disc;margin-bottom:1.5rem;}
+    5  .wrap p{font-size: 20px; font-weight: bold;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/freelancer/profile/modify.css:
+   77  input[type="file"] {border:1px solid #ddd !important; padding:10px !important;}
+   78  
+   79: .registerform select {height:40px;border:1px solid #ddd;padding:5px;font-size: 13px;font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'color: #2a2a2a;font-weight: 400;}
+   80  .registerform textarea {border:1px solid #ddd;padding:10px;width:100%;height: 10rem;}
+   81  .registerform p {font-size:13px;color:#999;padding-bottom:2px;margin:0;}
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/tmp/theme-elements.css:
+ 6559  .mfp-close,
+ 6560  .mfp-close-btn-in .mfp-close {
+ 6561:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif', Arial, sans-serif;
+ 6562  	font-weight: 400;
+ 6563  	font-size: 22px;
+ ....
+ 11251  .testimonial.testimonial-style-3 blockquote p {
+ 11252  	color: #777;
+ 11253:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif', Arial, sans-serif;
+ 11254  	font-size: 1em;
+ 11255  	font-style: normal;
+ .....
+ 11309  .testimonial.testimonial-style-4 blockquote p {
+ 11310  	color: #777;
+ 11311:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif', Arial, sans-serif;
+ 11312  	font-size: 1em;
+ 11313  	font-style: normal;
+ .....
+ 11356  .testimonial.testimonial-style-5 blockquote p {
+ 11357  	color: #777;
+ 11358:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif', Arial, sans-serif;
+ 11359  	font-size: 1.2em;
+ 11360  	font-style: normal;
+ .....
+ 12810  /* Default Font Style */
+ 12811  .default-font {
+ 12812:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif', Arial, sans-serif;
+ 12813  }
+ 12814  
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/tmp/theme.css:
+   14  	background-color: #FFF;
+   15  	color: #777;
+   16: 	font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif', Arial, sans-serif;
+   17  	font-size: 14px;
+   18  	margin: 0;
+   ..
+ 4927  
+ 4928  .page-header h1 {
+ 4929: 	font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'!important;
+ 4930  	color: #fff;
+ 4931  	display: inline-block;
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/tmp/demos/demo-insurance.css:
+  419  .testimonial.custom-testimonial-style-1 blockquote p {
+  420  	color: #777;
+  421: 	font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif'';
+  422  	font-style: normal;
+  423  	font-size: 14px;
+
+/Users/parkeunjin/Desktop/freelancerkr/freelancerkr_front/web/src/main/resources/static/css/tmp/demos/demo-medical.css:
+  384  .testimonial blockquote p {
+  385  	color: #fff !important;
+  386:     font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-seerif', Arial, sans-serif;
+  387  	font-size: 15px;
+  388  	line-height: 1.6;
+

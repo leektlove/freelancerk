@@ -1,0 +1,328 @@
+
+/** 컨테스트 카드 공지 **/
+.contest.list_card .collapse .list_g{
+    margin-bottom: 1rem;
+}
+.contest.list_card .collapse .list_g .list{
+    margin-bottom: 0.4rem;
+    font-size: 14px;
+    line-height: 18px;
+}
+.contest.list_card .collapse .list_g .list i{
+    color: #ff9013;
+    margin-right: 0.5rem;
+}
+.pickedContestEntries .wrap{
+    margin: auto;
+    margin-bottom: 1rem;
+}
+.list_card .card_title_date{
+  margin-bottom: 1rem;
+}
+
+
+
+/** 제출된 작품 이미지 **/ 
+.pickedContestEntries .wrap .post-image .image-cover{
+    height: 250px;
+    overflow: hidden;
+}
+.pickedContestEntries .wrap .post-image .image-cover .thumb-info img{
+    height: 250px;
+}
+
+
+
+
+/** 채팅창 **/
+.pickedContestEntries .wrap .comment-chat{
+    width: 100%;
+    align-self: center;   
+}
+#comment .comment-view{
+    position: relative;
+    margin-bottom: 0.5rem;
+    height: 220px;
+    padding: 0;
+}
+#comment .comment-view .comments{
+    /*position:absolute;
+    left:0;
+    right:0;    
+    top:0;
+    bottom:0;*/
+    height: 100%;
+    padding: 1rem;
+    overflow:auto;
+}
+#comment .comment-view .comments li.send .comment .comment-by{
+    display: none;
+}
+#comment .comment-view .comments li.send .comment .img-thumbnail{
+    display: none;
+}
+#comment .comment-view .comments li img.avatar {
+    display: none;
+}
+#comment .comment-view .comments li.send{
+    padding:0;
+    padding-left:30px;
+}
+#comment .comment-view .comments li.receive .comment .img-thumbnail {
+    margin-left: -30px;
+    margin-top: 23px;
+    position: absolute;
+    top: 0;
+}
+#comment .comment-view .comments li.receive {
+    position: relative;
+    padding: 0;
+    padding-right: 30px;
+}
+
+
+
+/******************************** 동그란 체크박스 ********************************/
+.mui-selectable-image {
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+}
+.mui-selectable-image img{
+    width: 100%;
+}
+.mui-selectable-image input {
+    display: none;
+}
+.mui-selectable-image input ~ .indicator {
+    display: none;
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    border-radius: 50%;
+    background: #007bff;
+    padding: 0.2rem 0.5rem;
+    color: #ffffff;
+    font-size: 1.2rem;
+    z-index: 10;
+}
+.mui-selectable-image input ~ .indicator:before {
+    content: "\f00c";
+
+}
+.mui-selectable-image input:checked ~ .indicator {
+    display: block;
+}
+
+.mui-selectable-image .indicator-back {
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    border-radius: 50%;
+    background: #ddd;
+    padding: 0.2rem 0.5rem;
+    color: #ffffff;
+    font-size: 1.2rem;
+    z-index: 1;
+}
+.mui-selectable-image input ~ .indicator-back:before {
+    content: "\f00c";
+
+}
+.mui-selectable-image input:checked ~ .indicator-back {
+    display: block;
+}
+
+
+
+/******************************** 평가그래프 영역 ********************************/
+.score_graph {width:100%;margin-bottom:30px;overflow:hidden;}
+.score_graph .list{border-top: 1px solid #0088cc;border-bottom:1px solid #ddd;}
+.score_graph .content-line .circle-icon{font-size: 0.9rem;background-color: #0088cc;}
+.score_graph .content-line ruby{color: #0088cc;}
+.score_graph .button-line .color-btn{background-color: #0088cc;color:#fff;}
+.score_graph .button-line .gray-btn{background-color: #ddd;}
+.score_graph .button-line .line-color{border: 1px solid #0088cc;color: #0088cc;}
+.score_graph .p_text{display: inline-block;margin-right:30px;vertical-align: top;}
+.score_graph .p_count{display: inline-block;color:#e92131;font-size:36px;font-weight: bold;text-align: left;margin-top:-10px;}
+.score_graph .g_01 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:10px; position:relative;}
+.score_graph .g_01 .n {background-color:#db515d; border-radius:3px; height:100%;}
+.score_graph .g_01 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_01 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_01 .t img {margin-right:3px;}
+.score_graph .g_02 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:10px; position:relative;}
+.score_graph .g_02 .n {background-color:#0088cc; border-radius:3px; height:100%;}
+.score_graph .g_02 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_02 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_02 .t img {margin-right:3px;}
+.score_graph .g_03 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:10px; position:relative;}
+.score_graph .g_03 .n {background-color:#0088cc; border-radius:3px; height:100%;}
+.score_graph .g_03 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_03 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_03 .t img {margin-right:3px;}
+.score_graph .g_04 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:10px; position:relative;}
+.score_graph .g_04 .n {background-color:#0088cc; border-radius:3px; height:100%;}
+.score_graph .g_04 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_04 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_04 .t img {margin-right:3px;}
+.score_graph .g_05 {width:100%; height:30px; background:url('/static/images/graph_bar_deco.png') repeat; line-height:30px; margin-bottom:0px; position:relative;}
+.score_graph .g_05 .n {background-color:#0088cc; border-radius:3px; height:100%;}
+.score_graph .g_05 .p {position:absolute; right:0px; top:0px; padding-right:12px; color:#fff; font-size:12px;}
+.score_graph .g_05 .t {position:absolute; top:0px; font-size:13px; color:#fff; padding-left:12px; font-weight:700;}
+.score_graph .g_05 .t img {margin-right:3px;}
+.score_memo {text-align:justify;}
+
+.score_graph .counters .counter-with-unit strong {
+  font-size: 30px;
+  line-height: 35px;
+}
+.score_graph .counters .counter-with-unit label {
+  font-size: 16px;
+  line-height: 20px;
+}
+.counters [class*="fa-"], .counter-with-unit .icons {
+  font-size:25px;
+  line-height: 30px; 
+}
+.score_graph .counters img{
+  margin-top:0.5rem;
+  margin-bottom:0.5rem;
+}
+.score_graph .counters .label{
+  font-size: 15px;
+}
+.score_graph .counters .count-text{
+  color: #0088cc;
+  font-size: 17px;
+  margin-top: 1rem;
+}
+.circular-bar{
+  display: inline-block;
+  width: 19%;
+  text-align: center;
+  margin-bottom:0;
+}
+.circular-bar strong{
+  font-size: 17px;
+  top:25%;
+}
+.circular-bar label{
+  font-size: 12px;
+  top:50%;
+  line-height: 15px;
+}
+
+
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+  
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    
+
+ }  
+
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    /** 제출된 작품 이미지 **/ 
+    .pickedContestEntries .wrap .post-image .image-cover{
+        height: 250px;
+    }
+    .pickedContestEntries .wrap .post-image .image-cover .thumb-info img{
+        height: 250px;
+    }
+    /** 채팅 **/ 
+    #comment .comment-view .comments li.send{
+        padding:0;
+        padding-left: 30px;
+    }
+    #comment .comment-view .comments li.receive{
+        padding:0;
+        padding-right: 30px;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .contest.list_card .collapse .list_g .list{
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .pickedContestEntries .wrap{
+        margin-bottom: 3rem;
+    }
+    .pickedContestEntries .wrap:last-child{
+        margin-bottom: 0rem;
+    }
+    /** 제출된 작품 이미지 **/  
+    .pickedContestEntries .wrap .post-image .image-cover{
+        height: 250px;
+    }
+    .pickedContestEntries .wrap .post-image .image-cover .thumb-info img{
+        height: 250px;
+    }
+    /** 채팅 **/ 
+    #comment .comment-view{
+        height: 150px;
+    }
+    #comment .comment-view .comments li.send{
+        padding:0;
+        padding-left: 30px;
+    }
+    #comment .comment-view .comments li.receive{
+        padding:0;
+        padding-right:30px;
+    }
+    .circular-bar{
+        width: 32%;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .contest.list_card .collapse .list_g .list{
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .pickedContestEntries .wrap{
+        margin-bottom: 3rem;
+    }
+    .pickedContestEntries .wrap:last-child{
+        margin-bottom: 0rem;
+    }
+    /** 제출된 작품 이미지 **/ 
+    .pickedContestEntries .wrap .post-image .image-cover{
+        height: 250px;
+    }
+    .pickedContestEntries .wrap .post-image .image-cover .thumb-info img{
+        height: 250px;
+    }
+    /** 채팅 **/
+    #comment .comment-view{
+        height: 150px;
+    }
+    #comment .comment-view .comments li .img-thumbnail{
+        display: block;
+    }
+    #comment .comment-view .comments li.send{
+        padding:0;
+        padding-left: 30px;
+    }
+    #comment .comment-view .comments li.receive{
+        padding:0;
+        padding-right: 30px;
+    }
+    .circular-bar{
+        width: 32%;
+    }
+    .circular-bar canvas{
+        width: 100px!important;
+        height: 100px!important;
+    }
+}

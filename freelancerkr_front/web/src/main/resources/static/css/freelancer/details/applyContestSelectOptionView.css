@@ -1,0 +1,36 @@
+.option_table thead th{
+	text-align: center;
+	font-size:14px;
+	font-weight: 700;
+	border-top:1px solid #9c9c9c;
+	border-bottom:1px solid #9c9c9c;
+}
+.discount_table thead th{
+	text-align: center;
+	font-size:14px;
+	font-weight: 700;
+	border-top:1px solid #9c9c9c;
+	border-bottom:1px solid #9c9c9c;
+}
+.discount_table td{
+	text-align: center;
+}
+
+@media (min-width: 1200px) { 
+
+}
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	
+}
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	
+}
+@media (max-width: 575.98px) { 
+	.featured-box .box-content{
+		padding-right: 1rem;
+		padding-left: 1rem;
+	}
+}

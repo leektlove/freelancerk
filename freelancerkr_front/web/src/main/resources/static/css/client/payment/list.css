@@ -1,0 +1,294 @@
+.sub_title{border-bottom:2px solid #282828;font-size: 20px; font-weight: bold;margin-bottom:2rem;}
+
+.content-body .info {background-color: #fff;border:1px solid #ddd;padding:2rem;margin-bottom:3rem;}
+.content-body .info h4.title{font-size: 20px;font-weight: bold;text-align: center;margin-bottom:2rem;}
+.content-body .info h4.title em{color:#0088cc;font-weight: bold}
+.owl-carousel.owl-drag .owl-item .payment_card{box-shadow: 0 0 10px 1px #d0d0d0;padding:1rem;border-radius: 0;}
+.owl-carousel.owl-drag .owl-item .payment_card.project{border-top:6px solid #0088cc;}
+.owl-carousel.owl-drag .owl-item .payment_card.contest{border-top: 6px solid #e36159;}
+.payment_card .item .content .des{border-bottom: 1px solid #ddd;padding: 0.7rem;min-height:100px;overflow: hidden;}
+.payment_card .item .content .des div{line-height: 1rem;}
+.payment_card .item .content .des div span{display: table-cell;}
+.payment_card .item .content .des div span:first-child{width:50px;}
+.payment_card .item .content .des div span.title{width:75px;font-weight: bold}
+.payment_card .item .content .des div{margin-bottom:5px;}
+.payment_card .item .content .des-cnt{position: relative;}
+.payment_card .item .content .des-cnt .cell-box{display: flex;}
+.payment_card .item .content .des-cnt .cell-box .cell{width:33%;display:inline-block;padding:1rem 0;}
+.payment_card .item .content .des-cnt .cell-box .cell:last-child{border-right:0;}
+.payment_card .item .content .des-cnt .title{border:0;}
+.payment_card .item .content .des-cnt .contents{font-size:1rem;color: #0088cc;border:0;}
+
+.payment_card .item .content .option{border-bottom: 1px solid #ddd;padding: 0.7rem}
+.payment_card .item .content .option div span{display: table-cell;}
+.payment_card .item .content .option div span:first-child{width:50px;}
+.payment_card .item .content .option div span.title{width:75px;font-weight: bold}
+.payment_card .item .content .option div{margin-bottom:5px;}
+
+.payment_card .item .content .portfolio{padding: 0.7rem;padding-bottom: 0}
+.payment_card .item .content .portfolio div span{display: table-cell;}
+.payment_card .item .content .portfolio div span:first-child{width:50px;}
+.payment_card .item .content .portfolio div span.title{width:75px;font-weight: bold}
+.payment_card .item .content .portfolio .view {display: flex}
+.payment_card .item .content .portfolio .view div{width:50%;margin:5px;background: url(http://placehold.it/300x200/?text=portfolio)no-repeat;height: 80px;background-size: cover;background-position: center center;}
+.payment_card .item .content .portfolio .view div:first-child{margin-left:0;}
+.payment_card .item .content .portfolio .view div:last-child{margin-right:0;}
+
+/*.payment_card .item .content .btn-group{display: flex;}*/
+/*.payment_card .item .content .btn-group button{font-size:16px;width:50%;padding:0.5rem 1rem;margin-top:0.7rem;cursor: pointer;text-align: center;}*/
+
+.payment_card .item .content .btn-group.one-btn-1 button{width:100%;background-color: #7B7B7B;}
+.payment_card .item .content .btn-group.one-btn-2 button{width:100%;background-color: #FD4B61;}
+
+.payment_card .item .pickmeup_item{border-bottom:1px solid #ddd;}
+.payment_card .item .pickmeup_item image{}
+.payment_card .item .pickmeup_item div.star {padding-top: 0px;overflow: hidden;}
+.payment_card .item .pickmeup_item .evolation span{color: #ff0000;}
+.payment_card .item .pickmeup_item .star_con{position: relative;display: inline-block;}
+.payment_card .item .pickmeup_item .star_point_con{position: absolute;left: 0px;top: 0px;width: 0px;overflow-x: hidden;}
+.payment_card .item .pickmeup_item .icons{width: 100%;padding-top: 7px;padding-bottom: 12px;}
+.payment_card .item .pickmeup_item .icons span{display: block;color: #999;font-size: 12px;padding-top:0px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
+.payment_card .item .pickmeup_item .bid_count{display:inline-block;padding:10px 0;text-align:left;}
+.payment_card .item .pickmeup_item .bid_count span{color: #ff0000;}
+.payment_card .item .pickmeup_item .dday_count{display:block; text-align:right;margin-top:-30px;right:0px;margin-bottom:10px;}
+.payment_card .item .pickmeup_item .dday_count div{display:inline-block;width:20px;height:25px;line-height:25px;margin-left:-0px;font-size:14px;color:#ddd;text-align:center;background:url('/static/images/day_bg.png');}
+.payment_card .item .pickmeup_item .img_title_box{margin-top: 25px;margin-bottom: 25px;text-align: center;}
+.payment_card .item .pickmeup_item .img_title_box .image{display: inline-block;vertical-align: middle;}
+.payment_card .item .pickmeup_item .img_title_box .title_box{display: inline-block;width: 95%;vertical-align: middle;}
+.payment_card .item .pickmeup_item .img_title_box .title{font-size: 20px;font-family: 'Nanum Gothic','Apple SD Gothic Neo','sans-serif';font-weight: 400;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;margin-bottom:10px;}
+.payment_card .item .table thead tr{
+    border-top: 0;
+}
+.payment_card .item .table thead th{
+    border-top: 0;
+    border-bottom: 1px solid #d0d0d0;
+    font-size: 12px;
+}
+.payment_card .item .table tbody td{
+    border: 0;
+}
+.payment_card .item .table tbody tr:last-child{
+    border-top: 2px solid #333;
+}
+
+.payment_card .item .bid_item .image{margin:20px 0;}
+.payment_card .item .bid_item .image div{background-image: url(/static/images/c_basic.jpg);height: 80px;width: 80px;border-radius: 50%;background-position: center center;background-size: cover;margin: auto;}
+
+.point .table th{padding:1rem;}
+.point .table td.used{color:red;}
+.title_box .title{
+	white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contest .custom-control-input:checked ~ .custom-control-label::before, 
+.contest .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+	background-color:#e36159!important;
+}
+.custom-control-label {
+    line-height: 25px;
+}
+.guide{text-align: center;}
+.guide_title{
+    position:relative;
+    margin-top:30px;
+    font-size: 20px;
+    font-weight:700;
+    text-align: center;
+}
+.guide_title:before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: calc(50% - 20px);
+    height: 4px;
+    width: 40px;
+    background-color: black;
+}
+.pickme_guid_1 img,
+.pickme_guid_2 img,
+.pickme_guid_3 img,
+.pickme_guid_4 img{
+	max-width: 175px;
+	margin-top:1rem;
+	margin-bottom:1rem;
+}
+.pickme_guid_1:after{
+    content: '';
+    background:url('/static/images/use-guide/pickme_guid_arow1.png')no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: -24px;
+    top:calc(50% - 40px);
+    width: 55px;
+    height: 27px;
+}
+.d-btn {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    width: 100%;
+    display: flex;
+    font-size: 13px;
+    align-items: center;
+    height: 45px;
+}
+.d-btn img {
+    margin-right: 0.5rem;
+    align-self: center;
+    width: 20px!important;
+    height: 21px;
+}
+
+
+/* 옵션 결제내역과 포인트*/
+.point .table{
+    width: 1000px;
+    margin: auto;
+}
+.point  .table thead th{
+    vertical-align: middle!important;
+    border: 0;
+    border-top: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0!important;
+    text-align: center;
+    font-size: 13px;
+}
+.point .table tbody td{
+    border: 0;
+}
+.point  .table tbody td.refund_day{
+    min-width: 120px;
+}
+.point  .table tbody td.count{
+    text-align: right;
+}
+.point  .table tbody tr:nth-child(2n){
+    background-color: #fafafa;
+}
+.point  .table tbody tr:last-child{
+    border-top: 1px solid #d0d0d0;
+}
+.point .table tbody tr:last-child td{
+    background-color: #fff;
+    border-bottom: 1px solid #d0d0d0;
+}
+.point .table tbody tr:last-child td:first-child{
+    background-color: #fff;
+    border-bottom: 0;
+}
+.point .table tbody tr:last-child td:last-child{
+    color: #0088cc;
+}
+
+
+.dash_line {
+    height: 2px;
+    width: calc(100% + 30px);
+    background-image: linear-gradient(to left, transparent 10px, #d0d0d0 0%);
+    background-size: 35px 100%;
+    position: absolute;
+    top: 0;
+    left: -15px;
+}
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+	.r-content{border:1px solid #ddd;margin-top:-1px;}
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 100px;
+	}
+	.pickme_guid_1:after{
+		top: calc(50% - 50px);
+    	width: 45px;
+    	height: 18px;
+	}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) { 
+	.r-content{border:1px solid #ddd;margin-top:-1px;}
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 130px;
+	}
+	.pickme_guid_1:after{
+		top: calc(50% - 40px);
+    	width: 45px;
+    	height: 18px;
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+	.pickme_guid_1 img,
+	.pickme_guid_2 img,
+	.pickme_guid_3 img,
+	.pickme_guid_4 img{
+		max-width: 130px;
+	} 
+    .pickme_guid_2:after{
+    	right:calc(100% - 27px);
+    	top:calc(100% - 26px);
+    	transform: rotate(0deg);
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+ }
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+}
+.payment_card{
+	border:0;
+}
+.payment_card .table td, .payment_card .table th {
+	padding: 7px 0;
+	font-size: 13px;
+    border-top: 0;
+}
+.payment_card tr.disabled{
+	background-color:#ececec;
+}
+.payment_card label{
+	margin-bottom:0;
+}
+
+.btn-delete {
+	background: darkgrey;
+	color: black;
+}
+.owl-carousel.stage-margin .owl-stage-outer{
+    margin-left: 30px !important;
+    margin-right: 30px !important;
+    padding: 10px;
+}
+.custom-checkbox .custom-control-label::before{
+    border-radius: 0;
+    background-color: #fff;
+    border: 1px solid #d0d0d0;
+    top: 0.4rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    left: -1.3rem;
+}
+.custom-control-label::after{}
+.custom-control-input:checked ~ .custom-control-label::before, .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before{
+    border-radius: 0;
+    border: 1px solid #d0d0d0;
+}
+.custom-checkbox .custom-control-input{
+    display: none;
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after{
+    display: none;
+}

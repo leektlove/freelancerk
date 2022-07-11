@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="layout/layout">
+<head>
+
+</head>
+
+<section id="content" layout:fragment="content">
+	<div id="container" class="container">
+		<div id="container_content">
+			<div id="main_con">
+
+				<!-- 방문자 필터 -->
+				<div>
+					<form id="" name="" method="get">
+						<span id="">방문자</span>
+						<input type="text" name="" value="" id="Date" readonly class="">
+						<input type="submit" value="검색" class="btn-black small">
+					</form>
+				</div>
+				<!-- 방문자 필터// -->
+
+				<!-- 차트 -->
+				<div id="chart">
+
+				</div>
+				<!-- 차트// -->
+
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script th:inline="javascript">
+		var date = [[${date}]];
+
+		google.charts.load('current', {'packages':['bar']});
+		google.charts.setOnLoadCallback(drawHourlyAccesses);
+
+		function drawHourlyAccesses() {
+			var data = google.visualization.arrayToDataTable([[${accessDaily}]]);
+
+			var options = {
+				chart: {
+					title: '방문자',
+					subtitle: '',
+				},
+				bars: 'vertical',
+				vAxis: {
+					format: 'decimal',
+					minValue:0,
+					viewWindow: { min: 0 },
+				},
+				height: 400,
+				colors: ['#1b9e77', '#d95f02', '#7570b3']
+			};
+
+			var chart = new google.charts.Bar(document.getElementById('chart'));
+
+			chart.draw(data, google.charts.Bar.convertOptions(options));
+		}
+		
+	</script>
+</section>
+
+</html>

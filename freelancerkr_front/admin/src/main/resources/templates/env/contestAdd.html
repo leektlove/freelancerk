@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/env.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/envHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+				<h1>■ 신규섹터추가</h1>
+				<form name="" id="" action="" method="post" >
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="350">
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>분류코드</th>
+								<td>
+									40c0
+								</td>
+							</tr>
+							<tr>
+								<th>출력</th>
+								<td>
+									<label><input type="radio" name="fr_display" value="Y" checked>출력</label>&nbsp;&nbsp;
+									<label><input type="radio" name="fr_display" value="N">미출력</label>
+								</td>
+							</tr>
+
+							<tr>
+								<th>순서</th>
+								<td><input type="text" name="" value="" size="4"></td>
+							</tr>
+
+							<tr>
+								<th>분류명</th>
+								<td>
+									<input type="text" name="" value="" size="50">
+								</td>
+							</tr>
+							<tr>
+								<th>
+									섹터설명
+								</th>
+								<td>
+									<textarea style="width: 350px;height: 100px"></textarea>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+							
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="저장" class="btn-color large">
+								<a href="" class="btn-colorline large">목록</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div><!-- container-->
+	</section>
+	
+
+</html>

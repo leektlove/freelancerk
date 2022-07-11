@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/freelancer/payment/view.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row mb-2">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>결제 관리</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+						
+					</div>
+				</div>
+				<div class="text-4">유료옵션의 효율을 검토해보세요!</div>
+			</div>
+		</section>
+		<!-- 페이지헤더//-->
+
+		<div class="container">
+	        
+	        <div class="">
+
+				<!-- 포트폴리오 -->
+				<div class="pickme">
+					<div class="heading heading-border heading-middle-border">
+                        <h4 class="font-weight-normal"><strong class="">포트폴리오</strong></h4>
+                    </div>
+					<div class="row">
+						<div class="owl-carousel owl-theme stage-margin nav-style-1 owl-loaded owl-drag owl-carousel-init" data-plugin-options="{'items': 3, 'margin': 25, 'loop': false, 'nav': true, 'dots': false, 'stagePadding': 45}">	
+							<div th:each="pickMeUp: ${pickMeUps.content}">
+								<div class="card-list">
+
+									<!-- 포트폴리오 카드 -->
+									<div class="portfolio payment_card p-3">
+										<div class="item">
+											<div class="d-flex">
+												<div class="w-25">
+													<!-- <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}"> -->
+														<!-- <a th:href="${pickMeUp.representativeImageUrl}"> -->
+															<img th:src="@{${(#strings.isEmpty(pickMeUp?.representativeImageUrl)?'/static/images/portfolio_no_image.png':pickMeUp?.representativeImageUrl)}}">
+														<!-- </a> -->
+													<!-- </div> -->
+												</div>
+												<div class="w-75 text-2 p-2" style="line-height: 21px;">
+													<div th:text="${pickMeUp.title}" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;font-weight: 300;font-size: 16px;margin-bottom: 5px;"></div>
+													<div th:if="${pickMeUp.existsTicketRecord || !pickMeUp.tickets.isEmpty()}">
+														<span style="font-size: 11px;">
+															<i class="fas fa-angle-right mr-2"></i>총 노출기간 : 
+														</span>
+														<span class="contents" th:text="${pickMeUp.postingPastDayTimes}"></span>
+														<span th:if="${pickMeUp.existsTicketRecord && pickMeUp.tickets.isEmpty()}">(노출종료)</span>
+														<span th:if="${!pickMeUp.tickets.isEmpty()}">(노출중)</span>
+													</div>
+													<div th:if="${pickMeUp.existsTicketRecord || !pickMeUp.tickets.isEmpty()}">
+														<span style="font-size: 11px;">
+															<i class="fas fa-angle-right mr-2"></i>최초공개 : 
+														</span>
+														<span th:text="${#temporals.format(pickMeUp.createdAt, 'yyyy.MM.dd')}"></span>
+													</div>
+													<div th:if="${!pickMeUp.existsTicketRecord && pickMeUp.tickets.isEmpty()}">
+														(미노출)
+													</div>
+												</div>
+											</div>
+											<div class="content">
+												<!-- <div class="des">
+													<div>
+														<span class="title">총 노출기간</span>
+														<span class="contents" th:text="${pickMeUp.postingPastDayTimes}">26일 17시간</span>
+													</div>
+												</div> -->
+												<table class="table mt-2">
+													<thead class="text-center">
+														<tr>
+															<th>옵션종류</th>
+															<th style="min-width: 80px;">결제금액</th>
+															<th style="min-width: 70px;">기한</th>
+														</tr>
+													</thead>
+													<tbody class="text-center">
+														<tr th:each="optionItem: ${options}">
+															<td scope="row" class="text-left">
+																<div class="custom-control custom-checkbox">
+									                                <input type="checkbox"
+									                                		readonly="readonly"
+									                                		class="custom-control-input"
+									                                		name="paymentOptionId[]"
+									                                		id="paymentOptionId"
+									                                		th:checked="${pickMeUp.isContainOption(optionItem.id)}"
+									                                		onclick="return false">
+									                                <label class="custom-control-label" for="paymentOptionId" th:text="${optionItem.subName}">
+									                                </label>
+									                            </div>
+															</td>
+															<td class="text-right">
+																<span th:text="|*{#numbers.formatInteger(pickMeUp.getOptionPurchasePrice(optionItem.id), 0, 'COMMA')}원|"></span>
+															</td>
+															<td  class="text-center" th:text="${pickMeUp.getAllOptionValidationSpan(optionItem.id)}">
+															</td>
+														</tr>
+														<tr class="text-2">
+															<td class="text-center">(할인 및 포인트 적용)</td>
+															<td class="text-right" th:text="|*{#numbers.formatInteger(pickMeUp.totalDiscountAmount, 0, 'COMMA')}원|"></td>
+															<td class=""></td>
+														</tr>
+														<tr style="border-top: 2px solid #333;">
+															<td class="text-center ">총 옵션결제 금액</td>
+															<td class=" text-right " th:text="|*{#numbers.formatInteger(pickMeUp.totalSupplyAmount, 0, 'COMMA')}원|">0원</td>
+															<td class=" text-center"></td>
+														</tr>
+													</tbody>
+												</table>
+												<div class="des-cnt text-center">
+													<div class="dash_line"></div>
+													<div class="cell-box">
+														<div class="cell">
+															<div class="title" data-toggle="tooltip" data-placement="top" title="" data-original-title="프리랜서의 포트폴리오가 조회된 횟수입니다.">조회수</div>
+															<div class="contents" th:text="${#numbers.formatInteger(pickMeUp.hits, 0, 'COMMA')}"></div>
+														</div>
+														<div class="cell">
+															<div class="title" data-toggle="tooltip" data-placement="top" title="" data-original-title="클라이언트가 본인의 프로젝트 또는 컨테스트에 참여 제안을 한 횟수입니다.">참여제안수</div>
+															<div class="contents" th:text="${#numbers.formatInteger(pickMeUp.projectPropositionCount, 0, 'COMMA')}"></div>
+														</div>
+														<div class="cell">
+															<div class="title" data-toggle="tooltip" data-placement="top" title="" data-original-title="프리랜서의 포트폴리오를 검토한 클라이언트가 본인의[직거래마켓]에 담은 횟수입니다.">직거래검토수</div>
+															<div class="contents" th:text="${#numbers.formatInteger(pickMeUp.directDeals?.size(), 0, 'COMMA')}"></div>
+														</div>
+													</div>
+												</div>
+												<div class="d-flex">
+													<button type="button" class="btn btn-quaternary rounded-0 w-100" th:onclick="|javascript:location.href='/freelancer/pickMeUp/extend?pickMeUpId=${pickMeUp.id}'|">옵션 추가/연장하기</button>
+													<button type="button" th:onclick="|invalidatePickMeUpTickets(${pickMeUp.id})|"
+															class="btn w-100 btn-light rounded-0 text-dark">
+														삭제
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- 포트폴리오 카드// -->
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 포트폴리오//-->
+
+				<!-- 입찰 -->
+				<div class="bid_list">
+					<div class="heading heading-border heading-middle-border mb-1">
+                        <h4 class="font-weight-normal mb-2"><strong class="">컨테스트</strong></h4>
+                    </div>
+                    <div style="margin-bottom:20px; margin-left:5px;font-size: 13px;">
+                    	<i class="fas fa-volume-up text-primary"></i> 구매하신 픽미업 옵션과 중복되는 컨테스트 옵션은 무료로 적용됩니다.
+                    </div>
+                    <div class="row">
+						<div class="owl-carousel owl-theme stage-margin nav-style-1 owl-loaded owl-drag owl-carousel-init" data-plugin-options="{'items': 3, 'margin': 25, 'loop': false, 'nav': true, 'dots': false, 'stagePadding': 45}">	
+							<div th:each="contestEntry: ${contestEntries.content}">
+								<div class="card-list">
+
+									<!-- 입찰 카드 -->
+									<div class="bid payment_card p-3">
+										<div class="item">
+											<div class="">
+												<!-- <div class="text-4 text-secondary" ></div>
+												<div class="des">
+													<div>
+														<div class="subtitle">작품 제출일:</div>
+														<span class="date" th:text="${#temporals.format(contestEntry.applyAt, 'yyyy.MM.dd')}">2018.01.18</span>
+													</div>
+													<div>
+														<div class="subtitle">설명 요약:</div>
+														<span class="contents" th:text="${#strings.abbreviate(contestEntry.project.description, 100)}"></span>
+													</div>
+													<div class="text-right">
+														<div class="subtitle">총 상금</div>
+														<span class="text-5 " th:text="${#numbers.formatDecimal(contestEntry.project.totalPrize, 0, 'DEFAULT', 0, 'DEFAULT')}">300,000</span>원
+													</div>
+												</div> -->
+												<div class="d-flex">
+													<div class="w-25">
+														<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+															<span th:href="@{/view/contest-entries/__${contestEntry.id}__/details/ajax}" data-ajax-on-modal>
+																<img th:src="${contestEntry.primaryContestEntryFileUrl}" class="" style="cursor: pointer;">
+															</span>
+														</div>
+													</div>
+													<div class="w-75 text-2 p-2" style="line-height: 21px;">
+														<div class="text-secondary"
+															 th:onclick="|javascript:location.href='/freelancer/contests/${contestEntry.project.id}/details'|"
+															 th:text="${contestEntry.project.title}"
+															 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;font-weight: 300;font-size: 16px;margin-bottom: 5px;cursor: pointer"></div>
+														<div>
+															<span style="font-size: 11px;">
+																<i class="fas fa-angle-right text-secondary mr-2"></i>작품제출일 : 
+															</span>
+															<span th:text="${#temporals.format(contestEntry.applyAt, 'yyyy.MM.dd')}"></span>
+														</div>
+														<div>
+															<span style="font-size: 11px;">
+																<i class="fas fa-angle-right text-secondary mr-2"></i>마감일 : 
+															</span>
+															<span class="contents" th:text="${#temporals.format(contestEntry.project.pickEndAt, 'yyyy.MM.dd')}"></span>
+														</div>
+													</div>
+												</div>
+												<div class="option">
+													<div>
+														<table class="table mt-2">
+															<thead>
+																<tr class="text-center">
+																	<th>옵션종류</th>
+																	<th colspan="2">결제금액</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr th:each="optionItem: ${options}" th:if="${optionItem.usedInContestEntry}">
+																	<td>
+
+																		<div class="custom-control custom-checkbox">
+											                                <input type="checkbox"
+											                                		readonly="readonly"
+											                                		class="custom-control-input"
+											                                		name="paymentOptionId[]"
+											                                		th:checked="${contestEntry.isContainOption(optionItem.id)}"
+											                                		onclick="return false">
+											                                <label class="custom-control-label" th:text="${optionItem.subName}">
+											                                </label>
+											                            </div>
+																	</td>
+																	<td class="text-right" colspan="2">
+																		 <span th:if="${contestEntry.getOptionPurchasePrice(optionItem.id) > 0}" th:text="|${#numbers.formatInteger(contestEntry.getOptionPurchasePrice(optionItem.id), 0, 'COMMA')}원|"></span>
+																		 <span th:if="${contestEntry.isContainOption(optionItem.id) && contestEntry.getOptionPurchasePrice(optionItem.id) == 0}">무료적용</span>
+																		 <span th:if="${!contestEntry.isContainOption(optionItem.id) && contestEntry.getOptionPurchasePrice(optionItem.id) == 0}">0원</span>
+																	</td>
+																</tr>
+																<tr class="text-2">
+																	<td class="text-center">(할인 및 포인트 적용)</td>
+																	<td class="text-right" th:text="|*{#numbers.formatInteger(contestEntry.totalDiscountAmount, 0, 'COMMA')}원|"></td>
+																	<td></td>
+																</tr>
+																<tr style="border-top: 2px solid #333;">
+																	<td class="text-center ">총 옵션결제 금액</td>
+																	<td class=" text-right " th:text="|*{#numbers.formatInteger(contestEntry.totalPurchaseAmount, 0, 'COMMA')}원|">0원</td>
+																	<td class=" text-center">VAT미포함</td>
+																</tr>
+															</tbody>
+														</table>
+														<div class="d-flex">
+															<button type="button"
+																	th:if="${contestEntry.project.status.name() == 'POSTED'}"
+																	class="btn w-100 rounded-0 border-0 text-dark"
+																	th:onclick="|toAddContestOptionView(${contestEntry.project.id}, ${contestEntry.numberOfActiveTickets})|"
+																	style="background-color: #ec858e;cursor: pointer;">
+																	옵션추가하기
+															</button>
+															<button type="button"
+																th:if="${contestEntry.project.status.name() != 'POSTED' AND contestEntry.bidStatus.name() == 'PICKED'}"
+																th:onclick="|javascript:location.href='/freelancer/bid/successList'|"
+																class="btn rounded-0 border-0 text-dark w-100"
+																style="background-color: #fdc6cb;cursor: pointer;">
+																<span th:text="${contestEntry.pickedRank + 1}"></span>위로 당선
+															</button>
+															<button type="button"
+																	th:if="${contestEntry.project.status.name() == 'IN_PROGRESS' AND contestEntry.bidStatus.name() == 'APPLY'}"
+																	th:onclick="|javascript:location.href='/freelancer/bid/failList'|"
+																	class="btn rounded-0 border-0 text-dark w-100"
+																	style="background-color: #a5a5a5;cursor: pointer;">
+																선정 중
+															</button>
+															<button type="button"
+																	th:if="${contestEntry.project.status.name() != 'POSTED' AND (contestEntry.bidStatus.name() == 'FAILED' OR contestEntry.bidStatus.name() == 'CANCEL')}"
+																	th:onclick="|javascript:location.href='/freelancer/bid/failList'|"
+																	class="btn rounded-0 border-0 text-dark w-100"
+																	style="background-color: #a5a5a5;cursor: pointer;">
+																	컨테스트종료
+															</button>
+															<button type="button"
+																	th:onclick="|invalidateContestEntryTicket(${contestEntry.id})|"
+																	class="btn w-100 btn-light rounded-0 text-dark">
+																	삭제
+															</button>
+														</div>
+													</div>
+													<!-- <div class="btn-group one-btn">
+
+													</div> -->
+												</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- 입찰 카드// -->
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 입찰//-->
+
+				<!-- 가이드 -->
+				<div class="heading heading-border heading-middle-border">
+                    <h4 class=""><strong class="">결제관리 이용방법</strong></h4>
+                </div>
+				<div class="row" style="align-items: center;max-width: 800px;margin:auto;margin-top:0rem;margin-bottom:80px">
+					<div class="pickme_guid_1 guide col-6 p-0">
+						<div class="form-row">
+							<div class="col-lg-12">
+								<img src="/static/images/use-guide/pay_1.png" class="img-fluid">
+							</div>
+							<div class="col-lg-12" style="align-self: center;">
+								[포트폴리오 관리]에서<br class="d-block d-md-none"/> 나의<br class="d-none d-md-block">
+								포트폴리오를<br class="d-block d-md-none"/> 업로드(공개)하세요.
+							</div>
+						</div>
+					</div>
+					<div class="pickme_guid_2 guide col-6 p-0">
+						<div class="form-row">
+							<div class="col-lg-12">
+								<img src="/static/images/use-guide/pay_2.png" class="img-fluid">
+							</div>
+							<div class="col-lg-12" style="align-self: center;">
+								공개된 포트폴리오의<br/> 효율을<br class="d-block d-md-none"/> 검토 해보세요.
+							</div>
+						</div>
+					</div>	
+				</div>
+				<!-- 가이드// -->
+
+				<!-- 포인트 -->
+				<div class="point">
+					<div class="heading heading-border heading-middle-border mb-1">
+                        <h4 class="font-weight-normal mb-2"><strong class="">옵션 결제내역과 포인트</strong></h4>
+                    </div>
+                    <div style="margin-bottom:20px;font-size: 13px;">
+	                    <i class="fas fa-exclamation-circle" style="font-size: 13px;color : #e36159"></i>
+	                    현금처럼 사용하실 수 있습니다.(유효기간 1년, 1포인트 = 1원)
+	                </div>
+	                <div style="position: relative; margin-bottom:80px;">
+	                    <div class="table-responsive">
+							<table class="table table-bordered text-center">
+								<thead>
+									<tr>
+										<th scope="col">순서</th>
+										<th scope="col">일자</th>
+										<th scope="col">구분</th>
+										<th scope="col">옵션명</th>
+										<th scope="col" style="line-height: 13px;">결제금액<div class="text-2">(VAT제외)</div></th>
+										<th scope="col">사용포인트</th>
+										<th scope="col">발생포인트</th>
+										<th scope="col">유효기한</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="item, iter: ${pointLogs}">
+										<td scope="row" th:text="${pointLogs.size() - iter.index}"></td>
+										<td th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd')}">
+										</td>
+										<td th:text="${item.type.desc}"></td>
+										<td th:if="${item.type.name() != 'REFUND_FOR_CONTEST_ENTRY'}" th:text="${item.purchaseOptionDescription != null?item.purchaseOptionDescription:item.reason}"></td>
+										<td th:if="${item.type.name() == 'REFUND_FOR_CONTEST_ENTRY'}" th:text="${item.reason}"></td>
+										<td class="count" th:if="${item.type.name() != 'REFUND_FOR_CONTEST_ENTRY'}" th:text="${item.purchase!=null?#numbers.formatDecimal(item.purchase.supplyAmountOfMoney, 0, 'DEFAULT', 0, 'DEFAULT'):0 + '원'}"></td>
+										<td class="count" th:if="${item.type.name() == 'REFUND_FOR_CONTEST_ENTRY'}">0원</td>
+										<td class="count" th:text="${#numbers.formatDecimal(item.usePoint, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
+										<td class="count" th:text="${#numbers.formatDecimal(item.addedPoint, 0, 'DEFAULT', 0, 'DEFAULT')}"></td>
+										<td th:text="${#temporals.format(item.addedPointExpiredAt, 'yyyy.MM.dd')}"></td>
+									</tr>
+									<tr>
+										<td colspan="6"></td>
+										<td >사용가능포인트</td>
+										<td class="count" th:text="|${#numbers.formatInteger(user.points, 0, 'COMMA')}P|"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- 포인트//-->
+
+			</div>
+			
+
+		</div>
+		<script>
+			var currentZoom = 100;
+		</script>
+		<script src="/static/js/portfolio-common-popup.js"></script>
+		<script src="/static/js/freelancer/payment/view.js"></script>
+	</section>
+	
+
+</html>

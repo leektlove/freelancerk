@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){    	
+    	setActiveChecked('activeChk', 'active');
+    	
+    	$("#contentType").val(content.contentType);
+    	
+    	//console.log("category222 : " + content.category2);
+    	getCategoryData(content.category1, content.category2);
+    	
+    	drawProductImg();
+    	drawPeerProduct();
+    	
+	});    
+
+</script>
+
+
+<script th:inline="javascript">
+var resourceList = null;
+var content = null;
+var baseProductImgList = null; 
+
+/*<![CDATA[*/
+    resourceList = /*[[${contentView.resourceList}]]*/ [];
+    //console.log(resourceList);
+/*]]>*/
+
+/*<![CDATA[*/
+    content = /*[[${contentView.content}]]*/ "";
+    //console.log(content);
+/*]]>*/
+ 
+/*<![CDATA[*/
+    baseProductImgList = /*[[${contentView.productImgList}]]*/ "";    
+    //console.log(productImgList);
+/*]]>*/
+
+/*<![CDATA[*/
+    basePeerProductList = /*[[${contentView.peerProductList}]]*/ "";    
+    //console.log(basePeerProductList);
+/*]]>*/
+
+function getResource(seq){
+	
+	var resource = resourceList.find((n) => (
+		n.seq == seq
+	));	
+	
+	//console.log(resource);	
+	return resource;
+}
+
+</script>
+
+
+
+<script>
+function saveContent(){
+	//var activeChk = $("#activeChk").attr('checked') ? 'Y' : 'N';
+	//$("#active").val(activeChk);		
+	
+	setActive('activeChk', 'active');	
+	
+	form1.submit();
+}
+
+function editContent(){	
+	
+	setActive('activeChk', 'active');
+	setYn('replyYnChk', 'replyYn');
+	
+	showModal("수정 하시겠습니까?", true, function(){
+		form1.action = "/w1/product/save_content";
+		form1.submit();
+	});
+		
+}
+
+function deleteContent(){
+	showModal("삭제 하시겠습니까?", true, function(){
+	
+		var contentId = $("#contentId").val();
+		var param = {};        	    
+	    param.contentId = contentId     
+	    param = JSON.stringify(param);
+	    
+		$.ajax({
+	        url : "/w1/product/check_del_product",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(result){
+	        	if(result.content.depth<1){
+		        	alert('삭제됩니다');
+		        		form1.action = "/w1/product/delete_content";
+						form1.submit();
+	        	}else{
+	        		alert('제품비교항목에 올라가있는 상품은 삭제할 수 없습니다.')
+	        	}
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });	
+	});
+}
+
+function goList(){
+	location.href="/w1/product/go_list";		
+}
+
+function deleteResource(contentId, resourceId){	
+	showModal("삭제 하시겠습니까?", true, function(){
+		
+		$('#contentId').val(contentId);
+		$('#deleteResourceId').val(resourceId);
+		
+		
+		location.href = "/w1/resource/delete?contentId="+$('#contentId').val()+"&deleteResourceId="+$('#deleteResourceId').val()+"&pageName=product"
+	
+	});
+}
+
+
+function clearResourceM(){
+	$("#resourceTypeM").val("").prop("selected", false);
+	$("#resourceTitleM").val("");
+	$("#resourceContentM").val("");	
+	$("#urlM").val("");		
+	$("#resourceSeqM").val("");
+	$("#contentIdM").val("");
+	$("#resourceIdM").val("");	
+}
+
+function addResource(){
+	clearResourceM();
+	$("#resourceSeqSpan").html(" 신규 등록");
+	
+	var contentId = $("#contentId").val();
+	$("#contentIdM").val(contentId);
+	
+	$('#resourceForm').modal("show");	
+}
+
+function editResource(seq){ 
+	clearResourceM();
+	
+	var resource = getResource(seq);
+	if(resource == null){
+		alert("순번이 잘못되었습니다.");
+		return;
+	}
+	var contentId = resource.contentId;
+	var resourceId = resource.resourceId;
+	var resourceType = resource.resourceType;
+	var resourceTitle = resource.resourceTitle;
+	var resourceContent = resource.resourceContent;
+	var resourceOrder = resource.orders; 
+	
+	
+	var url = resource.url;
+	var link = resource.link;
+	
+	console.log(
+		seq + " : " + contentId + " : " +  resourceId + " : " +  resourceType + " : " +  resourceContent + " : " +  url + " : " + resourceTitle
+	);
+	
+	
+	$("#resourceSeqSpan").html(seq);
+	
+	$("#resourceTypeM").val(resourceType).prop("selected", true); 
+	$("#resourceTitleM").val(resourceTitle);
+	$("#resourceContentM").val(resourceContent);
+	
+	if(resourceType == "1020"){
+		$("#urlM").val(url);	
+	}else{
+		$("#urlM").val(link);
+	}
+	
+	$("#resourceSeqM").val(seq);
+	$("#contentIdM").val(contentId);
+	$("#resourceIdM").val(resourceId);	
+	
+	$("#resourceOrderM").val(resourceOrder);
+	
+	$('#resourceForm').modal("show");	
+}
+function hideResource(){
+	$("#resourceOrderM").val(0);
+	$('#resourceForm').modal("hide");	
+}
+       
+function saveResource(){
+	showConfirm("저장 하시겠습니까?", function(){
+		var data = new FormData();
+		data.append("fileName", $('#fileNameM').prop('files')[0]);				
+		var seq = $("#resourceSeqM").val();
+		
+		if(seq != null && seq != ""){			
+			data.append("seq", $("#resourceSeqM").val());
+		}
+		
+		data.append("contentId", $("#contentIdM").val());
+		data.append("resourceId", $("#resourceIdM").val());
+		data.append("resourceType", $("#resourceTypeM").val());
+		data.append("resourceTitle", $("#resourceTitleM").val());
+		data.append("resourceContent", $("#resourceContentM").val());
+		data.append("orders", $("#resourceOrderM").val());
+		data.append("url", $("#urlM").val());  
+		
+		for (var pair of data.entries()) { 
+			console.log(pair[0]+ ', ' + pair[1]); 
+		}
+
+		$.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/w1/resource/save",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 180000,
+            success: function (result) {
+                console.log("SUCCESS : ", result.code);
+                if(result.code == "0000"){
+                	//화면 갱신 
+                    location.reload();	
+                }               
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+                alert("처리 중 오류가 발생하였습니다.");
+            }
+        });
+	});
+
+}
+
+function saveReply(){
+	showConfirm("저장 하시겠습니까?", function(){
+		var data = new FormData();
+		
+		data.append("content", $("#replyContent").val());
+		data.append("reviewGrade", $("#reviewGrade").val());
+		data.append("upperContentId", $("#contentId").val());
+		
+		saveReplyCommon(data);
+	});
+}
+
+function modifyReply(seq){
+	var replyContentId = "#replyContent" + seq;	
+	var replyContent = $(replyContentId).val();
+	
+	var replyGradeId = "#reviewGrade" + seq;	
+	var replyGrade = $(replyGradeId).val();
+	
+	var contentId = getReplyId(seq);
+	
+	showConfirm("수정 하시겠습니까?", function(){		
+		var data = new FormData();
+		data.append("content", replyContent);
+		data.append("reviewGrade", replyGrade);
+		data.append("contentId", contentId);
+		
+		var url = "/w1/product/modiy_reply";
+		saveReplyCommon(data, url);
+	});
+}
+
+function deleteReply(seq){
+	showConfirm("삭제 하시겠습니까?", function(){
+		var contentId = getReplyId(seq);
+		var data = new FormData();		
+		data.append("contentId", contentId);
+		
+		var url = "/w1/product/delete_reply";
+		saveReplyCommon(data, url);
+	});
+}
+
+
+function saveReplyCommon(data, url){
+	if(url == null){
+		url = "/w1/product/add_reply";
+	}
+	
+	$.ajax({
+           type: "POST",
+           enctype: 'multipart/form-data',
+           url: url,
+           data: data,
+           processData: false,
+           contentType: false,
+           cache: false,
+           timeout: 180000,
+           success: function (result) {
+               console.log("SUCCESS : ", result.code);
+               if(result.code == "0000"){                	
+               	search();                	
+               }               
+           },
+           error: function (e) {
+               console.log("ERROR : ", e);
+               alert("처리 중 오류가 발생하였습니다.");
+           }
+       });
+}
+
+
+
+function showReply(){
+	search();
+	$('#replyForm').modal("show");
+}
+
+function getRow(content, count){
+	var row = "\n";
+	row = row + "<tr class='even pointer'>                                     ";
+    row = row + "  <td class=''>"+ content.seq + "</td>         ";
+//    row = row + "  <td class='' style='vertical-align: middle;'><img src='" + content.ownerImgUrl + "' class='img-responsive img-rounded' style='width:70px;height:75px;'></td>";
+    row = row + "  <td class=''>"+ content.ownerName + "</td>";
+    row = row + "<td class=''>";
+    row = row + "<textarea type='text' class='form-control' id='replyContent" + content.seq + "' key='" + content.seq + "' value='" + content.content + "' rows='2'>" + content.content + "</textarea>";    
+    row = row + "</td>";
+    
+    row = row + "<td class=''>";
+    row = row + getGradeRow(content.seq, content.reviewGrade );
+    row = row + "</td>";
+    
+    row = row + "<td class=''>";    
+    row = row + "<div class='btn-group'>                                                                                                                                  ";
+    row = row + "  <button type='button' class='btn btn-danger' onClick='modifyReply(" + content.seq + ")'>수정</button>                                                                                             ";
+    row = row + "  <button type='button' class='btn btn-danger dropdown-toggle dropdown-toggle-split' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>  ";
+    row = row + "    <span class='sr-only'>Toggle Dropdown</span>                                                                                                         ";
+    row = row + "  </button>                                                                                                                                              ";
+    row = row + "  <div class='dropdown-menu'>                                                                                                                            ";
+    row = row + "    <a class='dropdown-item' onClick='deleteReply(" + content.seq + ")'>삭제</a>                                                                                                           ";
+    row = row + "  </div>                                                                                                                                                 ";
+    row = row + "</div>                                                                                                                                                   ";    
+
+    row = row + "</td>";
+    
+    
+    row = row + "</tr>                                      ";
+	
+	return row;
+}
+
+function getGradeRow(seq, reviewGrade){
+	var row = "";
+	
+	row = row + "<select required class='form-control' name='reviewGrade" + seq + "' id='reviewGrade" + seq + "' > " ;
+	row = row + "<option value='0'>선택</option>";
+	
+	var grade = 5.0;
+	for(var i = 0 ; i < 10 ; i++){	
+		if(reviewGrade == grade){
+			row = row + "<option value='" + grade + "' selected >" + grade + "</option>" ;
+		}else{
+			row = row + "<option value='" + grade + "'>" + grade + "</option>" ;
+		}
+		
+		grade = grade - 0.5;
+	}
+	
+	row = row + "</select>                                                                   " ;
+	
+	return row;
+}
+
+var replyList = null;
+
+function getReplyId(seq){
+	var result = null;
+	$.each(replyList, function(index, item) {	           	
+		if(item.content.seq == seq){
+			console.log(item.content.contentId);			
+			result = item.content.contentId;			
+		}		
+   });
+   return result;
+}
+
+function deleteMainImg(){
+	showModal("이미지 삭제 하시겠습니까?", true, function(){
+		var param = {};        	    
+	    param.contentId = $("#contentId").val();    
+	    param = JSON.stringify(param);
+		
+		$.ajax({
+	        url : "/w1/content/delete_mainimg",
+	        data : param,
+	        type : 'post',
+	        contentType:"application/json; charset=UTF-8",
+	        dataType:"json",
+	        success : function(result){
+	        	console.log("SUCCESS : ", result.code);
+	            if(result.code == "0000"){  
+	            	$("#mainImg").attr("src", result.mainUrl);
+	            }
+	        },
+	        error : function(e){
+	        	console.log(e);
+	        }
+	    });	
+	});
+}
+
+function search(page, perPageNum){
+	// $('#pagination').empty();
+	
+	var param = {};
+    param.contentId = $("#contentId").val();    
+	
+	
+    if(page !=null){
+    	param.page = page;
+    }
+    
+    if(perPageNum !=null){
+    	param.perPageNum = perPageNum;
+    }
+    
+    param = JSON.stringify(param);
+	
+	$('#listBody').empty();
+    $('#pagination').empty();
+    $("#replyContent").val("");
+
+	$.ajax({
+           type: "POST",           
+           url: "/w1/content/reply_list",
+           data: param,
+           contentType:"application/json; charset=UTF-8",
+	       dataType:"json",
+           success: function (data) {
+               console.log("SUCCESS : ", data.code);
+               var results = data.list;
+	           var rows = "";
+	           $.each(results, function(index, item) {	           	
+	           	rows = rows + getRow(item.content, item.count);
+					//console.log(item.content.seq);
+					//console.log(item.count.viewCnt);
+			   });	            
+            	            
+               $('#listBody').append(rows);
+            
+               var paging = getPageDiv(data.paging);	            
+               $('#pagination').append(paging);
+               
+               replyList = results;
+           },
+           error: function (e) {
+               console.log("ERROR : ", e);
+               alert("처리 중 오류가 발생하였습니다.");
+           }
+       });
+	
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 제품 이미지 관련 
+//////////////////////////////////////////////////////////////////////////////////
+
+function modifyImg(productImgId){
+	$("#prodcutImgId").val(productImgId);
+	$("#prodcutImgIdProc").val("M");
+		
+	showAddImg(false);
+}
+
+function deleteImg(productImgId){
+	$("#prodcutImgId").val(productImgId);
+	$("#prodcutImgIdProc").val("D");
+	saveImage();
+}
+
+function createImg(){
+	$("#prodcutImgId").val();
+	$("#prodcutImgIdProc").val("C");
+	showAddImg(true);
+}
+
+
+function showAddImg(isMulti){
+	
+	$("#prodcutImgFiles").val('');
+	
+	$("#prodcutImgFiles").attr('multiple', isMulti);
+	
+	$('#imgForm').modal("show");
+}
+
+/**
+ * 제품 이미지 저장 
+ */
+function saveImage(){
+	var procType = $("#prodcutImgIdProc").val();
+	var url = null;
+	var msg = null;
+	
+	if(procType == "D"){
+		msg = "삭제 하시겠습니까?";
+		url = '/w1/product/del_productimg';
+	}else if(procType == "M"){
+		msg = "저장 하시겠습니까?";
+		url = '/w1/product/mod_productimg';
+	}else{
+		msg = "저장 하시겠습니까?";
+		url = '/w1/product/add_productimg';
+	}
+	
+	showConfirm(msg, function(){		
+		var contentId = $("#contentId").val();
+		var productImgId = $("#prodcutImgId").val();
+
+		var formData = new FormData();		
+		
+		var prodcutImgFiles = $("#prodcutImgFiles")[0].files;
+		
+		var len = prodcutImgFiles.length;
+		
+		if(procType != "D"){
+			if( len < 1 ){
+				alert("추가할 이미지가 없습니다.");
+				return;
+			}
+		}
+		
+		for(var i = 0; i < len ; i++){
+			formData.append("prodcutImgFiles", prodcutImgFiles[i]);
+		}
+		
+		formData.append("contentId", contentId);
+		formData.append("otherId", productImgId);
+	
+		$.ajax({ 
+			type: "POST", 
+			enctype: 'multipart/form-data',
+			url: url,   // '/w1/product/add_productimg', 
+			data: formData,  
+			processData: false, 
+			contentType: false, 
+			cache: false, 
+			success: function (result) { 
+				console.log("SUCCESS : ", result.code);
+	            if(result.code == "0000"){  
+	            	$("#prodcutImgFiles").val('');
+	            	//모달 닫기 
+	            	$('#imgForm').modal("hide"); 
+	            	
+	            	drawProductImg(result.productImgList);
+	            }
+			}, 
+			error: function (e) {
+				console.log(e);
+			} 
+		});	
+	});
+}
+
+function drawProductImg(productImgList){
+	if(productImgList == null){
+		productImgList = baseProductImgList;
+	}
+	
+	var divSrc = ""
+	productImgList.map( (item, idx) => {
+		console.log(item.otherName);
+		divSrc = divSrc + getProductImgDivlet(item.otherId, item.imgUrl);
+	});
+	
+	divSrc = divSrc + "<div class='col-md-55'>	                                                                                ";
+	divSrc = divSrc + "	<a href='#' onClick='createImg()'> 				                                                        ";
+	divSrc = divSrc + "		<img style='width: 200px; height: 200px; display: block;' src='/images/add_img.png' alt='image' />  ";
+	divSrc = divSrc + "	</a>                                                                                                    ";
+	divSrc = divSrc + "</div>                                                                                                   ";
+	
+	$('#productImgDiv').empty();
+	$('#productImgDiv').append(divSrc);	
+}
+
+function getProductImgDivlet(productImgId, imgSrc){
+	var divSrc = ""
+	divSrc = divSrc + "<div class='col-md-55'>                                                                               ";  
+	divSrc = divSrc + "	<div class='thumbnail' style='height:200px;'>						                                 ";
+	divSrc = divSrc + "	  <div class='image view view-first' style='height:200px;'>					                         ";   		
+	divSrc = divSrc + "		<img style='width: 100%; height:200px; display: block;' src='" + imgSrc + "' />					 ";                           
+	divSrc = divSrc + "		<div class='mask'>                                                                               ";
+	divSrc = divSrc + "		  <p>&nbsp;</p>                                                                                  ";
+	divSrc = divSrc + "		  <div class='tools tools-bottom'>                                                               ";
+	divSrc = divSrc + "			<a href='#' onClick=modifyImg('" + productImgId + "')><i class='fa fa-pencil'></i></a>     ";
+	divSrc = divSrc + "			<a href='#' onClick=deleteImg('" + productImgId + "')><i class='fa fa-times'></i></a>      ";
+	divSrc = divSrc + "		  </div>                                                                                         ";
+	divSrc = divSrc + "		</div>		                                                                                     ";
+	divSrc = divSrc + "	  </div>					                            					                         "; 					                          
+	divSrc = divSrc + "	</div>                                                                                               ";
+	divSrc = divSrc + "</div>                                                                                                ";
+			
+	return divSrc;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// 유사 제품 관련 
+//////////////////////////////////////////////////////////////////////////////////
+
+// 유사 제품 추가 팝업 생성 
+function showPeerProductPopup(){
+	
+	var width=800, height=800;
+	var left = (screen.availWidth - width)/2;
+	var top = (screen.availHeight - height)/2;
+	var specs = "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no";
+	specs += ",width=" + width;
+	specs += ",height=" + height;
+	specs += ",left=" + left;
+	specs += ",top=" + top;
+	
+	var popupWin = window.open('/w1/product/go_list_popup?reset=Y', '제품선택', specs);	
+	return popupWin;
+}
+
+function createPeerProduct(){	
+	$('#peerProductProcType').val("C");
+	var popupWin = showPeerProductPopup();
+}
+
+//유사 제품 수정 팝업 생성
+function modifyPeerProduct(peerProductId){
+	$('#peerProductProcType').val("M");
+	$('#peerProductId').val(peerProductId);
+	
+	var popupWin = showPeerProductPopup();
+}
+
+//유사 제품 삭제
+function deletePeerProduct(peerProductId){	
+	showConfirm("삭제하시겠습니까?", function(){		
+		var procType = "D";
+		$('#peerProductProcType').val(procType);
+		$('#peerProductId').val(peerProductId);
+		savePeerProduct(null, procType);
+	});
+}
+
+
+// 팝업 리턴 값 처리 
+function getProductListPoupReturn(returnValue) {
+	if(returnValue == null) return;
+	
+	// 기존에 등록된 id 인지 체크 추가 
+	var procType = $('#peerProductProcType').val();	
+	
+	$('#peerProductProcType').val('');
+	
+	var productIds = JSON.parse(returnValue);
+	
+	//중복 체크 
+	productIds.map( (item, idx) => {		
+		console.log(item);
+	});
+	
+	var isValid = true;
+	basePeerProductList.map( (item, idx) => {
+		if(productIds.includes(item.otherCode)){
+			isValid = false; 		
+		}
+	});
+	
+	if(! isValid){
+		alert("중복된 제품이 선택되었습니다.");
+		return;
+	}
+
+	
+	if(procType == "C"){
+		savePeerProduct(productIds, procType);		
+	}else if(procType == "M"){		
+		savePeerProduct(productIds, procType);
+	}
+}
+
+
+function savePeerProduct(contentIds, procType){
+	
+    var contentId = $("#contentId").val();
+    var otherId = $("#peerProductId").val();
+    var formData = new FormData();
+    formData.append("contentId", contentId);
+    formData.append("otherId", otherId);
+     
+    var url = null;
+    if(procType == "C"){
+    	formData.append("productIds", contentIds);
+    	url = "/w1/product/add_peerproduct";
+	}else if(procType == "M"){
+		if(contentIds.length == 1){
+			formData.append("productId", contentIds[0]);
+			url = "/w1/product/mod_peerproduct";
+		}else{
+			alert("수정일 경우, 한건만 선택가능합니다.");
+			return;			
+		}
+	}else if(procType == "D"){
+		url = "/w1/product/del_peerproduct";
+	}
+    
+	$.ajax({
+        url : url,
+        data: formData,  
+		processData: false, 
+		contentType: false, 
+		cache: false,
+        type : 'post',
+        success : function(result){
+        	drawPeerProduct(result.peerProductList);
+        },
+        error : function(e){
+        	console.log(e);
+        }
+    });
+}
+
+function drawPeerProduct(peerProductList){
+	if(peerProductList == null){
+		peerProductList = basePeerProductList;
+	}else{
+		basePeerProductList = peerProductList;
+	}
+	
+	var divSrc = ""
+	peerProductList.map( (item, idx) => {
+		
+		divSrc = divSrc + getPeerProductDivlet(item.title, item.otherId, item.imgUrl);
+	});
+	
+	divSrc = divSrc + "<div class='col-md-55'>	                                                                                ";
+	divSrc = divSrc + "	<a href='#' onClick='createPeerProduct()'> 				                                                        ";
+	divSrc = divSrc + "		<img style='width: 200px; height: 200px; display: block;' src='/images/add_img.png' alt='image' />  ";
+	divSrc = divSrc + "	</a>                                                                                                    ";
+	divSrc = divSrc + "</div>                                                                                                   ";
+	
+	$('#peerProductDiv').empty();
+	$('#peerProductDiv').append(divSrc);	
+}
+
+function getPeerProductDivlet(title, peerProductId, imgSrc){
+	var divSrc = ""
+	divSrc = divSrc + "<div class='col-md-55'>                                                                               ";  
+	divSrc = divSrc + "	<div class='thumbnail' style='height:200px;'>						                                 ";
+	divSrc = divSrc + "	  <div class='image view view-first' style='height:200px;'>					                         ";   		
+	divSrc = divSrc + "		<img style='width: 100%; height:200px; display: block;' src='" + imgSrc + "' />					 ";                           
+	divSrc = divSrc + "		<div class='mask'>                                                                               ";
+	divSrc = divSrc + "		  <p><h4 style='color:white;' >" + title + "</h4></p>                                                                                  ";
+	divSrc = divSrc + "		  <div class='tools tools-bottom'>                                                               ";
+	divSrc = divSrc + "			<a href='#' onClick=modifyPeerProduct('" + peerProductId + "')><i class='fa fa-pencil'></i></a>     ";
+	divSrc = divSrc + "			<a href='#' onClick=deletePeerProduct('" + peerProductId + "')><i class='fa fa-times'></i></a>      ";
+	divSrc = divSrc + "		  </div>                                                                                         ";
+	divSrc = divSrc + "		</div>		                                                                                     ";
+	divSrc = divSrc + "	  </div>					                            					                         "; 					                          
+	divSrc = divSrc + "	</div>                                                                                               ";
+	divSrc = divSrc + "</div>                                                                                                ";
+			
+	return divSrc;
+}
+
+</script>
+
+
+	<div class="">
+		<div class="row">		
+		
+			<div class="col-md-12 col-sm-12">
+				<div class="x_panel">
+					
+					<div class="x_title">
+						<h2>
+							Product 상세
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>							
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="x_content">
+						
+						<form class="form-horizontal form-label-left" th:object=${contentView.content} th:action="@{/w1/product/save}" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
+							<input type="hidden" id="seq" th:field="*{seq}" />
+							<input type="hidden" id="contentId" th:field="*{contentId}" />																				
+							<input type="hidden" id="active" th:field="*{active}" />
+							<input type="hidden" id="replyYn" th:field="*{replyYn}"/>							
+							<input type="hidden" id="depth" th:field="*{depth}" />
+							<input type="hidden" id="path" th:field="*{path}" />
+							<input type="hidden" id="ownerId" th:field="*{ownerId}" />
+							
+							<input type="hidden" id="contentType" th:field="*{contentType}" />
+							<input type="hidden" id="priceType" th:field="${contentView.price.priceType}" />
+							<input type="hidden" id="curr" th:field="${contentView.price.curr}" />
+							<input type="hidden" id="priceId" th:field="${contentView.price.priceId}" />
+							
+							
+							<input type="hidden" id="peerProductProcType"  />
+							<input type="hidden" id="peerProductId">							
+										   
+										   
+							<span class="section">제품 Info : <span th:text="*{seq}"></span></span>														
+
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">좋아요</label>
+								
+								<div class="col-md-4 col-sm-4 "><h4 th:text="${contentView.count.likeCnt}"></h4></div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">평점</label>
+								<div class="col-md-2 col-sm-2 "><h4 th:text="*{avgReviewGrade}"></h4></div>								
+								<div class="col-md-2 col-sm-2 ">									
+									<label>
+										<input type="checkbox" class="js-switch" name="activeChk" id="activeChk" /> App 게시
+									</label>
+								</div>
+							</div>							
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">제품 카테고리<span
+									class="required">*</span></label>
+								<div class="col-md-5 col-sm-5 ">
+								    <select required class="form-control" id="category1" onchange="category1Change()" th:field="*{category1}" >
+										<option value="">대분류</option>										
+									</select>									
+								</div>								
+								<div class="col-md-5 col-sm-5 ">
+								    <select required class="form-control" id="category2"  th:field="*{category2}" >
+										<option value="">중분류</option>										
+									</select>									
+								</div>								
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">대표 이미지</label>
+								<div class="col-md-4 col-sm-4 ">
+									<img class='img-responsive' style='width:70px;height:75px;' th:src="*{mainUrl}" id="mainImg">
+									<button type="button" class="btn btn-primary" onClick="deleteMainImg()">이미지 삭제</button>
+								</div>																
+								<label class="control-label col-md-2 col-sm-2 ">대표 이미지 변경</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="file" class="form-control" placeholder="" name="mainUploadFile" id="mainUploadFile" th:value="*{mainFilename}">
+								</div>
+							</div>
+							
+							<div class="form-group row ">
+								<label class="control-label col-md-2 col-sm-2 ">대표 제품명</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="짧은 제품명" id="title" th:field="*{title}" />
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">벤더명</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="벤더명" id="vendor" th:field="*{vendor}" />
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">제품명<span class="required">*</span>
+								</label>
+								<div class="col-md-10 col-sm-10 ">
+<!-- 									<input type="text" class="form-control" placeholder="긴 제품명" id="content" th:field="*{content}" /> -->
+									<textarea class="form-control" placeholder="긴 제품명" id="content" th:field="*{content}" > </textarea>
+								</div>
+							</div>							
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">가격</label>								
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="금액" id="price" th:field="${contentView.price.price}" />									
+								</div>								
+								
+								<label class="control-label col-md-2 col-sm-2 ">최저가 링크</label>								
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="http://www.naver.com" id="priceUrl"  th:field="${contentView.price.priceUrl}" />									
+								</div>
+																
+							</div>
+
+
+							
+							<div class="form-group row align-items-center">
+								<label class="control-label col-md-2 col-sm-2 ">공개 구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">									
+									<select required class="form-control" id="viewType" th:field="*{viewType}" />
+										<option value="">선택하세요</option>										
+										<option value="9999" th:selected="*{viewType}=='9999'">전체공개</option>
+										<option value="8000" th:selected="*{viewType}=='8000'">관리자보기</option>
+									</select>
+								</div>
+								<label class="control-label col-md-2 col-sm-2 ">제품 상태<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">									
+									<select required class="form-control" id="status" th:field="*{status}" >
+										<option value="">선택하세요</option>
+										<option value="0000" th:selected="*{status}=='0000'">등록</option>	
+									</select>
+								</div>								
+							</div>
+
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">특장점<span class="required">*</span>
+								</label>
+								
+								<div class="col-md-10 col-sm-10" style="display: flex;justify-content: space-around;">									
+									<div th:each="feature, itemStat : ${contentView.featureList}">
+										
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].seq}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherId}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherType}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherCode}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherName}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherValue}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherOrder}"  />
+										<input type="hidden" th:field="${contentView.featureList[__${itemStat.index}__].otherStatus}"  />
+										
+										<input type="checkbox" th:value="${feature.otherValue}" 
+										th:name="${feature.otherCode}" 
+										th:id="${feature.otherCode}"
+										th:checked="${feature.checked}"
+										onClick="checkFeature(this)"
+										/>
+																				
+										<label th:text="${feature.otherName}" >명칭</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">종합설명<span class="required">*</span>
+								</label>
+								<div class="col-md-10 col-sm-10 ">								
+									<textarea class="form-control" required="required" rows="5" placeholder="제품 종합 설명" id="description" th:field="*{description}"></textarea>									
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">전체성분<span class="required">*</span>
+								</label>
+								<div class="col-md-10 col-sm-10 ">								
+									<textarea class="form-control" required="required" rows="5" placeholder="제품 전체성분" id="element" th:field="*{element}"></textarea>									
+								</div>
+							</div>
+							
+							<!-- start accordion -->	
+		                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+		                      <div class="panel">
+		                        <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		                          <h4 class="panel-title">제품 이미지 <i class="fa fa-chevron-down"></i></h4>
+		                        </a>
+		                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+		                          <div class="panel-body">		                            
+		                            
+	                         		<div class="row" id="productImgDiv">
+		                         		
+		                         		<div class="col-md-55">
+					                        <div class="thumbnail" style="height:200px;">						                      
+						                      <div class="image view view-first" style="height:200px;">					                            
+					                            
+					                            <img style="width: 100%; height:200px; display: block;" src="/images/prod-1.jpg" alt="image" />					                            
+					                            <div class="mask">
+					                              <p>&nbsp;</p>
+					                              <div class="tools tools-bottom">					                                
+					                                <a href="#" onClick="modifyImg('id')"><i class="fa fa-pencil"></i></a>
+					                                <a href="#" onClick="deleteImg('id')"><i class="fa fa-times"></i></a>
+					                              </div>
+					                            </div>
+					                            
+					                          </div>					                            					                          					                          
+					                        </div>
+				                        </div>
+				                        		
+				                        <div class="col-md-55">
+                                            <!-- 모달을 띄워서 파일 입력 -->                                            
+				                        	<a href="#" onClick="createImg()"> 				                        
+					                        	<img style="width: 200px; height: 200px; display: block;" src="/images/add_img.png" alt="image" />
+					                        </a>
+				                        </div>						
+				                      
+									</div>                
+		                            		                            
+		                          </div>
+		                        </div>
+		                      </div>
+		                      
+		                      <div class="panel">
+		                        <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+		                          <h4 class="panel-title">유사 제품 <i class="fa fa-chevron-down"></i></h4>                          
+		                        </a>
+		                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+		                          <div class="panel-body">
+		                          
+		                            <div class="row" id="peerProductDiv">		                         		
+		                         		<div class="col-md-55">
+					                        <div class="thumbnail" style="height:200px;">						                      
+						                      <div class="image view view-first" style="height:200px;">					                            
+					                            
+					                            <img style="width: 100%; height:200px; display: block;" src="/images/prod-1.jpg" alt="image" />					                            
+					                            <div class="mask">
+					                              <p>&nbsp;</p>
+					                              <div class="tools tools-bottom">					                                
+					                                <a href="#" onClick="modifyPeerProduct('id')"><i class="fa fa-pencil"></i></a>
+					                                <a href="#" onClick="deletePeerProduct('id')"><i class="fa fa-times"></i></a>
+					                              </div>
+					                            </div>
+					                            
+					                          </div>					                            					                          					                          
+					                        </div>
+				                        </div>
+				                        		
+				                        <div class="col-md-55">
+                                            <!-- 모달을 띄워서 파일 입력 -->                                            
+				                        	<a href="#" onClick="createPeerProduct()"> 				                        
+					                        	<img style="width: 200px; height: 200px; display: block;" src="/images/add_img.png" alt="image" />
+					                        </a>
+				                        </div>
+									</div>  
+		                            
+		                            
+		                            
+		                          </div>
+		                        </div>
+		                      </div>
+		                      
+
+		                      
+		                    </div>
+		                    <!-- end of accordion -->
+							<div class="control-group row ">								
+								<div class="col-md-12 col-sm-12  justify-content-end" style="display: flex;">
+									<a class="btn btn-app">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.viewCnt}" >102</span>
+		                    			<i class="fa fa-eye"></i> Views
+		                  			</a>
+		                  			
+									<a class="btn btn-app">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.likeCnt}" >102</span>
+		                    			<i class="fa fa-heart"></i> Likes
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.favCnt}">102</span>
+		                    			<i class="fa fa-star"></i> Favorite
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app" onClick="showReply()">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.favCnt}">102</span>
+		                    			<i class="fa fa-comment"></i> Reply
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app"  onClick="goList()">		                    			
+		                    			<i class="fa fa-list"></i> List
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app" onClick="editContent()">		                    			
+		                    			<i class="fa fa-edit"></i> Edit
+		                  			</a>
+		                  			
+		                  			<a class="btn btn-app" onClick="deleteContent()">		                    			
+		                    			<i class="fa fa-remove"></i> Delete
+		                  			</a>
+		                  			
+								</div>
+							</div>
+							
+							<input type="hidden" name="deleteResourceId" id="deleteResourceId" value="" />
+														
+							<div id="resourceTemp" th:each="resource : ${contentView.resourceList}">
+								<span class="section">Resource : <span th:text="${resource.seq}"></span></span>																								
+								<div class="form-group row">									
+									<div class="col-md-12 col-sm-12 " th:if="${resource.resourceType.equals('1000')}">
+										<!--모서리를 둥글게-->
+										<img src="./images/tree.jpg" 
+										th:attr="src=${resource.resourceUrl}"
+										class="img-responsive img-rounded"> 					
+									</div>
+									
+									<div class="col-md-12 col-sm-12 " th:if="${resource.resourceType.equals('1010')}">
+										<div class="video-container">
+										  	<video width="100%" height="auto" 
+											  id="v1"
+											  th:attr="src=${resource.resourceUrl}"
+											  src="" 
+											  loop muted autoplay 
+											  oncontextmenu="return false;"
+											  playsinline    
+											  preload											  
+											  ></video>											
+										</div>					
+									</div>
+									
+									
+									<div class="col-md-12 col-sm-12 " th:if="${resource.resourceType.equals('1020')}">	
+										<style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
+										<div class='embed-container'>											
+											<iframe width="560" height="315" th:attr="src=${resource.resourceUrl}" src="https://www.youtube.com/embed/TQvgUW8Ydhs?controls=0" frameborder="0" 
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+										</div>							
+									</div>
+									
+									<div class="col-md-12 col-sm-12 " th:if="${resource.resourceType.equals('1040')}">
+										<!--모서리를 둥글게-->
+										<img src="./images/tree.jpg" 
+										th:attr="src=${resource.resourceUrl}"
+										class="img-responsive img-rounded"> 					
+									</div>
+										
+									
+								</div>
+								
+								<div class="form-group row align-items-center">
+									<label class="control-label col-md-2 col-sm-2 ">Resource 제목</label>
+									<div class="col-md-10 col-sm-10 ">
+										<input type="text" class="form-control" placeholder="제목" name="resourceTitle" id="resourceTitle" th:value="${resource.resourceTitle}">
+									</div>
+								</div>
+								
+								<div class="form-group row align-items-center">
+									<label class="control-label col-md-2 col-sm-2 ">Resource 내용</label>
+									<div class="col-md-10 col-sm-10 ">
+										<textarea class="form-control" required="required" rows="5" placeholder="" name="resourceContent" id="resourceContent" th:text="${resource.resourceContent}">
+										</textarea>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<div class="col-md-12 col-sm-12  justify-content-end" style="display: flex;">
+										<a class="btn btn-app" style="font-size:1em;">
+										순번:
+											<span th:text="${resource.orders}" style="font-size:1.5em;"></span>
+		                  				</a>
+		                  				
+		                  												
+										<a class="btn btn-app">
+		                    			<span class="badge bg-blue" th:text="${contentView.count.likeCnt}" >102</span>
+		                    			<i class="fa fa-heart"></i> Likes
+		                  				</a>
+		                  				
+										<a class="btn btn-app" 
+										th:attr="onClick=|javascript:editResource('${resource.seq}')|"
+										>	
+										  <i class="fa fa-edit"></i> Edit
+			                  			</a>
+			                  						                  			
+			                  			<a class="btn btn-app" 
+			                  			th:attr="onClick=|javascript:deleteResource('${resource.contentId}', '${resource.resourceId}')|"
+			                  			>		                    			
+			                    			<i class="fa fa-remove"></i> Delete
+			                  			</a>	
+									</div>									
+								</div>
+							</div>
+							
+							</form>
+							
+							<span class="section" style="text-align: right;padding-right: 10px;"><i class="fa fa-plus-square" onClick="addResource()" id="addSection"></i></span>
+							
+							<!-- --------- resource 추가 모달 start --------  -->
+							<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="resourceForm">
+							    <input type="hidden" name="resourceSeqM" id="resourceSeqM" value="0" />
+							    <input type="hidden" name="contentIdM" id="contentIdM" value="" />
+							    <input type="hidden" name="resourceIdM" id="resourceIdM" value="" />
+							    
+			                    <div class="modal-dialog modal-lg">
+			                      <div class="modal-content">
+			                        <div class="modal-header">
+			                          <h4 class="modal-title" id="myModalLabel">Resource <span id="resourceSeqSpan"></span></h4>
+			                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+			                          </button>
+			                        </div>
+			                        
+			                        <div class="modal-body">
+									  <div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">Resource 구분<span class="required">*</span>
+										</label>
+										<div class="col-md-5 col-sm-5 ">
+											<select required class="form-control" name="resourceTypeM" id="resourceTypeM">
+												<option value="">선택하세요</option>
+												<option value="1000">이미지</option>
+												<option value="1010">동영상</option>
+												<option value="1020">YouTube</option>
+												<option value="1040">제품순번</option>
+											</select>
+										</div>		
+									  </div>
+									  <div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">Resource 제목<span class="required">*</span></label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" class="form-control" placeholder="제목" name="resourceTitleM" id="resourceTitleM">
+										</div>
+								      </div>
+									  <div class="form-group row">
+										<label class="control-label col-md-3 col-sm-3 ">Resource 내용<span class="required">*</span></label>
+										<div class="col-md-9 col-sm-9 ">								
+											<textarea class="form-control" required="required" rows="5" placeholder="" name="resourceContentM" id="resourceContentM"></textarea>
+										</div>
+									  </div>
+									  
+									  <div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">순번</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" class="form-control" value="0" name="resourceOrderM" id="resourceOrderM">											
+										</div>
+									  </div>							
+								
+									  <div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">Link/YouTube Url</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="text" class="form-control" placeholder="" name="urlM" id="urlM">
+										</div>
+									  </div>
+									  <div class="form-group row ">
+										<label class="control-label col-md-3 col-sm-3 ">Resource</label>
+										<div class="col-md-9 col-sm-9 ">
+											<input type="file" class="form-control" placeholder="" name="fileNameM" id="fileNameM">
+										</div>
+									  </div>									  
+			                        </div>
+			                        
+									<div class="modal-footer">
+			                          <button type="button" class="btn btn-primary" onClick="saveResource()">저장하기</button>
+			                          <button type="button" class="btn btn-secondary" onClick = "hideResource()" data-dismiss="modal">닫기</button>			                          
+			                        </div>
+			
+			                      </div>
+			                    </div>
+			                </div>
+							<!-- --------- resource 추가 모달 end --------  -->
+
+							<!-- --------- 댓글 관리 모달 start --------  -->
+							<div class="modal fade modeless" tabindex="-1" role="dialog" aria-hidden="true" id="replyForm">							    
+			                   <div class="modal-dialog modal-lg modal-dialog-scrollable">
+			                     <div class="modal-content">
+			                       <div class="modal-header">
+			                         <h4 class="modal-title" id="myModalLabel">제품 리뷰 <span id="resourceSeqSpan"></span></h4>
+			                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+			                         </button>
+			                       </div>
+			                        
+			                       <div class="modal-body"> 	
+									 
+									 <div class="table-responsive" style="margin-bottom: 16px;">
+									    <table class="table table-striped jambo_table bulk_action">
+									      <thead>
+									        <tr class="headings">									          
+									          <th class="column-title">순번 </th>
+									          <th class="column-title">등록자명</th>
+									          <th class="column-title">리뷰내용</th>
+									          <th class="column-title">평점</th>
+									          <th class="column-title">구분</th>
+									        </tr>
+									      </thead>
+									      <tbody id="listBody">            
+									      </tbody>
+									    </table>									    
+									    <div class="col-md-12 col-sm-12" id="pagination" style="display: flex;justify-content: center;">
+										   <div class="row">
+									            <div class="btn-group" role="group">
+									              <button type="button" class="btn btn-secondary">이전</button>
+									              
+									              <button type="button" class="btn btn-secondary">1</button>
+									              <button type="button" class="btn btn-secondary">2</button>
+									              <button type="button" class="btn btn-secondary">3</button>
+									               
+									              <button type="button" class="btn btn-secondary">다음</button>
+									            </div>
+									          </div>
+									     </div> 
+									 </div>
+									 
+									 <span class="section"></span>
+									  
+									 <div class="form-group row">
+									   <label class="control-label col-md-2 col-sm-2 ">리뷰입력<span class="required">*</span></label>
+										 <div class="col-md-10 col-sm-10 ">								
+										   <textarea class="form-control" required="required" rows="2" placeholder="" name="replyContent" id="replyContent"></textarea>
+										 </div>
+									 </div>
+									 <div class="form-group row">
+									   <label class="control-label col-md-2 col-sm-2 ">리뷰평점</label>
+										 <div class="col-md-10 col-sm-10 ">								
+										   <select required class="form-control" name="reviewGrade" id="reviewGrade" >
+										     <option value="0">선택하세요</option>										
+											 <option value="5.0">5.0</option>
+											 <option value="4.5">4.5</option>
+											 <option value="4.0">4.0</option>
+											 <option value="3.5">3.5</option>
+											 <option value="3.0">3.0</option>
+											 <option value="2.5">2.5</option>
+											 <option value="2.0">2.0</option>
+											 <option value="1.5">1.5</option>
+											 <option value="1.0">1.0</option>
+											 <option value="0.5">0.5</option>
+											</select>
+										 </div>
+									 </div>
+									 
+			                       </div>
+								   <div class="modal-footer">
+			                         <button type="button" class="btn btn-primary" onClick="saveReply()">저장하기</button>
+			                         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>			                          
+			                       </div>
+			
+			                      </div>
+			                    </div>
+			                </div>
+							<!-- --------- 댓글 관리 모달 end --------  -->
+							
+							<!-- --------- 제품 이미지 추가 모달 start --------  -->
+							<div class="modal fade modeless" tabindex="-1" role="dialog" aria-hidden="true" id="imgForm">							    
+			                   <div class="modal-dialog modal-lg modal-dialog-scrollable">
+			                     <div class="modal-content">
+			                       <div class="modal-header">
+			                         <h4 class="modal-title" id="myModalLabel">제품 이미지 등록 <span id="resourceSeqSpan"></span></h4>
+			                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+			                         </button>
+			                       </div>
+			                        
+			                       <div class="modal-body">
+									
+									 <span class="section"></span>	
+									 
+									 <div class="form-group row">
+									   <label class="control-label col-md-2 col-sm-2 ">파일 선택<span class="required">*</span></label>
+										 <div class="col-md-10 col-sm-10 ">								
+										   <input type="file" class="form-control" multiple="true" name="prodcutImgFiles" id="prodcutImgFiles">
+										   <input type="hidden" name="prodcutImgId" id="prodcutImgId">
+										   <input type="hidden" name="prodcutImgIdProc" id="prodcutImgIdProc">
+										 </div>
+									 </div>
+									 
+			                       </div>
+								   <div class="modal-footer">
+			                         <button type="button" class="btn btn-primary" onClick="saveImage()">저장하기</button>
+			                         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>			                          
+			                       </div>
+			
+			                      </div>
+			                    </div>
+			                </div>
+			                <!-- --------- 제품 이미지 추가 모달 end --------  -->												
+													
+					</div>
+					
+				</div>
+			</div>
+			
+				<!-- -----------------  -->
+		</div>
+	</div>
+	
+	
+ 
+</th:block>
+
+    
+</html>

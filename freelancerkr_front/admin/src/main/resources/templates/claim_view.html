@@ -1,0 +1,75 @@
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/reset.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/main.css">
+<div id="container_content">
+    <div class="container_inner" id="tab_con_editor">
+	    <h1>■ 문의</h1>
+	<table class="boardform">
+		<colgroup>
+			<col width="150">
+			<col width="">
+		</colgroup>
+		<tbody>
+            <tr>
+			    <th>진행상태</th>
+			    <td colspan="3">접수</td>
+		    </tr>
+			<tr>
+			    <th>클라이언트</th>
+			    <td>손연우 (sonyw129@gmail.com)</td>
+		    </tr>
+		    <tr>
+			    <th>제목</th>
+			    <td>테스트중입니다.</td>
+		</tr>
+		<tr>
+			<th>상세내용</th>
+			<td>테스트중입니다.</td>
+		</tr>
+		<tr>
+			<th>등록일</th>
+			<td colspan="3">2018-10-22 04:16:18</td>
+		</tr>
+	    </tbody>
+    </table>
+	<div class="boardbutton">
+		<div class="tc">
+	        <a href="#" class="btn-color large">수정</a>
+			<a href="#" class="btn-colorline large">목록</a>
+		</div>
+	</div>
+	<h1>■ 답변</h1>
+	<form name="fanswer" id="fanswer" action="#">
+		<input type="hidden" name="type" value="i">
+		<input type="hidden" name="fc_no" value="189">
+		<table class="boardform">
+			<colgroup>
+				<col width="150">
+				<col width="">
+			</colgroup>
+			<tbody>
+                <tr>
+    				<th>진행상태</th>
+    				<td>
+    					<label><input type="radio" name="fc_category" value="1" checked>접수</label>&nbsp;&nbsp;
+    					<label><input type="radio" name="fc_category" value="2">상담중</label>&nbsp;&nbsp;
+    					<label><input type="radio" name="fc_category" value="3">상담완료</label>
+    				</td>
+    			</tr>
+    			<tr>
+    				<th>답변</th>
+    				<td>
+    					<textarea name="fa_content" rows="10" style="width:95%;" id="fa_content"></textarea>
+    				</td>
+    			</tr>
+    		</tbody>
+        </table>
+    	<div class="boardbutton">
+    			<div class="tc">
+    				<input type="submit" value="저장" class="btn-color large">
+    			</div>
+    		</div>
+	    </form>
+    </div>
+</div>

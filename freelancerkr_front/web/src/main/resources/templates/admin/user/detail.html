@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+
+<th:block layout:fragment="content">	
+
+<!-- Javascript functions	-->
+<script type="text/javascript">
+    
+	document.addEventListener("DOMContentLoaded", function(){
+		
+// 		$.validator.setDefaults({
+// 		    onkeyup: false,
+// 		    onclick: false,
+// 		    onfocusout: false,
+		    
+// 		    showErrors: function(errorMap,errorList){
+// 		        if(this.numberOfInvalids()){ // 에러가 있으면
+// 		            alert(errorList[0].message); // 경고창으로 띄움
+// 		        }
+// 		    }
+// 		});
+
+// 		$("#form1").validate({
+// 		    rules: {
+// 		    	userName: "required"		        
+// 		    },
+// 		    messages: {
+// 		    	userName: "토큰이 누락되었습니다."		        
+// 		    },
+// 		    errorPlacement: function(error,element){
+// 		        //error.appendTo(element.closest("div").prev()); // 사용안함
+// 		    },
+// 		});		
+		
+    	/**
+		var validator = new FormValidator({
+            "events": ['blur', 'input', 'change']
+        }, document.form1);
+        
+        // on form "submit" event
+        document.form1.onsubmit = function(e) {
+            var submit = true,
+                validatorResult = validator.checkAll(this);
+            console.log(validatorResult);
+            return !!validatorResult.valid;
+            
+        };
+          
+        // on form "reset" event
+        document.form1.onreset = function(e) {
+            validator.reset();
+        };
+        
+        $('.toggleValidationTooltips').change(function() {
+            validator.settings.alerts = !this.checked;
+            if (this.checked)
+                $('form .alert').remove();
+        }).prop('checked', false);
+        **/
+        
+	});    
+
+</script>
+
+
+<script>
+var resSeq = 0;
+var resourceIds = [];
+
+function addResource(){
+	
+	var oldResId = (resSeq + "").lpad(2, "0");
+	
+	resSeq = resSeq + 1;	
+	var resId = (resSeq + "").lpad(2, "0");
+	
+	var currSeq = resSeq;
+	
+	
+	// 기존 resource 복사 
+	var orgRes = $("#resourceTemp").clone();
+	var removeResIcon = orgRes.find('#removeResIconTemp');
+	
+	orgRes.attr('id','resource' + resId);
+	removeResIcon.attr('id','removeResIcon' + resId);
+	
+	resourceIds.push(resId);
+	
+	removeResIcon.on("click", function(){
+		console.log("remove : " + '#resource' + resId);
+		if(currSeq == resSeq){
+			resSeq = resSeq -1;
+		}
+		
+		resourceIds.splice(resourceIds.indexOf(resId),1);   
+		
+		$('#resource' + resId).remove();  
+	});
+	
+	if(resourceIds.length  == 1){		
+		$('#resourceTemp').after(orgRes);
+		orgRes.show();
+	}else{
+		$('#resource' + oldResId).after(orgRes);
+		orgRes.show();
+	}
+	
+}
+
+function saveUser(){
+	// var result = $("#form1").valid();	
+    
+	/*<![CDATA[*/
+	var userId = "[[${userView.user.userId}]]";	
+	/*]]>*/
+	
+	
+	if(userId == ""){		
+		showModal("등록 하시겠습니까?", true, function(){
+			form1.submit();		
+		});
+	}else{		
+		showModal("수정 하시겠습니까?", true, function(){
+			form1.submit();		
+		});
+	}
+	
+}
+function saveImg(){
+	showModal("저장 하시겠습니까?", true, function(){
+		var data = new FormData();
+		data.append("faceImg", $("#mainUploadFile").prop('files')[0]);  
+        data.append("fileName", $("#mainUploadFile").val());
+		var userId = "[[${userView.user.userId}]]";	
+        data.append("userId", userId); 
+        
+		$.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/v1/user/save_img",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 180000,
+            success: function (result) {
+                console.log("SUCCESS : ", result.code);
+                if(result.code == "0000"){
+                	//화면 갱신 
+                    location.reload();	
+                }               
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+                alert("처리 중 오류가 발생하였습니다.");
+            }
+        });
+	});
+
+}
+function deleteImg(){
+
+		var userId = "[[${userView.user.userId}]]";	
+		
+		$.ajax({
+            type: "POST",
+            url: "/v1/user/delete_img/"+userId,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 180000,
+            success: function (result) {
+                console.log("SUCCESS : ", result.code);
+                if(result.code == "0000"){
+                	//화면 갱신 
+                    location.reload();	 
+                }               
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+                alert("처리 중 오류가 발생하였습니다.");
+            }
+        });
+	}
+
+</script>
+
+	<div class="">
+
+		<div class="row">
+		
+		
+			<div class="col-md-12 col-sm-12">
+				<div class="x_panel">
+					
+					<div class="x_title">
+						<h2 th:if="${#strings.isEmpty(userView.user.userId)}">
+							사용자 등록
+						</h2>
+						<h2 th:if="${not #strings.isEmpty(userView.user.userId)}">
+							사용자 상세
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>							
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="x_content">
+						
+						<form class="form-horizontal form-label-left" th:object=${userView.user} th:action="@{/w1/user/save}" method="post" enctype="multipart/form-data" id="form1" name="form1">
+							<input type="hidden" name="seq" id="seq" th:field="*{seq}" />
+							<input type="hidden" name="userId" id="userId" th:field="*{userId}" />
+							
+							<span class="section">기본정보</span>
+
+							<div class="form-group row">
+<!-- 								<label class="control-label col-md-2 col-sm-2 ">이미지</label> -->
+<!-- 								<div class="col-md-10 col-sm-10 "> -->
+<!-- 									<input type="text" class="form-control" placeholder="Email" name="email" id="imgUrl" th:field="*{imgUrl}"> -->
+									
+<!-- 									<img th:src="*{imgUrl}" class='img-responsive img-rounded' style='width:70px;height:75px;'> -->
+<!-- 									<span th:text="*{imgUrl}">aaaa</span> -->
+																	    									
+<!-- 								</div> -->
+								
+								<label class="control-label col-md-2 col-sm-2 ">사용자 이미지</label>
+								<div class="col-md-4 col-sm-4 ">
+									<img class='img-responsive' style='width:70px;height:75px;' th:src="*{imgUrl}" id="mainImg">
+									<button type="button" class="btn btn-primary" onClick="deleteImg()">이미지 삭제</button>
+								</div>																
+								<label class="control-label col-md-2 col-sm-2 ">사용자 이미지 변경</label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="file" class="form-control" placeholder="" name="mainUploadFile" id="mainUploadFile" th:value="*{imgUrl}">
+									<button type="button" class="btn btn-primary" onClick="saveImg()">이미지 저장</button>
+								</div>
+																
+							</div>
+							
+							
+							
+							
+
+						    <div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">Email<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<input type="text" class="form-control" placeholder="Email" name="email" id="email" th:field="*{email}">								    									
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">사용자명<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">									
+ 									<input type="text" class="form-control" placeholder="사용자명" name="userName" id="userName" th:field="*{userName}">									
+								</div>								
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">생년월일<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<input type="text" class="form-control" placeholder="YYYYMMDD" name="birthDay" id="birthDay" th:field="*{birthDay}" >		
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">성별<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">	
+									<select class="form-control" name="sex" id="sex" th:field="*{sex}" >									   
+										<option value="F" th:selected="*{sex}=='F'">여</option>
+										<option value="M" th:selected="*{sex}=='M'">남</option>
+									</select>								
+								</div>								
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">휴대폰<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<input type="text" class="form-control" placeholder="01012345678" name="cellphone" id="cellphone" th:field="*{cellphone}" >		
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">국적<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">
+									<select class="form-control" name="country" id="country" th:field="*{country}" >																				
+										<option value="KR" th:selected="*{country}=='KR'">대한민국</option>
+										<option value="CN" th:selected="*{country}=='CN'">중국</option>
+										<option value="JP" th:selected="*{country}=='JP'">일본</option>
+										<option value="TH" th:selected="*{country}=='TH'">태국</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">사용자구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<select class="form-control" name="userRole" id="userRole" th:field="*{userRole}" >    		
+							    		<option th:each="userRole : ${T(com.beautyjourney.beautage.entity.enums.UserRole).values()}" 
+							        		th:value="${userRole.code}" th:text="${userRole.val}"></option>
+									</select>		
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">로그인구분<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">									
+									<select class="form-control" name="oauthType" id="oauthType" th:field="*{oauthType}">									    		
+							    		<option th:each="oAuthType : ${T(com.beautyjourney.beautage.entity.enums.OAuthType).values()}" 
+							        		th:value="${oAuthType.code}" th:text="${oAuthType.val}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">마켓팅동의여부<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<select class="form-control" name="marketingYn" id="marketingYn" th:field="*{marketingYn}">
+										<option value="Y" th:selected="*{marketingYn}=='Y'">동의</option>
+										<option value="N" th:selected="*{marketingYn}=='N'">미동의</option>
+									</select>		
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 ">상태<span
+									class="required">*</span></label>
+								<div class="col-md-4 col-sm-4 ">									
+									<select class="form-control" name="status" id="status" th:field="*{status}" >    		
+							    		<option th:each="userStatus : ${T(com.beautyjourney.beautage.entity.enums.UserStatus).values()}" 
+							        		th:value="${userStatus.code}" th:text="${userStatus.val}"></option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">웹사이트</label>
+								<div class="col-md-4 col-sm-4 ">								    							
+									<input type="text" class="form-control" placeholder="" name="webSite" id="webSite" th:field="*{webSite}">		
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="control-label col-md-2 col-sm-2 ">비고</label>
+								<div class="col-md-10 col-sm-10 ">								    							
+									<textarea class="form-control" rows="5" placeholder="" name="comment" id="comment" th:field="*{comment}">
+									</textarea>		
+								</div>
+							</div>
+							
+							<div>
+								<div class="form-group">
+									<div class="col-md-12 col-sm-12 " style="text-align: right;">
+										<button type='button' class="btn btn-primary" id="saveUserBtn" onClick="saveUser()">저장하기</button>										
+									</div>
+								</div>
+							</div>
+							
+						</form>
+					</div>
+					
+				</div>
+			</div>
+			
+				<!-- -----------------  -->
+		</div>
+	</div>
+	
+	
+ 
+</th:block>
+
+    
+</html>

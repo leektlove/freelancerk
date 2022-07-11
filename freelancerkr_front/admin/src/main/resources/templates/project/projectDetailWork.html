@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/project.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/projectHeader"></th:block>
+			</div>
+			<div id="container_content">
+				<div class="container_inner">
+					<h1>■ 프로젝트보기</h1>
+					<table class="boardform">
+						<tbody>
+							<tr>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/basic|">기본정보</a></td>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/bid|">입찰정보</a></td>
+								<th width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/work|">진행정보</a></th>
+								<td width="25%" style="text-align:center;font-size:20px;border:1px solid #ddd; padding:0px;"><a th:href="|/project/${item.id}/details/message|">메시지정보</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<table class="boardform">
+						<colgroup>
+							<col width="150">
+							<col width="">
+						</colgroup>
+						<tbody><tr>
+							<th>프로젝트명</th>
+							<td th:text="${item.title}"></td>
+						</tr>
+						<tr>
+							<th>낙찰자</th>
+							<td>
+								<a href="" target="_blank" th:if="${item.contractedFreelancer != null}">
+									<div style="background-image:url('https://www.freelancerk.com:443/admin/img/f_basic.jpg'); background-repeat:no-repeat; background-size:cover; background-position:center center; width:100px; height:100px; float:left;">
+										
+									</div>
+									<div style="float:left; margin-left:10px;">
+										<span th:text="${item.contractedFreelancer.name}"></span>
+										<div class="star">
+											<div class="star_con">
+												<img src="/static/images/star_grade_area.png">
+												<div class="star_point_con" th:style="|width:${item.contractedFreelancer.ratingPercentageAsClient}%;|">
+													<img src="/static/images/star_grade_point.png">
+												</div>
+											</div>
+											(<span th:text="${item.contractedFreelancer.ratingsAsClient}"></span>)
+										</div>
+
+										<div class="number">
+											총 전체 완료 프로젝트 <span th:text="${item.contractedFreelancer.completedProjectCount}">2</span>건 중 <span th:text="${item.contractedFreelancer.ratingsAsFreelancer}">2</span>건 평가
+										</div>
+										<span th:text="${item.contractedFreelancer.cellphone}"></span> / <span th:text="${item.contractedFreelancer.email}"></span>
+									</div>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<th>낙찰금액</th>
+							<td th:text="${#numbers.formatInteger(item.successBidPrice, 0, 'COMMA')}">230,000</td>
+						</tr>
+						<tr>
+							<th>낙찰일</th>
+							<td colspan="3" th:text="${#temporals.format(item.successBidAt, 'yyyy-MM-dd')}">
+							</td>
+						</tr>
+							<tr>
+							<th>
+								계약서 및 문서
+								<br>
+								(클라이언트)
+							</th>
+								<td colspan="3">
+									<th:block th:if="${#strings.isEmpty(item.projectDescriptionFileName)}">
+										관련문서가 없습니다
+									</th:block>
+									<th:block th:if="${!#strings.isEmpty(item.projectDescriptionFileName)}">
+										<a th:href="@{${item.projectDescriptionFileUrl}}" th:text="${item.projectDescriptionFileName}"></a>
+									</th:block>
+								</td>
+						</tr>
+						<tr>
+							<th>
+								계약서 및 문서
+								<br>
+								(프리랜서)
+							</th>
+							<td colspan="3">
+							</td>
+						</tr>
+					
+						<tr>
+							<th>
+								평점
+								<br>
+								(클라이언트)
+							</th>
+							<td colspan="3">
+								<table class="boardlist" style="width:80%;">
+									<colgroup>
+										<col width="20%">
+										<col width="20%">
+										<col width="20%">
+										<col width="20%">
+										<col width="20%">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>전반적인 만족도</th>
+											<th>존중하는 태도</th>
+											<th>명확한 업무지시</th>
+											<th>신뢰성 (대금 관련)</th>
+											<th>소통능력</th>
+										</tr>
+										<tr th:if="${rateByFreelancer != null}">
+											<td th:text="${rateByFreelancer.type1Rate}">5.0</td>
+											<td th:text="${rateByFreelancer.type2Rate}">5.0</td>
+											<td th:text="${rateByFreelancer.type3Rate}">5.0</td>
+											<td th:text="${rateByFreelancer.type4Rate}">5.0</td>
+											<td th:text="${rateByFreelancer.type5Rate}">5.0</td>
+										</tr>
+										<tr>
+											<td colspan="5" style="text-align:left;">
+																			</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<th>평점<br>(프리랜서)</th>
+							<td colspan="3">
+								<table class="boardlist" style="width:80%;">
+									<colgroup>
+										<col width="20%">
+										<col width="20%">
+										<col width="20%">
+										<col width="20%">
+										<col width="20%">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>만족도</th>
+											<th>속도</th>
+											<th>정확성</th>
+											<th>신뢰성</th>
+											<th>소통능력</th>
+										</tr>
+										<tr th:if="${rateByClient != null}">
+											<td th:text="${rateByClient.type1Rate}">5.0</td>
+											<td th:text="${rateByClient.type2Rate}">5.0</td>
+											<td th:text="${rateByClient.type3Rate}">5.0</td>
+											<td th:text="${rateByClient.type4Rate}">5.0</td>
+											<td th:text="${rateByClient.type5Rate}">5.0</td>
+										</tr>
+										<tr>
+											<td colspan="5" style="text-align:left;">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<table class="boardform">
+						<thead class="thead-dark text-center">
+						<tr>
+							<th>회차</th>
+							<th>수령일</th>
+							<th>지급청구 금액</th>
+							<th>승인 금액</th>
+							<th>누적수입금액</th>
+							<th>명세서</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="paymentItem, iter : ${paymentToUsers}">
+							<td>
+								<th:block th:text="${iter.index + 1}">1</th:block>
+							</td>
+							<td>
+								<th:block th:if="${paymentItem.status.name() == 'PAYED'}" th:text="${#temporals.format(paymentItem.payedAt, 'yy-MM-dd HH:mm:ss')}">2018.
+									07. 05 14:17:34</th:block>
+							</td>
+							<td>
+								<th:block th:text="*{#numbers.formatDecimal(paymentItem.amount, 0, 'DEFAULT', 0, 'DEFAULT')}">50,000</th:block>원
+							</td>
+							<td class="text-center">
+								<th:block th:if="${paymentItem.status.name() == 'DENIED'}">
+									<span class="btn-color small" data-toggle="modal" data-target="#decline_approval">승인거절</span>
+								</th:block>
+								<span th:if="${paymentItem.status.name() == 'ACCEPTED' || paymentItem.status.name() == 'PAYED'}" th:text="|*{#numbers.formatDecimal(paymentItem.amount, 0, 'DEFAULT', 0, 'DEFAULT')}원|"></span>
+							</td>
+							<td>
+								<span th:text="*{#numbers.formatDecimal(paymentItem.accumulatedIncomeAmount, 0, 'DEFAULT', 0, 'DEFAULT')}">50,000</span>원
+							</td>
+							<td class="text-center">
+								<th:block th:if="${paymentItem.status.name() == 'PAYED'}">
+									<span th:id="${paymentItem.id}" class="btnShowTaxDetailPopup btn-colorline small tax_detail" data-toggle="modal" data-target="#specModal" th:data-id="${paymentItem.id}">명세서</span>
+								</th:block>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="btn-color small tax_all" style="display:block;width:100%; margin-top:10px; padding:10px 0px; border:none;">누적명세서
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+</html>

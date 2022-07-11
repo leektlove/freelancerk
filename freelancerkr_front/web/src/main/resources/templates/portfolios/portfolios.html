@@ -1,0 +1,65 @@
+<div class="row" style="padding: 0 0.7rem!important;">
+    <th:block th:each="item, iter: ${pickMeUps}" xmlns:th="http://www.w3.org/1999/xhtml">
+        <div class="col-6 col-sm-6 col-md-3 col-lg-1-5 col-xl-2 mb-3">
+            <article th:class="${(item.featured?'featured ':' ') + ' post ' + 'pickmeup_card' }">
+                <span class="badge-g-list">
+                    <span th:if="${item.directDealAvailable}"class="direct" data-toggle="tooltip" data-placement="top" data-original-title="직거래가능"><i class="fas fa-phone"></i></span>
+                    <span th:if="${item.highQuality}"class="master" data-toggle="tooltip" data-placement="top" data-original-title="고급인력"><i class="far fa-thumbs-up"></i></span>
+                    <span th:if="${item.creative}"class="creative" data-toggle="tooltip" data-placement="top" data-original-title="독창적"><i class="far fa-lightbulb"></i></span>
+                </span>
+                <a class="image_wrap" th:href="@{/portfolios/__${item.id}__/details(pickMeUpIds=${pickMeUpIds},currentIndex=${iter.index})}">
+                    <div class="post-image" style="position: relative;">
+                        <div class="kind-c">
+                            <img th:if="${item.contentType == 'VIDEO'}" src="/static/images/card_video.png" class="card_video" style="width: 40px;">
+                            <img th:if="${item.contentType == 'AUDIO'}" src="/static/images/card_audio.png" class="card_audio" style="width: 40px;">
+                        </div>
+                        <div class="pickmeup_portfolio_card">
+                            <div class="blog_text" th:if="${item.contentType?.name() == 'BLOG'}">
+                                <div class="text text-dark" th:text="${item.onlyTextDescription}">
+                                
+                                </div>
+                            </div>
+                            <div class="center-crop-wrapper">
+                                <img th:src="${item.representativeImageUrl}" class="img-fluid" alt="" style="border-radius: 4px 4px 0 0">
+                            </div>
+                        </div>
+                    </div>
+                </a> 
+                <div th:class="|pickmeup-profile-image ${item.project != null?'certification':''}|">
+                    <img th:src="@{${(#strings.isEmpty(item.user.profileImageUrl)?'/static/images/icon/freelancer_noimg.png':item.user.profileImageUrl)}}">
+                </div>
+                <div class="pickmeup_card_sector">
+                    <span class="" th:text="${item.category1st?.name}"></span>
+                    <i class="fas fa-arrow-right"></i>
+                    <span class="" th:text="${item.category2nd?.name}"></span>
+                </div>
+                <!-- <div class="card-infomation">
+                    <div class="counter">
+                        <div class="counter_c" th:text="${#numbers.formatInteger(item.directDealCount, 0, 'COMMA')}">0</div>
+                        <div class="counter_t">직거래</div>
+                    </div>
+                    <div class="counter">
+                        <div class="counter_c" th:text="${#numbers.formatInteger(item.projectPropositionCount, 0, 'COMMA')}">0</div>
+                        <div class="counter_t">요청</div>
+                    </div>
+                    <div class="counter">
+                        <div class="counter_c" th:text="${#numbers.formatInteger(item.hits, 0, 'COMMA')}">0</div>
+                        <div class="counter_t">조회수</div>
+                    </div>
+                </div> -->
+                <a th:href="@{/portfolios/__${item.id}__/details(pickMeUpIds=${pickMeUpIds},currentIndex=${iter.index})}">    
+                    <div class="card-title text-dark">
+                        <div th:text="${item.title}"></div>
+                    </div>
+                </a>
+                <div class="c_action_btn">
+                    <div th:onclick="|openProposeModal(${item.id})|" class="c_propose_btn">참여요청</div>
+                    <div th:if="${item.directDealAvailable}" class="c_direct_btn" th:onclick="|saveDirectDeal(${item.id})|">직거래 가능</div>
+                </div>
+            </article>
+        </div>
+    </th:block>
+</div>
+<div class="moreResultBlock">
+
+</div>

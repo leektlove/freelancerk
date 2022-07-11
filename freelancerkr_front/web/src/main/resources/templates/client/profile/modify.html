@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layout">
+<head>
+	<link rel="stylesheet" href="/static/css/client/profile/modify.css">
+	<script src="/static/lib/cropper/cropper.js"></script>
+	<link  href="/static/lib/cropper/cropper.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/static/vendor/slim-image-cropper/slim.min.css">
+	<script src="/static/lib/jquery-cropper/jquery-cropper.js"></script>
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<!-- 페이지헤더 -->
+		<section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+						<h1 class="text-dark"><strong>프로필 수정</strong></h1>
+					</div>
+					<div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 페이지헤더//-->
+
+		<div class="container">
+			<div class="content-body">
+				<section class="card form-wizard" id="w5">
+					<header class="card-header">
+						<div class="wizard-progress wizard-progress-lg">
+							<div class="steps-progress">
+								<div class="progress-indicator"></div>
+							</div>
+							<ul class="nav wizard-steps">
+								<li class="nav-item active">
+									<a class="nav-link" href="#w5-one" data-toggle="tab"><span>1</span>이미지업로드</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#w5-two" data-toggle="tab"><span>2</span>기본정보</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#w5-three" data-toggle="tab"><span>3</span>커뮤니케이션 방법</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#w5-four" data-toggle="tab"><span>4</span>비밀번호변경</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#w5-five" data-toggle="tab"><span>5</span>기업정보</a>
+								</li>
+							</ul>
+						</div>
+					</header>
+					<div class="">
+						<form id="clientProfileForm">
+							<div class="tab-content pt-5">
+								<div id="w5-one" class="tab-pane active">
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">나의 이미지를 업로드 해주세요</label>
+														<div class="form-row">
+															<div class="file_container p-0 col-lg-5">
+																<!-- <p class="text-left">프리랜서코리아는 프리랜서의 [실력과 경력]으로 평가 받는 플랫폼을 지향합니다<br /> 본인의 작업물이나 본인을 형상화 할 수 있는 이미지를 올려주세요
+																</p> -->
+																<input type="hidden" name="uploadedProfileImageUrl" th:value="${user.profileImageUrl}"/>
+																<div class="slim mx-auto mb-3 mb-lg-0" data-ratio="1:1" data-push="true" data-service="/files" data-label="클릭하여 사진을 올려주세요" id="my-cropper" style="max-width: 70%;">
+																	<input name="profileImageUrl" type="file" class="form-control-file" style="height:46px; margin-bottom:5px;">
+																</div>
+															</div>
+															<div class="col-lg-7">
+																<img src="/static/images/sample_05.png" class="pms_c">
+																<img src="/static/images/sample_04.png" class="pms_c">
+																<img src="/static/images/sample_06.png" class="pms_c">
+																<img src="/static/images/sample_03.png" class="pms_c">
+																<img src="/static/images/sample_02.png" class="pms_c">
+																<img src="/static/images/sample_01.png" class="pms_c">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div id="w5-two" class="tab-pane">
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<input type="hidden" name="id" th:value="${user.id}"/>
+													<div class="">
+														<label class="font-weight-bold text-dark" for="name">담당자명을 입력해주세요<span class="required"> *</span></label>
+														<input type="text" class="form-control" name="name" th:value="${user.name}"  placeholder="홍길동" required>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark" for="">닉네임을 입력해주세요<span class="required"> *</span>
+														</label>
+														<div class="input-group">
+															<input type="text" class="form-control" name="nickname" th:value="${user.nickname}" placeholder="삼성전자(주) 무선사업부" required>
+															<div class="input-group-append">
+																<button type="button" class="btn btn-primary duplicateCheck" id="btn-check-nickname">중복체크</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col public_name">
+													<div class="">
+														<label class="font-weight-bold text-dark">이름과 닉네임 중 어느 것을 노출하시겠어요?<span class="required"> *</span></label>
+														<select class="custom-select" id="exposeType" name="exposeType" required>
+															<option value="">선택</option>
+															<option value="NAME" th:selected="${user.exposeType == null OR user.exposeType.name() == 'NAME'}">이름</option>
+															<option value="NICKNAME" th:selected="${user.exposeType != null AND user.exposeType.name() == 'NICKNAME'}">닉네임</option>
+														</select>
+													</div>
+												</div>
+											</div>	
+										</li>
+										<li th:if="${user.authType?.name() != 'EMAIL'}">
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark" for="email">이메일을 입력해주세요<span class="required"> *</span></label>
+														<input type="text" class="form-control" name="email" th:value="${user.email}"  placeholder="이메일" required>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">	
+														<label class="font-weight-bold text-dark">휴대폰번호로 본인을 인증해주세요.<span class="required"> *</span></label>
+														<div>
+															<span class="mark">
+																<i class="fas fa-exclamation-circle mr-1"></i>
+																<span class="font-weight-bold">해외 거주자</span>의 경우 <span class="font-weight-bold">국가 코드</span>를 함께 입력해주세요.
+															</span>
+															<div class="mb-2">
+																예) 日本 : <span class="font-weight-bold">81</span>801234567
+															</div>
+														</div>
+														<div class="input-group">
+															<input type="text" class="form-control" name="cellphone" th:value="${user.cellphone}" id="cellphone" placeholder="010-1234-5678" required maxlength="15">
+															<input type="number" class="form-control" name="certificationCode" id="certificationCode" placeholder="인증코드" style="display: none" required maxlength="12">
+															<input type="hidden" name="cellphoneCertified" th:value="${user.cellphoneCertified}"/>
+															<div class="input-group-append">
+																<div class="btn btn-primary btn-certify" style="display: none">인증</div>
+															</div>
+															<div class="input-group-append">
+																<div class="btn btn-primary btn-request-certify">인증번호요청</div>
+															</div>
+														</div>
+														<div id="remainTimesContainer" style="margin: 8px;font-size: 9pt;color: grey; display: none">
+															남은시간 <span id="remainTimes">03:00</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark" for="">이메일 수신 여부를 선택해 주세요<span class="required"> *</span></label>
+														<select name="receiveEmail" class="form-control" id="receiveEmail" required>
+															<option value="true" th:selected="${user.receiveEmail}">네, 수신합니다.</option>
+															<option value="false" th:selected="${!user.receiveEmail}">아니오, 수신하지 않겠습니다.</option>
+														</select>
+														<div class="help-block" style="font-weight: bold;">입찰에 프리랜서가 참여하거나 대화를 신청한 경우, 등록된 이메일로 알림이 전송됩니다.<br/>
+														이메일을 본인의 휴대폰과 동기화해주세요 좀 더 편리한 이용이 가능합니다.</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div id="w5-three" class="tab-pane">
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<label class="font-weight-bold text-dark">
+												입찰 시 노출수단을 선택해주세요
+												<span class="required"> *</span>
+											</label>
+											<div class="help-block">
+												클라이언트 정보 보호를 위해 긴급한 경우를 제외하고 노출을 삼가해주세요.<br>입찰에 프리랜서가 참여하는 경우 등록된 휴대폰번호를 통해 알림톡이 전송됩니다 :)
+											</div>
+										</li>
+										<li>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="custom-control custom-checkbox">
+						                                <input type="checkbox" class="custom-control-input" name="exposeEmail"  id="exposeEmail" value="true" th:checked="${user.exposeEmail}"/>
+						                                <label class="custom-control-label" for="exposeEmail">이메일</label>
+						                            </div>
+						                            <input type="text" id="email" class="profile_email form-control" th:placeholder="|${user.email}|" th:value="${user.email}"/>
+												</div>
+											</div>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="custom-control custom-checkbox">
+						                                <input type="checkbox" class="custom-control-input" name="exposeCellphone"  id="exposeCellphone" value="true" th:checked="${user.exposeCellphone}"/>
+						                                <label class="custom-control-label" for="exposeCellphone">휴대폰번호</label>
+						                            </div>
+						                            <input type="text" class="form-control" th:placeholder="|${user.cellphone}|" disabled/>
+												</div>
+											</div>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="custom-control custom-checkbox">
+						                                <input type="checkbox" class="custom-control-input" name="exposeSns"  id="exposeSns" value="true" th:checked="${user.exposeSns}"/>
+						                                <label class="custom-control-label" for="exposeSns">홈페이지</label>
+						                            </div>
+						                            <input type="text" name="homepageUrl" th:value="${user.homepageUrl}" title="홈페이지" class="form-control only_nes" placeholder="홈페이지 주소를 붙여 넣어 주세요." />
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div id="w5-four" class="tab-pane">
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">비밀번호 변경이 필요한 경우에만 입력해주세요</label>
+														<div class="form-group">
+															<label class="font-weight-bold text-dark form-group" for="password">비밀번호를 입력해주세요</label>
+															<input type="text" class="form-control" name="password" id="password" th:disabled="${user.authType?.name() != 'EMAIL'}" placeholder=" * * * * * * * *">
+															<div class="help-block" for="password">비밀번호를 영문+숫자+특수문자의 조합으로 입력해주세요(사용되지 않는 특수문자: \"'?/)</div>
+														</div>
+														<div class="form-group">
+															<label class="font-weight-bold text-dark" for="passwordConfirm">비밀번호를 한번 더 입력해 주세요</label>
+															<input type="text" class="form-control" name="passwordConfirm" th:disabled="${user.authType?.name() != 'EMAIL'}" id="passwordConfirm" placeholder=" * * * * * * * *">
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div id="w5-five" class="tab-pane">
+									<div class="form-row">
+										<div class="form-group col-sm-9 mx-auto">
+											<div class="">
+												<label class="font-weight-bold text-dark">프로젝트 포스팅에 필요한 기업정보를 입력해 주세요</label>
+											</div>
+										</div>
+									</div>
+									<ul class="col-sm-9 mx-auto list list-icons">
+										<li class="company-info-container">
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col mb-0">
+													<div class="">
+														<label class="font-weight-bold text-dark">클라이언트(또는 회사)에 대해 소개해주세요.
+														</label>
+														<span class="ml-2" style="color:#bbb">(선택)
+														</span>
+														<textarea class="form-control" id="clientInfo" name="clientInfo" rows="5" required="" onkeyup="countChar(this)" th:text="${user.myClientInfo}"></textarea>
+														<div class="text_cnt">
+															<span id="textCnt">0</span>/1,000자
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark" for="businessType">어떤 종류의 사업자 입니까?<span class="required"> *</span></label>
+														<select class="custom-select" name="businessType" id="businessType" required>
+															<option value="">-- 선택 --</option>
+															<option th:each="item: ${T(com.freelancerk.domain.User.BusinessType).values()}"
+																th:value="${item}"
+																th:text="${item.name}"
+																th:selected="${item.name() == user.businessType?.name()}"
+															>
+															</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li class="company-info-container" style="display: none;">
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark" for="corporateName">회사명을 입력해 주세요 <span class="required"> *</span></label>
+														<input name="corporateName" id="corporateName" placeholder="" class="form-control" type="text" th:value="${user.corporateName}" required/>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<i class="fas fa-angle-right"></i>
+											<div class="form-row">
+												<div class="form-group col">
+													<div class="">
+														<label class="font-weight-bold text-dark">사업자 등록번호를 입력해주세요<br/>개인이라면 주민등록번호를 입력해주세요
+														<span class="ml-2" style="color:#bbb">(나중에 입력하셔도 됩니다)</span>
+														</label>
+														<input class="form-control only_nd" type="text" name="corporateNumber" id="corporateNumber" th:value="${user.corporateNumber}" title="사업자등록번호" placeholder="예) 123-45-67890">
+														<label class="company-info-container font-weight-bold text-dark mt-2">사업자 등록증을 첨부해주세요<span class="ml-2" style="color:#bbb">(나중에 입력하셔도 됩니다)</span>
+														</label>
+														<div class="company-info-container">
+															<span class="file_con real-file-input" th:style="|display: ${user == null OR user?.businessLicenseUrl == null?'inline':'none'}|">
+																<input type="file" class="form-control-file w-50 d-inline-block" name="businessLicenseFile" id="attachedFile">
+															</span>
+															<span th:if="${user?.businessLicenseUrl != null}" class="file_con mr-5 fake-file-input">
+																<button type="button" class="btn" id="fake-file-btn" style="background-color: lightgray;border: 1px solid;">파일선택</button>
+																<span class="form-control-file w-50 d-inline-block" th:text="${user?.businessLicenseFileName}"></span>
+															</span>
+															<span class="btn btn-info rounded-0" id="attachedFileCancelUpload" th:style="|display: ${user?.businessLicenseUrl != null?'inline-block':'none'}|">파일취소
+															</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer" style="height: 60px">
+						<ul class="pager">
+							<li class="previous">
+								<a><i class="fas fa-angle-left"></i> 이전</a>
+							</li>
+							<li class="next">
+								<a>다음 <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="finish hidden float-right">
+								<a id="btn-save"><span>프로필저장</span></a>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</div>
+			
+			<!-- 샘플이미지 선택 -->
+			<div class="modal fade modal_wrap" id="sample_img" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+			 aria-hidden="true">
+				<div class="modal-dialog modal-md" role="document">
+					<div class="modal-content">
+
+						<!-- 팝업 헤더 -->
+						<div class="head modal-header">
+							<h5 class="modal-title" id="ModalLabel">샘플 프로필 이미지 선택</h5>
+							<div class="">
+								<a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+							</div>
+						</div>
+						<!-- 팝업 헤더// -->
+
+						<!-- 팝업 컨텐츠 -->
+						<div class="content modal-body">
+							<table cellpadding="0" cellspacing="0" border="0">
+								<tbody>
+									<tr>
+										<td>
+											<img src="/static/images/sample_05.png" class="pms_c">
+											<img src="/static/images/sample_04.png" class="pms_c">
+											<img src="/static/images/sample_06.png" class="pms_c">
+											<img src="/static/images/sample_03.png" class="pms_c">
+											<img src="/static/images/sample_02.png" class="pms_c">
+											<img src="/static/images/sample_01.png" class="pms_c">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 샘플이미지 선택// -->
+
+		</div>
+
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+		<script src="/static/lib/moment/moment.min.js"></script>
+
+		<script th:inline="javascript">
+			var timer;
+			var remainSeconds = 180;
+			var IMP = window.IMP;
+			var iamportMerchantId = [[${iamportMerchantId}]];
+
+			IMP.init(iamportMerchantId);
+
+			var businessType = [[${user.businessType?.name()}]];
+            var nicknameAvailableMap = {};
+            var nickname = [[${user.nickname}]];
+            var authType = [[${user.authType?.name()}]];
+            nicknameAvailableMap[nickname] = true;
+
+			//checkbox show
+			$("input[name='exposeSns']").click(function(){
+				if($("input[name='exposeSns']").prop("checked")){
+					$(".cm_display_1_3_con").show();
+				}else{
+					$(".cm_display_1_3_con").hide();
+				}
+			});
+
+			//file change
+			$("#cm_license_file").change(function(){
+				$("#cm_license_file_cancel").show();
+			});
+			$("#cm_license_file_cancel").click(function(){
+				var file = $("#cm_license_file");
+				file.replaceWith( file = file.clone( true ) );
+				file.val("");
+				$("#cm_license_file_cancel").hide();
+			});
+
+			$(document).on('click', '.btn-certify', function() {
+				if (!confirm('인증 하시겠습니까?')) {
+					return;
+				}
+
+				var cellphone = $('input[name=cellphone]').val();
+				var certificationCode = $('input[name=certificationCode]').val();
+				var formData = new FormData();
+				formData.append('cellphone', cellphone);
+				formData.append('code', certificationCode);
+
+				$.ajax({
+					type: 'POST',
+					url: '/users/cellphone/certifications',
+					data: formData,
+					processData: false,
+					cache: false,
+					contentType: false,
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							$('input[name=cellphone]').val(cellphone);
+							$('input[name=cellphoneCertified]').val(true);
+							alert('인증 완료되었습니다.');
+
+							$('#certificationCode').hide();
+							$('#remainTimesContainer').hide();
+							$('.btn-request-certify').show();
+							$('.btn-certify').hide();
+						} else {
+							alert('요청에 실패했습니다.');
+						}
+					},
+					error: function(error){
+						alert('요청에 실패했습니다.');
+					}
+				});
+			});
+
+			$(document).on('click', '.btn-request-certify', function () {
+				if (!confirm('인증코드를 요청하시겠습니까?')) {
+					return;
+				}
+				var cellphone = $('input[name=cellphone]').val();
+
+				if (!cellphone) {
+					alert('휴대전화번호를 입력해 주세요.');
+					return;
+				}
+				remainSeconds = 180;
+
+				var formData = new FormData();
+				formData.append('cellphone', cellphone);
+
+				$.ajax({
+					type: 'POST',
+					url: '/users/cellphone/codes',
+					data: formData,
+					processData: false,
+					cache: false,
+					contentType: false,
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							alert('인증코드가 발송되었습니다.');
+
+							var formattedSeconds = moment().startOf('day')
+									.seconds(remainSeconds)
+									.format('mm:ss');
+							$('#remainTimes').text(formattedSeconds);
+							$('#certificationCode').show();
+							$('#remainTimesContainer').show();
+							$('.btn-request-certify').hide();
+							$('.btn-certify').show();
+
+							timer = setInterval(function() {
+								if (remainSeconds <= 0) {
+									clearInterval(timer);
+
+									$('#certificationCode').hide();
+									$('#remainTimesContainer').hide();
+									$('.btn-request-certify').show();
+									$('.btn-certify').hide();
+									return;
+								} else {
+									remainSeconds = remainSeconds - 1;
+									var formattedSeconds = moment().startOf('day')
+											.seconds(remainSeconds)
+											.format('mm:ss');
+									$('#remainTimes').text(formattedSeconds);
+								}
+							}, 1000);
+						} else {
+							alert('요청에 실패했습니다.');
+						}
+					},
+					error: function(error) {
+						console.error(error);
+						alert('요청에 실패했습니다.');
+					}
+				})
+			})
+		</script>
+		<script th:inline="javascript">
+			var useEscrow = [[${user.useEscrow}]];
+			var afterRedirect = [[${afterRedirect}]];
+			var businessType = [[${user.businessType?.name()}]];
+			var profileImageUrl = [[${user.profileImageUrl}]];
+		</script>
+		<!-- Specific Page Vendor -->
+		<script src="/static/vendor/slim-image-cropper/slim.kickstart.min.js"></script>
+	    <script src="/static/vendor/jquery-validation/jquery.validate.js"></script>
+	    <script src="/static/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+	    <script src="/static/vendor/pnotify/pnotify.custom.js"></script>
+
+		<script src="/static/js/client/profile/modify.js"></script>
+		<script src="/static/js/client/profile/modify-steps.js"></script>
+
+		<script>
+		</script>
+
+		<div class="modal" tabindex="-1" role="dialog" id="imageModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">이미지 자르기</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" style="text-align: center;">
+						<div>
+							<img style="max-width: 100%; width: 100%;" id="profileImageCandidate" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="btn-upload-cropped-image">적용</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</html>

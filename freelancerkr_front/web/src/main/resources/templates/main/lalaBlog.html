@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layout/layout">
+
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/common/lalaBlog.css">
+</head>
+
+    <section id="content" layout:fragment="content">
+
+    	<div class="container py-4">
+			<div class="position-relative">
+	            <h2 class="mb-3 mb-lg-4">
+	                <div class="line"></div>
+	                <span class="title">라라 프리랜서</span>
+	                <div class="sub-title">프리랜서의 시대, 그리고 우리</div>
+	            </h2>
+	        </div>
+			<div class="row">
+				<div class="col">
+					<div class="blog-posts">
+						
+						<div class="masonry-loader masonry-loader-showing">
+							<div class="masonry form-row" data-plugin-masonry data-plugin-options="{'itemSelector': '.masonry-item'}">
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/test/test_01.png" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/test/test_02.png" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/sample_15.jpg" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/test/test_03.png" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/test/test_04.png" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/test/test_05.png" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/sample_13.jpg" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/test/test_06.png" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/test/test_07.png" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="masonry-item no-default-style col-6 col-lg-3">
+									<a href="/">
+										<span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-dark-linear thumb-info-hide-info-hover">
+											<span class="thumb-info-wrapper mb-2">
+												<img src="/static/images/test/test_08.png" class="img-fluid" alt="">
+												<span class="thumb-info-title">
+													<span class="thumb-info-inner line-height-8">'1000 명 인터뷰'한 프리랜서 방송인</span>
+													<span class="thumb-info-type line-height-3">만 10년 경력의 연예부 이자이자 프리랜서 방송인, 그리고 출판사 편집장과 에세이 작가. 그를 숙식할 수 잇는 단어는 무궁무진 하다.</span>
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+    </section>
+
+</html>

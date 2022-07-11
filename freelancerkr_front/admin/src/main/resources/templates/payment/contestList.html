@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/payment.css">
+</head>
+
+
+<section id="content" layout:fragment="content">
+	<div id="container_side">
+		<th:block th:include="fragments/contestPaymentHeader"></th:block>
+	</div>
+	<div id="container_content">
+		<div class="container_inner">
+			<h1>■ 컨테스트결제관리 보기</h1>
+
+			<table class="boardform">
+				<colgroup>
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+					<col width="">
+				</colgroup>
+				<tbody>
+				<tr>
+					<th>순서</th>
+					<th>상태</th>
+					<th>클라이언트 이름</th>
+					<th>컨테스트명</th>
+					<th>참여인</th>
+					<th>총결제금</th>
+					<th>확정상금</th>
+					<th>상세보기</th>
+				</tr>
+				<tr th:each="item: ${page.content}">
+					<td th:text="*{#numbers.formatInteger(item.id, 0, 'COMMA')}">1</td>
+					<td th:text="${item.contestPaymentStatus}"></td>
+					<td th:text="${item.postingClient.corporateName}">화웨이</td>
+					<td th:text="${item.title}">데모작곡</td>
+					<td th:text="*{#numbers.formatInteger(item.numberOfApplyCount, 0, 'COMMA')}">5</td>
+					<td th:text="|*{#numbers.formatInteger(item.totalAmountOfMoney, 0, 'COMMA')} 원|">250,000</td>
+					<td th:text="|*{#numbers.formatInteger(item.totalPrize, 0, 'COMMA')} 원|">250,000</td>
+					<td><a href="/payment/contestDetail.html" class="btn-black medium">보기</a></td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>1차선정완료</td>
+					<td>화웨이</td>
+					<td>데모작곡</td>
+					<td>5</td>
+					<td>785,000</td>
+					<td>250,000</td>
+					<td><a href="/payment/contestDetail.html" class="btn-black medium">보기</a></td>
+				</tr>
+				</tbody></table>
+
+			<!-- <div class="boardbutton">
+                <div class="tc">
+                    <input type="submit" value="저장" class="btn-color large">
+                    <a href="" class="btn-colorline large">목록</a>
+                </div>
+            </div> -->
+		</div>
+	</div>
+</section>
+
+
+</html>

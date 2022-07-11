@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <!-- 로컬적용 css -->
+    <link rel="stylesheet" href="/static/css/client/bid/processing/bidderList.css">
+</head>
+    
+    <div id="content" layout:fragment="content">
+
+        <!-- 페이지헤더 -->
+        <section class="page-header page-header-modern bg-color-light-scale-1 page-header-md">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                        <h1 class="text-dark"><strong>입찰자 내역보기</strong></h1>
+                    </div>
+                    <div class="col-md-4 order-1 order-md-2 align-self-center mb-2 mb-md-0">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 페이지헤더// -->
+
+        <section>
+        	<div class="container">
+                <div class="content-body">
+                    <div class="container_inner">
+                        <div id="sub_sort" class="row">
+                            <div class="col-lg-10 col-md-9 col-sm-8 align-self-center">
+                                총 <span class="text-primary" th:text="${items.size()}"></span>명이 입찰에 참여했습니다.
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-4">
+
+                                <!-- 검색 필터 -->
+                                <select class="custom-select" name="sortBy">
+                                    <option value="CREATED_AT_DESC" th:selected="${sortBy == null OR sortBy.name() == 'CREATED_AT_DESC  '}">참여순</option>
+                                    <option value="AMOUNT_ASC" th:selected="${sortBy != null && sortBy.name() == 'AMOUNT_ASC'}">입찰가 낮은순</option>
+                                    <option value="AMOUNT_DESC" th:selected="${sortBy != null &&  sortBy.name() == 'AMOUNT_DESC'}">입찰가 높은순</option>
+                                </select>
+                                <!-- 검색필터// -->
+
+                            </div>
+                        </div>
+
+                        <div class="blog-posts" id="list_info">
+
+                            <!-- 리스트카드 -->
+                            <article class="post">
+                                <ul class="row">
+                                    <li class="col-12 col-md-6 mb-3" th:each="item : ${items}">
+                                        <div class="project card p-3">
+                                            <div class="row">
+                                                <div class="col-4 col-md-5 col-lg-4 ">
+                                                    <!-- <span class="">
+                                                        <img th:src="${item.participant.profileImageUrl == null?'/static/images/f_basic.jpg':item.participant.profileImageUrl}" class="img-fluid" style="height: 169px;">
+                                                    </span> -->
+                                                    <div class="" style="position: relative;">
+                                                        <div class="center-crop-wrapper rounded">
+                                                            <img class="img-fluid rounded" th:src="${item.participant.profileImageUrl == null?'/static/images/f_basic.jpg':item.participant.profileImageUrl}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 col-md-7 col-lg-8">
+                                                    <div class="">
+                                                        <div class="client-basic-info pt-2">
+                                                            <a class="d-flex justify-content-between" th:href="|/client/freelancer/profile/${item.participant.id}?referer=bids|" >
+                                                                <span class="font-weight-bold text-4" th:text="${item.participant.exposeName}"></span>
+                                                                <span class="read-more text-primary font-weight-semibold text-3 text-right">
+                                                                    프로필 보기 <i class="fas fa-angle-right position-relative top-1 ml-1"></i>
+                                                                </span>
+                                                            </a>
+                                                            <hr class="mt-1 mb-1" style="background-color:#d0d0d0;">
+                                                            <div class="card-des">
+                                                                <span th:text="${item.participant.aboutMe}"></span>
+                                                            </div>
+                                                            <div class="same_keyword">
+                                                                <span th:each="categoryItem: ${item.participant.categories}" th:text="|# ${categoryItem.name}|"># 번역</span>
+                                                            </div>
+                                                            <hr class="mt-1 mb-1" style="background-color:#d0d0d0;">
+                                                            <div class="text-right">
+                                                                <span class="budget_label">입찰가격</span>
+                                                                <span class="budget" th:text="*{#numbers.formatInteger(item.amountOfMoney, 0, 'COMMA')}"></span>원
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <span class="tender_item_date align-self-center">
+                                                        <i class="far fa-calendar fa-lg mr-1" style="font-size: 1rem;"></i>
+                                                        <span th:text="${#temporals.format(item.applyAt, 'yyyy.MM.dd HH:mm:ss')}"></span> 참여
+                                                    </span>
+                                                    <span class="tender_item_btns font-weight-bold">
+                                                        <a th:href="|javascript:openModal(${item.id}, ${item.project.useEscrow})|"
+                                                           th:attr="data-id=${item.id}, data-participant-name=${item.participant.exposeName},
+                                                           data-bid-amount=${item.amountOfMoney}, data-bid-id=${item.id},
+                                                           data-profile-image-url=${item.participant.profileImageUrl}"
+                                                           class="btn btn-primary rounded-0 contract_add pickBtn mb-0" style="padding:5px 30px;">
+                                                            <i class="fas fa-gavel mr-1" style="font-size: 1rem;"></i>
+                                                            낙찰
+                                                        </a>
+                                                        <!-- <a th:href="|/client/freelancer/profile/${item.participant.id}|" class="btn-colorline medium freelancer_load">프로필 상세보기</a> -->
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div style="clear:both"></div>
+                            </article>
+                            <!-- 리스트카드 -->
+
+                        </div>
+                        
+                        <!-- 페이지네이션 -->
+                        <!-- <div class="paging_con">
+                            <span class="current">1</span>
+                        </div> -->
+                        <!-- 페이지네이션//-->
+
+                    </div>
+                </div>
+                
+
+        	</div>
+        </section>
+
+        <!-- 선택 후 입찰마감 팝업 -->
+        <div class="modal fade modal_wrap" id="choice_freelancer_no_escrow" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width:400px;">
+                <div class="modal-content">
+
+                    <!-- 팝업 헤더 -->
+                    <div class="head modal-header">
+                        <h5 class="modal-title" id="ModalLabel">낙찰 - 에스크로서비스 미적용 프로젝트</h5>
+                        <div class="">
+                            <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                    <!-- 팝업 헤더// -->
+
+                    <!-- 팝업 컨텐츠 -->
+                    <div class="content modal-body">
+                        <div class="form-row">
+                            <div class="col-1"></div>
+                            <div class="col-3">
+                                <img class="img-fluid selectedFreelancerProfileImageUrl" src="/static/images/sample_01.png">
+                            </div>
+                            <div class="col-7 d-flex">
+                                <div class="align-self-center">
+                                    <input type="hidden" name="selectedProjectBidId"/>
+                                    <div class="ques">충분히 검토 및 소통하셨나요?<div class="line"></div></div>
+                                    <span style="font-size: 13px;margin-right:0.5rem;">낙찰자 </span><span class="selectedFreelancerExposeName text-primary" style="font-size: 15px;"></span>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                        <div class="text-right border-top mt-3 p-2">
+                            <div>
+                                <span>낙찰금액</span>
+                                <span class="selectedBidApplyAmount text-5"></span>
+                                <input type="hidden" name="useEscrow" value="false"/>
+                                <input class="form-control modify_bid_money" type="text" style="display: none" name="bidAmount" onkeyup="numberWithCommas(this)"/>원
+                            </div>
+                            <button class="successful_bid_modify_btn my-2">
+                                <i class="fas fa-pen mr-1"></i>
+                                <span class="modifyPickPrice">낙찰금액수정</span>
+                            </button>
+                        </div>
+                        <div class="d-flex py-2 mt-3 border-top border-bottom">
+                            <span class="border-right d-flex justify-content-center px-1 px-md-3">
+                                <i class="fas fa-exclamation-triangle fa-2x align-self-center text-secondary"></i>
+                            </span>
+                            <span class="px-2 px-md-3 text-2" style="line-height: 18px;">
+                                <div>에스크로서비스 미사용 프로젝트 입니다.</div>
+                                <div>낙찰 후 프로젝트가 완료처리 됩니다.</div>
+                            </span>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-lg btn-light rounded-0 w-100" data-dismiss="modal" aria-label="Close">취소</button>
+                            <button class="btn btn-lg btn-primary rounded-0 w-100" onclick="selectAndStartProject(this)">낙찰 후 입찰마감</button>
+                        </div>
+                    </div>
+                    <!-- 팝업 컨텐츠//-->
+
+                </div>
+            </div>
+        </div>
+        <!-- 선택 후 입찰마감 팝업//-->
+
+        <!-- 선택 후 입찰마감 팝업 (에스크로이용) -->
+        <div class="modal fade modal_wrap" id="choice_freelancer_escrow" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+         aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width:400px;">
+                <div class="modal-content">
+
+                    <!-- 팝업 헤더 -->
+                    <div class="head modal-header">
+                        <h5 class="modal-title" id="ModalLabel">낙찰 - 에스크로서비스 적용 프로젝트
+                        </h5>
+                        <div class="">
+                            <a class="close" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                    <!-- 팝업 헤더// -->
+
+                    <!-- 팝업 컨텐츠 -->
+                    <div class="content modal-body">
+                        <div class="form-row">
+                            <div class="col-1"></div>
+                            <div class="col-3">
+                                <img class="img-fluid selectedFreelancerProfileImageUrl" src="/static/images/sample_01.png">
+                            </div>
+                            <div class="col-7 d-flex">
+                                <div class="align-self-center">
+                                    <input type="hidden" name="selectedProjectBidId"/>
+                                    <div class="ques">충분히 검토 및 소통하셨나요?<div class="line"></div></div>
+                                    <span style="font-size: 13px;margin-right:0.5rem;">낙찰자 </span><span class="selectedFreelancerExposeName text-primary" style="font-size: 15px;"></span>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                        <div class="text-right border-top mt-3 p-2">
+                            <div>
+                                <span>낙찰금액</span>
+                                <span class="selectedBidApplyAmount text-5"></span>
+                                <input type="hidden" name="useEscrow" value="true"/>
+                                <input class="form-control modify_bid_money" type="text" style="display: none" name="bidAmount" onkeyup="numberWithCommas(this)"/>원
+                            </div>
+                            <button class="successful_bid_modify_btn my-2">
+                                <i class="fas fa-pen mr-1"></i>
+                                <span class="modifyPickPrice">낙찰금액수정</span>
+                            </button>
+                        </div>
+                        <div class="text-right p-2" style="background-color: #f4f4f4">
+                            <span>예치 필요 금액</span>
+                            <span class="text-secondary">
+                                <span class="selectedBidApplyAmountWhVat text-5"></span>원
+                            </span>
+                            <div style="font-size:11px;margin-top: 0.5rem;">
+                                <div>국민은행 400437-01-020230</div>
+                                <div>(주)플랫폼위즈컴퍼니</div>
+                            </div>
+                        </div>
+                        <div class="d-flex py-2 mt-3 border-top border-bottom">
+                            <span class="px-1 px-md-3 border-right d-flex justify-content-center">
+                                <i class="fas fa-exclamation-triangle fa-2x align-self-center text-secondary"></i>
+                            </span>
+                            <span class="px-2 px-md-3 text-2" style="line-height: 18px;">
+                                <div>17시이후, 공휴일 예치는 익일에 반영됩니다.</div>
+                                <div>세금계산서가 발행됩니다.(개인은 현금영수증)</div>
+                                <div>예치 후 클라이언트 승인이 있어야 출금됩니다.</div>
+                                <div>에스크로 잔액은 상대방이 확인 할 수 있습니다.</div>
+                            </span>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-lg btn-light rounded-0 w-100" data-dismiss="modal" aria-label="Close">취소</button>
+                            <button class="btn btn-lg btn-primary rounded-0 w-100" onclick="selectAndStartProject(this)">낙찰 후 입찰마감</button>
+                        </div>
+                    </div>
+                    <!-- 팝업 컨텐츠//-->
+
+                </div>
+            </div>
+        </div>
+        <!-- 선택 후 입찰마감 팝업 (에스크로이용)// -->
+
+        <script th:inline="javascript">
+            var projectId =[[${projectId}]];
+            var useEscrow =[[${project.useEscrow}]];
+            var requisiteInfoForEscrow = [[${user?.requisiteInfoForEscrow}]];
+            var selectedId = '';
+            var modifyMode = false;
+
+            $(document).ready(function() {
+                $(document).on('show.bs.modal', '.modal', function(event) {
+                    var participantExposeName = $('a[data-id=' + selectedId + ']').data('participant-name');
+                    var bidAmount = $('a[data-id=' + selectedId + ']').data('bid-amount');
+                    var bidAmountWhVat = 1*bidAmount + 1*bidAmount*0.1;
+                    var bidId = $('a[data-id=' + selectedId + ']').data('bid-id');
+                    var profileImageUrl = $('a[data-id=' + selectedId + ']').data('profile-image-url');
+                    $('.selectedFreelancerExposeName').text(participantExposeName);
+                    $('.selectedBidApplyAmount').text(bidAmount.toLocaleString());
+                    $('.selectedBidApplyAmountWhVat').text(bidAmountWhVat.toLocaleString());
+                    if (profileImageUrl) {
+                        $('.selectedFreelancerProfileImageUrl').attr('src', profileImageUrl);
+                    }
+                    $(this).find('input[name=bidAmount]').val(bidAmount.toLocaleString());
+                    $(this).find('input[name=selectedProjectBidId]').val(bidId);
+                });
+
+                $('.modifyPickPrice').click(function() {
+                    if (!modifyMode) {
+                        alert("낙찰금액을 수정하시면 수정하신 금액이 프리랜서에게도 전달됩니다.");
+                        $(this).closest('.modal').find('input[name=bidAmount]').show();
+                        $(this).closest('.modal').find('.selectedBidApplyAmount').hide();
+                        $(this).text('수정하기');
+                        modifyMode = true;
+                    } else {
+                        $(this).closest('.modal').find('.selectedBidApplyAmount').text(parseInt(removeComma($(this).closest('.modal').find('input[name=bidAmount]').val())).toLocaleString());
+                        $(this).closest('.modal').find('input[name=bidAmount]').hide();
+                        $(this).closest('.modal').find('.selectedBidApplyAmount').show();
+                        $(this).text('낙찰금액수정');
+                        modifyMode = false;
+                    }
+                });
+
+                $('.modal').on('shown.bs.modal', function(event) {
+                    $('input[name=bidAmount]').hide();
+                    $('.selectedBidApplyAmount').show();
+                    $(this).find('.modifyPickPrice').text('낙찰금액수정');
+                    modifyMode = false;
+                });
+
+                $('input[name=bidAmount]').keyup(function() {
+                    $('.selectedBidApplyAmountWhVat').text((Math.trunc(1.1*removeComma($(this).val()))).toLocaleString());
+                });
+
+            });
+
+            $(document).on('change', 'select[name=sortBy]', function() {
+                var sortBy = $(this).val();
+                location.href = '/client/bid/bidderList?projectId=' + projectId + '&sortBy=' + sortBy;
+            });
+
+            function openModal(id, useEscrow) {
+                if (!requisiteInfoForEscrow && useEscrow) {
+                    alert('프로필에 사업자등록번호(개인이라면 주민등록번호)를 입력해주세요. 에스크로계좌에 대금을 입금하시면, 프리랜서코리아가 세금계산서(개인이라면 현금영수증)를 발행해드립니다. ');
+                    location.href = '/client/profile/modify?after-redirect=%2Fclient%2Fbid%2FbidderList%3FprojectId%3D' + projectId;
+                    return;
+                }
+                selectedId = id;
+                if (useEscrow) {
+                    $('#choice_freelancer_escrow').modal('show');
+                } else {
+                    $('#choice_freelancer_no_escrow').modal('show');
+                }
+            }
+
+            function selectAndStartProject(elem) {
+                if (!confirm('이대로 입찰 마감하시겠습니까?')) {
+                    return;
+                }
+                var projectBidId = $(elem).closest('.modal').find('input[name=selectedProjectBidId]').val();
+                var pickedAmount = 1*removeComma($(elem).closest('.modal').find('input[name=bidAmount]').val());
+
+                var formData = new FormData();
+                formData.append('projectBidId', projectBidId);
+                formData.append('pickedAmount', pickedAmount);
+
+                var useEscrow = JSON.parse($(elem).closest('.modal').find('input[name=useEscrow]').val());
+                $.ajax({
+                    type: 'POST',
+                    url: '/projects/' + projectId + '/picks',
+                    data: formData,
+                    processData: false,
+                    cache: false,
+                    contentType: false,
+                    success: function(res) {
+                        if ('SUCCESS' === res.responseCode) {
+                            if (useEscrow) {
+                                alert('진행중인 프로젝트로 이동합니다.  ');
+                                location.href = '/client/project/processingList';
+                            } else {
+                                alert('완료된 프로젝트로 이동합니다. ');
+                                location.href = '/client/project/doneList';
+                            }
+                        } else {
+                            alert(res.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                        alert('요청 중 문제가 발생했습니다. 문제가 계속될 경우 고객센터로 문의주세요.');
+                    }
+                })
+            }
+        </script>
+    </div>
+    
+
+</html>

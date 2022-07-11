@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator=" layout/layout">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/project.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+		<div id="container">
+			<div id="container_side">
+				<th:block th:include="fragments/projectHeader"></th:block>
+			</div>
+			<div id="container_content">		
+				<div class="container_inner">
+					<h1>■ 프로젝트 검색</h1>
+					<form id="form" name="" method="get">
+						<table class="boardform">
+							<colgroup>
+								<col width="150">
+								<col width="350">
+								<col width="150">
+								<col width="">
+							</colgroup>
+							<tbody><tr>
+								<th>등록일</th>
+								<td colspan="3">
+									<input type="text" name="createdFrom" th:value="${#request.getParameter('createdFrom')}" size="20" readonly="" class="readonly search_date datepicker" id="">
+									 ~ 
+									<input type="text" name="createdTo" th:value="${#request.getParameter('createdTo')}" size="20" readonly="" class="readonly search_date datepicker" id="">
+									<span class="btn-black medium" onclick="today()">오늘</span>
+									<span class="btn-black medium" onclick="thisWeek()">이번주</span>
+									<span class="btn-black medium" onclick="thisMonth()">이번달</span>
+								</td>
+							</tr>
+
+							<tr>
+								<th>키워드</th>
+								<td colspan="3">
+									<input type="text" name="keyword" th:value="${#request.getParameter('keyword')}" size="50" placeholder="이름, 닉네임, 회사명, 이메일, 휴대폰을 입력해주세요.">
+								</td>
+							</tr>
+
+							<tr>
+								<th>키워드분류</th>
+								<td colspan="3">
+									<select name="categoryId">
+										<option value="">선택</option>
+										<th:block th:each="item, index: ${category1st}">
+											<option th:value="${item.id}" th:text="${item.name}" th:onclick="|selectCategory1st(this, ${item.id})|"
+													th:attr="data-category-1st-id=${item.id}"
+													th:selected="${(item.id + '') == #request.getParameter('categoryId')}"></option>
+										</th:block>
+									</select>
+									<select name="category2ndId" >
+										<option value="">전체</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>입력한키워드</th>
+								<td colspan="3">
+									<input type="text" name="projectKeyword" th:value="${#request.getParameter('projectKeyword')}" size="50" placeholder="">
+								</td>
+							</tr>
+							<tr>
+								<th>진행상태</th>
+								<td colspan="3">
+									<span th:each="status : ${T(com.freelancerk.domain.Project.Status).values()}"><label>
+										<input type="radio" name="status" th:value="${status.name()}" checked th:text="${status.desc}"
+											   th:checked="${#request.getParameter('status') == status.name()}"></label>&nbsp;&nbsp;
+									</span>
+								</td>
+							</tr>
+
+							<tr>
+								<th>입찰수</th>
+								<td>
+									<input type="text" name="bidCountFrom" th:value="${#request.getParameter('bidCountFrom')}" size="8"> 명
+									 ~ 
+									<input type="text" name="bidCountTo" th:value="${#request.getParameter('bidCountTo')}" size="8"> 명
+								</td>
+								<th>낙찰금액</th>
+								<td>
+									<input type="text" name="successBidFrom" th:value="${#request.getParameter('successBidFrom')}" size="8"> 원
+									 ~ 
+									<input type="text" name="successBidTo" th:value="${#request.getParameter('successBidTo')}" size="8"> 원
+								</td>
+							</tr>
+
+							<tr>
+								<th>예상 프로젝트 기간</th>
+								<td>
+                                    <select class="form-control" name="expectedPeriod" id="expectedPeriod">
+                                        <option value="">-- 선택 --</option>
+                                        <option th:each="period : ${T(com.freelancerk.domain.Project.ExpectedPeriod).values()}"
+                                                th:value="${period.name()}"
+                                                th:text="${period.name}"
+                                                th:selected="${period.getName() == #request.getParameter('expectedPeriod')}">
+                                        </option>
+                                    </select>
+								</td>
+								<th>예산</th>
+								<td>
+									<span class="s_term_con" style="padding:0px; background:none;">
+										<input type="text" name="budgetFrom" th:value="${#request.getParameter('budgetFrom')}" size="8" class="">
+										 ~
+										<input type="text" name="budgetTo" th:value="${#request.getParameter('budgetTo')}" size="8" class="" >
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<th>대금 지급 기준</th>
+								<td>
+                                    <select class="form-control" name="payCriteria" id="payCriteria">
+										<option value="">선택</option>
+                                        <option th:each="payCriteria : ${T(com.freelancerk.domain.Project.PayCriteria).values()}"
+                                                th:value="${payCriteria.name()}"
+                                                th:text="${payCriteria.name}"
+                                                th:selected="${payCriteria.name == #request.getParameter('payCriteria')}">
+                                        </option>
+                                    </select>
+								</td>
+								<th>작업 장소</th>
+								<td>
+                                    <select  class="form-control" name="workPlace" id="workPlace">
+										<option value="">선택</option>
+                                        <option th:each="workPlace : ${T(com.freelancerk.domain.Project.WorkPlace).values()}"
+                                                th:value="${workPlace.name()}"
+                                                th:text="${workPlace.name}" th:selected="${workPlace.name == #request.getParameter('workPlace')}">
+                                        </option>
+                                    </select>
+							</tr>
+							<tr>
+								<th>포스팅 기간</th>
+								<td>
+									<span class="s_term_con" style="padding:0px; background:none;">
+										<input type="text" name="postingStartFrom" th:value="${#request.getParameter('postingStartFrom')}" size="8" class="search_date datepicker" id="">
+										 ~ 
+										<input type="text" name="postingStartEnd" th:value="${#request.getParameter('postingStartEnd')}" size="8" class="search_date datepicker" id="">
+									</span>
+								</td>
+								<th>에스크로</th>
+								<td>
+									<label><input type="radio" value="" checked> 전체</label>&nbsp;&nbsp;
+									<label><input type="radio" name="useEscrow" value="true" th:checked="${#request.getParameter('useEscrow') == 'true'}"> Y</label>&nbsp;&nbsp;
+									<label><input type="radio" name="useEscrow" value="false" th:checked="${#request.getParameter('useEscrow') == 'false'}"> N</label>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						<div class="boardbutton">
+							<div class="tc">
+								<input type="submit" value="검색" class="btn-color large">
+								<a href="javascript:resetSearch()" class="btn-basic large">리셋</a>
+							</div>
+						</div>
+					</form>
+					<div class="Hspace"></div>
+					<h1>■ <span th:text="*{#numbers.formatInteger(page.totalElements, 0, 'COMMA')}">1</span>개의 프로젝트가 검색되었습니다.</h1>
+					<form name="" id="form" method="post">
+						<table class="boardlist">
+							<colgroup>
+								<col width="50px;"><col width="80px"><col width="80px;"><col width="150px;"><col width="120px;"><col width="120px;"><col width="120px;"><col width="160px;"><col width="160px;"><col width="150px;"><col width="120px;"><col width="160px;"><col width="160px;"><col width="160px;"><col width="100px;"><col width="100px;"><col width="150px"><col width="120px;">
+							</colgroup>
+							<tbody><tr>
+								<th>
+									<input type="checkbox" name="" value="1" id="">
+								</th>
+								<th>구분</th>
+								<th>순서</th>
+								<th>진행단계</th>
+								<th>
+									등록일
+									<span th:if="${'CREATED_AT' != #request.getParameter('ordering')}" class="obtn" onclick="orderBy('CREATED_AT', 'DESC')">▽</span>
+									<span th:if="${'CREATED_AT' == #request.getParameter('ordering') && 'DESC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('CREATED_AT', 'ASC')">▽</span>
+									<span th:if="${'CREATED_AT' == #request.getParameter('ordering') && 'ASC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('CREATED_AT', 'DESC')">△</span>
+
+								</th>
+								<th>마감일</th>
+								<th>낙찰일</th>
+								<th>프로젝트이름</th>
+								<th>클라이언트</th>
+								<th>낙찰된프리랜서</th>
+								<th>
+									입찰자수
+									<span th:if="${'BID_COUNT' != #request.getParameter('ordering')}" class="obtn" onclick="orderBy('BID_COUNT', 'DESC')">▽</span>
+									<span th:if="${'BID_COUNT' == #request.getParameter('ordering') && 'DESC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('BID_COUNT', 'ASC')">▽</span>
+									<span th:if="${'BID_COUNT' == #request.getParameter('ordering') && 'ASC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('BID_COUNT', 'DESC')">△</span>
+
+								</th>
+								<th>
+									최고입찰가
+									<span th:if="${'MAX_BID_AMOUNT' != #request.getParameter('ordering')}" class="obtn" onclick="orderBy('MAX_BID_AMOUNT', 'DESC')">▽</span>
+									<span th:if="${'MAX_BID_AMOUNT' == #request.getParameter('ordering') && 'DESC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('MAX_BID_AMOUNT', 'ASC')">▽</span>
+									<span th:if="${'MAX_BID_AMOUNT' == #request.getParameter('ordering') && 'ASC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('MAX_BID_AMOUNT', 'DESC')">△</span>
+								</th>
+								<th>
+									최저입찰가
+									<span th:if="${'MIN_BID_AMOUNT' != #request.getParameter('ordering')}" class="obtn" onclick="orderBy('MIN_BID_AMOUNT', 'DESC')">▽</span>
+									<span th:if="${'MIN_BID_AMOUNT' == #request.getParameter('ordering') && 'DESC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('MIN_BID_AMOUNT', 'ASC')">▽</span>
+									<span th:if="${'MIN_BID_AMOUNT' == #request.getParameter('ordering') && 'ASC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('MIN_BID_AMOUNT', 'DESC')">△</span>
+								</th>
+								<th>
+									낙찰가
+									<span th:if="${'SUCCESS_BID_AMOUNT' != #request.getParameter('ordering')}" class="obtn" onclick="orderBy('SUCCESS_BID_AMOUNT', 'DESC')">▽</span>
+									<span th:if="${'SUCCESS_BID_AMOUNT' == #request.getParameter('ordering') && 'DESC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('SUCCESS_BID_AMOUNT', 'ASC')">▽</span>
+									<span th:if="${'SUCCESS_BID_AMOUNT' == #request.getParameter('ordering') && 'ASC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('SUCCESS_BID_AMOUNT', 'DESC')">△</span>
+								</th>
+								<th>
+									에스크로사용
+									<span th:if="${'USE_ESCROW' != #request.getParameter('ordering')}" class="obtn" onclick="orderBy('USE_ESCROW', 'DESC')">▽</span>
+									<span th:if="${'USE_ESCROW' == #request.getParameter('ordering') && 'DESC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('USE_ESCROW', 'ASC')">▽</span>
+									<span th:if="${'USE_ESCROW' == #request.getParameter('ordering') && 'ASC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('USE_ESCROW', 'DESC')">△</span>
+								</th>
+								<th>
+									옵션결제여부
+								</th>
+								<th>
+									에스크로잔액
+									<span th:if="${'ESCROW_REMAIN_AMOUNT' != #request.getParameter('ordering')}" class="obtn" onclick="orderBy('ESCROW_REMAIN_AMOUNT', 'DESC')">▽</span>
+									<span th:if="${'ESCROW_REMAIN_AMOUNT' == #request.getParameter('ordering') && 'DESC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('ESCROW_REMAIN_AMOUNT', 'ASC')">▽</span>
+									<span th:if="${'ESCROW_REMAIN_AMOUNT' == #request.getParameter('ordering') && 'ASC' == #request.getParameter('direction')}" class="obtn obtn_now" onclick="orderBy('ESCROW_REMAIN_AMOUNT', 'DESC')">△</span>
+								</th>
+								<th>중복이메일 도달 횟수</th>
+								<th>참여제안 수</th>
+								<th>상세보기</th>
+								<th>중복키워드 알림메일</th>
+							</tr>
+							<tr th:each="item: ${page.content}">
+								<td>
+									<input type="checkbox" name="id" th:value="${item.id}" >
+								</td>
+								<td th:text="${item.projectType?.name}"></td>
+								<td th:text="*{#numbers.formatInteger(item.id, 0, 'COMMA')}">
+									651
+								</td>
+								<td th:text="${item.status?.desc}">입찰중</td>
+								<td th:text="|${#temporals.format(item.createdAt, 'yyyy-MM-dd')}|">2018.11.09</td>
+								<td th:text="|${#temporals.format(item.completedAt, 'yyyy-MM-dd')}|">
+								</td>
+								<td>
+									<span th:if="${item.status.name() == 'POSTED'}">D-<span th:text="${item.remainDays}">7</span></span>
+									<span th:if="${item.status.name() == 'IN_PROGRESS' || item.status.name() == 'COMPLETED'}" th:text="|${#temporals.format(item.startAt, 'yyyy-MM-dd')}|"></span>
+								</td>
+								<td th:text="${item.title}">프론트엔드개발/재택/2주</td>
+								<td>
+									<a th:href="${'http://www.freelancerk.com/redirect/users/' + item.postingClient.id + '?role=ROLE_CLIENT'}" target="_blank" th:text="|${item.postingClient.name} (${item.postingClient.corporateName!=null?item.postingClient.corporateName:'회사명 미등록'})|"></a>
+								</td>
+								<td th:text="${item.pickedFreelancerNames}">
+								</td>
+								<td th:text="*{#numbers.formatInteger(item.numberOfApplyCount, 0, 'COMMA')}">1</td>
+								<td th:text="*{#numbers.formatInteger(item.maxBidAmount, 0, 'COMMA')}">2,500,000</td>
+								<td th:text="*{#numbers.formatInteger(item.minBidAmount, 0, 'COMMA')}">2,500,000</td>
+								<td th:text="*{#numbers.formatInteger(item.successBidPrice, 0, 'COMMA')}">0</td>
+								<td th:text="${item.useEscrow}">Y</td>
+								<td th:text="${item.rePurchase}">Y</td>
+								<td th:text="*{#numbers.formatInteger(item.currentEscrowAmount, 0, 'COMMA')}">0</td>
+								<td th:text="*{#numbers.formatInteger(item.keywordDuplicatedMailTargets, 0, 'COMMA')}">0</td>
+								<td th:text="*{#numbers.formatInteger(item.projectPropositionCount, 0, 'COMMA')}">0</td>
+								<td>
+									<a th:href="|/project/${item.id}/details/basic|" class="btn-black medium">확인</a>
+								</td>
+								<td>
+									<button type="button" class="btn-black medium" th:onclick="|sendDuplicatedKeywordMail(${item.id})|">재전송</button>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</form>
+
+					<div class="boardbutton">
+						<div class="tc">
+							<div class="boardpage">
+								<th:block th:each="pageIndex: ${#numbers.sequence(0, displayPageIndexEnd - 1)}">
+									<span th:if="${pageIndex >= displayPageIndexStart}" th:class="|page-item ${(pageIndex == pageNumber)?'current':''}|"><a th:href="|/project/list?pageNumber=${pageIndex}|" th:text="${pageIndex + 1}"></a></span>
+								</th:block>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+			});
+			function today() {
+				$('input[name=createdFrom]').val(moment().format('YYYY-MM-DD'));
+				$('input[name=createdTo]').val(moment().add(1, 'day').format('YYYY-MM-DD'));
+			}
+
+			function thisWeek() {
+				$('input[name=createdFrom]').val(moment().startOf('week').format('YYYY-MM-DD'));
+				$('input[name=createdTo]').val(moment().add(1, 'week').startOf('week').format('YYYY-MM-DD'));
+			}
+
+			function thisMonth() {
+				$('input[name=createdFrom]').val(moment().startOf('month').format('YYYY-MM-DD'));
+				$('input[name=createdTo]').val(moment().add(1, 'month').startOf('month').format('YYYY-MM-DD'));
+			}
+
+			function orderBy(orderBy, direction) {
+				location.href = '/project/list?' + $('#form').serialize() + '&ordering=' + orderBy + '&direction=' + direction;
+			}
+
+			function resetSearch() {
+				location.href = '/project/list';
+			}
+
+			function sendDuplicatedKeywordMail(id) {
+				if (!confirm('발송하시겠습니까?')) {
+					return;
+				}
+
+				$.ajax({
+					type: 'POST',
+					url: '/projects/' + id + '/keyword-mail',
+					success: function(response) {
+						if ('SUCCESS' === response.responseCode) {
+							alert('성공적으로 발송 요청했습니다.');
+						} else {
+							alert('요청에 실패했습니다. 시스템 관리자에 문의해주세요.');
+						}
+					},
+					error: function(error) {
+						console.error(error);
+						alert('요청에 실패했습니다. 시스템 관리자에 문의해주세요.');
+					}
+				})
+			}
+
+			function search() {
+				$('#form').submit();
+			}
+		</script>
+	</section>
+	
+
+</html>

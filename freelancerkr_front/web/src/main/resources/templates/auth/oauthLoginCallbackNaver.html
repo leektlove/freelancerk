@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<form id="form" action="/login" role="form" method="post" style="display: none">
+    <input type="hidden" name="" value="freelancer">
+
+    <div class="input">
+        <div class="b_01">
+            <div class="box">
+                <input type="text" name="username" value="" class="en-priority required" placeholder="이메일" required="" title="이메일" style="ime-mode:inactive;" >
+            </div>
+        </div>
+        <div class="b_02">
+            <div class="box">
+                <input type="password" name="password" value="" class="en-priority required" placeholder="패스워드" required="" title="패스워드" style="ime-mode:inactive;" >
+            </div>
+        </div>
+    </div>
+
+    <div class="auto_login">
+        <input type="hidden" name="role" th:value="${role}" />
+        <input type="hidden" name="authType" value="EMAIL" />
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" name="RememberMe" value="1" id="auto_freelancer_login_btn" data-text="auto_freelancer_login_btn">
+            <label class="custom-control-label" for="auto_freelancer_login_btn">자동로그인</label>
+        </div>
+    </div>
+
+    <div class="btn_login">
+        <input type="submit" value="로그인">
+    </div>
+</form>
+
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+
+<script th:inline="javascript">
+    var naverClientId = [[${naverClientId}]];
+    var role = [[${role}]];
+    var type = [[${type}]];
+    var naverCallbackUrl = serverUrl + '/callback/oauth2/naver?role=' + role + '&type=' + type;
+</script>
+<script>
+    var naverLogin = new naver.LoginWithNaverId(
+        {
+            clientId: naverClientId,
+            callbackUrl: naverCallbackUrl,
+            isPopup: false,
+            callbackHandle: true
+            /* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */
+        }
+    );
+
+    /* (3) 네아로 로그인 정보를 초기화하기 위하여 init을 호출 */
+    naverLogin.init();
+
+    /* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) */
+    window.addEventListener('load', function () {
+        naverLogin.getLoginStatus(function (status) {
+            if (status) {
+                /* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */
+                var email = naverLogin.user.getEmail();
+                // if( email == undefined || email == null) {
+                //     alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
+                //     /* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 */
+                //     naverLogin.reprompt();
+                //     return;
+                // }
+
+                $('input[name=username]').val(naverLogin.user.getId());
+                $('input[name=authType]').val('NAVER');
+                $.ajax({
+                    type: "POST",
+                    url: $('#form').attr('action'),
+                    data: new FormData($('#form')[0]),
+                    processData: false,
+                    contentType: false,
+                    success: function(data)
+                    {
+                        close();
+                        window.opener.reload();
+                    },
+                    error: function(jqXHR, textStatus) {
+                        if (jqXHR.status === 404) {
+                            alert("존재하지 않는 계정입니다. 다시 한번 확인해주세요");
+                        } else {
+                            alert("로그인 시도에 실패했습니다.");
+                        }
+                        close();
+                    }
+                });
+            } else {
+                console.log("callback 처리에 실패하였습니다.");
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

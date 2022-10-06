@@ -2,7 +2,7 @@ body{font-family: 'nanumSquare','Nanum Gothic','Apple SD Gothic Neo', 'Arial', '
 .info{
 	position: relative;
 	padding: 5rem;
-	min-height: 800px;
+	min-height: 725px;
 }
 .ex{
 	color: #fff;
@@ -56,8 +56,8 @@ body{font-family: 'nanumSquare','Nanum Gothic','Apple SD Gothic Neo', 'Arial', '
 	font-size: 21px;
 	padding: 1rem 2rem;
 	color: #fff;
-	background-color: #c82333;
-	border-radius: 0;
+	background-color: #EA5335;
+	border-radius: 2px;
 	margin-top:3rem;
 	font-weight: 400;
 }

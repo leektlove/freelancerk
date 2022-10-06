@@ -146,9 +146,9 @@ label.radio input:checked ~ span::before{-webkit-box-shadow:0 0 0 3px #333 inset
 .BH_Popup img{max-width:100%;}
 
 .twoSiteHome{
-    min-height: 200px;
-    display: flex;  
+    min-height: 200px;  
     height: 100%;
+    display:flex;
     position: relative;
 }
 .introMainDiv{
@@ -213,7 +213,6 @@ label.radio input:checked ~ span::before{-webkit-box-shadow:0 0 0 3px #333 inset
     font-size: 12px;
 }
 .introInfoBoxBtnL{
-    margin-right:7px;
 }
 .introArtistBtnBox{
     margin-top: 7px;
@@ -359,17 +358,23 @@ label.radio input:checked ~ span::before{-webkit-box-shadow:0 0 0 3px #333 inset
 
 /*fplus mainHome*/
 .fplusBannerDiv{
+    text-align: center;
+    overflow: hidden;
+    vertical-align: middle;
     position: relative;
     height: 450px;
     max-width: 1200px; 
     margin: 0 auto;
 }
+
 .fplusBannerImg{
-     width: 100%;
+	width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position :50% 50%;
     filter: brightness(30%); 
 }
+
 .fplusBannerInfoBox{
     text-align:left;
     font-weight: 300;
@@ -408,16 +413,45 @@ label.radio input:checked ~ span::before{-webkit-box-shadow:0 0 0 3px #333 inset
     color: #212529;
     font-weight: 700;
 }
-
+.ajaxApplyAudition{
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #e95318;
+    color: #fff !important;
+    border: 0px solid black !important;
+}
+.goAuditionDetailBtn{
+	border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
 
 @media (max-width: 600px){
 	.fplusBannerTitle{
-	    font-size: 22px;
+	    font-size: 25px;
 	    font-weight: 600;
 	}
-	.fplusBannerTitlesub{
-		font-size: 15px;
+	.fplusBannerTitlesub2{
+		font-size: 17px;
 	    font-weight: 500;
+	}
+	.fplusBannerDiv{
+		height:225px;
+	}
+	.fplusBannerInfoBox {
+		top:40px;	
+		left:20px;
+		
+	}
+}
+@media (max-width: 992px){
+	.introHomeTopInfo{
+		display:none;
+	}
+	.twoSiteHome{
+    	display:block;
+    }
+    .introMainImg{
+		height:50%;	
 	}
 }
 

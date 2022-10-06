@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
+    	
         // Security configuration for H2 console access
         // !!!! You MUST NOT use this configuration for PRODUCTION site !!!!
         httpSecurity.authorizeRequests().antMatchers("/console/**").permitAll();

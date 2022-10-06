@@ -1,10 +1,8 @@
 package com.freelancerk.interceptor;
 
-import com.freelancerk.domain.DailyAccessLog;
-import com.freelancerk.domain.User;
-import com.freelancerk.domain.repository.DailyAccessLogRepository;
-import com.freelancerk.domain.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -13,10 +11,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.DailyAccessLogRepository;
+import com.freelancerk.domain.repository.UserRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component

@@ -1,12 +1,13 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.domain.specification.EscrowLogSpecifications;
-import com.freelancerk.domain.specification.EscrowRefundSpecifications;
-import com.freelancerk.domain.specification.ProjectItemTicketSpecifications;
-import com.freelancerk.service.ProjectService;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,8 +20,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.domain.ClientPointLog;
+import com.freelancerk.domain.EscrowLog;
+import com.freelancerk.domain.EscrowRefundRequest;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectItemTicket;
+import com.freelancerk.domain.ProjectProductItemType;
+import com.freelancerk.domain.Purchase;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.ClientPointLogRepository;
+import com.freelancerk.domain.repository.EscrowLogRepository;
+import com.freelancerk.domain.repository.EscrowRefundRequestRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketLogRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectProductItemTypeRepository;
+import com.freelancerk.domain.repository.PurchaseRepository;
+import com.freelancerk.domain.specification.EscrowLogSpecifications;
+import com.freelancerk.domain.specification.EscrowRefundSpecifications;
+import com.freelancerk.domain.specification.ProjectItemTicketSpecifications;
+import com.freelancerk.service.ProjectService;
 
 @Controller
 @RequestMapping("/client/payment")

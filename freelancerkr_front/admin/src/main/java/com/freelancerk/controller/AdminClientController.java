@@ -31,7 +31,7 @@ public class AdminClientController {
         this.pointService = pointService;
         this.userRepository = userRepository;
     }
-
+    
     @RequestMapping(method = RequestMethod.GET, value = "/clients")
     public CommonListResponse<List<User>> getClientUsers(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
                                                          @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {

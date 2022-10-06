@@ -1,14 +1,15 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.domain.specification.PickMeUpTicketSpecifications;
-import com.freelancerk.domain.specification.ProjectItemTicketSpecifications;
-import com.freelancerk.domain.specification.ProjectSpecifications;
-import com.freelancerk.service.PickMeUpService;
-import com.freelancerk.type.NoticeType;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,14 +20,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.domain.Advertisement;
+import com.freelancerk.domain.DailyAccessLog;
+import com.freelancerk.domain.PickMeUp;
+import com.freelancerk.domain.PickMeUpTicket;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectBid;
+import com.freelancerk.domain.ProjectFavorite;
+import com.freelancerk.domain.ProjectItemTicket;
+import com.freelancerk.domain.ProjectProductItemType;
+import com.freelancerk.domain.ProjectProposition;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.AdvertisementRepository;
+import com.freelancerk.domain.repository.CategoryRepository;
+import com.freelancerk.domain.repository.DailyAccessLogRepository;
+import com.freelancerk.domain.repository.NoticeRepository;
+import com.freelancerk.domain.repository.PickMeUpTicketRepository;
+import com.freelancerk.domain.repository.ProjectBidRepository;
+import com.freelancerk.domain.repository.ProjectFavoriteRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectProductItemTypeRepository;
+import com.freelancerk.domain.repository.ProjectPropositionRepository;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.domain.specification.PickMeUpTicketSpecifications;
+import com.freelancerk.domain.specification.ProjectItemTicketSpecifications;
+import com.freelancerk.domain.specification.ProjectSpecifications;
+import com.freelancerk.service.PickMeUpService;
+import com.freelancerk.type.NoticeType;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -72,7 +96,12 @@ public class MainViewController extends RootController {
         this.projectProductItemTypeRepository = projectProductItemTypeRepository;
     }
 
-    @RequestMapping(value = {"/", "/main"})
+    @RequestMapping(value = {"/"})
+    public String getIntroView(Model model) {
+        return "main/intro";
+    }
+    
+    @RequestMapping(value = {"/main"})
     public String getMainView(Model model,
                               HttpServletRequest request,
                               @RequestParam(value = "message", required = false) String message,
@@ -182,7 +211,7 @@ public class MainViewController extends RootController {
     public String getAboutUsView(Model model) {
         return "main/aboutUs";
     }
-
+    
     @RequestMapping("/infoPosting")
     public String getInfoPostingView(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

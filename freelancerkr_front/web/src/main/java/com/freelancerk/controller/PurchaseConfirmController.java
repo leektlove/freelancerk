@@ -1,5 +1,20 @@
 package com.freelancerk.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
+
 import com.freelancerk.domain.AligoKakaoMessageTemplate;
 import com.freelancerk.domain.Project;
 import com.freelancerk.domain.ProjectBid;
@@ -9,16 +24,8 @@ import com.freelancerk.service.ContestApplyService;
 import com.freelancerk.service.KeywordOrSectorAlarmService;
 import com.freelancerk.service.MessageService;
 import com.freelancerk.service.PurchaseService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller

@@ -1,12 +1,13 @@
 package com.freelancerk.controller.io;
 
+import javax.persistence.Transient;
+
 import com.freelancerk.domain.Project;
 import com.freelancerk.domain.TaxType;
 import com.freelancerk.domain.User;
 import com.freelancerk.util.FeeCalculator;
-import lombok.Data;
 
-import javax.persistence.Transient;
+import lombok.Data;
 
 @Data
 public class ContestPaymentData {

@@ -1,18 +1,18 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.ProjectViewMode;
-import com.freelancerk.TimeUtil;
-import com.freelancerk.controller.RootController;
-import com.freelancerk.controller.io.OptionNamePrice;
-import com.freelancerk.controller.io.ProjectProductOptionResponse;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.service.MessageService;
-import com.freelancerk.service.ProjectService;
-import com.freelancerk.service.UserService;
-import com.freelancerk.util.OptionDiscountCalculator;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,12 +25,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.freelancerk.ProjectViewMode;
+import com.freelancerk.TimeUtil;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.controller.io.OptionNamePrice;
+import com.freelancerk.controller.io.ProjectProductOptionResponse;
+import com.freelancerk.domain.AligoKakaoMessageTemplate;
+import com.freelancerk.domain.Category;
+import com.freelancerk.domain.ContestSector;
+import com.freelancerk.domain.ContestSectorMetaType;
+import com.freelancerk.domain.ContestSectorType;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectCategory;
+import com.freelancerk.domain.ProjectItemTicket;
+import com.freelancerk.domain.ProjectProductItemType;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.BankTypeRepository;
+import com.freelancerk.domain.repository.ContestSectorMetaTypeRepository;
+import com.freelancerk.domain.repository.ContestSectorRepository;
+import com.freelancerk.domain.repository.ProjectCategoryRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectProductItemTypeRepository;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.service.MessageService;
+import com.freelancerk.service.ProjectService;
+import com.freelancerk.service.UserService;
+import com.freelancerk.util.OptionDiscountCalculator;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @Controller
 @RequestMapping("/client/posting")

@@ -1,9 +1,5 @@
 package com.freelancerk.security;
 
-import com.freelancerk.domain.User;
-import com.freelancerk.exception.ExceedPasswordFailCountException;
-import com.freelancerk.exception.UsernameNotFoundException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -12,6 +8,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import com.freelancerk.domain.User;
+import com.freelancerk.exception.UsernameNotFoundException;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
@@ -24,11 +25,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthTypeAuthenticationToken authenticationToken = (UsernamePasswordAuthTypeAuthenticationToken) authentication;
-        String principal = null;
+        String principal = null;												
         String credential = null;
         String role = authenticationToken.getRole();
-
-        User user = service.loadUserByUsername(authenticationToken.getName());
+        String fpUser = authenticationToken.getFpUser();
+        User user = new User();
+        
+        if(fpUser!=null && !"".equals(fpUser)) {
+        	user = service.loadUserByUsernameAndFpUser(authenticationToken.getName(),authenticationToken.getFpUser());
+		}else {
+			user = service.loadUserByUsername(authenticationToken.getName());
+		}
+        
         if (!user.getRoles().contains(role)) {
             throw UsernameNotFoundException.getInstance();
         }

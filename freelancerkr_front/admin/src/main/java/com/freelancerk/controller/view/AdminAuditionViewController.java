@@ -4,6 +4,7 @@ import com.freelancerk.FileUtil;
 import com.freelancerk.controller.BaseController;
 import com.freelancerk.controller.io.JqueryUploaderResponse;
 import com.freelancerk.controller.io.JqueryUploaderResponseItem;
+import com.freelancerk.domain.AdminUser;
 import com.freelancerk.domain.Apply;
 import com.freelancerk.domain.Audition;
 import com.freelancerk.domain.Category;
@@ -41,6 +42,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,6 +74,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RequestMapping(value = "/audition")
 @Controller
@@ -111,6 +115,7 @@ public class AdminAuditionViewController extends BaseController {
 			@RequestParam(value = "fpUser", required = false) String fpUser,
 			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
 			@RequestParam(value = "pageSize", defaultValue = "20", required = false) int pageSize) {
+		
 		if (parentCategoryId != null && StringUtils.isNotEmpty(keywordName)) {
 			Category category = categoryRepository.findByParentCategoryIdAndName(parentCategoryId, keywordName);
 			categoryId = category != null ? category.getId() : null;
@@ -265,6 +270,8 @@ public class AdminAuditionViewController extends BaseController {
 	@RequestMapping(method = RequestMethod.POST, value = "/save")
 	public String auditionSave(Model model, @RequestParam(value = "auditionId", required = false) String auditionId,
 			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "product", required = false) String product,
+			@RequestParam(value = "adress", required = false) String adress,
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "text", required = false) String text,
 			@RequestParam(value = "auditionAt", required = false) String auditionAt,
@@ -280,10 +287,16 @@ public class AdminAuditionViewController extends BaseController {
 
 			audition.setAuditionId(uuid);
 		}
-		if (name != null) {
+		if (name != null && !"".equals(name)) {
 			audition.setName(name);
 		}
-		if (text != null) {
+		if (product != null && !"".equals(product)) {
+			audition.setProduct(product);
+		}
+		if (adress != null && !"".equals(adress)) {
+			audition.setAdress(adress);
+		}
+		if (text != null && !"".equals(text)) {
 			audition.setText(text);
 		}
 		if (status != null) {
@@ -580,4 +593,11 @@ public class AdminAuditionViewController extends BaseController {
 		return html;
 	}
 
+	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public Audition uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
+		Audition audition = new Audition();
+		audition.setImageUrl(storageService.storeFile(multipartFile));
+		return audition;
+	}
 }

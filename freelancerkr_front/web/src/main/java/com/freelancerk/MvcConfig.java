@@ -1,14 +1,15 @@
 package com.freelancerk;
 
-import com.freelancerk.interceptor.AccessRecordInterceptor;
-import com.freelancerk.interceptor.MenuHitInterceptor;
-import com.freelancerk.interceptor.CommonVariableInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.freelancerk.interceptor.AccessRecordInterceptor;
+import com.freelancerk.interceptor.CommonVariableInterceptor;
+import com.freelancerk.interceptor.MenuHitInterceptor;
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {

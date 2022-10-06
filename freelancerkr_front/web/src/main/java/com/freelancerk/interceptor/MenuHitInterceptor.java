@@ -1,5 +1,14 @@
 package com.freelancerk.interceptor;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.freelancerk.domain.MenuHit;
 import com.freelancerk.domain.Project;
 import com.freelancerk.domain.ProjectBid;
@@ -8,15 +17,8 @@ import com.freelancerk.domain.repository.MenuHitRepository;
 import com.freelancerk.domain.repository.ProjectBidRepository;
 import com.freelancerk.domain.repository.ProjectRepository;
 import com.freelancerk.domain.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MenuHitInterceptor implements HandlerInterceptor {

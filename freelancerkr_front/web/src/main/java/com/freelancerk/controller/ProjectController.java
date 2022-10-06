@@ -1,15 +1,20 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.TimeUtil;
-import com.freelancerk.io.CommonListResponse;
-import com.freelancerk.io.CommonResponse;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.model.SelectedKeywordModel;
-import com.freelancerk.service.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,16 +22,48 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.freelancerk.TimeUtil;
+import com.freelancerk.domain.AligoKakaoMessageTemplate;
+import com.freelancerk.domain.Category;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectBid;
+import com.freelancerk.domain.ProjectComment;
+import com.freelancerk.domain.ProjectContractFile;
+import com.freelancerk.domain.ProjectFavorite;
+import com.freelancerk.domain.ProjectItemTicket;
+import com.freelancerk.domain.ProjectItemTicketLog;
+import com.freelancerk.domain.ProjectProductItemType;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.ProjectBidRepository;
+import com.freelancerk.domain.repository.ProjectCommentRepository;
+import com.freelancerk.domain.repository.ProjectContractFileRepository;
+import com.freelancerk.domain.repository.ProjectFavoriteRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketLogRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectProductItemTypeRepository;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.io.CommonListResponse;
+import com.freelancerk.io.CommonResponse;
+import com.freelancerk.model.SelectedKeywordModel;
+import com.freelancerk.service.CategoryService;
+import com.freelancerk.service.FrkEmailService;
+import com.freelancerk.service.KeywordOrSectorAlarmService;
+import com.freelancerk.service.MessageService;
+import com.freelancerk.service.ProjectService;
+import com.freelancerk.service.StorageService;
+import com.freelancerk.service.UserService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Api(tags = "프로젝트", description = "포스팅/조회 등")

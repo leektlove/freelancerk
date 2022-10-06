@@ -72,35 +72,32 @@
 									<input type="checkbox" name="chkall" value="1" id="">
 								</th>
 								<th rowspan="2">순서</th>
-								<th rowspan="2">이름</th>
-								<th rowspan="2">설명</th>
 								<th rowspan="2">썸네일</th>
+								<th rowspan="2">이름</th>
+								<th rowspan="2">작품명</th>
 								<th rowspan="2">오디션 일시</th>
+								<th rowspan="2">위치</th>
 								<th rowspan="2">상태</th>
 								<th rowspan="2">상세보기</th>
 							</tr>
 							<tr>
-								<th>
-									  
-									<span class="obtn" data-no="4|d">▽</span>				</th>
-								<th>
-									
-									<span class="obtn" data-no="5|d">▽</span>
-								</th>
+								
 							</tr>
 							<tr th:each="item: ${page.content}">
 								<td>
 									<input type="checkbox" th:name="${item.id}" value="">
 								</td>
 								<td th:text="${item.id}">
-								</td>
-								<td th:text="${item.name}"></td>
-								<td th:text="${item.text}"></td>
 								<td>
 									<img th:src="${item.imageUrl}" style="width: 100px"/>
 								</td>
+								</td>
+								<td th:text="${item.name}"></td>
+								<td th:text="${item.product}"></td>
 								<td th:text="|${#temporals.format(item.auditionAt, 'yy-MM-dd HH:mm:ss')}|">2018-11-08<br>20:19:12</td>
-								<td th:text="${item.status}"></td>
+								<td th:text="${item.adress}"></td>
+								<td th:if="${item.status} == '2000'">정상</td>
+								<td th:if="${item.status} == '0000'">종료</td>
 								<td>
 									<a th:href="@{/audition/detail/{id}(id = ${item.auditionId})}" class="btn-black medium">보기</a>
 								</td>

@@ -1,13 +1,13 @@
 package com.freelancerk.security;
 
-import com.freelancerk.domain.User;
-import com.freelancerk.domain.repository.UserRepository;
-import com.freelancerk.exception.UsernameNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.exception.UsernameNotFoundException;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

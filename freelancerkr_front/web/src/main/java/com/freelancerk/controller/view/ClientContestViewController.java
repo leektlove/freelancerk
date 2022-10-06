@@ -1,11 +1,11 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.domain.specification.ProjectBidSpecifications;
-import com.freelancerk.service.ProjectBidService;
-import com.freelancerk.service.ProjectService;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -15,11 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.domain.ContestEntryFile;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectBid;
+import com.freelancerk.domain.ProjectComment;
+import com.freelancerk.domain.ProjectItemTicket;
+import com.freelancerk.domain.ProjectProductItemType;
+import com.freelancerk.domain.repository.ProjectBidRepository;
+import com.freelancerk.domain.repository.ProjectCommentRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectProductItemTypeRepository;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.specification.ProjectBidSpecifications;
+import com.freelancerk.service.ProjectBidService;
+import com.freelancerk.service.ProjectService;
 
 @Controller
 @RequestMapping("/client/contest")

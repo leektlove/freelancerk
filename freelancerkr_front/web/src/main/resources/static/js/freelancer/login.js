@@ -15,6 +15,7 @@ $(document).ready(function() {
         formData.append('password', $('input[name=password]').val());
         formData.append('role', 'ROLE_FREELANCER');
         formData.append('authType', 'EMAIL');
+        formData.append('fpUser', $('input[name=fpUser]').val());
         formData.append('redirectUrl', $('input[name=redirectUrl]').val());
 		
         $.ajax({

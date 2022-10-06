@@ -1,14 +1,16 @@
 package com.freelancerk.controller;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Locale;
+
+import javax.mail.internet.MimeUtility;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,22 +29,8 @@ import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 import com.freelancerk.domain.MailDto;
 import com.freelancerk.domain.User;
-import com.freelancerk.domain.repository.ApplyRepository;
-import com.freelancerk.domain.repository.AuditionRepository;
-import com.freelancerk.domain.repository.CategoryRepository;
-import com.freelancerk.domain.repository.DailyAccessLogRepository;
-import com.freelancerk.domain.repository.PaymentToUserRepository;
-import com.freelancerk.domain.repository.UserRepository;
 import com.freelancerk.gateway.EmailService;
 import com.freelancerk.service.MailService;
-import com.freelancerk.service.StorageService;
-
-import java.util.Locale;
-import java.util.Map;
-
-import javax.mail.internet.MimeUtility;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class MailController  {

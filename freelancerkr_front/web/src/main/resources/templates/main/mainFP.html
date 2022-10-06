@@ -388,18 +388,18 @@
 
     <!-- 메인 테스트 -->
     <div id="header-carousel" class="bg-gray carousel slide carousel-fade" data-ride="carousel" data-interval="3000" data-pause="false">
-		<div class="fplusBannerDiv">
-            <img src="/static/img/movie2.jpg" class="fplusBannerImg">
+		<div class="fplusBannerDiv" th:onclick="'location.href=\'' + @{/audition/detail(id=${topAudition.auditionId})} + '\''">
+            <img th:src="${topAudition.imageUrl}" class="fplusBannerImg" id="fplusMainTopImg">
             <div class="fplusBannerInfoBox"> <!-- absolute 박스-->
                 <div class="fplusBannerTitle">
-                  나의 해방일지 조연오디션
+                  <a th:text="${topAudition.name}">나의 해방일지 조연오디션</a>
                 </div>
                 <div class="fplusBannerTitlesub">
                  	
                 </div>
                 <div class="fplusBannerTitlesub2">
-                  일시: 2022-06-30 15:00 <br>
-                  장소: 서울특별시 강남구 학동로12길 8, 3층
+                  일시: <a th:text="|${#strings.substring(topAudition.auditionAt,0, 10)} ${#strings.substring(topAudition.auditionAt,11, 16)}|">2022-06-30 15:00</a> <br>
+                  장소: <a th:text="${topAudition.adress}">서울특별시 강남구 학동로12길 8, 3층</a>
                 </div>
             </div>
         </div>
@@ -541,37 +541,41 @@
   	  	search();
   	  	
   	  	$(document).on('click', '.ajaxApplyAudition', function(e){
-			var work = $(this).attr('workid');
-			console.log("ajaxApplyAudition: "+work);
-			//var loggedIn = '${loggedIn}';
-			var uid = $('#uid').val();
-			if(uid){
-				console.log(uid);
-				var param = {};
-			    param.uid = uid;
-			    param.work = work;
-			    
-			    param = JSON.stringify(param);
-			    
-				$.ajax({
-			        url : "/ajax_audition_apply",
-			        data : param,
-			        type : 'post',
-			        contentType:"application/json; charset=UTF-8",
-			        dataType:"json",
-			        success : function(data){
-			           if(data.status!="200"){
-				 			alert(data.errorMsg);
-						}else{
-							alert("신청이 완료되었습니다.")
-						}
-			        },
-			        error : function(request,status,error){
-			        	alert("신청중 문제가 발생했습니다. 계속 해당문제가 발생시 고객센터에 문의해주세요");
-			        }
-			    });
-			}else{
-				alert('로그인 후 이용해주세요');
+			if (!confirm("해당 오디션에 지원하시겠습니까?")) {
+				
+      	  	} else {
+				var work = $(this).attr('workid');
+				console.log("ajaxApplyAudition: "+work);
+				//var loggedIn = '${loggedIn}';
+				var uid = $('#uid').val();
+				if(uid){
+					console.log(uid);
+					var param = {};
+				    param.uid = uid;
+				    param.work = work;
+				    
+				    param = JSON.stringify(param);
+				    
+					$.ajax({
+				        url : "/ajax_audition_apply",
+				        data : param,
+				        type : 'post',
+				        contentType:"application/json; charset=UTF-8",
+				        dataType:"json",
+				        success : function(data){
+				           if(data.status!="200"){
+					 			alert(data.errorMsg);
+							}else{
+								alert("신청이 완료되었습니다.")
+							}
+				        },
+				        error : function(request,status,error){
+				        	alert("신청중 문제가 발생했습니다. 계속 해당문제가 발생시 고객센터에 문의해주세요");
+				        }
+				    });
+				}else{
+					alert('로그인 후 이용해주세요');
+				}
 			}
 		});
 		
@@ -610,10 +614,10 @@
 		function getRow(audition){
 			var date = ''+audition.auditionAt;
 			var row = '';
-			row = row + '<div class="col-6 col-sm-6 col-md-3 mb-3">';
-			row = row + '	<article class=" post pickmeup_card">';
+			row = row + '<div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-3">';
+			row = row + '	<article class=" post pickmeup_card" style="border:0px solid black; box-shadow: 0 0px 4px rgb(0 0 0 / 30%);">';
 			row = row + '		<span class="badge-g-list"></span>';
-			row = row + '		<a class="image_wrap">';
+			row = row + '		<a class="image_wrap" href="javascript:goAuditionDetail(\''+audition.auditionId+'\')">';
 			row = row + '			<div class="post-image" style="position: relative;">';
 			row = row + '				<div class="kind-c"></div>';
 			row = row + '				<div class="pickmeup_portfolio_card">';
@@ -623,19 +627,23 @@
 			row = row + '				</div> ';
 			row = row + '			</div>';
 			row = row + '		</a> ';
-			row = row + '		<a href="javascript:toPickMeUpDetail(&#39;/portfolios/7189/details?pickMeUpIds=7179,7190,7189,7187,7186,7183,7182,7177,7176,7175,7174,7171,7169,7168,7165,7163,7162,7160,7159,7158,7156,7152,7151,7150&amp;currentIndex=2&#39;, true, false)">';
+			row = row + '		<a href="javascript:goAuditionDetail(\''+audition.auditionId+'\')">';
 			row = row + '			 <div class="card-title text-dark" style="margin-bottom: 5px;">';
 			row = row + '				<div style="font-weight:600; margin-top: 10px;">'+audition.name+'</div>';
 			row = row + '				<div style="font-weight:600; font-size: 11px; color:666; text-align: center; margin-top: 3px;">'+date.substr(0,10)+' '+date.substr(11,5)+'</div>';
 			row = row + '			 </div>';
 			row = row + '		</a>';
 			row = row + '		<div class="c_action_btn">';
-			row = row + '			<div class="c_propose_btn ajaxApplyAudition" workid = "'+audition.auditionId+'"> 오디션 신청</div>';
+			row = row + '			<div class="c_propose_btn goAuditionDetailBtn" workid = "'+audition.auditionId+'" onclick="goAuditionDetail(\''+audition.auditionId+'\')"> 상세보기 </div>';
 			row = row + '		</div>';
 			row = row + '	</article>';
 			row = row + '</div>';
 		                
 			return row;
+		}
+		function goAuditionDetail(id){
+			console.log("goauditionDetail id : "+id);
+			location.href="/audition/detail?id="+id;
 		}
 	
     </script>

@@ -1,18 +1,20 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.PickMeUpComment.UserRole;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.gateway.EmailService;
-import com.freelancerk.io.CommonListResponse;
-import com.freelancerk.io.CommonResponse;
-import com.freelancerk.io.ResponseCode;
-import com.freelancerk.model.SelectedKeywordModel;
-import com.freelancerk.security.UsernamePasswordAuthTypeAuthenticationToken;
-import com.freelancerk.service.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,13 +36,35 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
+import com.freelancerk.domain.AligoKakaoMessageTemplate;
+import com.freelancerk.domain.Category;
+import com.freelancerk.domain.CertificationCode;
+import com.freelancerk.domain.ClientPointLog;
+import com.freelancerk.domain.DailyAccessLog;
+import com.freelancerk.domain.ResettingPassword;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.CertificationCodeRepository;
+import com.freelancerk.domain.repository.ClientPointLogRepository;
+import com.freelancerk.domain.repository.DailyAccessLogRepository;
+import com.freelancerk.domain.repository.ResettingPasswordRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.gateway.EmailService;
+import com.freelancerk.io.CommonListResponse;
+import com.freelancerk.io.CommonResponse;
+import com.freelancerk.io.ResponseCode;
+import com.freelancerk.model.SelectedKeywordModel;
+import com.freelancerk.security.UsernamePasswordAuthTypeAuthenticationToken;
+import com.freelancerk.service.CategoryService;
+import com.freelancerk.service.MessageService;
+import com.freelancerk.service.PointService;
+import com.freelancerk.service.ResettingPasswordService;
+import com.freelancerk.service.SmsService;
+import com.freelancerk.service.StorageService;
+import com.freelancerk.service.UserService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Api(tags = "유저", description = "유저 관련 정보 조회 등")

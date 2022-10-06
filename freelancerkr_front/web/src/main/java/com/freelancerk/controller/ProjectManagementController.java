@@ -1,6 +1,5 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.domain.Project;
 import io.swagger.annotations.Api;
 
 @Api("프로젝트 관리")

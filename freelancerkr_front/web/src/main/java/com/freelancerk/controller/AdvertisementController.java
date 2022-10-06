@@ -1,5 +1,11 @@
 package com.freelancerk.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.freelancerk.domain.AdvertisementClick;
 import com.freelancerk.domain.AdvertisementHit;
 import com.freelancerk.domain.repository.AdvertisementClickRepository;
@@ -7,11 +13,6 @@ import com.freelancerk.domain.repository.AdvertisementHitRepository;
 import com.freelancerk.domain.repository.AdvertisementRepository;
 import com.freelancerk.domain.repository.UserRepository;
 import com.freelancerk.io.CommonResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AdvertisementController extends RootController {

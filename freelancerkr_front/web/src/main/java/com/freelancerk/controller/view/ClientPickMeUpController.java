@@ -1,27 +1,15 @@
 package com.freelancerk.controller.view;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.FreelancerProductItemType;
-import com.freelancerk.domain.PickMeUp;
-import com.freelancerk.domain.PickMeUpTicket;
-import com.freelancerk.domain.Project;
 import com.freelancerk.domain.repository.CategoryRepository;
 import com.freelancerk.domain.repository.FreelancerProductItemTypeRepository;
 import com.freelancerk.domain.repository.PickMeUpTicketRepository;
 import com.freelancerk.domain.repository.ProjectRepository;
-import com.freelancerk.domain.specification.PickMeUpTicketSpecifications;
-import com.freelancerk.domain.specification.ProjectSpecifications;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/client/pickMeUp")

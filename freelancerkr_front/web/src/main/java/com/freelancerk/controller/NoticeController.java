@@ -1,11 +1,7 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.domain.Notice;
-import com.freelancerk.domain.repository.NoticeRepository;
-import com.freelancerk.io.CommonListResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.freelancerk.domain.Notice;
+import com.freelancerk.domain.repository.NoticeRepository;
+import com.freelancerk.io.CommonListResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Api(tags = "공지사항/자료실", description = "등록/조회 등")

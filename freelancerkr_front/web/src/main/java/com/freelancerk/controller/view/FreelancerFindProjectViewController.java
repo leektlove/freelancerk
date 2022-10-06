@@ -1,12 +1,11 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.domain.specification.ProjectSpecifications;
-import com.freelancerk.model.SortBy;
-import com.freelancerk.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -19,11 +18,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.domain.Category;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectBid;
+import com.freelancerk.domain.ProjectFavorite;
+import com.freelancerk.domain.ProjectItemTicket;
+import com.freelancerk.domain.ProjectProductItemType;
+import com.freelancerk.domain.ProjectProposition;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.CategoryRepository;
+import com.freelancerk.domain.repository.ProjectBidRepository;
+import com.freelancerk.domain.repository.ProjectFavoriteRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectProductItemTypeRepository;
+import com.freelancerk.domain.repository.ProjectPropositionRepository;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.specification.ProjectSpecifications;
+import com.freelancerk.model.SortBy;
+import com.freelancerk.service.UserService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller

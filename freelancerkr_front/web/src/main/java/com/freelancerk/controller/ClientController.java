@@ -1,16 +1,5 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.Constant;
-import com.freelancerk.io.CommonResponse;
-import com.freelancerk.domain.User;
-import com.freelancerk.domain.repository.BankTypeRepository;
-import com.freelancerk.domain.repository.UserRepository;
-import com.freelancerk.service.StorageService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +9,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.freelancerk.Constant;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.BankTypeRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.io.CommonResponse;
+import com.freelancerk.service.StorageService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Api(tags = "클라이언트", description = "정보 수정 등")

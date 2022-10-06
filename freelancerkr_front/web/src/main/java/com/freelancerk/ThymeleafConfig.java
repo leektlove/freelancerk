@@ -1,13 +1,14 @@
 package com.freelancerk;
 
-import lombok.extern.slf4j.Slf4j;
-import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+
+import lombok.extern.slf4j.Slf4j;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Slf4j
 @Configuration

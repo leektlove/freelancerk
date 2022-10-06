@@ -1,18 +1,19 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.domain.PickMeUp;
-import com.freelancerk.domain.RobotsTxt;
-import com.freelancerk.domain.User;
-import com.freelancerk.domain.repository.PickMeUpRepository;
-import com.freelancerk.domain.repository.RobotsTxtRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.freelancerk.domain.PickMeUp;
+import com.freelancerk.domain.RobotsTxt;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.PickMeUpRepository;
+import com.freelancerk.domain.repository.RobotsTxtRepository;
 
 @RestController
 public class RobotController {

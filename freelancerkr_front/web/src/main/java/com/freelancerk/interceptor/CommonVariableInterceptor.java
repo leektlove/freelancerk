@@ -1,11 +1,10 @@
 package com.freelancerk.interceptor;
 
-import com.freelancerk.domain.Project;
-import com.freelancerk.domain.User;
-import com.freelancerk.domain.repository.ProjectRepository;
-import com.freelancerk.domain.repository.UserRepository;
-import com.freelancerk.service.ProjectService;
-import com.freelancerk.service.UserService;
+import java.util.Arrays;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -13,9 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.service.ProjectService;
+import com.freelancerk.service.UserService;
 
 public class CommonVariableInterceptor implements HandlerInterceptor {
 

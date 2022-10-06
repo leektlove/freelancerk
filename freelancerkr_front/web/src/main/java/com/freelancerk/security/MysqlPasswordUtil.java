@@ -1,9 +1,9 @@
 package com.freelancerk.security;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MysqlPasswordUtil {

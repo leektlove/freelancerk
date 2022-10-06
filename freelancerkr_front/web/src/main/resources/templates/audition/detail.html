@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 				layout:decorator="layout/layoutf">
+<head>
+	<!-- 로컬적용 css -->
+	<link rel="stylesheet" href="/static/css/audition/auditionDetail.css">
+</head>
+
+	
+	<section id="content" layout:fragment="content">
+
+		<div class="container auditionDetailContainer" >
+		 	<input type="hidden" name="uid" th:if="${user}" th:value="${user.uid}" id="uid">
+	        <div class="row">
+	            <div class="col-lg-8 col-md-12 text-center col-sm-12 auditionImgMobile">
+	                <img src="../img/tumblr_e1ad3902a658bd6b6549bda049025d93_b430fb61_640.jpg" alt="" class="rounded auditionDetailThumnailImg" th:src="${audition.imageUrl}">
+	            </div>
+	            <div class="col-12 col-lg-4 col-md-12 auditionInfoPc">
+	                <div class="auditionInfoBox">
+	                   <div class="auditionInfoTopName" th:text="${audition.name}">
+	                       나의 해방일지 조연 오디션
+	                   </div>
+	                    <table class="goodsTopInfoTable ">
+							<tbody>
+	                            <tr>
+	                                <th>제목</th>
+	                                <td th:text="${audition.product}">나의 해방일지 </td>	
+	                            </tr>
+	                            <tr>
+	                                <th>시간</th>
+	                                <td  th:text="|${#strings.substring(audition.auditionAt,0, 10)} ${#strings.substring(audition.auditionAt,11, 16)}|">2022-04-12 13:23:32</td>	
+	                            </tr>
+	                            <tr>
+	                                <th>장소</th>
+	                                <td th:text="${audition.adress}">서울특별시 광진구 아차산로 39가길 23</td>	
+	                            </tr>
+						   </tbody>
+	                   </table>
+	                </div>
+	                <div class="auditionApply auditionApplyBtn auditionApplyBtnClick" th:workid="${audition.auditionId}" th:if="${!apply}">
+	                    오디션 지원하기
+	                </div>
+	                <div class="auditionApply auditionApplyBtn auditionApplyBtnNone" th:workid="${audition.auditionId}" th:if="${apply}">
+	                    지원완료
+	                </div>
+	            </div>
+	            <div class="col-12 goodsTopInfo">
+	                <div class="goodsTopTitle"  th:text="${audition.name}" >🌜 새벽 요가 &amp;모닝 요가 🌞</div>
+	                <div class="goodsTopSub">
+	                    <div class="goodsTopInfoTableDiv">
+	                        <table class="goodsTopInfoTable ">
+	                            <tbody> 
+	                                <tr>
+	                                    <th>제목</th>
+	                                    <td th:text="${audition.product}">나의 해방일지 </td>	
+	                                </tr>
+	                                <tr>
+	                                    <th>시간</th>
+                                    	<td th:text="|${#strings.substring(audition.auditionAt,0, 10)} ${#strings.substring(audition.auditionAt,11, 16)}|">2022-04-12 13:23:32</td>
+	                                </tr>
+	                                <tr>
+	                                    <th>장소</th>
+	                                    <td th:text="${audition.adress}">서울특별시 광진구 아차산로 39가길 23</td>	
+	                                </tr>
+	                           </tbody>
+	                       </table>
+	
+	                    </div>
+				    </div>
+			    </div>
+	            <div class="goodsTopButtonDiv"> <!--좋아요, 공유하기 버튼박스-->
+	               <div class="auditionApplyMobile auditionApplyBtn auditionApplyBtnClick"  th:workid="${audition.auditionId}"  th:if="${!apply}">
+	                    오디션 지원하기
+	                </div>
+	                <div class="auditionApplyMobile auditionApplyBtn auditionApplyBtnNone"  th:workid="${audition.auditionId}" th:if="${apply}">
+	                    지원완료
+	                </div>
+	            </div>
+	            <div class="goodsDivision1"> </div>
+	        </div>
+	        <hr class="hrPc">
+	        <div class="row auditionText">
+	            <div class="goodsContentsDescription" style="min-height:500px; max-height: 999999px;" th:utext="${audition.text}">
+	        
+	           	</div>
+	        </div>
+	    </div>
+	    <script>
+		    $(document).on('click', '.auditionApplyBtnClick', function(e){
+				if (!confirm("해당 오디션에 지원하시겠습니까?")) {
+				
+	      	  	} else {
+	            	var work = $(this).attr('workid');
+					console.log("ajaxApplyAudition: "+work);
+					//var loggedIn = '${loggedIn}';
+					var uid = $('#uid').val();
+					if(uid){
+						console.log(uid);
+						var param = {};
+					    param.uid = uid;
+					    param.work = work;
+					    
+					    param = JSON.stringify(param);
+					    
+						$.ajax({
+					        url : "/ajax_audition_apply",
+					        data : param,
+					        type : 'post',
+					        contentType:"application/json; charset=UTF-8",
+					        dataType:"json",
+					        success : function(data){
+					           if(data.status!="200"){
+						 			alert(data.errorMsg);
+								}else{
+									alert("신청이 완료되었습니다.");
+									location.reload();
+								}
+					        },
+					        error : function(request,status,error){
+					        	alert("신청중 문제가 발생했습니다. 계속 해당문제가 발생시 고객센터에 문의해주세요");
+					        }
+					    });
+					}else{
+						alert('로그인 후 이용해주세요');
+					}
+				}
+			});
+		</script> 	 
+	    
+	</section>
+	
+
+</html>

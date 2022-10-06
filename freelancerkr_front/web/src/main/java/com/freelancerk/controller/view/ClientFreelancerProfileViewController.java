@@ -1,12 +1,5 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.PickMeUp;
-import com.freelancerk.domain.User;
-import com.freelancerk.domain.repository.PickMeUpRepository;
-import com.freelancerk.domain.specification.PickMeUpSpecifications;
-import com.freelancerk.service.PickMeUpService;
-import com.freelancerk.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.freelancerk.controller.RootController;
+import com.freelancerk.domain.PickMeUp;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.PickMeUpRepository;
+import com.freelancerk.domain.specification.PickMeUpSpecifications;
+import com.freelancerk.service.PickMeUpService;
+import com.freelancerk.service.UserService;
 
 @Controller
 @RequestMapping("/client/freelancer/profile")

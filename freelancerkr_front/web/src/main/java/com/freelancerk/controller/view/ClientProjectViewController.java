@@ -1,12 +1,10 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.controller.RootController;
-import com.freelancerk.controller.io.ProjectSort;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.domain.specification.ProjectCommentSpecifications;
-import com.freelancerk.domain.specification.ProjectSpecifications;
-import com.freelancerk.service.ProjectService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,10 +16,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.controller.io.ProjectSort;
+import com.freelancerk.domain.PaymentToUser;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectBid;
+import com.freelancerk.domain.ProjectComment;
+import com.freelancerk.domain.ProjectRate;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.ContestEntryRewardRepository;
+import com.freelancerk.domain.repository.PaymentToUserRepository;
+import com.freelancerk.domain.repository.ProjectBidRepository;
+import com.freelancerk.domain.repository.ProjectCommentRepository;
+import com.freelancerk.domain.repository.ProjectCompleteRepository;
+import com.freelancerk.domain.repository.ProjectContractFileRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectRateRepository;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.domain.specification.ProjectCommentSpecifications;
+import com.freelancerk.domain.specification.ProjectSpecifications;
+import com.freelancerk.service.ProjectService;
 
 @Controller
 @RequestMapping("/client/project")

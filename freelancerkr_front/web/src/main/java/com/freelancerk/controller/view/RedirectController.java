@@ -1,11 +1,8 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.domain.Project;
-import com.freelancerk.domain.User;
-import com.freelancerk.domain.UserMasterTempToken;
-import com.freelancerk.domain.repository.ProjectRepository;
-import com.freelancerk.domain.repository.UserMasterTempTokenRepository;
-import com.freelancerk.domain.repository.UserRepository;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.UserMasterTempToken;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.repository.UserMasterTempTokenRepository;
+import com.freelancerk.domain.repository.UserRepository;
 
 @Controller
 public class RedirectController {

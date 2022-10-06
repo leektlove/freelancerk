@@ -1,20 +1,17 @@
 package com.freelancerk.controller.view;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.freelancerk.TimeUtil;
-import com.freelancerk.controller.RootController;
-import com.freelancerk.controller.io.SelectedPickMeUpOption;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.domain.specification.PickMeUpSpecifications;
-import com.freelancerk.domain.specification.PickMeUpTicketSpecifications;
-import com.freelancerk.model.ContactAvailableDayTimeModel;
-import com.freelancerk.policy.PaymentPolicy;
-import com.freelancerk.service.FreelancerPayService;
-import com.freelancerk.service.PickMeUpService;
-import com.freelancerk.util.OptionDiscountCalculator;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +27,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.freelancerk.TimeUtil;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.controller.io.SelectedPickMeUpOption;
+import com.freelancerk.domain.Category;
+import com.freelancerk.domain.ContactAvailableDayTime;
+import com.freelancerk.domain.FreelancerPayProduct;
+import com.freelancerk.domain.FreelancerProductItemType;
+import com.freelancerk.domain.PickMeUp;
+import com.freelancerk.domain.PickMeUpTicket;
+import com.freelancerk.domain.Purchase;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.CategoryRepository;
+import com.freelancerk.domain.repository.ContactAvailableDayTimeRepository;
+import com.freelancerk.domain.repository.FreelancerProductItemTypeRepository;
+import com.freelancerk.domain.repository.PickMeUpFreeChargeRepository;
+import com.freelancerk.domain.repository.PickMeUpRepository;
+import com.freelancerk.domain.repository.PickMeUpTicketRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.domain.specification.PickMeUpSpecifications;
+import com.freelancerk.domain.specification.PickMeUpTicketSpecifications;
+import com.freelancerk.model.ContactAvailableDayTimeModel;
+import com.freelancerk.policy.PaymentPolicy;
+import com.freelancerk.service.FreelancerPayService;
+import com.freelancerk.service.PickMeUpService;
+import com.freelancerk.util.OptionDiscountCalculator;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller

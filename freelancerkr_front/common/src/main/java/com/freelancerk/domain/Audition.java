@@ -19,6 +19,8 @@ public class Audition {
     
     private String auditionId;
     private String name;
+    private String adress;
+    private String product;
     private String text;
     private String imageUrl;
     private String status;

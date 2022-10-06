@@ -1,5 +1,9 @@
 package com.freelancerk.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.freelancerk.controller.io.ContestPaymentData;
 import com.freelancerk.domain.Project;
 import com.freelancerk.domain.ProjectBid;
@@ -7,9 +11,6 @@ import com.freelancerk.domain.repository.ProjectRepository;
 import com.freelancerk.domain.repository.UserRepository;
 import com.freelancerk.io.CommonResponse;
 import com.freelancerk.service.ProjectBidService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ContestPaymentController extends RootController {

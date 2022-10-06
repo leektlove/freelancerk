@@ -1,11 +1,12 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.domain.User;
-import com.freelancerk.exception.NotLoggedInException;
 import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
+
+import com.freelancerk.domain.User;
+import com.freelancerk.exception.NotLoggedInException;
 
 public class RootController {
 

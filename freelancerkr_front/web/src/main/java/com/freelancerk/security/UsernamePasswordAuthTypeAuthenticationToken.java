@@ -1,13 +1,14 @@
 package com.freelancerk.security;
 
+import java.util.Collection;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 public class UsernamePasswordAuthTypeAuthenticationToken extends UsernamePasswordAuthenticationToken {
     private String authType;
     private String role;
+    private String fpUser;
 
     public UsernamePasswordAuthTypeAuthenticationToken(Object principal, Object credentials) {
         super(principal, credentials);
@@ -22,6 +23,13 @@ public class UsernamePasswordAuthTypeAuthenticationToken extends UsernamePasswor
         this.authType = authType;
         this.role = role;
     }
+    
+    public UsernamePasswordAuthTypeAuthenticationToken(Object principal, Object credentials, String authType, String role, String fpUser) {
+        super(principal, credentials);
+        this.authType = authType;
+        this.role = role;
+        this.fpUser = fpUser;
+    }
 
     public String getAuthType() {
         return authType;
@@ -29,5 +37,9 @@ public class UsernamePasswordAuthTypeAuthenticationToken extends UsernamePasswor
 
     public String getRole() {
         return role;
+    }
+    
+    public String getFpUser() {
+    	return fpUser;
     }
 }

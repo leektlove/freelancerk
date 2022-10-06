@@ -1,14 +1,10 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.ProjectBidRepository;
-import com.freelancerk.domain.repository.ProjectItemTicketRepository;
-import com.freelancerk.domain.repository.ProjectPropositionRepository;
-import com.freelancerk.service.ProjectBidService;
-import com.freelancerk.service.ProjectService;
-import com.freelancerk.service.UserService;
-import com.freelancerk.type.ContestDetailViewTypeForFreelancer;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +12,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.domain.ContestEntryFile;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectBid;
+import com.freelancerk.domain.ProjectComment;
+import com.freelancerk.domain.ProjectContractFile;
+import com.freelancerk.domain.ProjectItemTicket;
+import com.freelancerk.domain.ProjectProductItemType;
+import com.freelancerk.domain.repository.ProjectBidRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectPropositionRepository;
+import com.freelancerk.service.ProjectBidService;
+import com.freelancerk.service.ProjectService;
+import com.freelancerk.service.UserService;
+import com.freelancerk.type.ContestDetailViewTypeForFreelancer;
 
 @Controller
 public class FreelancerContestViewController extends RootController {

@@ -1,16 +1,9 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.ProjectBidRepository;
-import com.freelancerk.domain.repository.ProjectCommentRepository;
-import com.freelancerk.domain.repository.ProjectPropositionRepository;
-import com.freelancerk.domain.specification.ProjectBidSpecifications;
-import com.freelancerk.domain.specification.ProjectPropositionSpecifications;
-import com.freelancerk.model.SortBy;
-import com.freelancerk.service.ProjectBidService;
-import com.freelancerk.service.UserService;
-import lombok.extern.java.Log;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -19,9 +12,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.domain.ContestEntryFile;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectBid;
+import com.freelancerk.domain.ProjectProposition;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.ProjectBidRepository;
+import com.freelancerk.domain.repository.ProjectCommentRepository;
+import com.freelancerk.domain.repository.ProjectPropositionRepository;
+import com.freelancerk.domain.specification.ProjectBidSpecifications;
+import com.freelancerk.domain.specification.ProjectPropositionSpecifications;
+import com.freelancerk.model.SortBy;
+import com.freelancerk.service.ProjectBidService;
+import com.freelancerk.service.UserService;
+
+import lombok.extern.java.Log;
 
 @Log
 @Controller

@@ -1,15 +1,9 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.FileUtil;
-import com.freelancerk.controller.io.JqueryUploaderResponse;
-import com.freelancerk.controller.io.JqueryUploaderResponseItem;
-import com.freelancerk.domain.ContestEntryFile;
-import com.freelancerk.io.CommonResponse;
-import com.freelancerk.service.StorageService;
-import com.freelancerk.service.VideoThumbnailService;
-import org.apache.commons.lang3.StringUtils;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.freelancerk.FileUtil;
+import com.freelancerk.controller.io.JqueryUploaderResponse;
+import com.freelancerk.controller.io.JqueryUploaderResponseItem;
+import com.freelancerk.domain.ContestEntryFile;
+import com.freelancerk.io.CommonResponse;
+import com.freelancerk.service.StorageService;
+import com.freelancerk.service.VideoThumbnailService;
 
 @RestController
 public class StaticController {

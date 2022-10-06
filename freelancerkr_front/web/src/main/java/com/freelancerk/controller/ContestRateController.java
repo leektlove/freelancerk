@@ -1,5 +1,16 @@
 package com.freelancerk.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.freelancerk.domain.AligoKakaoMessageTemplate;
 import com.freelancerk.domain.ProjectBid;
 import com.freelancerk.domain.ProjectRate;
@@ -9,13 +20,8 @@ import com.freelancerk.domain.repository.ProjectRateRepository;
 import com.freelancerk.domain.repository.UserRepository;
 import com.freelancerk.io.CommonResponse;
 import com.freelancerk.service.MessageService;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class ContestRateController {

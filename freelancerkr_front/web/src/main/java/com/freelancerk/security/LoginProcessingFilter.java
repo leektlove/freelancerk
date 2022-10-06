@@ -1,14 +1,12 @@
 package com.freelancerk.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.freelancerk.domain.User;
-import com.freelancerk.exception.ExceedPasswordFailCountException;
-import com.freelancerk.exception.UsernameNotFoundException;
-import com.freelancerk.io.CommonResponse;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,11 +15,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.freelancerk.domain.User;
+import com.freelancerk.exception.ExceedPasswordFailCountException;
+import com.freelancerk.exception.UsernameNotFoundException;
+import com.freelancerk.io.CommonResponse;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
@@ -41,25 +43,29 @@ public class LoginProcessingFilter extends AbstractAuthenticationProcessingFilte
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse httpServletResponse)
 			throws AuthenticationException, IOException, ServletException {
-
+		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String role = request.getParameter("role");
 		String authType = request.getParameter("authType");
-		String fpUser = "N";
-		if(request.getParameter("fpUser")!=null && !"".equals(request.getParameter("fpUser"))) {
-			fpUser = "Y";
+		String fpUser = request.getParameter("fpUser");
+		if( fpUser == null || "".equals(fpUser)) {
+			fpUser = "N";
 		}
+		request.setAttribute("fpType", fpUser);
 		User user = null;
 		try {
-			
-			user = userDetailsService.loadUserByUsernameAndFpUser(username,fpUser);
+			if(fpUser!=null && !"".equals(fpUser)) {
+				user = userDetailsService.loadUserByUsernameAndFpUser(username,fpUser);
+			}else {
+				user = userDetailsService.loadUserByUsername(username);
+			}
 			if (user != null && user.isLegacyUser() && User.AuthType.EMAIL.name().equals(authType)) {
 				password = MysqlPasswordUtil.passwordFunc(password);
 			}
 
 			UsernamePasswordAuthTypeAuthenticationToken loginToken = new UsernamePasswordAuthTypeAuthenticationToken(
-					username, password, authType, role);
+					username, password, authType, role,fpUser);
 			AuthenticationManager manager = getAuthenticationManager();
 			return manager.authenticate(loginToken);
 		} catch (UsernameNotFoundException | org.springframework.security.core.userdetails.UsernameNotFoundException e) {
@@ -92,7 +98,15 @@ public class LoginProcessingFilter extends AbstractAuthenticationProcessingFilte
 			Authentication authentication) throws IOException, ServletException {
 
 		String role = request.getParameter("role");
-		final User authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
+		String fpUser = (String) request.getAttribute("fpType");
+		User authenticatedUser = new User();
+		
+		if(fpUser!=null && !"".equals(fpUser)) {
+			authenticatedUser = userDetailsService.loadUserByUsernameAndFpUser(authentication.getName(),fpUser);
+		}else {
+			authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
+		}
+		
 		authenticatedUser.setLoginRole(User.Role.valueOf(role));
 		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 

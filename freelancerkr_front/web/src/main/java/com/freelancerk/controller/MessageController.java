@@ -1,15 +1,7 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.TimeUtil;
-import com.freelancerk.domain.Message;
-import com.freelancerk.domain.Project;
-import com.freelancerk.domain.User;
-import com.freelancerk.domain.repository.MessageRepository;
-import com.freelancerk.domain.specification.MessageSpecifications;
-import com.freelancerk.io.CommonListResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.freelancerk.TimeUtil;
+import com.freelancerk.domain.Message;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.MessageRepository;
+import com.freelancerk.domain.specification.MessageSpecifications;
+import com.freelancerk.io.CommonListResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Api(tags = "메세지", description = "조회/검색 등")

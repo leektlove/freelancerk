@@ -1,12 +1,11 @@
 package com.freelancerk.controller.view;
 
-import com.freelancerk.TimeUtil;
-import com.freelancerk.controller.RootController;
-import com.freelancerk.domain.*;
-import com.freelancerk.domain.repository.*;
-import com.freelancerk.domain.specification.ProjectItemTicketSpecifications;
-import com.freelancerk.domain.specification.ProjectSpecifications;
-import com.freelancerk.service.ProjectService;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,11 +19,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.freelancerk.TimeUtil;
+import com.freelancerk.controller.RootController;
+import com.freelancerk.domain.Message;
+import com.freelancerk.domain.Project;
+import com.freelancerk.domain.ProjectItemTicket;
+import com.freelancerk.domain.ProjectPointLog;
+import com.freelancerk.domain.ProjectProductItemType;
+import com.freelancerk.domain.User;
+import com.freelancerk.domain.repository.MessageRepository;
+import com.freelancerk.domain.repository.ProjectItemTicketRepository;
+import com.freelancerk.domain.repository.ProjectPointLogRepository;
+import com.freelancerk.domain.repository.ProjectProductItemTypeRepository;
+import com.freelancerk.domain.repository.ProjectRepository;
+import com.freelancerk.domain.repository.UserRepository;
+import com.freelancerk.domain.specification.ProjectItemTicketSpecifications;
+import com.freelancerk.domain.specification.ProjectSpecifications;
+import com.freelancerk.service.ProjectService;
 
 @Controller
 @RequestMapping("/client/profile")

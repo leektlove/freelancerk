@@ -14,6 +14,8 @@ $(document).ready(function() {
         formData.append('password', $('input[name=password]').val());
         formData.append('role', 'ROLE_CLIENT');
         formData.append('authType', 'EMAIL');
+        formData.append('fpUser', $('input[name=fpUser]').val());
+        
         $.ajax({
             type: "POST",
             url: $('#form').attr('action'),

@@ -1,14 +1,7 @@
 package com.freelancerk.controller;
 
-import com.freelancerk.io.CommonListResponse;
-import com.freelancerk.io.CommonResponse;
-import com.freelancerk.domain.AdminUser;
-import com.freelancerk.domain.Popup;
-import com.freelancerk.domain.repository.AdminUserRepository;
-import com.freelancerk.domain.repository.PopupRepository;
-import com.freelancerk.service.StorageService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.freelancerk.domain.AdminUser;
+import com.freelancerk.domain.Popup;
+import com.freelancerk.domain.repository.AdminUserRepository;
+import com.freelancerk.domain.repository.PopupRepository;
+import com.freelancerk.io.CommonListResponse;
+import com.freelancerk.io.CommonResponse;
+import com.freelancerk.service.StorageService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "팝업관리", description = "등록/조회 등")
 @RestController

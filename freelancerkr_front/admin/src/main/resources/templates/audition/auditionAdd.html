@@ -12,6 +12,10 @@
 	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-noscript.css"></noscript>
 	<noscript><link rel="stylesheet" href="/static/vendor/jquery-file-uploader/css/jquery.fileupload-ui-noscript.css"></noscript>
 	
+	<script src="/static/summernote/summernote-lite.js"></script>
+	<script src="/static/summernote/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/static/summernote/summernote-lite.css">
+	
 </head>
 
 	
@@ -35,18 +39,18 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th>이름</th>
+								<th>모집공고</th>
 								<td>
-									<input type="text" name="name" value="" id="" title="타이틀" maxlength="20">			
+									<input type="text" name="name" value="" id="" title="모집공고타이틀" maxlength="20">			
 								</td>
 							</tr>
 							<tr>
-								<th>설명</th>
+								<th>작품명</th>
 								<td>
-									<input type="text" name="text" value="" id="" maxlength="100" title="설명">
+									<input type="text" name="product" value="" id="" title="작품명" maxlength="25">			
 								</td>
 							</tr>
-								<tr>
+							<tr>
 								<th>상태</th>
 								<td>
 									<select name="status">
@@ -62,6 +66,12 @@
 								</td>
 							</tr>
 							<tr>
+								<th>위치</th>
+								<td>
+									<input type="text" name="adress" value="" id="" title="위치" maxlength="50">			
+								</td>
+							</tr>
+							<tr>
 								<th>사진</th>
 								<td colspan="3">
 									<div style="margin-top:10px;">
@@ -70,6 +80,12 @@
 									<div style="width:300px; margin-top:20px;">
 										<img src="" style="margin-bottom: 10px; width:100%;">
 									</div>
+								</td>
+							</tr>
+							<tr>
+								<th >내용</th>
+								<td colspan="3">
+									<textarea id="summernote" name="text"></textarea>
 								</td>
 							</tr>
 						</tbody>
@@ -212,6 +228,49 @@
 		{% } %}
 		</script>
 		
+		<script th:inline="javascript">
+								
+			$(document).ready(function() {
+				//여기 아래 부분
+				$('#summernote').summernote({
+					  height: 600,                 // 에디터 높이
+					  minHeight: null,             // 최소 높이
+					  maxHeight: null,             // 최대 높이
+					  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+					  lang: "ko-KR",					// 한글 설정
+					  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+					  
+		    		callbacks : { 
+		            	onImageUpload : function(files, editor, welEditable) {
+	           			 // 파일 업로드(다중업로드를 위해 반복문 사용)
+				            for (var i = files.length - 1; i >= 0; i--) {
+				            	uploadSummernoteImageFile(files[i],  this);
+				    		}
+	            		}
+	        		}
+	        	});
+	        	
+	        	
+		        function uploadSummernoteImageFile(file, el) {
+					data = new FormData();
+					data.append("file", file);
+					$.ajax({
+						data : data,
+						type : "POST",
+						url : "/audition/uploadSummernoteImageFile",
+						contentType : false,
+						enctype : 'multipart/form-data',
+						processData : false,
+						success : function(data) {
+							console.log(data);
+							$(el).summernote('editor.insertImage', data.imageUrl);
+						}
+					});
+				}
+				
+			});
+		</script>
+							
 	</section>
 	
 

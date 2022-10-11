@@ -96,12 +96,12 @@ public class MainViewController extends RootController {
         this.projectProductItemTypeRepository = projectProductItemTypeRepository;
     }
 
-    @RequestMapping(value = {"/"})
-    public String getIntroView(Model model) {
-        return "main/intro";
-    }
+//    @RequestMapping(value = {"/"})
+//    public String getIntroView(Model model) {
+//        return "main/intro";
+//    }
     
-    @RequestMapping(value = {"/main"})
+    @RequestMapping(value = {"/","/main"})
     public String getMainView(Model model,
                               HttpServletRequest request,
                               @RequestParam(value = "message", required = false) String message,
